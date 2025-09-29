@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: kickr-postgres
+    environment:
+      POSTGRES_DB: kickr_db
+      POSTGRES_USER: kickr_user
+      POSTGRES_PASSWORD: kickr_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+  # Service optionnel pour l'administration de la base de données
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: kickr-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@kickr.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,54 @@
+# ----------------------------
+# Maven / Java inside kickr-server
+# ----------------------------
+/kickr-server/target/
+/kickr-server/*.class
+/kickr-server/*.jar
+/kickr-server/*.war
+/kickr-server/*.ear
+
+# IDE (IntelliJ / Eclipse)
+ /kickr-server/.idea/
+/kickr-server/*.iml
+/kickr-server/.classpath
+/kickr-server/.project
+/kickr-server/.settings/
+/kickr-server/*.ipr
+
+# Logs
+/kickr-server/*.log
+
+# Temporary files
+/kickr-server/*.tmp
+/kickr-server/*.swp
+/kickr-server/*~
+
+# OS files
+/kickr-server/.DS_Store
+/kickr-server/Thumbs.db
+
+# Spring Boot
+/kickr-server/spring-boot-devtools.properties
+
+# IntelliJ caches
+/kickr-server/out/
+/kickr-server/.idea/modules.xml
+/kickr-server/.idea/workspace.xml
+/kickr-server/.idea/tasks.xml
+/kickr-server/.idea/dictionaries
+/kickr-server/.idea/vcs.xml
+/kickr-server/.idea/assetWizardSettings.xml
+/kickr-server/.idea/jsLibraryMappings.xml
+
+# VS Code
+/kickr-server/.vscode/
+
+# Environment variables
+/kickr-server/.env
+
+# Docker
+/kickr-server/docker-compose.override.yml
+/kickr-server/*.env
+
+
+/.idea

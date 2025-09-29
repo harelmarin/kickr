@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: kickr-server
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kickr_db
+    username: kickr_user
+    password: kickr_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: create
+
+jwt:
+  secret: "Kx1GvN9uCqfT5y8pFj3V2bLrM6tQwXzA0sDdFgHjKlMnOpQrStUvWxYzABCD1234"
+
+logging:
+  level:
+    com.ampara: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
