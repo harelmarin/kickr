@@ -1,5 +1,6 @@
 package com.kickr_server.auth.refreshToken;
 
+import com.kickr_server.dto.RefreshTokenResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
