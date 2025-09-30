@@ -45,6 +45,7 @@
 
 # Environment variables
 /kickr-server/.env
+.env
 
 # Docker
 /kickr-server/docker-compose.override.yml

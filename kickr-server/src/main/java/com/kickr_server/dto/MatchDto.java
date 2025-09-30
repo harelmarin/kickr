@@ -1,5 +1,6 @@
 package com.kickr_server.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExternalMatchDto {
+public class MatchDto {
 
     @JsonProperty("home_team")
     private String homeTeamName;
@@ -28,7 +29,7 @@ public class ExternalMatchDto {
     private String awayTeamLogo;
 
     @JsonProperty("match_date")
-    private LocalDateTime matchDate;
+    private String matchDate;
 
     @JsonProperty("competition")
     private String competition;
@@ -41,5 +42,4 @@ public class ExternalMatchDto {
 
     @JsonProperty("away_score")
     private Integer awayScore;
-
 }

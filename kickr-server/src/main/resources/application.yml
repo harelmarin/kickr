@@ -22,7 +22,11 @@ spring:
         ddl-auto: create
 
 jwt:
-  secret: "Kx1GvN9uCqfT5y8pFj3V2bLrM6tQwXzA0sDdFgHjKlMnOpQrStUvWxYzABCD1234"
+  secret: ${JWT_SECRET}
+football:
+  api:
+    key: ${FOOTBALL_API_KEY}
+
 
 logging:
   level:

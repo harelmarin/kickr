@@ -16,5 +16,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ExternalMatchResponse {
     @JsonProperty("matches")
-    private List<ExternalMatchDto> matches;
+    private List<MatchDto> matches;
 }
