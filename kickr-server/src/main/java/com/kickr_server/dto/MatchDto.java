@@ -2,9 +2,11 @@ package com.kickr_server.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kickr_server.utils.DateTimeConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +31,7 @@ public class MatchDto {
     private String awayTeamLogo;
 
     @JsonProperty("match_date")
-    private String matchDate;
+    private LocalDateTime matchDate;
 
     @JsonProperty("competition")
     private String competition;

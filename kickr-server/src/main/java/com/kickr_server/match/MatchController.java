@@ -16,7 +16,7 @@ public class MatchController {
     private final MatchService matchService;
 
     @GetMapping("/next")
-    public List<MatchDto> getNextMatches() throws Exception {
-        return matchService.fetchNextMatches();
+    public void getNextMatches() throws Exception {
+        matchService.fetchAndSaveNextMatches();
     }
 }

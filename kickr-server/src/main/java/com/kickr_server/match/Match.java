@@ -38,6 +38,13 @@ public class Match {
     @Column(nullable = false)
     private String location;
 
+    @Column
+    private Integer homeScore;
+
+    @Column
+    private Integer awayScore;
+
+
 
 
 }

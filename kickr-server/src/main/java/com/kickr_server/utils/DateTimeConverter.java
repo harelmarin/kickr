@@ -1,5 +1,6 @@
 package com.kickr_server.utils;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -32,9 +33,9 @@ public class DateTimeConverter {
      * System.out.println(localTime); // "2025-09-27T16:00:00"
      * </pre>
      */
-    public static String toLocalTimeFrance(String utcDateTime) {
+    public static LocalDateTime toLocalTimeFrance(String utcDateTime) {
         ZonedDateTime zdtUtc = ZonedDateTime.parse(utcDateTime);
         ZonedDateTime zdtParis = zdtUtc.withZoneSameInstant(ZoneId.of("Europe/Paris"));
-        return zdtParis.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        return zdtParis.toLocalDateTime();
     }
 }
