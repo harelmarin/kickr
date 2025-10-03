@@ -1,11 +1,11 @@
 package com.kickr_server.auth;
 
-import com.kickr_server.dto.UserDto;
-import com.kickr_server.dto.AuthRequest;
-import com.kickr_server.dto.AuthResponse;
-import com.kickr_server.dto.RefreshTokenRequest;
-import com.kickr_server.dto.RefreshTokenResponse;
-import com.kickr_server.dto.RegisterRequest;
+import com.kickr_server.dto.User.UserDto;
+import com.kickr_server.dto.Auth.AuthRequest;
+import com.kickr_server.dto.Auth.AuthResponse;
+import com.kickr_server.dto.Auth.RefreshTokenRequest;
+import com.kickr_server.dto.Auth.RefreshTokenResponse;
+import com.kickr_server.dto.Auth.RegisterRequest;
 import com.kickr_server.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

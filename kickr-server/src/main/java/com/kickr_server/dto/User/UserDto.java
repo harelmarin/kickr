@@ -1,4 +1,4 @@
-package com.kickr_server.dto;
+package com.kickr_server.dto.User;
 
 import com.kickr_server.user.User;
 

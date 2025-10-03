@@ -1,4 +1,4 @@
-package com.kickr_server.dto;
+package com.kickr_server.dto.Team;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -1,12 +1,25 @@
-package com.kickr_server.match;
+package com.kickr_server.usermatch;
 
+import com.kickr_server.match.Match;
 import com.kickr_server.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Entité représentant l’évaluation d’un match par un utilisateur.
+ * <p>
+ * Cette entité fait le lien entre {@link User} et {@link Match}, en ajoutant des informations
+ * comme une note, un commentaire et la date de visionnage.
+ * <p>
+ * Un enregistrement {@code UserMatch} correspond donc à un utilisateur ayant noté un match.
+ */
 @Entity
 @Table(name = "user_matches")
 @Data
@@ -15,23 +28,63 @@ import java.util.UUID;
 @Builder
 public class UserMatch {
 
+    /**
+     * Identifiant unique de l’évaluation (UUID généré automatiquement).
+     */
     @Id
     @GeneratedValue
     private UUID id;
 
+    /**
+     * Le match concerné par l’évaluation.
+     * <p>
+     * Si le match est supprimé, toutes les évaluations liées seront aussi supprimées
+     * (grâce à {@link OnDelete}).
+     */
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "match_id", nullable = false)
     private Match match;
 
+    /**
+     * L’utilisateur qui a fait l’évaluation.
+     * <p>
+     * Si l’utilisateur est supprimé, toutes ses évaluations liées seront supprimées.
+     */
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    /**
+     * Note donnée au match (entre 0 et 5).
+     */
     @Column(nullable = false)
+    @Min(0)
+    @Max(5)
     private int note;
 
+    /**
+     * Commentaire facultatif laissé par l’utilisateur (limité à 1000 caractères).
+     */
     @Column(length = 1000)
     private String comment;
 
+    /**
+     * Date et heure auxquelles l’utilisateur a marqué le match comme "vu".
+     * Par défaut, définie à l’instant de la création si non spécifiée.
+     */
     private LocalDateTime watchedAt;
+
+    /**
+     * Callback exécuté automatiquement avant l’insertion en base.
+     * Définit {@code watchedAt} à la date et l’heure actuelles si elle est absente.
+     */
+    @PrePersist
+    public void prePersist() {
+        if (watchedAt == null) {
+            watchedAt = LocalDateTime.now();
+        }
+    }
 }
+

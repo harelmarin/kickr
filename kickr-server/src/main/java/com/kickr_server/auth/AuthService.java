@@ -4,10 +4,10 @@ import com.kickr_server.auth.jwt.JwtService;
 import com.kickr_server.auth.refreshToken.RefreshToken;
 import com.kickr_server.auth.refreshToken.RefreshTokenRepository;
 import com.kickr_server.auth.refreshToken.RefreshTokenService;
-import com.kickr_server.dto.AuthRequest;
-import com.kickr_server.dto.AuthResponse;
-import com.kickr_server.dto.RefreshTokenResponse;
-import com.kickr_server.dto.UserDto;
+import com.kickr_server.dto.Auth.AuthRequest;
+import com.kickr_server.dto.Auth.AuthResponse;
+import com.kickr_server.dto.Auth.RefreshTokenResponse;
+import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.user.User;
 
 
@@ -96,10 +96,4 @@ public class AuthService {
         refreshTokenService.findByToken(refreshTokenStr)
                 .ifPresent(refreshTokenRepository::delete);
     }
-
-
-
-
-
-
 }

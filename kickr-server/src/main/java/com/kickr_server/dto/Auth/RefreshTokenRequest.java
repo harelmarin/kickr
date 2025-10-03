@@ -1,4 +1,4 @@
-package com.kickr_server.dto;
+package com.kickr_server.dto.Auth;
 
 /**
  * Requête envoyée par le frontend pour renouveler un access token.

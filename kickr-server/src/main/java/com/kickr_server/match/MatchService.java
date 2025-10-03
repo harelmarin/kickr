@@ -1,7 +1,7 @@
 package com.kickr_server.match;
 
 import com.kickr_server.config.AppConfig;
-import com.kickr_server.dto.MatchDto;
+import com.kickr_server.dto.Match.MatchDto;
 import com.kickr_server.team.Team;
 import com.kickr_server.team.TeamRepository;
 import com.kickr_server.utils.DateTimeConverter;

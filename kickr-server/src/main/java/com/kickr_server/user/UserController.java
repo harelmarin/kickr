@@ -1,6 +1,6 @@
 package com.kickr_server.user;
 
-import com.kickr_server.dto.UserDto;
+import com.kickr_server.dto.User.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

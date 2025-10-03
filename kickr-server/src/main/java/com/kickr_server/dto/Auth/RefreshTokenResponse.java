@@ -1,4 +1,4 @@
-package com.kickr_server.dto;
+package com.kickr_server.dto.Auth;
 
 /**
  * Réponse envoyée par l’API lors d’un renouvellement de token.
