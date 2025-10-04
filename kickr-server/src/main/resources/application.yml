@@ -41,3 +41,14 @@ springdoc:
     path: /swagger-ui.html
     display-request-duration: true
 
+
+
+resilience4j:
+  ratelimiter:
+    instances:
+      feedRateLimiter:
+        limitForPeriod: 1        # Nombre max d’appels par période
+        limitRefreshPeriod: 10s  # Période (ici toutes les 10s)
+        timeoutDuration: 0s      # Si >0, attend avant de refuser
+
+

@@ -3,6 +3,7 @@ package com.kickr_server.feed;
 import com.kickr_server.dto.UserMatch.UserMatchFullDto;
 import com.kickr_server.usermatch.UserMatch;
 import com.kickr_server.usermatch.UserMatchService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class FeedController {
     }
 
     @GetMapping("/preview/{userId}")
+    @RateLimiter(name = "feedRateLimiter", fallbackMethod = "previewFeedFallback")
     public List<UserMatchFullDto> getPreviewFeed(
             @PathVariable UUID userId,
             @RequestParam(defaultValue = "0") int page,
@@ -39,6 +41,22 @@ public class FeedController {
                 .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
+
+    /**
+     * Méthode fallback si le rate limiter est dépassé.
+     */
+    public List<UserMatchFullDto> previewFeedFallback(UUID userId, int page, int size, Throwable t) {
+        UserMatchFullDto blocked = new UserMatchFullDto(
+                UUID.randomUUID(),
+                null,
+                null,
+                0,
+                "Service indisponible vous avez effectué trop de requêtes. Veuillez réessayer dans quelques instants",
+                null
+        );
+        return List.of(blocked);
+    }
+
 
 
 }

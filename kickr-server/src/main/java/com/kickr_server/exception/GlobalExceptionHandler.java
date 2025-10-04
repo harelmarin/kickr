@@ -1,5 +1,6 @@
 package com.kickr_server.exception;
 
+import com.kickr_server.dto.generic.ApiResponseDto;
 import com.kickr_server.exception.auth.InvalidCredentialsException;
 import com.kickr_server.exception.auth.JwtTokenException;
 import com.kickr_server.exception.auth.LogOutException;
@@ -65,109 +66,94 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * Crée une réponse JSON standardisée pour une exception donnée.
-     *
-     * @param status  le code HTTP de la réponse
-     * @param message le message d'erreur à renvoyer
-     * @return ResponseEntity contenant le corps JSON
-     */
-    private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String message) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("status", status.value());
-        body.put("error", status.getReasonPhrase());
-        body.put("message", message);
-        body.put("timestamp", LocalDateTime.now());
-        return ResponseEntity.status(status).body(body);
+    private <T> ResponseEntity<ApiResponseDto<T>> buildError(HttpStatus status, String message) {
+        return ResponseEntity.status(status).body(ApiResponseDto.error(message, null));
     }
 
     // ---------------------- USER EXCEPTIONS ----------------------
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleGeneralException(Exception ex) {
+        return buildError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistException.class)
-    public ResponseEntity<Map<String, Object>> handleUserAlreadyExist(UserAlreadyExistException ex) {
-        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleUserAlreadyExist(UserAlreadyExistException ex) {
+        return buildError(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleUserNotFound(UserNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleUserNotFound(UserNotFoundException ex) {
+        return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     // ---------------------- AUTH EXCEPTIONS ----------------------
 
     @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(JwtTokenException.class)
-    public ResponseEntity<Map<String, Object>> handleJwtToken(JwtTokenException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleJwtToken(JwtTokenException ex) {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(RefreshTokenExpiredException.class)
-    public ResponseEntity<Map<String, Object>> handleRefreshTokenExpired(RefreshTokenExpiredException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleRefreshTokenExpired(RefreshTokenExpiredException ex) {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(LogOutException.class)
-    public ResponseEntity<Map<String, Object>> handleLogOut(LogOutException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED,
-                ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleLogOut(LogOutException ex) {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     // ---------------------- FOLLOW EXCEPTIONS ----------------------
 
     @ExceptionHandler(FollowerNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> FollowerNotFoundException(FollowerNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleFollowerNotFound(FollowerNotFoundException ex) {
+        return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(FollowedNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> FollowedNotFoundException(FollowedNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleFollowedNotFound(FollowedNotFoundException ex) {
+        return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     // ---------------------- MATCH EXCEPTIONS ----------------------
 
     @ExceptionHandler(MatchNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> UserMatchNotFoundException(MatchNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleMatchNotFound(MatchNotFoundException ex) {
+        return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     // ---------------------- USERMATCH EXCEPTIONS ----------------------
 
     @ExceptionHandler(UserMatchNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> UserMatchNotFoundException(UserMatchNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleUserMatchNotFound(UserMatchNotFoundException ex) {
+        return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalMatchNoteException.class)
-    public ResponseEntity<Map<String, Object>> IllegaMatchNoteException(IllegalMatchNoteException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleIllegalMatchNote(IllegalMatchNoteException ex) {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalCommentLengthException.class)
-    public ResponseEntity<Map<String, Object>> IllegalCommentLengthException(IllegalCommentLengthException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    public ResponseEntity<ApiResponseDto<Void>> handleIllegalCommentLength(IllegalCommentLengthException ex) {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     // ---------------------- VALIDATION EXCEPTIONS ----------------------
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        return ResponseEntity.badRequest().body(Map.of(
-                "error", "Validation Error",
-                "messages", errors
-        ));
+    public ResponseEntity<ApiResponseDto<Void>> handleValidationException(MethodArgumentNotValidException ex) {
+        StringBuilder sb = new StringBuilder();
+        ex.getBindingResult().getFieldErrors().forEach(fe ->
+                sb.append(fe.getField()).append(": ").append(fe.getDefaultMessage()).append("; ")
+        );
+        return buildError(HttpStatus.BAD_REQUEST, sb.toString());
     }
 }
+
