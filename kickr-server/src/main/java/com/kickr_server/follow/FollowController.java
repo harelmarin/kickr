@@ -1,6 +1,8 @@
 package com.kickr_server.follow;
 
 import com.kickr_server.dto.User.UserDto;
+import com.kickr_server.dto.follow.FollowRequestDto;
+import com.kickr_server.dto.follow.FollowResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,18 +20,18 @@ public class FollowController {
      * Faire suivre un utilisateur.
      */
     @PostMapping("/follow")
-    public String follow(@RequestParam UUID followerId, @RequestParam UUID followedId) {
-        followService.follow(followerId, followedId);
-        return "User " + followerId + " now follows " + followedId;
+    public FollowResponseDto follow(@RequestBody  FollowRequestDto request) {
+        followService.follow(request.followerId(), request.followedId());
+        return FollowResponseDto.success(request.followerId(), request.followedId(), true);
     }
 
     /**
      * Ne plus suivre un utilisateur.
      */
     @PostMapping("/unfollow")
-    public String unfollow(@RequestParam UUID followerId, @RequestParam UUID followedId) {
-        followService.unfollow(followerId, followedId);
-        return "User " + followerId + " unfollowed " + followedId;
+    public FollowResponseDto unfollow(@RequestBody FollowRequestDto request) {
+        followService.unfollow(request.followerId(), request.followedId());
+        return FollowResponseDto.success(request.followerId(), request.followedId(),false);
     }
 
     /**

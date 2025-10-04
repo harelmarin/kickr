@@ -1,6 +1,7 @@
 package com.kickr_server.user;
 
 import com.kickr_server.dto.User.UserDto;
+import com.kickr_server.dto.generic.ApiResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -64,7 +65,8 @@ public class UserController {
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable UUID id) {
+    public ApiResponseDto<Void> deleteUser(@PathVariable UUID id) {
         userService.deleteById(id);
+        return new ApiResponseDto<>("SUCCESS", "Utilisateur supprimé avec succès",null, null);
     }
 }

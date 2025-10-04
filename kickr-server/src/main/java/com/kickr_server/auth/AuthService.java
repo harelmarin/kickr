@@ -8,6 +8,7 @@ import com.kickr_server.dto.Auth.AuthRequest;
 import com.kickr_server.dto.Auth.AuthResponse;
 import com.kickr_server.dto.Auth.RefreshTokenResponse;
 import com.kickr_server.dto.User.UserDto;
+import com.kickr_server.exception.auth.LogOutException;
 import com.kickr_server.user.User;
 
 
@@ -93,7 +94,16 @@ public class AuthService {
     }
 
     public void logout(String refreshTokenStr) {
-        refreshTokenService.findByToken(refreshTokenStr)
-                .ifPresent(refreshTokenRepository::delete);
+        boolean deleted = refreshTokenService.findByToken(refreshTokenStr)
+                .map(token -> {
+                    refreshTokenRepository.delete(token);
+                    return true;
+                })
+                .orElse(false);
+
+        if (!deleted) {
+            throw new LogOutException("Déconnexion impossible, veuillez réessayer dans quelques instants");
+        }
     }
+
 }

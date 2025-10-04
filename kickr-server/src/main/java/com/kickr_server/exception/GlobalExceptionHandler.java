@@ -2,6 +2,7 @@ package com.kickr_server.exception;
 
 import com.kickr_server.exception.auth.InvalidCredentialsException;
 import com.kickr_server.exception.auth.JwtTokenException;
+import com.kickr_server.exception.auth.LogOutException;
 import com.kickr_server.exception.auth.RefreshTokenExpiredException;
 import com.kickr_server.exception.follow.FollowerNotFoundException;
 import com.kickr_server.exception.follow.FollowedNotFoundException;
@@ -84,82 +85,76 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Une erreur inattendue est survenue : " + ex.getMessage());
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistException.class)
     public ResponseEntity<Map<String, Object>> handleUserAlreadyExist(UserAlreadyExistException ex) {
-        return buildResponse(HttpStatus.CONFLICT,
-                "Création impossible : cet utilisateur existe déjà. " + ex.getMessage());
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleUserNotFound(UserNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND,
-                "Utilisateur introuvable : " + ex.getMessage());
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     // ---------------------- AUTH EXCEPTIONS ----------------------
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED,
-                "Authentification échouée : identifiants incorrects. " + ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(JwtTokenException.class)
     public ResponseEntity<Map<String, Object>> handleJwtToken(JwtTokenException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED,
-                "Token invalide ou expiré. Veuillez vous reconnecter. " + ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(RefreshTokenExpiredException.class)
     public ResponseEntity<Map<String, Object>> handleRefreshTokenExpired(RefreshTokenExpiredException ex) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    @ExceptionHandler(LogOutException.class)
+    public ResponseEntity<Map<String, Object>> handleLogOut(LogOutException ex) {
         return buildResponse(HttpStatus.UNAUTHORIZED,
-                "Veuillez vous reconnecter. " + ex.getMessage());
+                ex.getMessage());
     }
 
     // ---------------------- FOLLOW EXCEPTIONS ----------------------
 
     @ExceptionHandler(FollowerNotFoundException.class)
     public ResponseEntity<Map<String, Object>> FollowerNotFoundException(FollowerNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND,
-                "Follower pas trouvé : " + ex.getMessage());
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(FollowedNotFoundException.class)
     public ResponseEntity<Map<String, Object>> FollowedNotFoundException(FollowedNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND,
-                "Follow pas trouvé : " + ex.getMessage());
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     // ---------------------- MATCH EXCEPTIONS ----------------------
 
     @ExceptionHandler(MatchNotFoundException.class)
     public ResponseEntity<Map<String, Object>> UserMatchNotFoundException(MatchNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND,
-                "Match non trouvé : " + ex.getMessage());
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     // ---------------------- USERMATCH EXCEPTIONS ----------------------
 
     @ExceptionHandler(UserMatchNotFoundException.class)
     public ResponseEntity<Map<String, Object>> UserMatchNotFoundException(UserMatchNotFoundException ex) {
-        return buildResponse(HttpStatus.NOT_FOUND,
-                "Match noté non trouvé : " + ex.getMessage());
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalMatchNoteException.class)
     public ResponseEntity<Map<String, Object>> IllegaMatchNoteException(IllegalMatchNoteException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED,
-                "Note pas attribuable : " + ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalCommentLengthException.class)
     public ResponseEntity<Map<String, Object>> IllegalCommentLengthException(IllegalCommentLengthException ex) {
-        return buildResponse(HttpStatus.UNAUTHORIZED,
-                "Votre commentaire est trop long : " + ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     // ---------------------- VALIDATION EXCEPTIONS ----------------------

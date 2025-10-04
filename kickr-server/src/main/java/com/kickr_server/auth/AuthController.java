@@ -6,6 +6,7 @@ import com.kickr_server.dto.Auth.AuthResponse;
 import com.kickr_server.dto.Auth.RefreshTokenRequest;
 import com.kickr_server.dto.Auth.RefreshTokenResponse;
 import com.kickr_server.dto.Auth.RegisterRequest;
+import com.kickr_server.dto.generic.ApiResponseDto;
 import com.kickr_server.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,8 +29,9 @@ public class AuthController {
             @ApiResponse(responseCode = "401", description = "Email ou mot de passe invalide")
     })
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest request) {
-        return authService.authenticate(request);
+    public ApiResponseDto<AuthResponse> login(@RequestBody AuthRequest request) {
+        AuthResponse authResponse = authService.authenticate(request);
+        return ApiResponseDto.success("Connexion réussi", authResponse);
     }
 
     @Operation(summary = "Créer un nouvel utilisateur")
@@ -39,12 +41,13 @@ public class AuthController {
     })
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto register(@Valid @RequestBody RegisterRequest request) {
+    public ApiResponseDto<UserDto> register(@Valid @RequestBody RegisterRequest request) {
         var user = new User();
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPassword(request.password());
-        return authService.register(user);
+        UserDto userDto = authService.register(user);
+        return ApiResponseDto.success("Inscription réussie", userDto);
     }
 
 
@@ -65,8 +68,9 @@ public class AuthController {
     })
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void logout(@RequestBody RefreshTokenRequest request) {
+    public ApiResponseDto<Void> logout(@RequestBody RefreshTokenRequest request) {
         authService.logout(request.refreshToken());
+        return ApiResponseDto.success("Déconnexion réussie", null);
     }
 
 }

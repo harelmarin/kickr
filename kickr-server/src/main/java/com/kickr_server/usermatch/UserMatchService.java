@@ -5,6 +5,7 @@ import com.kickr_server.exception.user.UserNotFoundException;
 import com.kickr_server.exception.userMatch.IllegalCommentLengthException;
 import com.kickr_server.exception.userMatch.IllegalMatchNoteException;
 import com.kickr_server.exception.userMatch.UserMatchNotFoundException;
+import com.kickr_server.follow.FollowService;
 import com.kickr_server.match.Match;
 import com.kickr_server.match.MatchRepository;
 import com.kickr_server.user.User;
@@ -12,6 +13,7 @@ import com.kickr_server.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +37,7 @@ public class UserMatchService {
     private final UserMatchRepository userMatchRepository;
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
+    private final FollowService followService;
 
     /**
      * Récupère toutes les évaluations de matchs.
@@ -78,17 +81,17 @@ public class UserMatchService {
 
     public UserMatch save(UserMatchDto dto) {
         Match match = matchRepository.findById(dto.matchId)
-                .orElseThrow(() -> new IllegalArgumentException("Match not found: " + dto.matchId));
+                .orElseThrow(() -> new IllegalArgumentException("Match introuvable"));
 
         User user = userRepository.findById(dto.userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + dto.userId));
+                .orElseThrow(() -> new UserNotFoundException("Match introuvable"));
 
         if (dto.note < 0 || dto.note > 5) {
-            throw new IllegalMatchNoteException(dto.note + " illégal");
+            throw new IllegalMatchNoteException(dto.note + " dépasse les limites : 0 et 5");
         }
 
         if (dto.comment.length() > 1000) {
-            throw new IllegalCommentLengthException(dto.comment.length() + " > 1000");
+            throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 caractères");
         }
         UserMatch userMatch = UserMatch.builder()
                 .user(user)
@@ -105,16 +108,25 @@ public class UserMatchService {
      * */
     public UserMatch update(UUID id, int note, String comment) {
         UserMatch existing = userMatchRepository.findById(id)
-                .orElseThrow(() -> new UserMatchNotFoundException(" Evaluation non trouvée : " + id));
+                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation introuvable"));
 
         if (note < 0 || note > 5) {
-            throw new IllegalMatchNoteException(note + " illégal");
+            throw new IllegalMatchNoteException(note + " dépasse les limites : 0 et 5");
         }
         if (comment.length() > 1000) {
-            throw new IllegalCommentLengthException(comment.length() + " > 1000");
+            throw new IllegalCommentLengthException(comment.length() + " > 1000 caractères");
         }
         existing.setNote(note);
         existing.setComment(comment);
         return userMatchRepository.save(existing);
     }
+
+    public List<UserMatch> getMatchesFromFollowedUsers(UUID userId) {
+        List<User> followedUsers = followService.getFollowing(userId);
+        return userMatchRepository.findByUserIn(followedUsers)
+                .stream()
+                .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
+                .toList();
+    }
+
 }

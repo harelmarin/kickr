@@ -1,5 +1,6 @@
 package com.kickr_server.user;
 
+import com.kickr_server.dto.generic.ApiResponseDto;
 import com.kickr_server.exception.user.UserAlreadyExistException;
 import com.kickr_server.exception.user.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,7 @@ public class UserService {
      */
     public User getUserById(UUID id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User id=" + id + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
 
     }
 
@@ -58,7 +59,7 @@ public class UserService {
      */
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User email=" + email + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
     }
 
     /**
@@ -72,10 +73,10 @@ public class UserService {
      */
     public User save(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserAlreadyExistException(user.getEmail());
+            throw new UserAlreadyExistException("Utilisateur déjà existant");
         }
         if (userRepository.existsByName(user.getName())) {
-            throw new UserAlreadyExistException(user.getName());
+            throw new UserAlreadyExistException("Nom déjà utilisé");
         }
         return userRepository.save(user);
     }

@@ -2,6 +2,7 @@ package com.kickr_server.usermatch;
 
 import com.kickr_server.dto.UserMatch.UserMatchDto;
 import com.kickr_server.dto.UserMatch.UserMatchUpdateDto;
+import com.kickr_server.dto.generic.ApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,15 +50,17 @@ public class UserMatchController {
      * Crée une nouvelle évaluation pour un match par un utilisateur.
      */
     @PostMapping
-    public UserMatchDto saveUserMatch(@RequestBody UserMatchDto dto) {
-        return UserMatchDto.fromEntity(userMatchService.save(dto));
+    public ApiResponseDto<UserMatchDto> saveUserMatch(@RequestBody UserMatchDto dto) {
+        UserMatchDto userMatchDto = UserMatchDto.fromEntity(userMatchService.save(dto));
+        return ApiResponseDto.success("Evaluation créée", userMatchDto);
     }
 
     /**
      * Met à jour une évaluation existante.
      */
     @PutMapping("/{id}")
-    public UserMatchDto updateUserMatch(@PathVariable UUID id, @RequestBody UserMatchUpdateDto dto) {
-        return UserMatchDto.fromEntity(userMatchService.update(id, dto.getNote(), dto.getComment()));
+    public ApiResponseDto<UserMatchDto>  updateUserMatch(@PathVariable UUID id, @RequestBody UserMatchUpdateDto dto) {
+        UserMatchDto userMatchDto = UserMatchDto.fromEntity(userMatchService.update(id, dto.getNote(), dto.getComment()));
+        return ApiResponseDto.success("Evaluation modifiée", userMatchDto);
     }
 }
