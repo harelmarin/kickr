@@ -31,12 +31,21 @@ public class FeedService {
      * @return liste de {@link UserMatch} correspondant aux matchs notés par les utilisateurs suivis
      */
     public List<UserMatch> getMatchesFromFollowedUsers(UUID userId) {
-        // Récupérer les utilisateurs suivis
         List<User> followedUsers = followService.getFollowing(userId);
-
-        // Récupérer tous leurs UserMatch et trier par date de visionnage descendante
         return userMatchRepository.findByUserIn(followedUsers)
                 .stream()
+                .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
+                .toList();
+    }
+
+    /**
+     * Récupère le dernier match noté par chaque utilisateur suivi.
+     */
+    public List<UserMatch> getLatestMatchesFromFollowedUsers(UUID userId) {
+        List<User> followedUsers = followService.getFollowing(userId);
+        return followedUsers.stream()
+                .map(userMatchRepository::findTopByUserOrderByWatchedAtDesc)
+                .filter(java.util.Objects::nonNull)
                 .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
                 .toList();
     }

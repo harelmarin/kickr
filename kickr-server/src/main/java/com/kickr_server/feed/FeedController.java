@@ -10,18 +10,36 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/feed/{userId}")
+@RequestMapping("/api/feed")
 @RequiredArgsConstructor
 public class FeedController {
 
     private final UserMatchService userMatchService;
+    private final FeedService feedService;
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public List<UserMatchFullDto> getFeed(@PathVariable UUID userId) {
         List<UserMatch> matches = userMatchService.getMatchesFromFollowedUsers(userId);
         return matches.stream()
                 .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
+
+    @GetMapping("/preview/{userId}")
+    public List<UserMatchFullDto> getPreviewFeed(
+            @PathVariable UUID userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        List<UserMatch> latestMatches = feedService.getLatestMatchesFromFollowedUsers(userId);
+        int start = Math.min(page * size, latestMatches.size());
+        int end = Math.min(start + size, latestMatches.size());
+
+        return latestMatches.subList(start, end).stream()
+                .map(UserMatchFullDto::fromEntity)
+                .toList();
+    }
+
+
 }
 
