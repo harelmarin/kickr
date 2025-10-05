@@ -19,6 +19,7 @@ public class FeedController {
     private final FeedService feedService;
 
     @GetMapping("/{userId}")
+    @RateLimiter(name = "feedRateLimiter")
     public List<UserMatchFullDto> getFeed(@PathVariable UUID userId) {
         List<UserMatch> matches = userMatchService.getMatchesFromFollowedUsers(userId);
         return matches.stream()
@@ -27,7 +28,7 @@ public class FeedController {
     }
 
     @GetMapping("/preview/{userId}")
-    @RateLimiter(name = "feedRateLimiter", fallbackMethod = "previewFeedFallback")
+    @RateLimiter(name = "feedRateLimiter")
     public List<UserMatchFullDto> getPreviewFeed(
             @PathVariable UUID userId,
             @RequestParam(defaultValue = "0") int page,
@@ -41,23 +42,5 @@ public class FeedController {
                 .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
-
-    /**
-     * Méthode fallback si le rate limiter est dépassé.
-     */
-    public List<UserMatchFullDto> previewFeedFallback(UUID userId, int page, int size, Throwable t) {
-        UserMatchFullDto blocked = new UserMatchFullDto(
-                UUID.randomUUID(),
-                null,
-                null,
-                0,
-                "Service indisponible vous avez effectué trop de requêtes. Veuillez réessayer dans quelques instants",
-                null
-        );
-        return List.of(blocked);
-    }
-
-
-
 }
 

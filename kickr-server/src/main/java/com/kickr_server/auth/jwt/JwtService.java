@@ -57,9 +57,9 @@ public class JwtService {
                     .build()
                     .parseClaimsJws(token);
         } catch (io.jsonwebtoken.ExpiredJwtException e) {
-            throw new JwtTokenException("Veuillez vous reconnecter");
+            throw new JwtTokenException("Session expired, please log in again");
         } catch (Exception e) {
-            throw new JwtTokenException("Veuillez vous reconnecter");
+            throw new JwtTokenException("Invalid token, please log in again");
         }
     }
 

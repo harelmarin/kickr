@@ -8,6 +8,7 @@ import com.kickr_server.dto.Auth.RefreshTokenResponse;
 import com.kickr_server.dto.Auth.RegisterRequest;
 import com.kickr_server.dto.generic.ApiResponseDto;
 import com.kickr_server.user.User;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,6 +29,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "Authentification réussie"),
             @ApiResponse(responseCode = "401", description = "Email ou mot de passe invalide")
     })
+    @RateLimiter(name = "authRateLimiter")
     @PostMapping("/login")
     public ApiResponseDto<AuthResponse> login(@RequestBody AuthRequest request) {
         AuthResponse authResponse = authService.authenticate(request);
@@ -39,6 +41,7 @@ public class AuthController {
             @ApiResponse(responseCode = "201", description = "Utilisateur créé"),
             @ApiResponse(responseCode = "400", description = "Données invalides")
     })
+    @RateLimiter(name = "authRateLimiter")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponseDto<UserDto> register(@Valid @RequestBody RegisterRequest request) {
@@ -47,7 +50,7 @@ public class AuthController {
         user.setEmail(request.email());
         user.setPassword(request.password());
         UserDto userDto = authService.register(user);
-        return ApiResponseDto.success("Inscription réussie", userDto);
+        return ApiResponseDto.success("Registration successful", userDto);
     }
 
 
@@ -56,6 +59,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "Nouveau access token généré"),
             @ApiResponse(responseCode = "401", description = "Refresh token invalide ou expiré")
     })
+    @RateLimiter(name = "authRateLimiter")
     @PostMapping("/refresh")
     public RefreshTokenResponse refresh(@RequestBody RefreshTokenRequest request) {
         return authService.refreshAccessToken(request.refreshToken());
@@ -66,11 +70,12 @@ public class AuthController {
             @ApiResponse(responseCode = "204", description = "Refresh token révoqué"),
             @ApiResponse(responseCode = "404", description = "Refresh token non trouvé")
     })
+    @RateLimiter(name = "authRateLimiter")
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ApiResponseDto<Void> logout(@RequestBody RefreshTokenRequest request) {
         authService.logout(request.refreshToken());
-        return ApiResponseDto.success("Déconnexion réussie", null);
+        return ApiResponseDto.success("Logout successful", null);
     }
 
 }

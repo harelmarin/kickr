@@ -81,18 +81,19 @@ public class UserMatchService {
 
     public UserMatch save(UserMatchDto dto) {
         Match match = matchRepository.findById(dto.matchId)
-                .orElseThrow(() -> new IllegalArgumentException("Match introuvable"));
+                .orElseThrow(() -> new IllegalArgumentException("Match not found"));
 
         User user = userRepository.findById(dto.userId)
-                .orElseThrow(() -> new UserNotFoundException("Match introuvable"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (dto.note < 0 || dto.note > 5) {
-            throw new IllegalMatchNoteException(dto.note + " dépasse les limites : 0 et 5");
+            throw new IllegalMatchNoteException(dto.note + " is out of bounds: must be between 0 and 5");
         }
 
         if (dto.comment.length() > 1000) {
-            throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 caractères");
+            throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 characters");
         }
+
         UserMatch userMatch = UserMatch.builder()
                 .user(user)
                 .match(match)
@@ -105,17 +106,19 @@ public class UserMatchService {
 
     /**
      * Met à jour la note et/ou le commentaire d'une évaluation existante.
-     * */
+     */
     public UserMatch update(UUID id, int note, String comment) {
         UserMatch existing = userMatchRepository.findById(id)
-                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation introuvable"));
+                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation not found"));
 
         if (note < 0 || note > 5) {
-            throw new IllegalMatchNoteException(note + " dépasse les limites : 0 et 5");
+            throw new IllegalMatchNoteException(note + " is out of bounds: must be between 0 and 5");
         }
+
         if (comment.length() > 1000) {
-            throw new IllegalCommentLengthException(comment.length() + " > 1000 caractères");
+            throw new IllegalCommentLengthException(comment.length() + " > 1000 characters");
         }
+
         existing.setNote(note);
         existing.setComment(comment);
         return userMatchRepository.save(existing);

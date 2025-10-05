@@ -3,6 +3,7 @@ package com.kickr_server.follow;
 import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.dto.follow.FollowRequestDto;
 import com.kickr_server.dto.follow.FollowResponseDto;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class FollowController {
     /**
      * Faire suivre un utilisateur.
      */
+    @RateLimiter(name = "followRateLimiter")
     @PostMapping("/follow")
     public FollowResponseDto follow(@RequestBody  FollowRequestDto request) {
         followService.follow(request.followerId(), request.followedId());
@@ -28,6 +30,7 @@ public class FollowController {
     /**
      * Ne plus suivre un utilisateur.
      */
+    @RateLimiter(name = "followRateLimiter")
     @PostMapping("/unfollow")
     public FollowResponseDto unfollow(@RequestBody FollowRequestDto request) {
         followService.unfollow(request.followerId(), request.followedId());
@@ -37,6 +40,7 @@ public class FollowController {
     /**
      * Liste des utilisateurs suivis par un utilisateur.
      */
+    @RateLimiter(name = "followRateLimiter")
     @GetMapping("/following/{userId}")
     public List<UserDto> getFollowing(@PathVariable UUID userId) {
         return followService.getFollowing(userId).stream().map(UserDto::fromEntity).toList();
@@ -45,6 +49,7 @@ public class FollowController {
     /**
      * Liste des utilisateurs qui suivent un utilisateur.
      */
+    @RateLimiter(name = "followRateLimiter")
     @GetMapping("/followers/{userId}")
     public List<UserDto> getFollowers(@PathVariable UUID userId) {
         return followService.getFollowers(userId).stream().map(UserDto::fromEntity).toList();

@@ -42,11 +42,11 @@ public class AuthService {
         try {
             user = userService.getUserByEmail(request.email());
         } catch (Exception e) {
-            throw new InvalidCredentialsException("Email ou mot de passe invalide");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new InvalidCredentialsException("Email ou mot de passe invalide");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
         String accessToken = jwtService.generateToken(user.getEmail());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
@@ -85,7 +85,7 @@ public class AuthService {
     public RefreshTokenResponse refreshAccessToken(String refreshTokenStr) {
         RefreshToken refreshToken = refreshTokenService.findByToken(refreshTokenStr)
                 .map(refreshTokenService::verifyExpiration)
-                .orElseThrow(() -> new RuntimeException("Refresh token invalide"));
+                .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
 
         String newAccessToken = jwtService.generateToken(refreshToken.getUser().getEmail());
         refreshTokenRepository.delete(refreshToken);
@@ -102,7 +102,7 @@ public class AuthService {
                 .orElse(false);
 
         if (!deleted) {
-            throw new LogOutException("Déconnexion impossible, veuillez réessayer dans quelques instants");
+            throw new LogOutException("Logout failed, please try again later");
         }
     }
 

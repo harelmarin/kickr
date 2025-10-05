@@ -46,9 +46,27 @@ springdoc:
 resilience4j:
   ratelimiter:
     instances:
+      authRateLimiter:
+        limitForPeriod: 5
+        limitRefreshPeriod: 30s
+        timeoutDuration: 1s
       feedRateLimiter:
-        limitForPeriod: 1        # Nombre max d’appels par période
-        limitRefreshPeriod: 10s  # Période (ici toutes les 10s)
-        timeoutDuration: 0s      # Si >0, attend avant de refuser
+        limitForPeriod: 20
+        limitRefreshPeriod: 10s
+        timeoutDuration: 200ms
+      userRateLimiter:
+        limitForPeriod: 10
+        limitRefreshPeriod: 10s
+        timeoutDuration: 500ms
+      userMatchRateLimiter:
+        limitForPeriod: 10
+        limitRefreshPeriod: 10s
+        timeoutDuration: 500ms
+      followRateLimiter:
+        limitForPeriod: 5
+        limitRefreshPeriod: 10s
+        timeoutDuration: 500ms
+
+
 
 

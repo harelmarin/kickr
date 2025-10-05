@@ -2,6 +2,7 @@ package com.kickr_server.user;
 
 import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.dto.generic.ApiResponseDto;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -29,6 +30,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste récupérée avec succès")
     })
+    @RateLimiter(name = "userRateLimiter")
     @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.findAll().stream()
@@ -47,6 +49,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Utilisateur trouvé"),
             @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
     })
+    @RateLimiter(name = "userRateLimiter")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable UUID id) {
         var user = userService.getUserById(id);
@@ -63,10 +66,12 @@ public class UserController {
             @ApiResponse(responseCode = "204", description = "Utilisateur supprimé"),
             @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
     })
+    @RateLimiter(name = "userRateLimiter")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ApiResponseDto<Void> deleteUser(@PathVariable UUID id) {
         userService.deleteById(id);
-        return new ApiResponseDto<>("SUCCESS", "Utilisateur supprimé avec succès",null, null);
+        return new ApiResponseDto<>("SUCCESS", "User deleted successfully", null, null);
+
     }
 }

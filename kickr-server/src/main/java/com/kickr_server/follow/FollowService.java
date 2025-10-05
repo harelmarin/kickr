@@ -39,12 +39,12 @@ public class FollowService {
      */
     public void follow(UUID followerId, UUID followedId) {
         User follower = userRepository.findById(followerId)
-                .orElseThrow(() -> new FollowerNotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new FollowerNotFoundException("User not found"));
         User followed = userRepository.findById(followedId)
-                .orElseThrow(() -> new FollowerNotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new FollowerNotFoundException("User not found"));
 
         if (followRepository.existsByFollowerAndFollowed(follower, followed)) {
-            throw new IllegalStateException("Vous suivez déjà cet utilisateur");
+            throw new IllegalStateException("You are already following this user");
         }
 
         followRepository.save(Follow.builder()
@@ -62,9 +62,9 @@ public class FollowService {
      */
     public void unfollow(UUID followerId, UUID followedId) {
         User follower = userRepository.findById(followerId)
-                .orElseThrow(() -> new FollowerNotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new FollowerNotFoundException("User not found"));
         User followed = userRepository.findById(followedId)
-                .orElseThrow(() -> new FollowedNotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new FollowedNotFoundException("User not found"));
         followRepository.deleteByFollowerAndFollowed(follower, followed);
     }
 
@@ -77,7 +77,7 @@ public class FollowService {
      */
     public List<User> getFollowing(UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         return followRepository.findByFollower(user)
                 .stream()
                 .map(Follow::getFollowed)
@@ -93,7 +93,7 @@ public class FollowService {
      */
     public List<User> getFollowers(UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         return followRepository.findByFollowed(user)
                 .stream()
                 .map(Follow::getFollower)

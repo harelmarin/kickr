@@ -63,44 +63,48 @@ public class MatchService {
      * @throws Exception en cas d'erreur lors de la requête HTTP ou du parsing JSON
      */
     private List<MatchDto> fetchNextMatches() throws Exception {
-        String url = "https://v3.football.api-sports.io/fixtures?league=39&season=2025";
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("x-apisports-key", footballApiKey);
-        headers.set("Accept", "application/json");
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<String> responseRaw = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(responseRaw.getBody());
-        JsonNode responseArray = root.get("response");
-        if (responseArray == null || !responseArray.isArray()) {
-            return List.of();
-        }
-
+        int season = 2025;
+        int[] leagueIds = {39, 140, 135, 78, 61};
         List<MatchDto> matches = new ArrayList<>();
-        for (JsonNode fixtureNode : responseArray) {
-            JsonNode teams = fixtureNode.get("teams");
-            JsonNode fixture = fixtureNode.get("fixture");
-            JsonNode league = fixtureNode.get("league");
-            JsonNode goals = fixtureNode.get("goals");
 
-            MatchDto match = new MatchDto(
-                    teams.get("home").get("name").asText(),
-                    teams.get("home").get("logo").asText(),
-                    teams.get("away").get("name").asText(),
-                    teams.get("away").get("logo").asText(),
-                    DateTimeConverter.toLocalTimeFrance(fixture.get("date").asText()),
-                    league.get("name").asText(),
-                    fixture.get("venue") != null && !fixture.get("venue").isNull() ? fixture.get("venue").get("name").asText() : null,
-                    goals.get("home").isNull() ? null : goals.get("home").asInt(),
-                    goals.get("away").isNull() ? null : goals.get("away").asInt()
-            );
-            matches.add(match);
+        for (int leagueId : leagueIds) {
+            String url = "https://v3.football.api-sports.io/fixtures?league=" + leagueId + "&season=" + season;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("x-apisports-key", footballApiKey);
+            headers.set("Accept", "application/json");
+
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> responseRaw = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(responseRaw.getBody());
+            JsonNode responseArray = root.get("response");
+            if (responseArray == null || !responseArray.isArray()) continue;
+
+            for (JsonNode fixtureNode : responseArray) {
+                JsonNode teams = fixtureNode.get("teams");
+                JsonNode fixture = fixtureNode.get("fixture");
+                JsonNode league = fixtureNode.get("league");
+                JsonNode goals = fixtureNode.get("goals");
+
+                MatchDto match = new MatchDto(
+                        teams.get("home").get("name").asText(),
+                        teams.get("home").get("logo").asText(),
+                        teams.get("away").get("name").asText(),
+                        teams.get("away").get("logo").asText(),
+                        DateTimeConverter.toLocalTimeFrance(fixture.get("date").asText()),
+                        league.get("name").asText(),
+                        fixture.get("venue") != null && !fixture.get("venue").isNull() ? fixture.get("venue").get("name").asText() : null,
+                        goals.get("home").isNull() ? null : goals.get("home").asInt(),
+                        goals.get("away").isNull() ? null : goals.get("away").asInt()
+                );
+                matches.add(match);
+            }
         }
         return matches;
     }
+
 
     /**
      * Récupère les prochains matchs et les sauvegarde dans la base de données.

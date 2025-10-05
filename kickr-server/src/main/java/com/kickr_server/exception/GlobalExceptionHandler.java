@@ -13,6 +13,7 @@ import com.kickr_server.exception.user.UserNotFoundException;
 import com.kickr_server.exception.userMatch.IllegalCommentLengthException;
 import com.kickr_server.exception.userMatch.IllegalMatchNoteException;
 import com.kickr_server.exception.userMatch.UserMatchNotFoundException;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -143,6 +144,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalCommentLengthException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleIllegalCommentLength(IllegalCommentLengthException ex) {
         return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+
+    // ---------------------- ERROR 429 RATE LIMIT----------------------
+
+    @ExceptionHandler(RequestNotPermitted.class)
+    public ResponseEntity<String> handleRateLimit(RequestNotPermitted ex) {
+        return ResponseEntity
+                .status(HttpStatus.TOO_MANY_REQUESTS)
+                .body("Too many requests, please try again later");
     }
 
     // ---------------------- VALIDATION EXCEPTIONS ----------------------
