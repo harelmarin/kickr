@@ -1,11 +1,13 @@
 package com.kickr_server.dto.Match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kickr_server.match.Match;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * DTO pour mapper un match provenant d'une API externe.
@@ -41,4 +43,20 @@ public class MatchDto {
 
     @JsonProperty("away_score")
     private Integer awayScore;
+
+    public static MatchDto fromEntity(Match match) {
+        if (match == null) return null;
+        return new MatchDto(
+                match.getHomeTeam().getName(),
+                match.getHomeTeam().getLogoUrl(),
+                match.getAwayTeam().getName(),
+                match.getAwayTeam().getLogoUrl(),
+                match.getMatchDate(),
+                match.getCompetition(),
+                match.getLocation(),
+                match.getHomeScore(),
+                match.getAwayScore()
+        );
+    }
 }
+

@@ -8,12 +8,17 @@ import com.kickr_server.utils.DateTimeConverter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,5 +161,15 @@ public class MatchService {
             }
             matchRepository.save(match);
         }
+    }
+
+    public List<Match> getAll() {
+        return matchRepository.findAll();
+    }
+
+    public Page<MatchDto> getNextMatchesByDate(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return matchRepository.findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime.now(), pageable)
+                .map(MatchDto::fromEntity);
     }
 }
