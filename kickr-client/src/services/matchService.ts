@@ -1,15 +1,28 @@
-import { Match } from "@/types/Match";
+import axios from 'axios';
+import { Match } from '@/types/Match';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
-
-export async function getMatches(): Promise<Match[]> {
-  const res = await fetch(`${API_URL}/matches`, {
-    cache: "no-store",
+export const fetchNextMatches = async (page = 0, limit = 10): Promise<Match[]> => {
+  const response = await axios.get('http://localhost:8080/api/matchs/next', {
+    params: { page, limit },
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch matches");
+  const content = response.data?.content;
+
+  if (!content || !Array.isArray(content)) {
+    console.error('API ne renvoie pas de content valide', response.data);
+    return [];
   }
 
-  return res.json();
-}
+  return content.map((m: any) => ({
+    id: m.id ?? `${m.home_team}-${m.away_team}-${m.match_date}`,
+    homeTeam: m.home_team,
+    awayTeam: m.away_team,
+    homeLogo: m.home_logo,
+    awayLogo: m.away_logo,
+    matchDate: m.match_date,
+    competition: m.competition,
+    location: m.location,
+    homeScore: m.home_score,
+    awayScore: m.away_score,
+  }));
+};

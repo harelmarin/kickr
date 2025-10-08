@@ -30,9 +30,7 @@ public class MatchController {
      * @return page de MatchDto (10 par page)
      */
     @GetMapping("/next")
-    public Page<MatchDto> getNextMatches(
-            @RequestParam(defaultValue = "0") int page
-    ) {
+    public Page<MatchDto> getNextMatches(@RequestParam(defaultValue = "0") int page) {
         return matchService.getNextMatchesByDate(page);
     }
 
