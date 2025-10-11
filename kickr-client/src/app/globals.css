@@ -3,28 +3,38 @@
 @tailwind components;
 @tailwind utilities;
 
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: 'Bebas';
+  src: url('/fonts/BebasNeue-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+.header-title{
+  font-family: 'Bebas', sans-serif;
 }
+
+Ò
+
+
+body {
+  scroll-behavior: smooth;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary: #0F0D13;
+    --secondary : #B560FF;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
 }
