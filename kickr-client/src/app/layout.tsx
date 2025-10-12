@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="w-[70%]" >
         <ReactQueryProvider>
           <Header />
-          <main className="pt-20">{children}</main>
+          <main className="pt-8">{children}</main>
         </ReactQueryProvider>
         </div>
       </body>

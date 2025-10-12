@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Match } from '@/types/Match';
 
-export const fetchNextMatches = async (page = 0, limit = 10): Promise<Match[]> => {
+export const fetchNextMatches = async (page = 0, limit = 9): Promise<Match[]> => {
   const response = await axios.get('http://localhost:8080/api/matchs/next', {
     params: { page, limit },
   });

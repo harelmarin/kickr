@@ -1,23 +1,45 @@
 'use client';
-
+import { useState } from 'react';
 import { useNextMatchs } from '@/hooks/useNextMatchs';
-import { NextMatchsCard } from './nextMatchsCard';
+import { NextMatchesCardHomePage } from './nextMatchsCard';
 
-export function NextMatchesClient() {
-  const { data: matches, isLoading, isError } = useNextMatchs();
+export function NextMatchesHomePage() {
+  const [currentPage, setCurrentPage] = useState(0);
+  const matchesPerPage = 9;
 
-   console.log('Matches:', matches); 
+  const { data: matches, isLoading } = useNextMatchs(currentPage, matchesPerPage);
 
-  if (isLoading) return <p>Chargement...</p>;
-  if (isError) return <p>Erreur !</p>;
+  if (isLoading) return <p>Loading...</p>;
+
+  
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {matches && matches.length > 0 ? (
-        matches.map((match) => <NextMatchsCard key={match.id} match={match} />)
-      ) : (
-        <p>Aucun match prévu</p>
-      )}
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 transition-opacity duration-300 ease-in-out opacity-100">
+      {matches?.map((match) => (
+        <NextMatchesCardHomePage key={match.id} match={match} />
+      ))}
+  </div>
+
+
+      <div className="flex justify-center gap-4 mt-4">
+        <button
+          type="button"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+          disabled={currentPage === 0}
+          className="px-4 py-2 rounded-lg border border-gray-500"
+        >
+          Previous
+        </button>
+        <span className="text-gray-300 flex items-center">Page {currentPage + 1}</span>
+        <button
+          type="button"
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          className="px-4 py-2 rounded-lg border border-gray-500"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

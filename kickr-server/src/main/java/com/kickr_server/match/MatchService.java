@@ -168,7 +168,7 @@ public class MatchService {
     }
 
     public Page<MatchDto> getNextMatchesByDate(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 9);
         return matchRepository.findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime.now(), pageable)
                 .map(MatchDto::fromEntity);
     }

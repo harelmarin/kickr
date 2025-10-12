@@ -1,19 +1,26 @@
 'use client';
 
+import Link from "next/link"; 
+
 export const Header = () => {
   return (
-    <header className="bg-primary text-white shadow-sm h-[5%] flex items-center justify-between border-b border-gray-700 ">
+    <header className="bg-primary text-white shadow-sm h-[5%] flex items-center justify-between border-b border-gray-700 mt-6">
       <div>
-        <h1 className="text-4xl font-bold header-title"> Kickr</h1>
+        <Link href="/" className="text-4xl font-bold header-title cursor-pointer">
+          Kickr
+        </Link>
       </div>
-      <div className="flex gap-4">
-        <nav className="flex gap-4 font-small">
-          <h2 className="hover:text-gray-300 cursor-pointer transition-colors">Teams</h2>
-          <h2 className="hover:text-gray-300 cursor-pointer transition-colors">Matches</h2>
-          <h2 className="hover:text-gray-300 cursor-pointer transition-colors">Members</h2>
+
+      <div className="flex gap-4 regular items-center">
+        <nav className="flex gap-4 font-small mr-12">
+          <h2 className="hover-secondary cursor-pointer transition-colors">Teams</h2>
+          <h2 className="hover-secondary cursor-pointer transition-colors">Matches</h2>
+          <h2 className="hover-secondary cursor-pointer transition-colors">Members</h2>
         </nav>
-         <button className="px-2 shadow-2xl text-white header-title transition bg-secondary"> Login </button>
-        <button> Register </button>
+         <button className="hover-secondary cursor-pointer bold transition-colors">
+          Login
+        </button>
+         <button className=" px-4 py-1 rounded-md text-white header-title transition bg-secondary opacity-100 hover:opacity-90 cursor-pointer text-lg">Register</button>
       </div>
     </header>
   );

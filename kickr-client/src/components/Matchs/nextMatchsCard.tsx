@@ -1,28 +1,29 @@
 import { Match } from '@/types/Match';
 
-interface NextMatchsCardProps {
+interface NextMatchsMiniCardProps {
   match: Match;
 }
 
-export const NextMatchsCard = ({ match }: NextMatchsCardProps) => {
+export const NextMatchesCardHomePage = ({ match }: NextMatchsMiniCardProps) => {
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row items-center gap-4 hover:shadow-xl transition-shadow">
-      <div className="flex items-center gap-4">
-        <img src={match.homeLogo} alt={match.homeTeam} className="w-16 h-16 object-contain" />
-        <span className="font-semibold text-lg">{match.homeTeam}</span>
+    <div className="bg-white shadow rounded-lg p-2 flex flex-col sm:flex-row items-center gap-2 hover:shadow-md transition-shadow text-sm">
+      
+      {/* Home team */}
+      <div className="flex items-center gap-2">
+        <img src={match.homeLogo} alt={match.homeTeam} className="w-10 h-10 object-contain" />
       </div>
 
-      <span className="text-xl font-bold mx-2">vs</span>
+      <span className="font-bold mx-1 text-sm">vs</span>
 
-      <div className="flex items-center gap-4">
-        <img src={match.awayLogo} alt={match.awayTeam} className="w-16 h-16 object-contain" />
-        <span className="font-semibold text-lg">{match.awayTeam}</span>
+      {/* Away team */}
+      <div className="flex items-center gap-2">
+        <img src={match.awayLogo} alt={match.awayTeam} className="w-10 h-10 object-contain" />
       </div>
 
-      <div className="mt-2 md:mt-0 md:ml-auto text-gray-500 text-sm text-center">
-        <p>{new Date(match.matchDate).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}</p>
+      {/* Match info */}
+      <div className="mt-1 sm:mt-0 sm:ml-auto text-gray-500 text-xs text-center">
+        <p>{new Date(match.matchDate).toLocaleString('fr-EU', { dateStyle: 'short', timeStyle: 'short' })}</p>
         <p>{match.competition}</p>
-        {match.location && <p>{match.location}</p>}
       </div>
     </div>
   );

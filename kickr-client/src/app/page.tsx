@@ -1,22 +1,45 @@
-import { NextMatchesClient } from '@/components/Matchs/nextMatchsClient';
+import { Footer } from '@/components/Layout/footer';
+import { NextMatchesHomePage} from '@/components/Matchs/nextMatchsClient';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
-    <>
-      <section className="relative h-[60vh] flex items-center justify-center text-center bg-gradient-to-br from-blue-700 via-blue-500 to-blue-400 text-white">
-        <div className="max-w-2xl px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Suivez vos matchs préférés ⚽</h1>
-          <p className="text-lg md:text-xl opacity-90">
-            Découvrez les prochains matchs, suivez vos clubs et partagez vos avis, comme sur Letterboxd mais pour le foot.
+    <main className="flex flex-col min-h-screen bg-[#0F0D13] text-white">
+      <section className="relative flex items-center justify-center h-[80vh] overflow-hidden">
+        <Image
+          src="/img/hero.jpg"
+          alt="Football stadium with supporters"
+          fill
+          className="object-cover object-center brightness-100 rounded-md"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-[#0F0D13]/90" />
+        {/* Text */}
+        <div className="relative z-10 text-center px-6 max-w-3xl">
+          <h1 className="text-5xl md:text-7xl font-bold header-title mb-6">
+            Rate Your Favorite Matches
+          </h1>
+          <p className="text-lg md:text-xl regular opacity-90 mb-8">
+            Discover upcoming games, follow your favorite clubs, 
+            and share your opinions with your friends
           </p>
+          <div className="flex justify-center gap-4">
+            <button className="px-6 py-3 text-xl rounded-lg bg-secondary text-white header-title hover:opacity-90 transition cursor-pointer">
+              Get Started
+            </button>
+            <button className="px-6 py-3 text-xl  rounded-lg border border-white/50 text-white header-title hover:bg-white/10 transition cursor-pointer">
+              Learn More
+            </button>
+          </div>
         </div>
-        <div className="absolute inset-0 bg-black/30" />
       </section>
-
-      <section className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold text-center mb-8">Prochains Matchs</h2>
-        <NextMatchesClient />
-      </section>
-    </>
+      <section className="max-w-7xl mt-16 mx-auto px-6">
+      <h2 className="text-[70px] font-bold header-title border-b-2 border-gray-700 w-fit mx-auto mb-12 leading-tight">
+        Upcoming Matches
+      </h2>
+      <NextMatchesHomePage />
+    </section>
+     <Footer/>
+    </main>
   );
 }
