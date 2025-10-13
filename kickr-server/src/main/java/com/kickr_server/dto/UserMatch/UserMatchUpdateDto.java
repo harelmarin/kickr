@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserMatchUpdateDto {
-    int note;
+    double note;
     String comment;
 
 

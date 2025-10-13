@@ -18,7 +18,7 @@ public class UserMatchFullDto {
     private UUID id;
     private UserDto user;
     private MatchDto match;
-    private int note;
+    private double note;
     private String comment;
     private LocalDateTime watchedAt;
 

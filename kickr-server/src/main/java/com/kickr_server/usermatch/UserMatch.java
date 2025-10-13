@@ -59,10 +59,12 @@ public class UserMatch {
     /**
      * Note donnée au match (entre 0 et 5).
      */
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "double precision")
     @Min(0)
     @Max(5)
-    private int note;
+    private double note;
+
+
 
     /**
      * Commentaire facultatif laissé par l’utilisateur (limité à 1000 caractères).
@@ -86,5 +88,13 @@ public class UserMatch {
             watchedAt = LocalDateTime.now();
         }
     }
+
+    public void setNote(double note) {
+        if (note < 0 || note > 5 || (note * 2) % 1 != 0) {
+            throw new IllegalArgumentException("Note must be between 0 and 5");
+        }
+        this.note = note;
+    }
+
 }
 

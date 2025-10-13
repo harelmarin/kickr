@@ -23,7 +23,7 @@ public class UserMatchDto {
     public UUID id;
     public UUID userId;
     public UUID matchId;
-    public  int note;
+    public  double note;
     public  String comment;
     public  LocalDateTime watchedAt;
 
