@@ -1,7 +1,4 @@
-@import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @font-face {
   font-family: 'Bebas';
@@ -19,7 +16,6 @@
   font-display: swap;
 }
 
-
 @font-face {
   font-family: 'Bold';
   src: url('/fonts/Lato/Lato-Bold.ttf') format('truetype');
@@ -28,8 +24,7 @@
   font-display: swap;
 }
 
-
-.header-title{
+.header-title {
   font-family: 'Bebas';
 }
 
@@ -37,20 +32,18 @@
   font-family: 'Regular';
 }
 
-.bold{
+.bold {
   font-family: 'Bold';
 }
-
 
 body {
   scroll-behavior: smooth;
 }
 
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #0F0D13;
-    --secondary : #B560FF;
+    --primary: #0f0d13;
+    --secondary: #b560ff;
   }
 }
 
@@ -59,11 +52,13 @@ body {
 }
 
 .bg-secondary {
-    background-color: var(--secondary);
+  background-color: var(--secondary);
 }
 
 .hover-secondary:hover {
   color: var(--secondary);
 }
 
-
+.border-secondary {
+  border: 1px solid #b560ff;
+}

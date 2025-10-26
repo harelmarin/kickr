@@ -109,7 +109,7 @@ public class UserMatchService {
                 .comment(dto.comment)
                 .build();
 
-        userMatch.setNote(dto.note); // validation des demi-notes
+        userMatch.setNote(dto.note);
 
         return userMatchRepository.save(userMatch);
     }
@@ -135,7 +135,7 @@ public class UserMatchService {
             throw new IllegalCommentLengthException(comment.length() + " > 1000 characters");
         }
 
-        existing.setNote(note); // validation demi-notes
+        existing.setNote(note);
         existing.setComment(comment);
 
         return userMatchRepository.save(existing);

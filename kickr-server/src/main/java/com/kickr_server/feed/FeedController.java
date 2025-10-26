@@ -15,32 +15,32 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FeedController {
 
-    private final UserMatchService userMatchService;
     private final FeedService feedService;
 
-    @GetMapping("/{userId}")
-    @RateLimiter(name = "feedRateLimiter")
-    public List<UserMatchFullDto> getFeed(@PathVariable UUID userId) {
-        List<UserMatch> matches = userMatchService.getMatchesFromFollowedUsers(userId);
-        return matches.stream()
-                .map(UserMatchFullDto::fromEntity)
-                .toList();
-    }
-
+    /**
+     * Récupère le feed paginé d'un utilisateur (matches des suivis)
+     */
     @GetMapping("/preview/{userId}")
     @RateLimiter(name = "feedRateLimiter")
     public List<UserMatchFullDto> getPreviewFeed(
             @PathVariable UUID userId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        List<UserMatchFullDto> feed = feedService.getFeedFull(userId);
 
-        List<UserMatch> latestMatches = feedService.getLatestMatchesFromFollowedUsers(userId);
-        int start = Math.min(page * size, latestMatches.size());
-        int end = Math.min(start + size, latestMatches.size());
+        int start = Math.min(page * size, feed.size());
+        int end = Math.min(start + size, feed.size());
 
-        return latestMatches.subList(start, end).stream()
-                .map(UserMatchFullDto::fromEntity)
-                .toList();
+        return feed.subList(start, end);
+    }
+
+    /**
+     * Récupère le dernier match noté par chaque utilisateur suivi
+     */
+    @GetMapping("/latest/{userId}")
+    @RateLimiter(name = "feedRateLimiter")
+    public List<UserMatchFullDto> getLatestFeed(@PathVariable UUID userId) {
+        return feedService.getLatestFeedFull(userId);
     }
 }
-

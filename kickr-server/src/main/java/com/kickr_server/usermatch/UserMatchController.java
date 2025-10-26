@@ -1,6 +1,7 @@
 package com.kickr_server.usermatch;
 
 import com.kickr_server.dto.UserMatch.UserMatchDto;
+import com.kickr_server.dto.UserMatch.UserMatchFullDto;
 import com.kickr_server.dto.UserMatch.UserMatchUpdateDto;
 import com.kickr_server.dto.generic.ApiResponseDto;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -18,55 +19,58 @@ public class UserMatchController {
     private final UserMatchService userMatchService;
 
     /**
-     * Récupère toutes les évaluations de matchs.
+     *  Récupère toutes les évaluations (avec user + match complets)
      */
     @RateLimiter(name = "userMatchRateLimiter")
     @GetMapping
-    public List<UserMatchDto> getAllUserMatch() {
+    public List<UserMatchFullDto> getAllUserMatch() {
         return userMatchService.findAll().stream()
-                .map(UserMatchDto::fromEntity)
+                .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
 
     /**
-     * Récupère toutes les évaluations faites par un utilisateur donné.
+     * Récupère toutes les évaluations faites par un utilisateur donné (avec infos complètes)
      */
     @RateLimiter(name = "userMatchRateLimiter")
     @GetMapping("/user/{id}")
-    public List<UserMatchDto> getUserMatchByUser(@PathVariable UUID id) {
+    public List<UserMatchFullDto> getUserMatchByUser(@PathVariable UUID id) {
         return userMatchService.getByUserId(id).stream()
-                .map(UserMatchDto::fromEntity)
+                .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
 
     /**
-     * Récupère toutes les évaluations d’un match donné.
+     * Récupère toutes les évaluations d’un match donné (avec infos complètes)
      */
     @RateLimiter(name = "userMatchRateLimiter")
     @GetMapping("/match/{id}")
-    public List<UserMatchDto> getUserMatchByMatch(@PathVariable UUID id) {
+    public List<UserMatchFullDto> getUserMatchByMatch(@PathVariable UUID id) {
         return userMatchService.getByMatchId(id).stream()
-                .map(UserMatchDto::fromEntity)
+                .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
 
     /**
-     * Crée une nouvelle évaluation pour un match par un utilisateur.
+     * Crée une nouvelle évaluation (utilise DTO simplifié car on envoie que des IDs)
      */
     @RateLimiter(name = "userMatchRateLimiter")
     @PostMapping
-    public ApiResponseDto<UserMatchDto> saveUserMatch(@RequestBody UserMatchDto dto) {
-        UserMatchDto userMatchDto = UserMatchDto.fromEntity(userMatchService.save(dto));
-        return ApiResponseDto.success("Evaluation créée", userMatchDto);
+    public ApiResponseDto<UserMatchFullDto> saveUserMatch(@RequestBody UserMatchDto dto) {
+        var entity = userMatchService.save(dto);
+        return ApiResponseDto.success("Évaluation créée", UserMatchFullDto.fromEntity(entity));
     }
 
     /**
-     * Met à jour une évaluation existante.
+     *  Met à jour une évaluation existante
      */
     @RateLimiter(name = "userMatchRateLimiter")
     @PutMapping("/{id}")
-    public ApiResponseDto<UserMatchDto>  updateUserMatch(@PathVariable UUID id, @RequestBody UserMatchUpdateDto dto) {
-        UserMatchDto userMatchDto = UserMatchDto.fromEntity(userMatchService.update(id, dto.getNote(), dto.getComment()));
-        return ApiResponseDto.success("Evaluation modifiée", userMatchDto);
+    public ApiResponseDto<UserMatchFullDto> updateUserMatch(
+            @PathVariable UUID id,
+            @RequestBody UserMatchUpdateDto dto
+    ) {
+        var entity = userMatchService.update(id, dto.getNote(), dto.getComment());
+        return ApiResponseDto.success("Évaluation mise à jour", UserMatchFullDto.fromEntity(entity));
     }
 }

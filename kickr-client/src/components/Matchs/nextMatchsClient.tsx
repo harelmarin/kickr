@@ -1,27 +1,23 @@
-'use client';
 import { useState } from 'react';
-import { useNextMatchs } from '@/hooks/useNextMatchs';
+import { useNextMatchs } from '../../hooks/useNextMatchs';
 import { NextMatchesCardHomePage } from './nextMatchsCard';
 
 export function NextMatchesHomePage() {
   const [currentPage, setCurrentPage] = useState(0);
   const matchesPerPage = 9;
 
-  const { data: matches, isLoading } = useNextMatchs(currentPage, matchesPerPage);
-
-  if (isLoading) return <p>Loading...</p>;
-
-  
+  const { data: matches = [], isLoading } = useNextMatchs(
+    currentPage,
+    matchesPerPage,
+  );
 
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 transition-opacity duration-300 ease-in-out opacity-100">
-      {matches?.map((match) => (
-        <NextMatchesCardHomePage key={match.id} match={match} />
-      ))}
-  </div>
-
-
+        {matches.map((match) => (
+          <NextMatchesCardHomePage key={match.id} match={match} />
+        ))}
+      </div>
       <div className="flex justify-center gap-4 mt-4">
         <button
           type="button"
@@ -31,7 +27,9 @@ export function NextMatchesHomePage() {
         >
           Previous
         </button>
-        <span className="text-gray-300 flex items-center">Page {currentPage + 1}</span>
+        <span className="text-gray-300 flex items-center">
+          Page {currentPage + 1}
+        </span>
         <button
           type="button"
           onClick={() => setCurrentPage((prev) => prev + 1)}
@@ -40,6 +38,7 @@ export function NextMatchesHomePage() {
           Next
         </button>
       </div>
+      {isLoading && <p>Loading more matches...</p>}{' '}
     </div>
   );
 }

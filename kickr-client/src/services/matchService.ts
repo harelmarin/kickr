@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Match } from '@/types/Match';
+import type { Match } from '../types/Match';
+import type { MatchApiResponse } from '../types/MatchApiResponse';
 
 export const fetchNextMatches = async (page = 0, limit = 9): Promise<Match[]> => {
   const response = await axios.get('http://localhost:8080/api/matchs/next', {
@@ -13,7 +14,7 @@ export const fetchNextMatches = async (page = 0, limit = 9): Promise<Match[]> =>
     return [];
   }
 
-  return content.map((m: any) => ({
+  return content.map((m: MatchApiResponse) => ({
     id: m.id ?? `${m.home_team}-${m.away_team}-${m.match_date}`,
     homeTeam: m.home_team,
     awayTeam: m.away_team,

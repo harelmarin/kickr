@@ -53,3 +53,77 @@
 
 
 /.idea
+
+
+# ----------------------------
+# Node / React / Vite inside kickr-client
+# ----------------------------
+
+# Node modules
+/kickr-client/node_modules/
+
+# Build output
+/kickr-client/dist/
+# Si tu utilises vite preview, parfois /kickr-client/.vite/
+
+# Logs
+/kickr-client/*.log
+/kickr-client/npm-debug.log*
+/kickr-client/yarn-debug.log*
+/kickr-client/yarn-error.log*
+
+# Temporary files
+/kickr-client/*.tmp
+/kickr-client/*.swp
+/kickr-client/*~
+
+# OS files
+/kickr-client/.DS_Store
+/kickr-client/Thumbs.db
+
+# IDEs
+/kickr-client/.idea/
+/kickr-client/*.iml
+/kickr-client/.classpath
+/kickr-client/.project
+/kickr-client/.settings/
+/kickr-client/*.ipr
+
+# VS Code
+/kickr-client/.vscode/
+
+# Environment variables
+/kickr-client/.env
+/kickr-client/.env.local
+/kickr-client/.env.*.local
+
+# Yarn / pnpm / npm
+/kickr-client/.yarn/*
+/kickr-client/.pnp.*
+/kickr-client/.npm/
+
+# Cache
+/kickr-client/.cache/
+/kickr-client/.turbo/
+/kickr-client/.parcel-cache/
+/kickr-client/.vite/
+
+# Tailwind / PostCSS / other tool caches
+/kickr-client/.postcss-cache/
+/kickr-client/.tailwindcache/
+
+# Docker
+/kickr-client/docker-compose.override.yml
+/kickr-client/*.env
+
+# Storybook
+/kickr-client/storybook-static/
+
+# Tests coverage
+/kickr-client/coverage/
+
+# Build artifacts
+/kickr-client/build/
+
+# Misc
+/kickr-client/dist/

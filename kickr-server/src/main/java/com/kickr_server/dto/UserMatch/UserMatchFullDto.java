@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor // nécessaire pour Jackson
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserMatchFullDto {
 
