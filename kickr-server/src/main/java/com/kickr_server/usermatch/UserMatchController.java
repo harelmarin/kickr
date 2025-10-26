@@ -5,6 +5,10 @@ import com.kickr_server.dto.UserMatch.UserMatchFullDto;
 import com.kickr_server.dto.UserMatch.UserMatchUpdateDto;
 import com.kickr_server.dto.generic.ApiResponseDto;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +22,10 @@ public class UserMatchController {
 
     private final UserMatchService userMatchService;
 
-    /**
-     *  Récupère toutes les évaluations (avec user + match complets)
-     */
+    @Operation(summary = "Récupère toutes les évaluations avec informations complètes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste de toutes les évaluations")
+    })
     @RateLimiter(name = "userMatchRateLimiter")
     @GetMapping
     public List<UserMatchFullDto> getAllUserMatch() {
@@ -29,45 +34,65 @@ public class UserMatchController {
                 .toList();
     }
 
-    /**
-     * Récupère toutes les évaluations faites par un utilisateur donné (avec infos complètes)
-     */
+    @Operation(summary = "Récupère toutes les évaluations faites par un utilisateur donné")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste des évaluations de l'utilisateur"),
+            @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+    })
     @RateLimiter(name = "userMatchRateLimiter")
     @GetMapping("/user/{id}")
-    public List<UserMatchFullDto> getUserMatchByUser(@PathVariable UUID id) {
+    public List<UserMatchFullDto> getUserMatchByUser(
+            @Parameter(description = "UUID de l'utilisateur", required = true)
+            @PathVariable UUID id
+    ) {
         return userMatchService.getByUserId(id).stream()
                 .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
 
-    /**
-     * Récupère toutes les évaluations d’un match donné (avec infos complètes)
-     */
+    @Operation(summary = "Récupère toutes les évaluations d’un match donné")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste des évaluations du match"),
+            @ApiResponse(responseCode = "404", description = "Match non trouvé")
+    })
     @RateLimiter(name = "userMatchRateLimiter")
     @GetMapping("/match/{id}")
-    public List<UserMatchFullDto> getUserMatchByMatch(@PathVariable UUID id) {
+    public List<UserMatchFullDto> getUserMatchByMatch(
+            @Parameter(description = "UUID du match", required = true)
+            @PathVariable UUID id
+    ) {
         return userMatchService.getByMatchId(id).stream()
                 .map(UserMatchFullDto::fromEntity)
                 .toList();
     }
 
-    /**
-     * Crée une nouvelle évaluation (utilise DTO simplifié car on envoie que des IDs)
-     */
+    @Operation(summary = "Crée une nouvelle évaluation")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Évaluation créée avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
+    })
     @RateLimiter(name = "userMatchRateLimiter")
     @PostMapping
-    public ApiResponseDto<UserMatchFullDto> saveUserMatch(@RequestBody UserMatchDto dto) {
+    public ApiResponseDto<UserMatchFullDto> saveUserMatch(
+            @Parameter(description = "DTO de l'évaluation à créer", required = true)
+            @RequestBody UserMatchDto dto
+    ) {
         var entity = userMatchService.save(dto);
         return ApiResponseDto.success("Évaluation créée", UserMatchFullDto.fromEntity(entity));
     }
 
-    /**
-     *  Met à jour une évaluation existante
-     */
+    @Operation(summary = "Met à jour une évaluation existante")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Évaluation mise à jour"),
+            @ApiResponse(responseCode = "404", description = "Évaluation non trouvée"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
+    })
     @RateLimiter(name = "userMatchRateLimiter")
     @PutMapping("/{id}")
     public ApiResponseDto<UserMatchFullDto> updateUserMatch(
+            @Parameter(description = "UUID de l'évaluation à mettre à jour", required = true)
             @PathVariable UUID id,
+            @Parameter(description = "DTO contenant la note et le commentaire mis à jour", required = true)
             @RequestBody UserMatchUpdateDto dto
     ) {
         var entity = userMatchService.update(id, dto.getNote(), dto.getComment());

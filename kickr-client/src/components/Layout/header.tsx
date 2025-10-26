@@ -24,7 +24,7 @@ export const Header = () => {
         <button className="hover-secondary cursor-pointer bold transition-colors">
           Login
         </button>
-        <button className=" px-4 py-1 rounded-md text-white header-title transition bg-secondary opacity-100 hover:opacity-90 cursor-pointer text-lg">
+        <button className=" px-4 py-0.5 rounded-md text-white header-title transition bg-secondary opacity-100 hover:opacity-90 cursor-pointer text-lg">
           Register
         </button>
       </div>

@@ -6,7 +6,7 @@ interface NextMatchsMiniCardProps {
 
 export const NextMatchesCardHomePage = ({ match }: NextMatchsMiniCardProps) => {
   return (
-    <div className="bg-white shadow rounded-lg p-2 flex flex-col sm:flex-row items-center gap-2 hover:shadow-md transition-shadow text-sm bg-primary border-secondary">
+    <div className="bg-white shadow rounded-lg p-2 flex flex-col sm:flex-row items-center gap-2 hover:shadow-md transition-shadow text-sm bg-primary border-secondary-skinny">
       <div className="flex items-center gap-2">
         <img
           src={match.homeLogo}

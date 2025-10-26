@@ -62,3 +62,7 @@ body {
 .border-secondary {
   border: 1px solid #b560ff;
 }
+
+.border-secondary-skinny {
+  border: 0.33px solid #b560ff;
+}

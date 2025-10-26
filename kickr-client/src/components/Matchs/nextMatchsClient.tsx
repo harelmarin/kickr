@@ -23,17 +23,23 @@ export function NextMatchesHomePage() {
           type="button"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
-          className="px-4 py-2 rounded-lg border border-gray-500"
+          className={`px-4 py-2 rounded-lg border border-gray-500 transition border-secondary
+    ${
+      currentPage === 0
+        ? 'cursor-not-allowed opacity-50'
+        : 'cursor-pointer hover:opacity-100'
+    }`}
         >
           Previous
         </button>
+
         <span className="text-gray-300 flex items-center">
           Page {currentPage + 1}
         </span>
         <button
           type="button"
           onClick={() => setCurrentPage((prev) => prev + 1)}
-          className="px-4 py-2 rounded-lg border border-gray-500"
+          className="px-4 py-2 rounded-lg border-secondary cursor-pointer opacity-90 hover:opacity-100"
         >
           Next
         </button>
