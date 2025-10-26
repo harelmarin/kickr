@@ -32,7 +32,8 @@ public class UserMatchFullDto {
                 entity.getMatch().getCompetition(),
                 entity.getMatch().getLocation(),
                 entity.getMatch().getHomeScore(),
-                entity.getMatch().getAwayScore()
+                entity.getMatch().getAwayScore(),
+                entity.getMatch().getExternalFixtureId()
         );
 
         return new UserMatchFullDto(

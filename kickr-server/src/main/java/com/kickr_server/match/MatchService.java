@@ -21,18 +21,10 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service pour récupérer et sauvegarder les informations des matchs de football depuis l'API Football.
- * <p>
- * Ce service effectue les opérations suivantes :
- * <ul>
- *     <li>Récupération des prochains matchs via l'API Football</li>
- *     <li>Conversion des dates/horaires UTC en heure locale (France)</li>
- *     <li>Gestion et création des équipes si elles n'existent pas encore dans la base</li>
- *     <li>Ajout ou mise à jour des scores pour les matchs terminés</li>
- *     <li>Sauvegarde des matchs dans la base de données</li>
- * </ul>
  */
 @Service
 public class MatchService {
@@ -41,35 +33,24 @@ public class MatchService {
     private final String footballApiKey;
     private final MatchRepository matchRepository;
     private final TeamRepository teamRepository;
+    private final ObjectMapper objectMapper;
 
-    /**
-     * Constructeur du service MatchService.
-     *
-     * @param restTemplate     RestTemplate pour effectuer les requêtes HTTP vers l'API
-     * @param appConfig        Configuration de l'application contenant la clé API Football
-     * @param matchRepository  Repository pour persister les matchs
-     * @param teamRepository   Repository pour persister et récupérer les équipes
-     */
     public MatchService(RestTemplate restTemplate, AppConfig appConfig, MatchRepository matchRepository, TeamRepository teamRepository) {
         this.restTemplate = restTemplate;
         this.footballApiKey = appConfig.getFootballApiKey();
         this.matchRepository = matchRepository;
         this.teamRepository = teamRepository;
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
+
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     /**
-     * Récupère la liste des prochains matchs depuis l'API Football et mappe chaque fixture en {@link MatchDto}.
-     * <p>
-     * Les horaires sont convertis en heure locale de France via {@link DateTimeConverter}.
-     *
-     * @return Liste de {@link MatchDto} représentant les matchs à venir ou en cours
-     * @throws Exception en cas d'erreur lors de la requête HTTP ou du parsing JSON
+     * Récupère la liste des prochains matchs depuis l'API Football.
      */
     private List<MatchDto> fetchNextMatches() throws Exception {
         int season = 2025;
-        int[] leagueIds = {39, 140, 135, 78, 61};
+        int[] leagueIds = {39, 140, 135, 78, 61}; // Premier League, La Liga, Serie A, Bundesliga, Ligue 1
         List<MatchDto> matches = new ArrayList<>();
 
         for (int leagueId : leagueIds) {
@@ -82,8 +63,7 @@ public class MatchService {
             HttpEntity<String> entity = new HttpEntity<>(headers);
             ResponseEntity<String> responseRaw = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(responseRaw.getBody());
+            JsonNode root = objectMapper.readTree(responseRaw.getBody());
             JsonNode responseArray = root.get("response");
             if (responseArray == null || !responseArray.isArray()) continue;
 
@@ -93,40 +73,36 @@ public class MatchService {
                 JsonNode league = fixtureNode.get("league");
                 JsonNode goals = fixtureNode.get("goals");
 
+                Integer externalId = fixture.path("id").asInt();
+
                 MatchDto match = new MatchDto(
-                        teams.get("home").get("name").asText(),
-                        teams.get("home").get("logo").asText(),
-                        teams.get("away").get("name").asText(),
-                        teams.get("away").get("logo").asText(),
-                        DateTimeConverter.toLocalTimeFrance(fixture.get("date").asText()),
-                        league.get("name").asText(),
-                        fixture.get("venue") != null && !fixture.get("venue").isNull() ? fixture.get("venue").get("name").asText() : null,
-                        goals.get("home").isNull() ? null : goals.get("home").asInt(),
-                        goals.get("away").isNull() ? null : goals.get("away").asInt()
+                        teams.path("home").path("name").asText(),
+                        teams.path("home").path("logo").asText(),
+                        teams.path("away").path("name").asText(),
+                        teams.path("away").path("logo").asText(),
+                        DateTimeConverter.toLocalTimeFrance(fixture.path("date").asText()),
+                        league.path("name").asText(),
+                        fixture.path("venue").path("name").asText(null),
+                        goals.path("home").isNull() ? null : goals.path("home").asInt(),
+                        goals.path("away").isNull() ? null : goals.path("away").asInt(),
+                        externalId
                 );
+
                 matches.add(match);
             }
         }
         return matches;
     }
 
-
     /**
      * Récupère les prochains matchs et les sauvegarde dans la base de données.
-     * <p>
-     * Pour chaque match récupéré :
-     * <ul>
-     *     <li>Les équipes sont récupérées ou créées si elles n'existent pas encore</li>
-     *     <li>Si le match existe déjà, ses scores sont mis à jour</li>
-     *     <li>Si le match n'existe pas, il est créé avec toutes ses informations</li>
-     * </ul>
-     *
-     * @throws Exception en cas d'erreur lors de la récupération ou de la sauvegarde des matchs
      */
     public void fetchAndSaveNextMatches() throws Exception {
         List<MatchDto> matches = fetchNextMatches();
 
         for (MatchDto matchDto : matches) {
+
+            // 1️⃣ Vérifie si les équipes existent déjà
             Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
                     .orElseGet(() -> teamRepository.save(
                             Team.builder()
@@ -134,6 +110,7 @@ public class MatchService {
                                     .logoUrl(matchDto.getHomeTeamLogo())
                                     .build()
                     ));
+
             Team awayTeam = teamRepository.findByName(matchDto.getAwayTeamName())
                     .orElseGet(() -> teamRepository.save(
                             Team.builder()
@@ -141,12 +118,21 @@ public class MatchService {
                                     .logoUrl(matchDto.getAwayTeamLogo())
                                     .build()
                     ));
-            Match match = matchRepository.findByHomeTeamAndAwayTeamAndMatchDateAndCompetition(
-                    homeTeam, awayTeam, matchDto.getMatchDate(), matchDto.getCompetition()
-            ).orElse(null);
 
-            if (match == null) {
+            Optional<Match> existingMatch = matchRepository.findByExternalFixtureId(matchDto.getExternalFixtureId());
+
+            Match match;
+            if (existingMatch.isPresent()) {
+                match = existingMatch.get();
+                match.setHomeScore(matchDto.getHomeScore());
+                match.setAwayScore(matchDto.getAwayScore());
+                match.setMatchDate(matchDto.getMatchDate());
+                match.setCompetition(matchDto.getCompetition());
+                match.setLocation(matchDto.getLocation());
+                match.setExternalFixtureId(matchDto.getExternalFixtureId());
+            } else {
                 match = Match.builder()
+                        .externalFixtureId(matchDto.getExternalFixtureId())
                         .homeTeam(homeTeam)
                         .awayTeam(awayTeam)
                         .matchDate(matchDto.getMatchDate())
@@ -155,18 +141,22 @@ public class MatchService {
                         .homeScore(matchDto.getHomeScore())
                         .awayScore(matchDto.getAwayScore())
                         .build();
-            } else {
-                match.setHomeScore(matchDto.getHomeScore());
-                match.setAwayScore(matchDto.getAwayScore());
             }
+
             matchRepository.save(match);
         }
     }
 
+    /**
+     * Récupère tous les matchs enregistrés.
+     */
     public List<Match> getAll() {
         return matchRepository.findAll();
     }
 
+    /**
+     * Récupère les prochains matchs (après la date actuelle) avec pagination.
+     */
     public Page<MatchDto> getNextMatchesByDate(int page) {
         Pageable pageable = PageRequest.of(page, 9);
         return matchRepository.findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime.now(), pageable)

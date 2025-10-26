@@ -20,4 +20,6 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
             String competition
     );
     Page<Match> findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime dateTime, Pageable pageable);
+    Optional<Match> findByExternalFixtureId(Integer externalFixtureId);
+
 }

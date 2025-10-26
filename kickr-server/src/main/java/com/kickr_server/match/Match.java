@@ -81,4 +81,8 @@ public class Match {
      */
     @Column
     private Integer awayScore;
+
+    @Column(unique = true, nullable = false)
+    private Integer externalFixtureId;
+
 }

@@ -44,6 +44,10 @@ public class MatchDto {
     @JsonProperty("away_score")
     private Integer awayScore;
 
+    @JsonProperty("id")
+    private Integer externalFixtureId;
+
+
     public static MatchDto fromEntity(Match match) {
         if (match == null) return null;
         return new MatchDto(
@@ -55,7 +59,8 @@ public class MatchDto {
                 match.getCompetition(),
                 match.getLocation(),
                 match.getHomeScore(),
-                match.getAwayScore()
+                match.getAwayScore(),
+                match.getExternalFixtureId()
         );
     }
 }
