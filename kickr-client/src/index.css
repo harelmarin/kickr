@@ -43,8 +43,12 @@ body {
 @media (prefers-color-scheme: dark) {
   :root {
     --primary: #0f0d13;
-    --secondary: #b560ff;
+    --secondary: #942dfa;
   }
+}
+
+.color-secondary {
+    color: var(--secondary);
 }
 
 .bg-primary {

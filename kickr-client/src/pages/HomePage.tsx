@@ -1,4 +1,4 @@
-import { NextMatchesHomePage } from '../components/matchs/nextMatchsClient';
+import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
 
 export default function HomePage() {
   return (

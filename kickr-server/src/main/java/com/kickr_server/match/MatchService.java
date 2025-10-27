@@ -177,12 +177,19 @@ public class MatchService {
             }
         }
 
+
         int savedCount = 0;
         for (MatchDto matchDto : allMatches) {
+            String leagueForTeam = isLeague(matchDto.getCompetition())
+                    ? matchDto.getCompetition()
+                    : "";
+
+
             Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
                     .orElseGet(() -> teamRepository.save(
                             Team.builder()
                                     .name(matchDto.getHomeTeamName())
+                                    .competition(leagueForTeam)
                                     .logoUrl(matchDto.getHomeTeamLogo())
                                     .build()
                     ));
@@ -191,6 +198,7 @@ public class MatchService {
                     .orElseGet(() -> teamRepository.save(
                             Team.builder()
                                     .name(matchDto.getAwayTeamName())
+                                    .competition(leagueForTeam)
                                     .logoUrl(matchDto.getAwayTeamLogo())
                                     .build()
                     ));
@@ -228,4 +236,13 @@ public class MatchService {
         return matchRepository.findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime.now(), pageable)
                 .map(MatchDto::fromEntity);
     }
+
+    private boolean isLeague(String competitionName) {
+        return competitionName.equalsIgnoreCase("Premier League")
+                || competitionName.equalsIgnoreCase("La Liga")
+                || competitionName.equalsIgnoreCase("Serie A")
+                || competitionName.equalsIgnoreCase("Bundesliga")
+                || competitionName.equalsIgnoreCase("Ligue 1");
+    }
+
 }
