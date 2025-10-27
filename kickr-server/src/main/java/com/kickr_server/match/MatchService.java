@@ -50,7 +50,14 @@ public class MatchService {
      */
     private List<MatchDto> fetchNextMatches() throws Exception {
         int season = 2025;
-        int[] leagueIds = {39, 140, 135, 78, 61}; // Premier League, La Liga, Serie A, Bundesliga, Ligue 1
+        int[] leagueIds = {
+                // Championnats
+                39, 140, 135, 78, 61,
+                // Coupes nationales
+                45, 143, 137, 81, 66,
+                // Compétitions européennes
+                2, 3, 848
+        };
         List<MatchDto> matches = new ArrayList<>();
 
         for (int leagueId : leagueIds) {
@@ -75,14 +82,21 @@ public class MatchService {
 
                 Integer externalId = fixture.path("id").asInt();
 
+                LocalDateTime matchDate = DateTimeConverter.toLocalTimeFrance(fixture.path("date").asText());
+
+                String location = fixture.path("venue").path("name").asText(null);
+                if (location == null || location.isBlank()) {
+                    location = "";
+                }
+
                 MatchDto match = new MatchDto(
                         teams.path("home").path("name").asText(),
                         teams.path("home").path("logo").asText(),
                         teams.path("away").path("name").asText(),
                         teams.path("away").path("logo").asText(),
-                        DateTimeConverter.toLocalTimeFrance(fixture.path("date").asText()),
+                        matchDate,
                         league.path("name").asText(),
-                        fixture.path("venue").path("name").asText(null),
+                        location,
                         goals.path("home").isNull() ? null : goals.path("home").asInt(),
                         goals.path("away").isNull() ? null : goals.path("away").asInt(),
                         externalId
@@ -95,14 +109,76 @@ public class MatchService {
     }
 
     /**
-     * Récupère les prochains matchs et les sauvegarde dans la base de données.
+     * Récupère et sauvegarde tous les matchs (championnats, coupes, compétitions européennes)
+     * sans gérer les stages.
      */
     public void fetchAndSaveNextMatches() throws Exception {
-        List<MatchDto> matches = fetchNextMatches();
+        int season = 2025;
 
-        for (MatchDto matchDto : matches) {
+        int[] leagueIds = {
+                // Championnats
+                39, 140, 135, 78, 61,
+                // Coupes nationales
+                45, 143, 137, 81, 66,
+                // Compétitions européennes
+                2, 3, 848
+        };
 
-            // 1️⃣ Vérifie si les équipes existent déjà
+        List<MatchDto> allMatches = new ArrayList<>();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-apisports-key", footballApiKey);
+        headers.set("Accept", "application/json");
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        for (int leagueId : leagueIds) {
+            String url = "https://v3.football.api-sports.io/fixtures?league=" + leagueId + "&season=" + season;
+
+            try {
+                ResponseEntity<String> responseRaw = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+                JsonNode root = objectMapper.readTree(responseRaw.getBody());
+                JsonNode responseArray = root.get("response");
+
+                if (responseArray == null || !responseArray.isArray()) continue;
+
+                for (JsonNode fixtureNode : responseArray) {
+                    JsonNode teams = fixtureNode.get("teams");
+                    JsonNode fixture = fixtureNode.get("fixture");
+                    JsonNode league = fixtureNode.get("league");
+                    JsonNode goals = fixtureNode.get("goals");
+
+                    Integer externalId = fixture.path("id").asInt();
+                    LocalDateTime matchDate = DateTimeConverter.toLocalTimeFrance(fixture.path("date").asText());
+
+                    String location = fixture.path("venue").path("name").asText(null);
+                    if (location == null || location.isBlank()) {
+                        location = "Lieu non communiqué";
+                    }
+
+                    MatchDto match = new MatchDto(
+                            teams.path("home").path("name").asText(),
+                            teams.path("home").path("logo").asText(),
+                            teams.path("away").path("name").asText(),
+                            teams.path("away").path("logo").asText(),
+                            matchDate,
+                            league.path("name").asText(),
+                            location,
+                            goals.path("home").isNull() ? null : goals.path("home").asInt(),
+                            goals.path("away").isNull() ? null : goals.path("away").asInt(),
+                            externalId
+                    );
+
+                    allMatches.add(match);
+                }
+
+            } catch (Exception e) {
+                System.out.println("⚠️ Erreur récupération fixtures pour la ligue " + leagueId + " : " + e.getMessage());
+            }
+        }
+
+        int savedCount = 0;
+        for (MatchDto matchDto : allMatches) {
             Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
                     .orElseGet(() -> teamRepository.save(
                             Team.builder()
@@ -121,31 +197,21 @@ public class MatchService {
 
             Optional<Match> existingMatch = matchRepository.findByExternalFixtureId(matchDto.getExternalFixtureId());
 
-            Match match;
-            if (existingMatch.isPresent()) {
-                match = existingMatch.get();
-                match.setHomeScore(matchDto.getHomeScore());
-                match.setAwayScore(matchDto.getAwayScore());
-                match.setMatchDate(matchDto.getMatchDate());
-                match.setCompetition(matchDto.getCompetition());
-                match.setLocation(matchDto.getLocation());
-                match.setExternalFixtureId(matchDto.getExternalFixtureId());
-            } else {
-                match = Match.builder()
-                        .externalFixtureId(matchDto.getExternalFixtureId())
-                        .homeTeam(homeTeam)
-                        .awayTeam(awayTeam)
-                        .matchDate(matchDto.getMatchDate())
-                        .competition(matchDto.getCompetition())
-                        .location(matchDto.getLocation())
-                        .homeScore(matchDto.getHomeScore())
-                        .awayScore(matchDto.getAwayScore())
-                        .build();
-            }
-
+            Match match = existingMatch.orElseGet(Match::new);
+            match.setExternalFixtureId(matchDto.getExternalFixtureId());
+            match.setHomeTeam(homeTeam);
+            match.setAwayTeam(awayTeam);
+            match.setMatchDate(matchDto.getMatchDate());
+            match.setCompetition(matchDto.getCompetition());
+            match.setLocation(matchDto.getLocation());
+            match.setHomeScore(matchDto.getHomeScore());
+            match.setAwayScore(matchDto.getAwayScore());
             matchRepository.save(match);
+            savedCount++;
         }
+        System.out.println("✅ " + savedCount + " matchs récupérés et sauvegardés (toutes compétitions confondues).");
     }
+
 
     /**
      * Récupère tous les matchs enregistrés.

@@ -28,6 +28,7 @@ public class MatchController {
         matchService.fetchAndSaveNextMatches();
     }
 
+
     @Operation(summary = "Récupère les prochains matchs avec pagination")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Page de prochains matchs")

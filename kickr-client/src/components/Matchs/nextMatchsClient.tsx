@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNextMatchs } from '../../hooks/useNextMatchs';
+// @ts-ignore
 import { NextMatchesCardHomePage } from './nextMatchsCard';
 
 export function NextMatchesHomePage() {
