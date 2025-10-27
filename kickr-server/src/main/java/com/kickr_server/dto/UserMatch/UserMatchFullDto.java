@@ -29,12 +29,16 @@ public class UserMatchFullDto {
                 entity.getMatch().getAwayTeam().getName(),
                 entity.getMatch().getAwayTeam().getLogoUrl(),
                 entity.getMatch().getMatchDate(),
-                entity.getMatch().getCompetition(),
+                entity.getMatch().getCompetition().getId(),
+                entity.getMatch().getCompetition().getExternalId(),
+                entity.getMatch().getCompetition().getName(),
+                entity.getMatch().getCompetition().getLogoUrl(),
                 entity.getMatch().getLocation(),
                 entity.getMatch().getHomeScore(),
                 entity.getMatch().getAwayScore(),
                 entity.getMatch().getExternalFixtureId()
         );
+
 
         return new UserMatchFullDto(
                 entity.getId(),

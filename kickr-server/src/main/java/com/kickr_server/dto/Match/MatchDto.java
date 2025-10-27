@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * DTO pour mapper un match provenant d'une API externe.
+ * Expose les informations essentielles, y compris les détails de la compétition.
  */
 @Data
 @NoArgsConstructor
@@ -32,8 +33,17 @@ public class MatchDto {
     @JsonProperty("match_date")
     private LocalDateTime matchDate;
 
-    @JsonProperty("competition")
-    private String competition;
+    @JsonProperty("competition_id")
+    private UUID competitionId;
+
+    @JsonProperty("competition_externalId")
+    private Integer competitionExternalId;
+
+    @JsonProperty("competition_name")
+    private String competitionName;
+
+    @JsonProperty("competition_logo")
+    private String competitionLogo;
 
     @JsonProperty("location")
     private String location;
@@ -47,7 +57,9 @@ public class MatchDto {
     @JsonProperty("id")
     private Integer externalFixtureId;
 
-
+    /**
+     * Convertit une entité Match en DTO.
+     */
     public static MatchDto fromEntity(Match match) {
         if (match == null) return null;
         return new MatchDto(
@@ -56,7 +68,10 @@ public class MatchDto {
                 match.getAwayTeam().getName(),
                 match.getAwayTeam().getLogoUrl(),
                 match.getMatchDate(),
-                match.getCompetition(),
+                match.getCompetition().getId(),
+                match.getCompetition().getExternalId(),
+                match.getCompetition().getName(),
+                match.getCompetition().getLogoUrl(),
                 match.getLocation(),
                 match.getHomeScore(),
                 match.getAwayScore(),
@@ -64,4 +79,3 @@ public class MatchDto {
         );
     }
 }
-

@@ -1,5 +1,6 @@
 package com.kickr_server.match;
 
+import com.kickr_server.competitions.Competition;
 import com.kickr_server.team.Team;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,7 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
             Team homeTeam,
             Team awayTeam,
             LocalDateTime matchDate,
-            String competition
+            Competition competition
     );
     Page<Match> findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime dateTime, Pageable pageable);
     Optional<Match> findByExternalFixtureId(Integer externalFixtureId);

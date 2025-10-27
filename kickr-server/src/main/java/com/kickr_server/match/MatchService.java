@@ -1,5 +1,7 @@
 package com.kickr_server.match;
 
+import com.kickr_server.competitions.Competition;
+import com.kickr_server.competitions.CompetitionRepository;
 import com.kickr_server.config.AppConfig;
 import com.kickr_server.dto.Match.MatchDto;
 import com.kickr_server.team.Team;
@@ -33,13 +35,15 @@ public class MatchService {
     private final String footballApiKey;
     private final MatchRepository matchRepository;
     private final TeamRepository teamRepository;
+    private final CompetitionRepository competitionRepository;
     private final ObjectMapper objectMapper;
 
-    public MatchService(RestTemplate restTemplate, AppConfig appConfig, MatchRepository matchRepository, TeamRepository teamRepository) {
+    public MatchService(RestTemplate restTemplate, AppConfig appConfig, MatchRepository matchRepository, TeamRepository teamRepository, CompetitionRepository competitionRepository) {
         this.restTemplate = restTemplate;
         this.footballApiKey = appConfig.getFootballApiKey();
         this.matchRepository = matchRepository;
         this.teamRepository = teamRepository;
+        this.competitionRepository = competitionRepository;
 
         this.objectMapper = new ObjectMapper();
         this.objectMapper.registerModule(new JavaTimeModule());
@@ -89,18 +93,39 @@ public class MatchService {
                     location = "";
                 }
 
+
+
+                Integer leagueExternalId = league.path("id").asInt();
+                String leagueName = league.path("name").asText();
+                String leagueLogo = league.path("logo").asText();
+
+                Competition competition = competitionRepository.findByExternalId(leagueExternalId)
+                        .orElseGet(() -> competitionRepository.save(
+                                Competition.builder()
+                                        .name(leagueName)
+                                        .externalId(leagueExternalId)
+                                        .logoUrl(leagueLogo)
+                                        .build()
+                        ));
+
+
                 MatchDto match = new MatchDto(
                         teams.path("home").path("name").asText(),
                         teams.path("home").path("logo").asText(),
                         teams.path("away").path("name").asText(),
                         teams.path("away").path("logo").asText(),
                         matchDate,
-                        league.path("name").asText(),
+                        competition.getId(),
+                        competition.getExternalId(),
+                        competition.getName(),
+                        competition.getLogoUrl(),
                         location,
                         goals.path("home").isNull() ? null : goals.path("home").asInt(),
                         goals.path("away").isNull() ? null : goals.path("away").asInt(),
                         externalId
                 );
+
+
 
                 matches.add(match);
             }
@@ -156,20 +181,53 @@ public class MatchService {
                         location = "Lieu non communiqué";
                     }
 
-                    MatchDto match = new MatchDto(
-                            teams.path("home").path("name").asText(),
-                            teams.path("home").path("logo").asText(),
-                            teams.path("away").path("name").asText(),
-                            teams.path("away").path("logo").asText(),
-                            matchDate,
-                            league.path("name").asText(),
-                            location,
-                            goals.path("home").isNull() ? null : goals.path("home").asInt(),
-                            goals.path("away").isNull() ? null : goals.path("away").asInt(),
-                            externalId
-                    );
+                    // ✅ Récupération / création de la compétition
+                    Integer leagueExternalId = league.path("id").asInt();
+                    String leagueName = league.path("name").asText();
+                    String leagueLogo = league.path("logo").asText();
 
-                    allMatches.add(match);
+                    Competition competition = competitionRepository.findByExternalId(leagueExternalId)
+                            .orElseGet(() -> competitionRepository.save(
+                                    Competition.builder()
+                                            .name(leagueName)
+                                            .externalId(leagueExternalId)
+                                            .logoUrl(leagueLogo)
+                                            .build()
+                            ));
+
+                    // ✅ Récupération / création des équipes
+                    Team homeTeam = teamRepository.findByName(teams.path("home").path("name").asText())
+                            .orElseGet(() -> teamRepository.save(
+                                    Team.builder()
+                                            .name(teams.path("home").path("name").asText())
+                                            .competition(competition)
+                                            .logoUrl(teams.path("home").path("logo").asText())
+                                            .build()
+                            ));
+
+                    Team awayTeam = teamRepository.findByName(teams.path("away").path("name").asText())
+                            .orElseGet(() -> teamRepository.save(
+                                    Team.builder()
+                                            .name(teams.path("away").path("name").asText())
+                                            .competition(competition)
+                                            .logoUrl(teams.path("away").path("logo").asText())
+                                            .build()
+                            ));
+
+                    // ✅ Vérifie si le match existe déjà
+                    Optional<Match> existingMatch = matchRepository.findByExternalFixtureId(externalId);
+                    Match match = existingMatch.orElseGet(Match::new);
+
+                    match.setExternalFixtureId(externalId);
+                    match.setHomeTeam(homeTeam);
+                    match.setAwayTeam(awayTeam);
+                    match.setMatchDate(matchDate);
+                    match.setCompetition(competition);
+                    match.setLocation(location);
+                    match.setHomeScore(goals.path("home").isNull() ? null : goals.path("home").asInt());
+                    match.setAwayScore(goals.path("away").isNull() ? null : goals.path("away").asInt());
+
+                    matchRepository.save(match);
                 }
 
             } catch (Exception e) {
@@ -177,48 +235,9 @@ public class MatchService {
             }
         }
 
-
-        int savedCount = 0;
-        for (MatchDto matchDto : allMatches) {
-            String leagueForTeam = isLeague(matchDto.getCompetition())
-                    ? matchDto.getCompetition()
-                    : "";
-
-
-            Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
-                    .orElseGet(() -> teamRepository.save(
-                            Team.builder()
-                                    .name(matchDto.getHomeTeamName())
-                                    .competition(leagueForTeam)
-                                    .logoUrl(matchDto.getHomeTeamLogo())
-                                    .build()
-                    ));
-
-            Team awayTeam = teamRepository.findByName(matchDto.getAwayTeamName())
-                    .orElseGet(() -> teamRepository.save(
-                            Team.builder()
-                                    .name(matchDto.getAwayTeamName())
-                                    .competition(leagueForTeam)
-                                    .logoUrl(matchDto.getAwayTeamLogo())
-                                    .build()
-                    ));
-
-            Optional<Match> existingMatch = matchRepository.findByExternalFixtureId(matchDto.getExternalFixtureId());
-
-            Match match = existingMatch.orElseGet(Match::new);
-            match.setExternalFixtureId(matchDto.getExternalFixtureId());
-            match.setHomeTeam(homeTeam);
-            match.setAwayTeam(awayTeam);
-            match.setMatchDate(matchDto.getMatchDate());
-            match.setCompetition(matchDto.getCompetition());
-            match.setLocation(matchDto.getLocation());
-            match.setHomeScore(matchDto.getHomeScore());
-            match.setAwayScore(matchDto.getAwayScore());
-            matchRepository.save(match);
-            savedCount++;
-        }
-        System.out.println("✅ " + savedCount + " matchs récupérés et sauvegardés (toutes compétitions confondues).");
+        System.out.println("✅ Synchronisation des matchs terminée (toutes compétitions confondues).");
     }
+
 
 
     /**
@@ -237,12 +256,5 @@ public class MatchService {
                 .map(MatchDto::fromEntity);
     }
 
-    private boolean isLeague(String competitionName) {
-        return competitionName.equalsIgnoreCase("Premier League")
-                || competitionName.equalsIgnoreCase("La Liga")
-                || competitionName.equalsIgnoreCase("Serie A")
-                || competitionName.equalsIgnoreCase("Bundesliga")
-                || competitionName.equalsIgnoreCase("Ligue 1");
-    }
 
 }
