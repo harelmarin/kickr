@@ -1,7 +1,7 @@
 package com.kickr_server.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kickr_server.dto.Match.MatchDto;
+import com.kickr_server.dto.match.MatchDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

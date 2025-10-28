@@ -1,6 +1,6 @@
 package com.kickr_server.match;
 
-import com.kickr_server.dto.Match.MatchDto;
+import com.kickr_server.dto.match.MatchDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

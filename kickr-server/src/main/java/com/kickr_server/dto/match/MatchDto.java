@@ -1,4 +1,4 @@
-package com.kickr_server.dto.Match;
+package com.kickr_server.dto.match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kickr_server.match.Match;

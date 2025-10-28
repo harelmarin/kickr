@@ -3,7 +3,7 @@ package com.kickr_server.match;
 import com.kickr_server.competitions.Competition;
 import com.kickr_server.competitions.CompetitionRepository;
 import com.kickr_server.config.AppConfig;
-import com.kickr_server.dto.Match.MatchDto;
+import com.kickr_server.dto.match.MatchDto;
 import com.kickr_server.team.Team;
 import com.kickr_server.team.TeamRepository;
 import com.kickr_server.utils.DateTimeConverter;
@@ -58,7 +58,7 @@ public class MatchService {
                 // Championnats
                 39, 140, 135, 78, 61,
                 // Coupes nationales
-                45, 143, 137, 81, 66,
+                //45, 143, 137, 81, 66,
                 // Compétitions européennes
                 2, 3, 848
         };

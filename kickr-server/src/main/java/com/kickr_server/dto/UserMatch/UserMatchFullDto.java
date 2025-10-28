@@ -1,6 +1,6 @@
 package com.kickr_server.dto.UserMatch;
 
-import com.kickr_server.dto.Match.MatchDto;
+import com.kickr_server.dto.match.MatchDto;
 import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.usermatch.UserMatch;
 import lombok.AllArgsConstructor;
