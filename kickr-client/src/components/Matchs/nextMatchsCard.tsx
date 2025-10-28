@@ -6,30 +6,32 @@ interface NextMatchsMiniCardProps {
 
 export const NextMatchesCardHomePage = ({ match }: NextMatchsMiniCardProps) => {
   return (
-    <div className="bg-white shadow rounded-lg p-2 flex flex-col sm:flex-row items-center gap-2 hover:shadow-md transition-shadow text-sm bg-primary border-secondary-skinny">
-      <div className="flex items-center gap-2">
+    <div className=" cursor-pointer bg-gray-900 hover:bg-gray-800 transition rounded-lg flex flex-col items-center p-6 text-center shadow-lg group">
+      <div className="flex items-center gap-4 mb-2">
         <img
           src={match.homeLogo}
           alt={match.homeTeam}
-          className="w-10 h-10 object-contain"
+          className="w-12 h-12 object-contain rounded-full transition-transform duration-300 "
         />
-      </div>
-      <span className="font-bold mx-1 text-sm">vs</span>
-      <div className="flex items-center gap-2">
+        <span className="text-white font-bold text-lg">vs</span>
         <img
           src={match.awayLogo}
           alt={match.awayTeam}
-          className="w-10 h-10 object-contain"
+          className="w-12 h-12 object-contain rounded-full transition-transform duration-300"
         />
       </div>
-      <div className="mt-1 sm:mt-0 sm:ml-auto text-white-500 text-xs text-center">
-        <p>
+
+      <div>
+        <p className="text-sm font-semibold">
+          {match.homeTeam} <p className="text-xl"> vs </p> {match.awayTeam}
+        </p>
+        <p className="text-gray-400 text-sm">{match.competition}</p>
+        <p className="text-gray-500 text-sm">
           {new Date(match.matchDate).toLocaleString('fr-EU', {
             dateStyle: 'short',
             timeStyle: 'short',
           })}
         </p>
-        <p>{match.competition}</p>
       </div>
     </div>
   );

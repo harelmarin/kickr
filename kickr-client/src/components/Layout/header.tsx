@@ -3,9 +3,7 @@ import { LoginDropdown, RegisterDropdown } from '../auth/authForm.tsx';
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
-  const [openDropdown, setOpenDropdown] = useState<'login' | 'register' | null>(
-    null,
-  );
+  const [openDropdown, setOpenDropdown] = useState<'login' | 'register' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = (type: 'login' | 'register') => {
@@ -14,14 +12,10 @@ export const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setOpenDropdown(null);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -38,15 +32,30 @@ export const Header = () => {
 
         <div className="flex items-center gap-2">
           <nav className="flex gap-4 items-center">
-            <h2 className="hover-secondary cursor-pointer transition-colors">
+            <Link
+              to="/competitions"
+              className="hover-secondary cursor-pointer transition-colors"
+            >
+              Competitions
+            </Link>
+            <Link
+              to="/teams"
+              className="hover-secondary cursor-pointer transition-colors"
+            >
               Teams
-            </h2>
-            <h2 className="hover-secondary cursor-pointer transition-colors">
+            </Link>
+            <Link
+              to="/matches"
+              className="hover-secondary cursor-pointer transition-colors"
+            >
               Matches
-            </h2>
-            <h2 className="hover-secondary cursor-pointer transition-colors">
+            </Link>
+            <Link
+              to="/members"
+              className="hover-secondary cursor-pointer transition-colors"
+            >
               Members
-            </h2>
+            </Link>
           </nav>
 
           <div className="w-px h-8 bg-gray-700 mx-2 md:mx-2"></div>
