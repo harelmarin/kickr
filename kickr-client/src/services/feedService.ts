@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axios';
 import type { UserMatchResponseApi } from '../types/UserMatchResponseApi';
 
 export const fetchPreviewFeed = async (
@@ -7,8 +7,8 @@ export const fetchPreviewFeed = async (
   size = 10,
 ): Promise<UserMatchResponseApi[]> => {
   try {
-    const response = await axios.get(
-      `http://localhost:8080/api/feed/preview/${userId}`,
+    const response = await axiosInstance.get(
+      `/feed/preview/${userId}`,
       {
         params: { page, size },
       },

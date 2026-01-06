@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axiosInstance from './axios';
 import type { Match } from '../types/Match';
 import type { MatchApiResponse } from '../types/MatchApiResponse';
 
 export const fetchNextMatches = async (page = 0, limit = 9): Promise<Match[]> => {
-  const response = await axios.get('http://localhost:8080/api/matchs/next', {
+  const response = await axiosInstance.get('/matchs/next', {
     params: { page, limit },
   });
 
