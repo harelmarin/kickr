@@ -55,7 +55,7 @@ export const MatchDetailPage = () => {
             <div className="mt-6 space-y-4 text-[13px] border-t border-white/5 pt-6">
               <div className="flex justify-between">
                 <span className="text-[#667788]">Competition</span>
-                <Link to={`/competitions/${match.competition}`} className="text-white hover:text-[var(--color-green-primary)] transition-colors">{match.competition}</Link>
+                <Link to={`/competitions/${match.competition}`} className="text-white hover:text-kickr transition-colors">{match.competition}</Link>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#667788]">Stade</span>
@@ -73,7 +73,7 @@ export const MatchDetailPage = () => {
                 </h1>
                 <span className="text-2xl font-medium text-[#667788]">{matchDate.getFullYear()}</span>
               </div>
-              <p className="text-lg font-medium text-white italic opacity-80 decoration-[var(--color-green-primary)]">
+              <p className="text-lg font-medium text-white italic opacity-80 decoration-kickr">
                 The matchday that shook the {match.competition}.
               </p>
             </header>
@@ -127,7 +127,7 @@ export const MatchDetailPage = () => {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-4xl transition-all duration-200 ${star <= (hoveredRating || rating) ? 'text-[var(--color-green-primary)]' : 'text-[#445566]'
+                        className={`text-4xl transition-all duration-200 ${star <= (hoveredRating || rating) ? 'text-kickr' : 'text-[#445566]'
                           }`}
                         onMouseEnter={() => setHoveredRating(star)}
                         onMouseLeave={() => setHoveredRating(0)}
@@ -150,7 +150,7 @@ export const MatchDetailPage = () => {
                   />
                 </div>
 
-                <button className="w-full bg-[var(--color-green-primary)] text-black font-black uppercase tracking-[0.2em] py-3 rounded text-[11px] hover:bg-[#3ef87b] transition-all active:scale-[0.98]">
+                <button className="w-full btn-primary-kickr py-3 rounded text-[11px] hover:brightness-110 active:scale-[0.98]">
                   SAVE ENTRY
                 </button>
               </div>
@@ -169,7 +169,7 @@ const ReviewItem = ({ user, rating, content }: { user: string; rating: number; c
     <div className="flex-1">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-white font-bold">{user}</span>
-        <span className="text-[var(--color-green-primary)] font-bold text-xs">
+        <span className="text-kickr font-bold text-xs">
           {'★'.repeat(Math.floor(rating))}{rating % 1 !== 0 ? '½' : ''}
         </span>
       </div>
@@ -180,7 +180,7 @@ const ReviewItem = ({ user, rating, content }: { user: string; rating: number; c
 
 const LoadingState = () => (
   <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
-    <div className="w-12 h-12 border-4 border-[var(--color-green-primary)] border-t-transparent rounded-full animate-spin"></div>
+    <div className="w-12 h-12 border-4 border-kickr border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
 
@@ -188,7 +188,7 @@ const ErrorState = () => (
   <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
     <div className="text-center">
       <h1 className="text-2xl text-white font-bold mb-4">Match non trouvé</h1>
-      <Link to="/matches" className="text-[var(--color-green-primary)] hover:underline uppercase tracking-widest text-sm font-bold">Retour aux matchs</Link>
+      <Link to="/matches" className="text-kickr hover:underline uppercase tracking-widest text-sm font-bold">Retour aux matchs</Link>
     </div>
   </div>
 );

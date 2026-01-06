@@ -96,7 +96,7 @@ const BigStat = ({ label, value }: { label: string; value: string }) => (
 const MiniStat = ({ label, value, description }: { label: string; value: string; description: string }) => (
   <div>
     <div className="text-[9px] font-bold text-[#667788] uppercase tracking-widest mb-1">{label}</div>
-    <div className="text-2xl font-black text-[var(--color-green-primary)] font-display italic">{value}</div>
+    <div className="text-2xl font-black text-[var(--color-primary)] font-display italic">{value}</div>
     <div className="text-[9px] text-[#445566] uppercase font-bold tracking-tighter mt-1">{description}</div>
   </div>
 );

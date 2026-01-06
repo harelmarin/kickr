@@ -63,9 +63,9 @@ export const TeamsPage = () => {
                   alt={team.name}
                   className="max-w-full max-h-full object-contain filter drop-shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-1 bg-[var(--color-green-primary)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-[var(--color-primary)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
-              <h3 className="text-xs font-bold text-white text-center group-hover:text-[var(--color-green-primary)] transition-colors truncate px-2">
+              <h3 className="text-xs font-bold text-white text-center group-hover:text-[var(--color-primary)] transition-colors truncate px-2">
                 {team.name}
               </h3>
             </Link>

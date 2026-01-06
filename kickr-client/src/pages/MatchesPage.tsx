@@ -79,7 +79,7 @@ const ErrorState = () => (
     <div className="max-w-md">
       <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter">Connexion Interrompue</h2>
       <p className="text-[#667788] text-sm mb-8 leading-relaxed">Les tribunes sont vides... Il semble y avoir un souci de connexion avec les serveurs de matchs.</p>
-      <button onClick={() => window.location.reload()} className="text-[var(--color-green-primary)] font-black uppercase tracking-widest text-xs border border-[var(--color-green-primary)]/20 px-8 py-3 rounded hover:bg-[var(--color-green-primary)]/5">Réessayer</button>
+      <button onClick={() => window.location.reload()} className="text-[var(--color-primary)] font-black uppercase tracking-widest text-xs border border-[var(--color-primary)]/20 px-8 py-3 rounded hover:bg-[var(--color-primary)]/5">Réessayer</button>
     </div>
   </div>
 );

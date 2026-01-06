@@ -19,13 +19,13 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
           <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font">
             Track football. <br />
-            <span className="text-[var(--color-green-primary)]">Rate matchdays.</span>
+            <span className="text-kickr">Rate matchdays.</span>
           </h1>
           <p className="text-xl md:text-2xl text-[#99aabb] mb-12 font-medium max-w-3xl mx-auto leading-relaxed">
             The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life.
           </p>
           <div className="flex items-center justify-center gap-6">
-            <Link to="/matches" className="bg-[var(--color-green-primary)] text-black font-black uppercase tracking-[0.2em] px-10 py-4 rounded text-xs hover:bg-[#3ef87b] transition-all">
+            <Link to="/matches" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all">
               Get Started — It's Free
             </Link>
           </div>
@@ -124,10 +124,10 @@ const ActivityCard = ({ user, match, rating, content }: any) => (
     <div className="flex items-center gap-3 mb-4">
       <div className="w-8 h-8 rounded-full bg-[#2c3440]"></div>
       <div className="flex flex-col">
-        <span className="text-white text-xs font-bold hover:text-[var(--color-green-primary)] cursor-pointer transition-colors">{user}</span>
+        <span className="text-white text-xs font-bold hover:text-kickr cursor-pointer transition-colors">{user}</span>
         <span className="text-[#5c6470] text-[10px] font-bold uppercase tracking-widest leading-none">Rated {match}</span>
       </div>
-      <span className="ml-auto text-[var(--color-green-primary)] font-bold text-xs">
+      <span className="ml-auto text-kickr font-bold text-xs">
         {'★'.repeat(Math.floor(rating))}{rating % 1 !== 0 ? '½' : ''}
       </span>
     </div>

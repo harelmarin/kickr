@@ -17,7 +17,7 @@ export const UserMenu: FC = () => {
         <div className="relative group">
             {/* Minimalist Profile Trigger - No bulky background */}
             <button className="flex items-center gap-3 py-1 transition-opacity hover:opacity-75">
-                <div className="w-6 h-6 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center font-black text-[9px] text-[var(--color-green-primary)] uppercase">
+                <div className="w-6 h-6 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center font-black text-[9px] text-[var(--color-primary)] uppercase">
                     {user.name.charAt(0)}
                 </div>
                 <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">{user.name}</span>

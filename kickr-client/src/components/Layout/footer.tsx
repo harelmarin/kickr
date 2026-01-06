@@ -42,7 +42,7 @@ export const Footer = () => {
             © {new Date().getFullYear()} Kickr. Performance data provided by Football API.
           </p>
           <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-[#445566]">
-            Made with <span className="text-[var(--color-green-primary)] px-1">⚽</span> in the digital stadium
+            Made with <span className="text-[var(--color-primary)] px-1">⚽</span> in the digital stadium
           </div>
         </div>
       </div>

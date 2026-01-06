@@ -49,7 +49,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
             <button
                 type="submit"
                 disabled={isLoading}
-                className="bg-[var(--color-green-primary)] text-black py-3 rounded text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#3ef87b] transition-all disabled:opacity-50"
+                className="bg-[var(--color-primary)] text-black py-3 rounded text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#3ef87b] transition-all disabled:opacity-50"
             >
                 {isLoading ? 'Verifying...' : 'Log in'}
             </button>
@@ -120,7 +120,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
             <button
                 type="submit"
                 disabled={isLoading}
-                className="bg-[var(--color-green-primary)] text-black py-3 rounded text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#3ef87b] transition-all disabled:opacity-50"
+                className="bg-[var(--color-primary)] text-black py-3 rounded text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#3ef87b] transition-all disabled:opacity-50"
             >
                 {isLoading ? 'Processing...' : 'Sign up'}
             </button>

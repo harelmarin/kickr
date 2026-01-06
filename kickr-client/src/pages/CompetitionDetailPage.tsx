@@ -56,7 +56,7 @@ export const CompetitionDetailPage = () => {
                 to={`/teams/${team.id}`}
                 className="group"
               >
-                <div className="aspect-square bg-[#1b2228] rounded-xl border border-white/5 p-6 flex items-center justify-center mb-3 transition-all duration-300 group-hover:border-[var(--color-green-primary)] group-hover:bg-[#2c3440] shadow-md relative overflow-hidden">
+                <div className="aspect-square bg-[#1b2228] rounded-xl border border-white/5 p-6 flex items-center justify-center mb-3 transition-all duration-300 group-hover:border-[var(--color-primary)] group-hover:bg-[#2c3440] shadow-md relative overflow-hidden">
                   <img
                     src={team.logoUrl}
                     alt={team.name}

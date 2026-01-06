@@ -18,7 +18,7 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
             {/* The Poster */}
             <Link
                 to={`/matches/${match.id}`}
-                className="block aspect-[2/3] bg-[#2c3440] rounded border border-white/10 overflow-hidden shadow-lg transition-all duration-300 group-hover:border-[var(--color-green-primary)] group-hover:shadow-[0_0_15px_rgba(0,224,84,0.2)] relative"
+                className="block aspect-[2/3] bg-[#2c3440] rounded border border-white/10 overflow-hidden shadow-lg transition-all duration-300 poster-hover-effect relative"
             >
                 {/* Poster Content: Minimalist Team Visualization */}
                 <div className="absolute inset-0 flex flex-col items-center justify-around py-8 px-4 bg-gradient-to-br from-[#1b2228] to-[#2c3440]">
@@ -29,7 +29,7 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
 
                 {/* Score Ribbon (Bottom) */}
                 {isPast && (
-                    <div className="absolute bottom-0 inset-x-0 bg-[var(--color-green-primary)] py-1.5 text-center transition-transform duration-300 translate-y-full group-hover:translate-y-0">
+                    <div className="absolute bottom-0 inset-x-0 bg-kickr py-1.5 text-center transition-transform duration-300 translate-y-full group-hover:translate-y-0">
                         <span className="text-black font-black text-[12px] tracking-tight">
                             {match.homeScore} — {match.awayScore}
                         </span>

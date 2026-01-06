@@ -7,7 +7,7 @@ export const CompetitionsPage = () => {
   if (isLoading)
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#14181c]">
-        <div className="w-16 h-16 border-4 border-[var(--color-green-primary)] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-16 h-16 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
 
@@ -28,14 +28,14 @@ export const CompetitionsPage = () => {
               to={`/competitions/${comp.id}`}
               className="group"
             >
-              <div className="aspect-square bg-[#2c3440] rounded-xl border border-white/5 p-8 flex items-center justify-center mb-4 transition-all duration-300 group-hover:border-[var(--color-green-primary)] group-hover:bg-[#1b2228] shadow-lg">
+              <div className="aspect-square bg-[#2c3440] rounded-xl border border-white/5 p-8 flex items-center justify-center mb-4 transition-all duration-300 group-hover:border-[var(--color-primary)] group-hover:bg-[#1b2228] shadow-lg">
                 <img
                   src={comp.logoUrl}
                   alt={comp.name}
                   className="max-w-full max-h-full object-contain filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <h3 className="text-center text-sm font-bold text-white group-hover:text-[var(--color-green-primary)] transition-colors tracking-tight">
+              <h3 className="text-center text-sm font-bold text-white group-hover:text-[var(--color-primary)] transition-colors tracking-tight">
                 {comp.name}
               </h3>
               <p className="text-center text-[10px] text-[#667788] uppercase tracking-widest mt-1">
