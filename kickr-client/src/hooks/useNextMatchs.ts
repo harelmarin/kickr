@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import type { Match } from '../types/Match';
-import { matchService } from '../services/matchService';
+import { matchService, type MatchesPageResponse } from '../services/matchService';
 
 export const useNextMatchs = (page = 0, limit = 9) => {
-  return useQuery<Match[], Error>({
+  return useQuery<MatchesPageResponse, Error>({
     queryKey: ['nextMatches', page, limit],
     queryFn: () => matchService.fetchNextMatches(page, limit),
     placeholderData: (prev) => prev,

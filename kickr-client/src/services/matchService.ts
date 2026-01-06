@@ -2,8 +2,15 @@ import axiosInstance from './axios';
 import type { Match } from '../types/Match';
 import type { MatchApiResponse } from '../types/MatchApiResponse';
 
+export interface MatchesPageResponse {
+  content: Match[];
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+}
+
 export const matchService = {
-  fetchNextMatches: async (page = 0, limit = 9): Promise<Match[]> => {
+  fetchNextMatches: async (page = 0, limit = 9): Promise<MatchesPageResponse> => {
     const response = await axiosInstance.get('/matchs/next', {
       params: { page, limit },
     });
@@ -12,21 +19,33 @@ export const matchService = {
 
     if (!content || !Array.isArray(content)) {
       console.error('API ne renvoie pas de content valide', response.data);
-      return [];
+      return {
+        content: [],
+        totalPages: 0,
+        totalElements: 0,
+        last: true,
+      };
     }
 
-    return content.map((m: MatchApiResponse) => ({
-      id: m.id ?? `${m.home_team}-${m.away_team}-${m.match_date}`,
-      homeTeam: m.home_team,
-      awayTeam: m.away_team,
-      homeLogo: m.home_logo,
-      awayLogo: m.away_logo,
-      matchDate: m.match_date,
-      competition: m.competition,
-      location: m.location,
-      homeScore: m.home_score,
-      awayScore: m.away_score,
-    }));
+    return {
+      content: content.map((m: MatchApiResponse) => ({
+        id: m.id ?? `${m.home_team}-${m.away_team}-${m.match_date}`,
+        homeTeam: m.home_team,
+        homeTeamId: m.home_team_id,
+        awayTeam: m.away_team,
+        awayTeamId: m.away_team_id,
+        homeLogo: m.home_logo,
+        awayLogo: m.away_logo,
+        matchDate: m.match_date,
+        competition: m.competition,
+        location: m.location,
+        homeScore: m.home_score,
+        awayScore: m.away_score,
+      })),
+      totalPages: response.data.totalPages || 0,
+      totalElements: response.data.totalElements || 0,
+      last: response.data.last || false,
+    };
   },
 
   getAllMatchesByTeam: async (teamId: string): Promise<Match[]> => {
@@ -39,7 +58,9 @@ export const matchService = {
       return response.data.map((m: MatchApiResponse) => ({
         id: m.id ?? `${m.home_team}-${m.away_team}-${m.match_date}`,
         homeTeam: m.home_team,
+        homeTeamId: m.home_team_id,
         awayTeam: m.away_team,
+        awayTeamId: m.away_team_id,
         homeLogo: m.home_logo,
         awayLogo: m.away_logo,
         matchDate: m.match_date,

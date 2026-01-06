@@ -7,7 +7,7 @@ export const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-green rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-green-primary rounded-lg flex items-center justify-center">
                 <span className="text-2xl">⚽</span>
               </div>
               <span className="text-3xl font-display text-primary">KICKR</span>

@@ -21,6 +21,9 @@ public class Team {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(unique = true)
+    private Integer externalId;
+
     /**
      * Relation vers la compétition à laquelle appartient l’équipe.
      */

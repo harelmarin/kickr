@@ -66,7 +66,7 @@ export const CompetitionDetailPage = () => {
                   />
                 </div>
               ) : (
-                <div className="w-32 h-32 bg-gradient-green rounded-2xl flex items-center justify-center shadow-xl">
+                <div className="w-32 h-32 bg-green-primary rounded-2xl flex items-center justify-center shadow-xl">
                   <span className="text-6xl font-display text-white">{competition.name.charAt(0)}</span>
                 </div>
               )}
@@ -126,7 +126,7 @@ export const CompetitionDetailPage = () => {
                         />
                       </div>
                     ) : (
-                      <div className="w-20 h-20 flex items-center justify-center bg-gradient-green rounded-xl text-2xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <div className="w-20 h-20 flex items-center justify-center bg-green-primary rounded-xl text-2xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
                         {team.name.charAt(0)}
                       </div>
                     )}

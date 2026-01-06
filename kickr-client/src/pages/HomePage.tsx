@@ -30,7 +30,7 @@ export default function HomePage() {
           <h1 className="text-6xl md:text-8xl font-display text-primary mb-6 leading-tight">
             Rate Every Match.
             <br />
-            <span className="text-gradient-green">Build Your Legacy.</span>
+            <span className="text-green-bright">Build Your Legacy.</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-secondary max-w-3xl mx-auto mb-10 font-medium">
@@ -74,25 +74,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Upcoming Matches Section */}
-      <section className="py-20 bg-secondary relative">
+      {/* Upcoming Matches Section - Compact */}
+      <section className="py-12 bg-secondary relative">
         <div className="absolute inset-0 bg-grid opacity-5 pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+          <div className="flex items-center justify-between mb-8">
             <div>
-              <span className="text-green-bright text-sm font-semibold uppercase tracking-wider mb-3 block">
+              <span className="text-green-bright text-xs font-semibold uppercase tracking-wider mb-2 block">
                 Don't Miss Out
               </span>
-              <h2 className="text-5xl md:text-6xl font-display text-primary mb-3">
+              <h2 className="text-4xl font-display text-primary">
                 Upcoming Matches
               </h2>
-              <p className="text-lg text-secondary">
-                Rate the biggest games and share your opinions
-              </p>
             </div>
-            <button className="btn btn-secondary">
-              View All Matches →
+            <button className="btn btn-secondary text-sm px-4 py-2">
+              View All →
             </button>
           </div>
           
@@ -118,7 +115,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-gradient-green rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-green-primary rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>

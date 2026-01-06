@@ -25,8 +25,10 @@ public class UserMatchFullDto {
     public static UserMatchFullDto fromEntity(UserMatch entity) {
         MatchDto matchDto = new MatchDto(
                 entity.getMatch().getHomeTeam().getName(),
+                entity.getMatch().getHomeTeam().getId(),
                 entity.getMatch().getHomeTeam().getLogoUrl(),
                 entity.getMatch().getAwayTeam().getName(),
+                entity.getMatch().getAwayTeam().getId(),
                 entity.getMatch().getAwayTeam().getLogoUrl(),
                 entity.getMatch().getMatchDate(),
                 entity.getMatch().getCompetition().getId(),

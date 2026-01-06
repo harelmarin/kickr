@@ -21,11 +21,17 @@ public class MatchDto {
     @JsonProperty("home_team")
     private String homeTeamName;
 
+    @JsonProperty("home_team_id")
+    private UUID homeTeamId;
+
     @JsonProperty("home_logo")
     private String homeTeamLogo;
 
     @JsonProperty("away_team")
     private String awayTeamName;
+
+    @JsonProperty("away_team_id")
+    private UUID awayTeamId;
 
     @JsonProperty("away_logo")
     private String awayTeamLogo;
@@ -64,8 +70,10 @@ public class MatchDto {
         if (match == null) return null;
         return new MatchDto(
                 match.getHomeTeam().getName(),
+                match.getHomeTeam().getId(),
                 match.getHomeTeam().getLogoUrl(),
                 match.getAwayTeam().getName(),
+                match.getAwayTeam().getId(),
                 match.getAwayTeam().getLogoUrl(),
                 match.getMatchDate(),
                 match.getCompetition().getId(),

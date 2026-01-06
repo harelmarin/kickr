@@ -64,7 +64,7 @@ export const CompetitionsPage = () => {
                     />
                   </div>
                 ) : (
-                  <div className="w-24 h-24 flex items-center justify-center bg-gradient-green rounded-xl text-3xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="w-24 h-24 flex items-center justify-center bg-green-primary rounded-xl text-3xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     {comp.name.charAt(0)}
                   </div>
                 )}

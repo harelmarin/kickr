@@ -109,11 +109,42 @@ public class MatchService {
                         ));
 
 
+                // Récupérer ou créer les équipes pour avoir leurs IDs
+                String homeTeamName = teams.path("home").path("name").asText();
+                String homeTeamLogo = teams.path("home").path("logo").asText();
+                Integer homeTeamExternalId = teams.path("home").path("id").asInt();
+                
+                Team homeTeam = teamRepository.findByExternalId(homeTeamExternalId)
+                        .orElseGet(() -> teamRepository.save(
+                                Team.builder()
+                                        .name(homeTeamName)
+                                        .externalId(homeTeamExternalId)
+                                        .logoUrl(homeTeamLogo)
+                                        .competition(competition)
+                                        .build()
+                        ));
+
+                String awayTeamName = teams.path("away").path("name").asText();
+                String awayTeamLogo = teams.path("away").path("logo").asText();
+                Integer awayTeamExternalId = teams.path("away").path("id").asInt();
+                
+                Team awayTeam = teamRepository.findByExternalId(awayTeamExternalId)
+                        .orElseGet(() -> teamRepository.save(
+                                Team.builder()
+                                        .name(awayTeamName)
+                                        .externalId(awayTeamExternalId)
+                                        .logoUrl(awayTeamLogo)
+                                        .competition(competition)
+                                        .build()
+                        ));
+
                 MatchDto match = new MatchDto(
-                        teams.path("home").path("name").asText(),
-                        teams.path("home").path("logo").asText(),
-                        teams.path("away").path("name").asText(),
-                        teams.path("away").path("logo").asText(),
+                        homeTeamName,
+                        homeTeam.getId(),
+                        homeTeamLogo,
+                        awayTeamName,
+                        awayTeam.getId(),
+                        awayTeamLogo,
                         matchDate,
                         competition.getId(),
                         competition.getExternalId(),
@@ -251,7 +282,7 @@ public class MatchService {
      * Récupère les prochains matchs (après la date actuelle) avec pagination.
      */
     public Page<MatchDto> getNextMatchesByDate(int page) {
-        Pageable pageable = PageRequest.of(page, 9);
+        Pageable pageable = PageRequest.of(page, 12);
         return matchRepository.findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime.now(), pageable)
                 .map(MatchDto::fromEntity);
     }

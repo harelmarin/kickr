@@ -1,7 +1,9 @@
 export interface Match {
   id: string;
   homeTeam: string;
+  homeTeamId: string;
   awayTeam: string;
+  awayTeamId: string;
   homeLogo: string;
   awayLogo: string;
   homeScore?: number | null;
@@ -9,5 +11,4 @@ export interface Match {
   matchDate: string;
   competition: string;
   location: string;
-
 }
