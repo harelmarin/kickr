@@ -92,7 +92,7 @@ export const TeamsPage = () => {
               </button>
             )}
           </div>
-          
+
           {/* Results count */}
           <div className="mt-1.5 text-xs text-tertiary">
             {isLoading && page === 0 ? (
@@ -119,7 +119,7 @@ export const TeamsPage = () => {
                   {/* Logo */}
                   <div className="mb-3 flex items-center justify-center">
                     {team.logoUrl ? (
-                      <div className="w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center">
                         <img
                           src={team.logoUrl}
                           alt={team.name}
@@ -127,7 +127,7 @@ export const TeamsPage = () => {
                         />
                       </div>
                     ) : (
-                      <div className="w-16 h-16 flex items-center justify-center bg-green-primary rounded-lg text-xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <div className="w-16 h-16 flex items-center justify-center bg-green-primary rounded-lg text-xl font-display text-white shadow-lg">
                         {team.name.charAt(0)}
                       </div>
                     )}

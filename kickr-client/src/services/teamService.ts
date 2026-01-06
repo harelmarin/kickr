@@ -6,12 +6,12 @@ export const teamService = {
     try {
       const response = await axiosInstance.get('/teams');
       if (!Array.isArray(response.data)) {
-        console.error('Réponse inattendue du backend :', response.data);
+        console.error('Unexpected backend response:', response.data);
         return [];
       }
       return response.data;
     } catch (err) {
-      console.error('Erreur lors de la récupération des équipes :', err);
+      console.error('Error fetching teams:', err);
       return [];
     }
   },
@@ -21,7 +21,7 @@ export const teamService = {
       const response = await axiosInstance.get(`/teams/${id}`);
       return response.data;
     } catch (err) {
-      console.error(`Erreur lors de la récupération de l'équipe ${id} :`, err);
+      console.error(`Error fetching team ${id}:`, err);
       throw err;
     }
   },
@@ -30,12 +30,12 @@ export const teamService = {
     try {
       const response = await axiosInstance.get(`/teams/competition/${competitionId}`);
       if (!Array.isArray(response.data)) {
-        console.error('Réponse inattendue du backend :', response.data);
+        console.error('Unexpected backend response:', response.data);
         return [];
       }
       return response.data;
     } catch (err) {
-      console.error(`Erreur lors de la récupération des équipes de la compétition ${competitionId} :`, err);
+      console.error(`Error fetching teams for competition ${competitionId}:`, err);
       return [];
     }
   },

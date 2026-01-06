@@ -8,7 +8,7 @@ export const MatchesPage = () => {
   const pageSize = 16;
 
   const { data, isLoading, isError } = useNextMatchs(page, pageSize);
-  
+
   // Accumulate matches when new data arrives
   useEffect(() => {
     if (data?.content && data.content.length > 0) {
@@ -62,73 +62,103 @@ export const MatchesPage = () => {
         {allMatches.length > 0 ? (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 mb-8">
-              {allMatches.map((match) => (
-                <Link
-                  key={match.id}
-                  to={`/matches/${match.id}`}
-                  className="card p-2 hover-lift cursor-pointer group"
-                >
-                  {/* Logos */}
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    {/* Home */}
-                    <div className="flex flex-col items-center gap-1 flex-1">
-                      <Link
-                        to={`/teams/${match.homeTeamId}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 hover:scale-110 transition-transform hover:ring-2 hover:ring-green-bright"
-                      >
-                        <img
-                          src={match.homeLogo}
-                          alt={match.homeTeam}
-                          className="w-full h-full object-contain"
-                        />
-                      </Link>
-                      {match.homeScore !== null && (
-                        <span className="text-lg font-display text-primary font-bold">
-                          {match.homeScore}
-                        </span>
+              {allMatches.map((match) => {
+                const hasScore = match.homeScore !== null && match.awayScore !== null;
+
+                return (
+                  <Link
+                    key={match.id}
+                    to={`/matches/${match.id}`}
+                    className="card p-3 hover-lift cursor-pointer group"
+                  >
+                    {/* Logos */}
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      {/* Home */}
+                      <div className="flex flex-col items-center gap-1 flex-1">
+                        <Link
+                          to={`/teams/${match.homeTeamId}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className={`w-14 h-14 rounded-lg p-2 flex-shrink-0 kickr-touch ${hasScore && match.homeScore! > match.awayScore!
+                            ? 'bg-green-primary/20'
+                            : hasScore && match.homeScore! < match.awayScore!
+                              ? 'bg-tertiary/40'
+                              : 'bg-tertiary'
+                            }`}
+                        >
+                          <img
+                            src={match.homeLogo}
+                            alt={match.homeTeam}
+                            className="w-full h-full object-contain"
+                          />
+                        </Link>
+                        {hasScore && (
+                          <span className={`text-xl font-display font-bold ${match.homeScore! > match.awayScore! ? 'text-green-bright' :
+                            match.homeScore! < match.awayScore! ? 'text-secondary' :
+                              'text-primary'
+                            }`}>
+                            {match.homeScore}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Separator */}
+                      <div className="flex-shrink-0 text-xs text-muted font-bold">
+                        {hasScore ? '-' : 'vs'}
+                      </div>
+
+                      {/* Away */}
+                      <div className="flex flex-col items-center gap-1 flex-1">
+                        <Link
+                          to={`/teams/${match.awayTeamId}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className={`w-14 h-14 rounded-lg p-2 flex-shrink-0 kickr-touch ${hasScore && match.awayScore! > match.homeScore!
+                            ? 'bg-green-primary/20'
+                            : hasScore && match.awayScore! < match.homeScore!
+                              ? 'bg-tertiary/40'
+                              : 'bg-tertiary'
+                            }`}
+                        >
+                          <img
+                            src={match.awayLogo}
+                            alt={match.awayTeam}
+                            className="w-full h-full object-contain"
+                          />
+                        </Link>
+                        {hasScore && (
+                          <span className={`text-xl font-display font-bold ${match.awayScore! > match.homeScore! ? 'text-green-bright' :
+                            match.awayScore! < match.homeScore! ? 'text-secondary' :
+                              'text-primary'
+                            }`}>
+                            {match.awayScore}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="text-center pt-2 border-t border-primary">
+                      <div className="text-xs font-semibold text-green-bright uppercase truncate mb-1">
+                        {match.competition}
+                      </div>
+                      <div className="text-xs text-tertiary mb-2">
+                        {new Date(match.matchDate).toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
+                        {' • '}
+                        {new Date(match.matchDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
+                      </div>
+
+                      {/* Badge pour matchs terminés */}
+                      {hasScore && (
+                        <div className={`mt-1 py-1.5 px-2 rounded-md font-bold text-xs uppercase tracking-wide ${match.homeScore === match.awayScore
+                          ? 'bg-yellow-500/20 text-yellow-500'
+                          : 'bg-green-bright/15 text-green-bright'
+                          }`}>
+                          {match.homeScore === match.awayScore ? 'Draw' : 'Final'}
+                        </div>
                       )}
                     </div>
-
-                    {/* Separator */}
-                    <div className="flex-shrink-0 text-xs text-muted font-bold">
-                      {match.homeScore !== null ? '-' : 'vs'}
-                    </div>
-
-                    {/* Away */}
-                    <div className="flex flex-col items-center gap-1 flex-1">
-                      <Link
-                        to={`/teams/${match.awayTeamId}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 hover:scale-110 transition-transform hover:ring-2 hover:ring-green-bright"
-                      >
-                        <img
-                          src={match.awayLogo}
-                          alt={match.awayTeam}
-                          className="w-full h-full object-contain"
-                        />
-                      </Link>
-                      {match.awayScore !== null && (
-                        <span className="text-lg font-display text-primary font-bold">
-                          {match.awayScore}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="text-center pt-2 border-t border-primary">
-                    <div className="text-xs font-semibold text-green-bright uppercase truncate mb-1">
-                      {match.competition}
-                    </div>
-                    <div className="text-xs text-tertiary">
-                      {new Date(match.matchDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
-                      {' • '}
-                      {new Date(match.matchDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Load More Button */}

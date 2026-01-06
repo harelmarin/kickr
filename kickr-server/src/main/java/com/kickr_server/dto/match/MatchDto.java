@@ -11,7 +11,8 @@ import java.util.UUID;
 
 /**
  * DTO pour mapper un match provenant d'une API externe.
- * Expose les informations essentielles, y compris les détails de la compétition.
+ * Expose les informations essentielles, y compris les détails de la
+ * compétition.
  */
 @Data
 @NoArgsConstructor
@@ -67,7 +68,8 @@ public class MatchDto {
      * Convertit une entité Match en DTO.
      */
     public static MatchDto fromEntity(Match match) {
-        if (match == null) return null;
+        if (match == null)
+            return null;
         return new MatchDto(
                 match.getHomeTeam().getName(),
                 match.getHomeTeam().getId(),
@@ -83,7 +85,6 @@ public class MatchDto {
                 match.getLocation(),
                 match.getHomeScore(),
                 match.getAwayScore(),
-                match.getExternalFixtureId()
-        );
+                match.getExternalFixtureId());
     }
 }

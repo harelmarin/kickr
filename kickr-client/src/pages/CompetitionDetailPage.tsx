@@ -118,7 +118,7 @@ export const CompetitionDetailPage = () => {
                   {/* Logo */}
                   <div className="mb-4 flex items-center justify-center">
                     {team.logoUrl ? (
-                      <div className="w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-20 h-20 flex items-center justify-center">
                         <img
                           src={team.logoUrl}
                           alt={team.name}
@@ -126,7 +126,7 @@ export const CompetitionDetailPage = () => {
                         />
                       </div>
                     ) : (
-                      <div className="w-20 h-20 flex items-center justify-center bg-green-primary rounded-xl text-2xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <div className="w-20 h-20 flex items-center justify-center bg-green-primary rounded-xl text-2xl font-display text-white shadow-lg">
                         {team.name.charAt(0)}
                       </div>
                     )}

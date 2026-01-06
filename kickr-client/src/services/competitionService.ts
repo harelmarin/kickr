@@ -6,12 +6,12 @@ export const competitionService = {
     try {
       const response = await axiosInstance.get('/competitions');
       if (!Array.isArray(response.data)) {
-        console.error('Réponse inattendue du backend :', response.data);
+        console.error('Unexpected backend response:', response.data);
         return [];
       }
       return response.data;
     } catch (err) {
-      console.error('Erreur lors de la récupération des compétitions :', err);
+      console.error('Error fetching competitions:', err);
       return [];
     }
   },
@@ -21,7 +21,7 @@ export const competitionService = {
       const response = await axiosInstance.get(`/competitions/${id}`);
       return response.data;
     } catch (err) {
-      console.error(`Erreur lors de la récupération de la compétition ${id} :`, err);
+      console.error(`Error fetching competition ${id}:`, err);
       throw err;
     }
   },

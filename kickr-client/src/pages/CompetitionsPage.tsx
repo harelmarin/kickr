@@ -13,7 +13,7 @@ export const CompetitionsPage = () => {
         </div>
       </div>
     );
-    
+
   if (isError)
     return (
       <div className="flex items-center justify-center min-h-screen bg-primary">
@@ -56,7 +56,7 @@ export const CompetitionsPage = () => {
               {/* Logo */}
               <div className="mb-5 flex items-center justify-center">
                 {comp.logoUrl ? (
-                  <div className="w-24 h-24 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-24 h-24 flex items-center justify-center">
                     <img
                       src={comp.logoUrl}
                       alt={comp.name}
@@ -64,7 +64,7 @@ export const CompetitionsPage = () => {
                     />
                   </div>
                 ) : (
-                  <div className="w-24 h-24 flex items-center justify-center bg-green-primary rounded-xl text-3xl font-display text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="w-24 h-24 flex items-center justify-center bg-green-primary rounded-xl text-3xl font-display text-white shadow-lg">
                     {comp.name.charAt(0)}
                   </div>
                 )}

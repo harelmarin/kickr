@@ -8,9 +8,9 @@ interface NextMatchsMiniCardProps {
 export const NextMatchesCardHomePage = ({ match }: NextMatchsMiniCardProps) => {
   const matchDate = new Date(match.matchDate);
   const hasScore = match.homeScore !== null && match.awayScore !== null;
-  
+
   return (
-    <Link 
+    <Link
       to={`/matches/${match.id}`}
       className="card p-2 hover-lift cursor-pointer group"
     >
@@ -21,7 +21,7 @@ export const NextMatchesCardHomePage = ({ match }: NextMatchsMiniCardProps) => {
           <Link
             to={`/teams/${match.homeTeamId}`}
             onClick={(e) => e.stopPropagation()}
-            className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 hover:scale-110 transition-transform hover:ring-2 hover:ring-green-bright"
+            className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 kickr-touch"
           >
             <img
               src={match.homeLogo}
@@ -46,7 +46,7 @@ export const NextMatchesCardHomePage = ({ match }: NextMatchsMiniCardProps) => {
           <Link
             to={`/teams/${match.awayTeamId}`}
             onClick={(e) => e.stopPropagation()}
-            className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 hover:scale-110 transition-transform hover:ring-2 hover:ring-green-bright"
+            className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 kickr-touch"
           >
             <img
               src={match.awayLogo}

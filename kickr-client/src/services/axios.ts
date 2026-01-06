@@ -53,15 +53,15 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    // Si erreur 401 et que ce n'est pas déjà une tentative de retry
+    // If 401 error and not already a retry attempt
     if (error.response?.status === 401 && !originalRequest._retry) {
-      // Si c'est une route d'auth, on ne tente pas de refresh
+      // If it's an auth route, don't attempt refresh
       if (originalRequest.url?.includes('/auth/')) {
         return Promise.reject(error);
       }
 
       if (isRefreshing) {
-        // Si un refresh est déjà en cours, on met la requête en attente
+        // If a refresh is already in progress, queue the request
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -79,7 +79,7 @@ axiosInstance.interceptors.response.use(
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (!refreshToken) {
-        // Pas de refresh token, on déconnecte l'utilisateur
+        // No refresh token, log out the user
         localStorage.clear();
         toast.error('Session expired. Please log in again.');
         window.location.href = '/';
@@ -87,18 +87,18 @@ axiosInstance.interceptors.response.use(
       }
 
       try {
-        // Tentative de refresh du token
+        // Attempt to refresh the token
         const response = await axios.post('http://localhost:8080/api/auth/refresh', {
           refreshToken
         });
 
         const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-        // Mise à jour des tokens
+        // Update tokens
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', newRefreshToken);
 
-        // Mise à jour du header de la requête originale
+        // Update the original request header
         if (originalRequest.headers) {
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
@@ -109,7 +109,7 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError as Error);
 
-        // Le refresh a échoué, on déconnecte l'utilisateur
+        // Refresh failed, log out the user
         localStorage.clear();
         toast.error('Session expired. Please log in again.');
         window.location.href = '/';
@@ -120,13 +120,13 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // Gestion globale des autres erreurs
+    // Global error handling for other errors
     if (error.response) {
-      console.error('Erreur serveur:', error.response.status, error.response.data);
+      console.error('Server error:', error.response.status, error.response.data);
     } else if (error.request) {
-      console.error('Pas de réponse du serveur:', error.request);
+      console.error('No server response:', error.request);
     } else {
-      console.error('Erreur de configuration:', error.message);
+      console.error('Configuration error:', error.message);
     }
 
     return Promise.reject(error);

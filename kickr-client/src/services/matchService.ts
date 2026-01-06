@@ -74,4 +74,30 @@ export const matchService = {
       return [];
     }
   },
+
+  fetchMatchById: async (id: string): Promise<Match | null> => {
+    try {
+      const response = await axiosInstance.get(`/matchs/${id}`);
+      const m = response.data;
+      if (!m) return null;
+
+      return {
+        id: m.id ?? `${m.home_team}-${m.away_team}-${m.match_date}`,
+        homeTeam: m.home_team,
+        homeTeamId: m.home_team_id,
+        awayTeam: m.away_team,
+        awayTeamId: m.away_team_id,
+        homeLogo: m.home_logo,
+        awayLogo: m.away_logo,
+        matchDate: m.match_date,
+        competition: m.competition,
+        location: m.location,
+        homeScore: m.home_score,
+        awayScore: m.away_score,
+      };
+    } catch (err) {
+      console.error(`Erreur lors de la récupération du match ${id} :`, err);
+      return null;
+    }
+  },
 };

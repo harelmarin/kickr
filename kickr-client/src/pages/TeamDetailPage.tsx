@@ -8,13 +8,13 @@ export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: team, isLoading: isLoadingTeam, isError: isErrorTeam } = useTeam(id!);
   const { data: allMatches, isLoading: isLoadingMatches } = useMatchesByTeam(id!);
-  
+
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
 
   // Tri côté client basé sur la date/heure actuelle
   const { upcomingMatches, pastMatches } = useMemo(() => {
     if (!allMatches) return { upcomingMatches: [], pastMatches: [] };
-    
+
     const now = new Date();
     const upcoming: Match[] = [];
     const past: Match[] = [];
@@ -64,30 +64,57 @@ export const TeamDetailPage = () => {
     );
   }
 
-  // Version mini avec logos mis en avant
+  // Version avec indicateurs de victoire/défaite très visibles
   const renderCompactMatchCard = (match: Match, isPast: boolean) => {
     const matchDate = new Date(match.matchDate);
     const hasScore = match.homeScore !== null && match.awayScore !== null;
-    
+
+    // Déterminer le résultat du point de vue de l'équipe
+    let matchResult: 'win' | 'loss' | 'draw' | 'upcoming' = 'upcoming';
+
+    if (hasScore && team) {
+      const isHomeTeam = match.homeTeam === team.name;
+      const teamScore = isHomeTeam ? match.homeScore! : match.awayScore!;
+      const opponentScore = isHomeTeam ? match.awayScore! : match.homeScore!;
+
+      if (teamScore > opponentScore) {
+        matchResult = 'win';
+      } else if (teamScore < opponentScore) {
+        matchResult = 'loss';
+      } else {
+        matchResult = 'draw';
+      }
+    }
+
+    // Classes de style basées sur le résultat
+    const cardBgClass =
+      matchResult === 'win' ? 'bg-green-primary/15 border-l-4 border-l-green-bright' :
+        matchResult === 'loss' ? 'bg-red-primary/15 border-l-4 border-l-red-primary' :
+          matchResult === 'draw' ? 'bg-yellow-500/15 border-l-4 border-l-yellow-500' :
+            'border-l-4 border-l-transparent';
+
     return (
       <Link
         key={match.id}
         to={`/matches/${match.id}`}
-        className={`card p-2 hover-lift cursor-pointer ${isPast ? 'opacity-90' : ''}`}
+        className={`card p-3 hover-lift cursor-pointer ${cardBgClass} ${isPast ? 'opacity-95' : ''}`}
       >
-        {/* Logos mis en avant */}
+        {/* Logos des équipes */}
         <div className="flex items-center justify-center gap-2 mb-2">
           {/* Home */}
           <div className="flex flex-col items-center gap-1 flex-1">
-            <div className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 group-hover:scale-110 transition-transform">
+            <Link
+              to={`/teams/${match.homeTeamId}`}
+              onClick={(e) => e.stopPropagation()}
+              className="w-14 h-14 rounded-lg p-2 flex-shrink-0 kickr-touch bg-tertiary"
+            >
               <img src={match.homeLogo} alt={match.homeTeam} className="w-full h-full object-contain" />
-            </div>
+            </Link>
             {hasScore && (
-              <span className={`text-lg font-display font-bold ${
-                match.homeScore! > match.awayScore! ? 'text-green-bright' : 
-                match.homeScore! < match.awayScore! ? 'text-red-primary' : 
-                'text-primary'
-              }`}>
+              <span className={`text-xl font-display font-bold ${match.homeScore! > match.awayScore! ? 'text-green-bright' :
+                match.homeScore! < match.awayScore! ? 'text-secondary' :
+                  'text-primary'
+                }`}>
                 {match.homeScore}
               </span>
             )}
@@ -98,31 +125,44 @@ export const TeamDetailPage = () => {
 
           {/* Away */}
           <div className="flex flex-col items-center gap-1 flex-1">
-            <div className="w-14 h-14 bg-tertiary rounded-lg p-2 flex-shrink-0 group-hover:scale-110 transition-transform">
+            <Link
+              to={`/teams/${match.awayTeamId}`}
+              onClick={(e) => e.stopPropagation()}
+              className="w-14 h-14 rounded-lg p-2 flex-shrink-0 kickr-touch bg-tertiary"
+            >
               <img src={match.awayLogo} alt={match.awayTeam} className="w-full h-full object-contain" />
-            </div>
+            </Link>
             {hasScore && (
-              <span className={`text-lg font-display font-bold ${
-                match.awayScore! > match.homeScore! ? 'text-green-bright' : 
-                match.awayScore! < match.homeScore! ? 'text-red-primary' : 
-                'text-primary'
-              }`}>
+              <span className={`text-xl font-display font-bold ${match.awayScore! > match.homeScore! ? 'text-green-bright' :
+                match.awayScore! < match.homeScore! ? 'text-secondary' :
+                  'text-primary'
+                }`}>
                 {match.awayScore}
               </span>
             )}
           </div>
         </div>
 
-        {/* Compact Footer */}
+        {/* Footer avec résultat */}
         <div className="text-center pt-2 border-t border-primary">
           <div className="text-xs font-semibold text-green-bright uppercase truncate mb-1">
             {match.competition}
           </div>
-          <div className="text-xs text-tertiary">
-            {matchDate.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+          <div className="text-xs text-tertiary mb-2">
+            {matchDate.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
             {' • '}
-            {matchDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+            {matchDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
           </div>
+
+          {/* Badge de résultat TRÈS visible */}
+          {hasScore && matchResult !== 'upcoming' && (
+            <div className={`mt-2 py-2 px-3 rounded-lg font-bold text-sm uppercase tracking-wide ${matchResult === 'win' ? 'bg-green-bright/30 text-green-bright' :
+              matchResult === 'loss' ? 'bg-red-primary/30 text-red-primary' :
+                'bg-yellow-500/30 text-yellow-500'
+              }`}>
+              {matchResult === 'win' ? 'Victory' : matchResult === 'loss' ? 'Defeat' : 'Draw'}
+            </div>
+          )}
         </div>
       </Link>
     );
@@ -169,8 +209,8 @@ export const TeamDetailPage = () => {
                     {team.country}
                   </span>
                 )}
-                <span className="badge badge-green text-xs">{upcomingMatches.length} À venir</span>
-                <span className="badge badge-red text-xs">{pastMatches.length} Terminés</span>
+                <span className="badge badge-green text-xs">{upcomingMatches.length} Upcoming</span>
+                <span className="badge badge-red text-xs">{pastMatches.length} Completed</span>
               </div>
             </div>
           </div>
@@ -184,20 +224,18 @@ export const TeamDetailPage = () => {
           <div className="flex gap-4 mb-6 border-b border-primary">
             <button
               onClick={() => setActiveTab('upcoming')}
-              className={`px-4 py-2 text-sm font-semibold transition-colors relative ${
-                activeTab === 'upcoming' ? 'text-green-bright' : 'text-secondary hover:text-primary'
-              }`}
+              className={`px-4 py-2 text-sm font-semibold transition-colors relative ${activeTab === 'upcoming' ? 'text-green-bright' : 'text-secondary hover:text-primary'
+                }`}
             >
-              Prochains ({upcomingMatches.length})
+              Upcoming ({upcomingMatches.length})
               {activeTab === 'upcoming' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-bright"></div>}
             </button>
             <button
               onClick={() => setActiveTab('past')}
-              className={`px-4 py-2 text-sm font-semibold transition-colors relative ${
-                activeTab === 'past' ? 'text-green-bright' : 'text-secondary hover:text-primary'
-              }`}
+              className={`px-4 py-2 text-sm font-semibold transition-colors relative ${activeTab === 'past' ? 'text-green-bright' : 'text-secondary hover:text-primary'
+                }`}
             >
-              Passés ({pastMatches.length})
+              Past ({pastMatches.length})
               {activeTab === 'past' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-bright"></div>}
             </button>
           </div>
@@ -206,7 +244,7 @@ export const TeamDetailPage = () => {
           {isLoadingMatches ? (
             <div className="text-center py-12">
               <div className="w-12 h-12 border-4 border-green-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-secondary">Chargement...</p>
+              <p className="text-secondary">Loading...</p>
             </div>
           ) : (
             <>
@@ -217,7 +255,7 @@ export const TeamDetailPage = () => {
                   </div>
                 ) : (
                   <div className="card-glass p-8 text-center">
-                    <p className="text-secondary">Aucun match prévu</p>
+                    <p className="text-secondary">No upcoming matches</p>
                   </div>
                 )
               )}
@@ -229,7 +267,7 @@ export const TeamDetailPage = () => {
                   </div>
                 ) : (
                   <div className="card-glass p-8 text-center">
-                    <p className="text-secondary">Aucun historique</p>
+                    <p className="text-secondary">No past matches</p>
                   </div>
                 )
               )}

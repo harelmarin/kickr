@@ -1,4 +1,4 @@
-import { NextMatchesHomePage } from '../components/matchs/nextMatchsClient';
+import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
 
 export default function HomePage() {
   return (
@@ -26,17 +26,17 @@ export default function HomePage() {
           <div className="inline-block mb-6">
             <span className="badge badge-green text-sm">⚽ The Ultimate Football Rating Platform</span>
           </div>
-          
+
           <h1 className="text-6xl md:text-8xl font-display text-primary mb-6 leading-tight">
             Rate Every Match.
             <br />
             <span className="text-green-bright">Build Your Legacy.</span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-secondary max-w-3xl mx-auto mb-10 font-medium">
             Join thousands of football fans tracking matches, sharing ratings, and building their personal football diary.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button className="btn btn-primary text-lg px-8 py-4">
               <span>Get Started Free</span>
@@ -77,7 +77,7 @@ export default function HomePage() {
       {/* Upcoming Matches Section - Compact */}
       <section className="py-12 bg-secondary relative">
         <div className="absolute inset-0 bg-grid opacity-5 pointer-events-none"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -92,7 +92,7 @@ export default function HomePage() {
               View All →
             </button>
           </div>
-          
+
           <NextMatchesHomePage />
         </div>
       </section>
@@ -115,7 +115,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-green-primary rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-green-primary rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
@@ -128,7 +128,7 @@ export default function HomePage() {
 
             {/* Feature 2 */}
             <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-gradient-red rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-gradient-red rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                 </svg>
@@ -141,7 +141,7 @@ export default function HomePage() {
 
             {/* Feature 3 */}
             <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-blue-primary rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-blue-primary rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                 </svg>
@@ -160,7 +160,7 @@ export default function HomePage() {
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-green-primary opacity-5 blur-3xl"></div>
         </div>
-        
+
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <h2 className="text-5xl md:text-7xl font-display text-primary mb-6">
             Ready to Start Rating?
