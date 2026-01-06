@@ -8,12 +8,10 @@ type RootLayoutProps = {
 
 export const Layout = ({ children }: RootLayoutProps) => {
   return (
-    <div className="bg-primary text-gray-900 flex justify-center min-h-screen bg-header">
-      <div className="w-[70%] flex flex-col">
-          <Header />
-          <main className="pt-8">{children}</main>
-          <Footer />
-      </div>
+    <div className="bg-primary min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
     </div>
   );
 };
