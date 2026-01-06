@@ -2,13 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { LoginDropdown, RegisterDropdown } from '../auth/authForm.tsx';
 import { UserMenu } from '../auth/UserMenu';
 import { useAuth } from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
-  const [openDropdown, setOpenDropdown] = useState<'login' | 'register' | null>(
-    null,
-  );
+  const [openDropdown, setOpenDropdown] = useState<'login' | 'register' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = (type: 'login' | 'register') => {
@@ -17,10 +15,7 @@ export const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setOpenDropdown(null);
       }
     };
@@ -29,80 +24,63 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="bg-secondary/95 backdrop-blur-md border-b border-primary sticky top-0 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
+      <div className="max-w-7xl mx-auto flex items-center h-full px-6">
         {/* Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 group cursor-pointer"
-        >
-          <div className="w-10 h-10 bg-green-primary rounded-lg flex items-center justify-center">
-            <span className="text-2xl">⚽</span>
-          </div>
-          <span className="text-3xl font-display text-primary group-hover:text-green-bright transition-colors">
-            KICKR
-          </span>
+        <Link to="/" className="flex items-center gap-2 group mr-10">
+          <span className="text-2xl">⚽</span>
+          <span className="text-xl font-black font-display tracking-tighter text-white">KICKR</span>
         </Link>
 
         {/* Navigation */}
-        <div className="flex items-center gap-8">
-          <nav className="hidden md:flex gap-8 items-center">
-            <Link
-              to="/competitions"
-              className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm relative group"
-            >
-              Competitions
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-bright group-hover:w-full transition-all"></span>
-            </Link>
-            <Link
-              to="/teams"
-              className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm relative group"
-            >
-              Teams
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-bright group-hover:w-full transition-all"></span>
-            </Link>
-            <Link
-              to="/matches"
-              className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm relative group"
-            >
-              Matches
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-bright group-hover:w-full transition-all"></span>
-            </Link>
-            <Link
-              to="/members"
-              className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm relative group"
-            >
-              Members
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-bright group-hover:w-full transition-all"></span>
-            </Link>
-          </nav>
+        <nav className="hidden md:flex flex-1 items-center gap-6">
+          <NavSlot to="/matches" label="Matches" />
+          <NavSlot to="/competitions" label="Leagues" />
+          <NavSlot to="/teams" label="Teams" />
+          <NavSlot to="/members" label="Members" />
+        </nav>
 
-          {/* Auth Buttons or User Menu */}
+        {/* Right Section: Search & Profile */}
+        <div className="flex items-center gap-5">
+          {/* Letterboxd-style Search: Minimalist, grows focus */}
+          <div className="relative group">
+            <div className="bg-[#2c3440] hover:bg-[#38424e] rounded-full flex items-center transition-all duration-300">
+              <div className="pl-4 pr-2">
+                <svg className="w-3.5 h-3.5 text-[#667788] group-focus-within:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Search"
+                className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-2 w-24 focus:w-48 transition-all duration-300"
+              />
+            </div>
+          </div>
+
           {isAuthenticated ? (
-            <UserMenu />
+            <div className="flex items-center gap-4 border-l border-white/10 pl-5">
+              <UserMenu />
+            </div>
           ) : (
-            <div className="flex items-center gap-3" ref={containerRef}>
+            <div className="flex items-center gap-5 border-l border-white/10 pl-5" ref={containerRef}>
               <button
-                className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm hidden md:block"
+                className="text-[#99aabb] hover:text-white font-bold uppercase tracking-widest text-[10px] transition-colors"
                 onClick={() => toggleDropdown('login')}
               >
                 Sign In
               </button>
               <button
-                className="btn btn-primary text-sm px-6 py-2"
+                className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95"
                 onClick={() => toggleDropdown('register')}
               >
-                Join Free
+                Sign Up
               </button>
 
-              {/* Dropdown */}
+              {/* Dropdowns */}
               {openDropdown && (
-                <div className="absolute top-full right-0 mt-3 z-20 w-72 animate-scale-in">
-                  {openDropdown === 'login' && (
-                    <LoginDropdown
-                      onSuccess={() => setOpenDropdown(null)}
-                    />
-                  )}
+                <div className="absolute top-full right-6 mt-3 z-50 w-80 animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-lg overflow-hidden">
+                  {openDropdown === 'login' && <LoginDropdown onSuccess={() => setOpenDropdown(null)} />}
                   {openDropdown === 'register' && (
                     <RegisterDropdown
                       onSuccess={() => setOpenDropdown(null)}
@@ -118,3 +96,15 @@ export const Header = () => {
     </header>
   );
 };
+
+const NavSlot = ({ to, label }: { to: string; label: string }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `uppercase tracking-[0.25em] text-[10px] font-bold transition-colors ${isActive ? 'text-white' : 'text-[#667788] hover:text-[#99aabb]'
+      }`
+    }
+  >
+    {label}
+  </NavLink>
+);

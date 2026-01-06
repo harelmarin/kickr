@@ -8,9 +8,9 @@ type RootLayoutProps = {
 
 export const Layout = ({ children }: RootLayoutProps) => {
   return (
-    <div className="bg-primary min-h-screen flex flex-col">
+    <div className="bg-[#14181c] min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1">{children}</main>
+      <div className="flex-1 animate-fade-in">{children}</div>
       <Footer />
     </div>
   );

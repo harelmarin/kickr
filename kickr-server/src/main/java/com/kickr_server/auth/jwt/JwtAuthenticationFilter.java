@@ -22,14 +22,16 @@ import java.util.List;
  * Ce filtre intercepte les requêtes entrantes et :
  * </p>
  * <ul>
- *     <li>Extrait le token JWT de l'en-tête "Authorization".</li>
- *     <li>Valide le token via {@link JwtService}.</li>
- *     <li>Si valide, authentifie l'utilisateur dans le {@link SecurityContextHolder}.</li>
- *     <li>Si invalide, renvoie une réponse HTTP 401 (Unauthorized).</li>
+ * <li>Extrait le token JWT de l'en-tête "Authorization".</li>
+ * <li>Valide le token via {@link JwtService}.</li>
+ * <li>Si valide, authentifie l'utilisateur dans le
+ * {@link SecurityContextHolder}.</li>
+ * <li>Si invalide, renvoie une réponse HTTP 401 (Unauthorized).</li>
  * </ul>
  *
  * <p>
- * Permet de sécuriser les endpoints en s'assurant que seul un utilisateur authentifié peut y accéder.
+ * Permet de sécuriser les endpoints en s'assurant que seul un utilisateur
+ * authentifié peut y accéder.
  * </p>
  */
 @Component
@@ -41,14 +43,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /**
      * Intercepte chaque requête HTTP pour vérifier le JWT.
      *
-     * @param request  La requête HTTP entrante.
-     * @param response La réponse HTTP sortante.
+     * @param request     La requête HTTP entrante.
+     * @param response    La réponse HTTP sortante.
      * @param filterChain La chaîne de filtres à exécuter après ce filtre.
      * @throws ServletException En cas d'erreur de servlet.
-     * @throws IOException En cas d'erreur d'entrée/sortie.
+     * @throws IOException      En cas d'erreur d'entrée/sortie.
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response,
+            @NotNull FilterChain filterChain)
             throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -64,9 +67,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             } catch (JwtTokenException e) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write(e.getMessage());
-                return;
+                // Si le token est invalide, on ne définit pas l'authentification
+                // mais on laisse la requête continuer pour que SecurityFilterChain
+                // décide si l'accès est autorisé ou non (cas des routes publiques).
             }
         }
 
@@ -82,6 +85,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 path.startsWith("/swagger-resources") ||
                 path.startsWith("/webjars");
     }
-
 
 }

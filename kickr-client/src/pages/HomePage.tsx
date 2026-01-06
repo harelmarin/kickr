@@ -1,181 +1,150 @@
 import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col min-h-screen bg-primary">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0">
+    <main className="flex flex-col min-h-screen bg-[#14181c]">
+      {/* Cinematic Hero */}
+      <section className="relative h-[650px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-transparent to-[#14181c]/40"></div>
+          <div className="absolute inset-0 bg-[#000] opacity-40"></div>
           <img
-            src="/img/hero.jpg"
-            alt="Football stadium"
-            className="w-full h-full object-cover opacity-30"
+            src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
+            alt="Stadium"
+            className="w-full h-full object-cover grayscale opacity-50"
           />
-          <div className="absolute inset-0 bg-gradient-overlay"></div>
         </div>
 
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-green-primary opacity-10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-red-primary opacity-10 rounded-full blur-3xl"></div>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center animate-fade-in-up">
-          <div className="inline-block mb-6">
-            <span className="badge badge-green text-sm">⚽ The Ultimate Football Rating Platform</span>
-          </div>
-
-          <h1 className="text-6xl md:text-8xl font-display text-primary mb-6 leading-tight">
-            Rate Every Match.
-            <br />
-            <span className="text-green-bright">Build Your Legacy.</span>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
+          <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font">
+            Track football. <br />
+            <span className="text-[var(--color-green-primary)]">Rate matchdays.</span>
           </h1>
-
-          <p className="text-xl md:text-2xl text-secondary max-w-3xl mx-auto mb-10 font-medium">
-            Join thousands of football fans tracking matches, sharing ratings, and building their personal football diary.
+          <p className="text-xl md:text-2xl text-[#99aabb] mb-12 font-medium max-w-3xl mx-auto leading-relaxed">
+            The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="btn btn-primary text-lg px-8 py-4">
-              <span>Get Started Free</span>
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
-            <button className="btn btn-secondary text-lg px-8 py-4">
-              Explore Matches
-            </button>
+          <div className="flex items-center justify-center gap-6">
+            <Link to="/matches" className="bg-[var(--color-green-primary)] text-black font-black uppercase tracking-[0.2em] px-10 py-4 rounded text-xs hover:bg-[#3ef87b] transition-all">
+              Get Started — It's Free
+            </Link>
           </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-16">
-            <div>
-              <div className="text-4xl font-display text-green-bright mb-1">10K+</div>
-              <div className="text-sm text-tertiary uppercase tracking-wide">Matches Rated</div>
-            </div>
-            <div>
-              <div className="text-4xl font-display text-green-bright mb-1">500+</div>
-              <div className="text-sm text-tertiary uppercase tracking-wide">Active Users</div>
-            </div>
-            <div>
-              <div className="text-4xl font-display text-green-bright mb-1">50+</div>
-              <div className="text-sm text-tertiary uppercase tracking-wide">Competitions</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg className="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
         </div>
       </section>
 
-      {/* Upcoming Matches Section - Compact */}
-      <section className="py-12 bg-secondary relative">
-        <div className="absolute inset-0 bg-grid opacity-5 pointer-events-none"></div>
+      {/* Main Content Area */}
+      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <span className="text-green-bright text-xs font-semibold uppercase tracking-wider mb-2 block">
-                Don't Miss Out
-              </span>
-              <h2 className="text-4xl font-display text-primary">
-                Upcoming Matches
-              </h2>
-            </div>
-            <button className="btn btn-secondary text-sm px-4 py-2">
-              View All →
-            </button>
-          </div>
+          {/* Main Column: Social & Discover */}
+          <div className="lg:col-span-3 space-y-24">
 
-          <NextMatchesHomePage />
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-24 bg-primary">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-green-bright text-sm font-semibold uppercase tracking-wider mb-3 block">
-              Why Choose Kickr
-            </span>
-            <h2 className="text-5xl md:text-6xl font-display text-primary mb-4">
-              Everything You Need
-            </h2>
-            <p className="text-xl text-secondary max-w-2xl mx-auto">
-              The most complete platform for football match ratings and reviews
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-green-primary rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+            {/* 1. Upcoming Matches Section */}
+            <section>
+              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Upcoming Matches</span>
+                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-white transition-colors">Calendar</Link>
               </div>
-              <h3 className="text-2xl font-display text-primary mb-3">Rate & Review</h3>
-              <p className="text-secondary leading-relaxed">
-                Share detailed ratings and reviews for every match. Build your credibility as a football analyst.
-              </p>
-            </div>
+              <NextMatchesHomePage />
+            </section>
 
-            {/* Feature 2 */}
-            <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-gradient-red rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                </svg>
+            {/* 2. Recent Reviews Section */}
+            <section>
+              <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788] mb-10 border-b border-white/5 pb-4">Recent reviews from the crowd</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <ActivityCard
+                  user="TheTactician"
+                  match="Man City v Real Madrid"
+                  rating={4.5}
+                  content="Une masterclass tactique. Le positionnement de Rodri a tout changé en deuxième période."
+                />
+                <ActivityCard
+                  user="Kopite96"
+                  match="Liverpool v Arsenal"
+                  rating={5}
+                  content="L'ambiance à Anfield était indescriptible. Ce match restera dans l'histoire de la Premier League."
+                />
+                <ActivityCard
+                  user="Ultra_Paris"
+                  match="PSG v Barcelona"
+                  rating={2.5}
+                  content="Trop de pertes de balles au milieu. La défense a manqué d'agressivité sur les transitions."
+                />
+                <ActivityCard
+                  user="CalcioFan"
+                  match="Inter v Milan"
+                  rating={4}
+                  content="Un derby della Madonnina comme on les aime. On sentait la tension dès l'échauffement."
+                />
               </div>
-              <h3 className="text-2xl font-display text-primary mb-3">Follow Friends</h3>
-              <p className="text-secondary leading-relaxed">
-                See what your friends are watching and compare ratings. Discover new perspectives on matches.
-              </p>
-            </div>
+            </section>
 
-            {/* Feature 3 */}
-            <div className="card-glass p-8 hover-lift group">
-              <div className="w-14 h-14 bg-blue-primary rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                </svg>
+            {/* 3. Popular / Trending Matches (Reusing grid for now) */}
+            <section>
+              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Trending on Kickr</span>
+                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-white transition-colors">Popular</Link>
               </div>
-              <h3 className="text-2xl font-display text-primary mb-3">Track Stats</h3>
-              <p className="text-secondary leading-relaxed">
-                Keep a complete diary of every match you watch. Analyze your viewing patterns and preferences.
-              </p>
-            </div>
+              <p className="text-[#445566] text-xs italic mb-8">Matches that everyone is talking about right now.</p>
+              <NextMatchesHomePage />
+            </section>
+          </div>
+
+          {/* Right Sidebar */}
+          <div className="hidden lg:block space-y-16">
+            <section className="bg-[#1b2228] border border-white/5 rounded p-8 shadow-xl">
+              <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Kickr HQ Stats</h3>
+              <div className="space-y-8">
+                <Stat label="Matches Logged" value="1.2M" />
+                <Stat label="Reviews this week" value="45K" />
+                <Stat label="Active Members" value="280K" />
+              </div>
+            </section>
+
+            {/* Trending Leagues Without Fan Count */}
+            <section>
+              <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Trending Leagues</h3>
+              <div className="flex flex-col gap-5">
+                <LeagueItem name="Premier League" />
+                <LeagueItem name="La Liga" />
+                <LeagueItem name="Champions League" />
+                <LeagueItem name="Ligue 1" />
+                <LeagueItem name="Serie A" />
+              </div>
+            </section>
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-hero relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-green-primary opacity-5 blur-3xl"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-display text-primary mb-6">
-            Ready to Start Rating?
-          </h2>
-          <p className="text-xl text-secondary mb-10 max-w-2xl mx-auto">
-            Join our community of passionate football fans and never miss a match again.
-          </p>
-          <button className="btn btn-primary text-xl px-12 py-5 hover-glow-green">
-            Create Free Account
-          </button>
-          <p className="text-sm text-muted mt-6">
-            No credit card required • Free forever
-          </p>
-        </div>
-      </section>
+      </div>
     </main>
   );
 }
+
+const ActivityCard = ({ user, match, rating, content }: any) => (
+  <div className="bg-[#14181c] border-b border-white/5 pb-10 group">
+    <div className="flex items-center gap-3 mb-4">
+      <div className="w-8 h-8 rounded-full bg-[#2c3440]"></div>
+      <div className="flex flex-col">
+        <span className="text-white text-xs font-bold hover:text-[var(--color-green-primary)] cursor-pointer transition-colors">{user}</span>
+        <span className="text-[#5c6470] text-[10px] font-bold uppercase tracking-widest leading-none">Rated {match}</span>
+      </div>
+      <span className="ml-auto text-[var(--color-green-primary)] font-bold text-xs">
+        {'★'.repeat(Math.floor(rating))}{rating % 1 !== 0 ? '½' : ''}
+      </span>
+    </div>
+    <p className="text-sm text-[#99aabb] leading-relaxed italic line-clamp-3">"{content}"</p>
+  </div>
+);
+
+const Stat = ({ label, value }: any) => (
+  <div className="flex flex-col">
+    <span className="text-[9px] font-bold text-[#5c6470] uppercase tracking-widest mb-1">{label}</span>
+    <span className="text-2xl font-black text-white italic">{value}</span>
+  </div>
+);
+
+const LeagueItem = ({ name }: { name: string }) => (
+  <div className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2">
+    <span className="text-xs font-bold text-[#99aabb] group-hover:text-white transition-colors">{name}</span>
+    <span className="text-[#445566] transition-transform group-hover:translate-x-1">→</span>
+  </div>
+);

@@ -34,8 +34,9 @@ public class MatchController {
         })
         @GetMapping("/next")
         public Page<MatchDto> getNextMatches(
-                        @Parameter(description = "Numéro de page (0-based)", example = "0") @RequestParam(defaultValue = "0") int page) {
-                return matchService.getNextMatchesByDate(page);
+                        @Parameter(description = "Numéro de page (0-based)", example = "0") @RequestParam(defaultValue = "0") int page,
+                        @Parameter(description = "Nombre d'éléments par page", example = "10") @RequestParam(defaultValue = "10") int limit) {
+                return matchService.getNextMatchesByDate(page, limit);
         }
 
         @Operation(summary = "Récupère tous les matchs disponibles")

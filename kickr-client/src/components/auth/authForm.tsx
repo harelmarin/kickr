@@ -12,7 +12,6 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
         try {
             await login({ username, password });
             onSuccess?.();
@@ -22,12 +21,11 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="absolute top-full mt-1 right-0 w-64 bg-primary border border-gray-700 rounded-md shadow-lg p-4 z-50 flex flex-col gap-3"
-        >
+        <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
+            <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.3em] mb-2">Sign In</h3>
+
             {error && (
-                <div className="text-red-500 text-xs bg-red-500/10 p-2 rounded">
+                <div className="text-[10px] font-bold text-[#ff4b4b] bg-[#ff4b4b]/10 p-3 rounded border border-[#ff4b4b]/20 uppercase tracking-widest">
                     {error}
                 </div>
             )}
@@ -38,7 +36,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                className="p-2 rounded bg-gray-800 text-white text-sm w-full border border-gray-700 focus:border-secondary outline-none transition"
+                className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
             />
             <input
                 type="password"
@@ -46,14 +44,14 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="p-2 rounded bg-gray-800 text-white text-sm w-full border border-gray-700 focus:border-secondary outline-none transition"
+                className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
             />
             <button
                 type="submit"
                 disabled={isLoading}
-                className="bg-secondary p-2 rounded text-sm hover:opacity-90 transition w-full disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                className="bg-[var(--color-green-primary)] text-black py-3 rounded text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#3ef87b] transition-all disabled:opacity-50"
             >
-                {isLoading ? 'Logging in...' : 'Log in'}
+                {isLoading ? 'Verifying...' : 'Log in'}
             </button>
         </form>
     );
@@ -72,31 +70,24 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
         try {
             await register({ name, email, password });
-            // After successful registration, reset form and switch to login
             setName('');
             setEmail('');
             setPassword('');
-
-            // Wait a bit for the toast to show, then switch to login
             setTimeout(() => {
                 onSuccess?.();
                 onSwitchToLogin?.();
             }, 2000);
-        } catch (err) {
-            // Error is handled by the useAuth hook
-        }
+        } catch (err) { }
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="absolute top-full mt-1 right-0 w-64 bg-primary border border-gray-700 rounded-md shadow-lg p-4 z-50 flex flex-col gap-3"
-        >
+        <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
+            <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.3em] mb-2">Create Account</h3>
+
             {error && (
-                <div className="text-red-500 text-xs bg-red-500/10 p-2 rounded">
+                <div className="text-[10px] font-bold text-[#ff4b4b] bg-[#ff4b4b]/10 p-3 rounded border border-[#ff4b4b]/20 uppercase tracking-widest">
                     {error}
                 </div>
             )}
@@ -107,7 +98,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="p-2 rounded bg-gray-800 text-white text-sm w-full border border-gray-700 focus:border-secondary outline-none transition"
+                className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
             />
             <input
                 type="email"
@@ -115,7 +106,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="p-2 rounded bg-gray-800 text-white text-sm w-full border border-gray-700 focus:border-secondary outline-none transition"
+                className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
             />
             <input
                 type="password"
@@ -124,16 +115,15 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="p-2 rounded bg-gray-800 text-white text-sm w-full border border-gray-700 focus:border-secondary outline-none transition"
+                className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
             />
             <button
                 type="submit"
                 disabled={isLoading}
-                className="bg-secondary p-2 rounded text-sm hover:opacity-90 transition w-full disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                className="bg-[var(--color-green-primary)] text-black py-3 rounded text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#3ef87b] transition-all disabled:opacity-50"
             >
-                {isLoading ? 'Signing up...' : 'Sign up'}
+                {isLoading ? 'Processing...' : 'Sign up'}
             </button>
         </form>
     );
 };
-
