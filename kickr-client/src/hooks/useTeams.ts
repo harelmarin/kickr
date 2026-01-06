@@ -27,3 +27,12 @@ export const useTeamsByCompetition = (competitionId: string) => {
     enabled: !!competitionId,
   });
 };
+
+export const useSearchTeams = (search?: string, page: number = 0, size: number = 20) => {
+  return useQuery({
+    queryKey: ['teams', 'search', search, page, size],
+    queryFn: () => teamService.searchTeams(search, page, size),
+    staleTime: 60 * 1000,
+    placeholderData: (prev) => prev,
+  });
+};
