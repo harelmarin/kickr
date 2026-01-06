@@ -22,5 +22,10 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
     );
     Page<Match> findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime dateTime, Pageable pageable);
     Optional<Match> findByExternalFixtureId(Integer externalFixtureId);
-
+    
+    // Tous les matchs d'une équipe (à domicile ou à l'extérieur) triés par date
+    List<Match> findByHomeTeamOrAwayTeamOrderByMatchDateDesc(
+            Team homeTeam,
+            Team awayTeam
+    );
 }

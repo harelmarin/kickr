@@ -256,5 +256,19 @@ public class MatchService {
                 .map(MatchDto::fromEntity);
     }
 
+    /**
+     * Récupère tous les matchs d'une équipe spécifique (passés et futurs).
+     */
+    public List<MatchDto> getAllMatchesByTeamId(java.util.UUID teamId) {
+        Optional<Team> teamOpt = teamRepository.findById(teamId);
+        if (teamOpt.isEmpty()) {
+            return List.of();
+        }
+        Team team = teamOpt.get();
+        return matchRepository.findByHomeTeamOrAwayTeamOrderByMatchDateDesc(team, team)
+                .stream()
+                .map(MatchDto::fromEntity)
+                .toList();
+    }
 
 }

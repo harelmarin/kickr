@@ -52,4 +52,16 @@ public class MatchController {
                 .toList();
     }
 
+    @Operation(summary = "Récupère tous les matchs d'une équipe (passés et futurs)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste de tous les matchs de l'équipe")
+    })
+    @GetMapping("/team/{teamId}")
+    public List<MatchDto> getAllMatchesByTeam(
+            @Parameter(description = "ID de l'équipe")
+            @PathVariable java.util.UUID teamId
+    ) {
+        return matchService.getAllMatchesByTeamId(teamId);
+    }
+
 }

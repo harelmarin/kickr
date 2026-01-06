@@ -4,6 +4,7 @@ import { ReactQueryProvider } from '../services/queryProvider';
 import HomePage from './HomePage';
 import { CompetitionsPage } from './CompetitionsPage';
 import { CompetitionDetailPage } from './CompetitionDetailPage';
+import { TeamDetailPage } from './TeamDetailPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/competitions" element={<CompetitionsPage/>}/>
             <Route path="/competitions/:id" element={<CompetitionDetailPage/>}/>
+            <Route path="/teams/:id" element={<TeamDetailPage/>}/>
           </Routes>
         </Layout>
       </BrowserRouter>
