@@ -14,13 +14,14 @@ import java.util.UUID;
  * <p>
  * Fournit les méthodes principales pour :
  * <ul>
- *     <li>Récupérer tous les utilisateurs</li>
- *     <li>Récupérer un utilisateur par son UUID ou son email</li>
- *     <li>Créer un nouvel utilisateur</li>
- *     <li>Supprimer un utilisateur</li>
+ * <li>Récupérer tous les utilisateurs</li>
+ * <li>Récupérer un utilisateur par son UUID ou son email</li>
+ * <li>Créer un nouvel utilisateur</li>
+ * <li>Supprimer un utilisateur</li>
  * </ul>
  * <p>
- * Les exceptions personnalisées {@link UserNotFoundException} et {@link UserAlreadyExistException}
+ * Les exceptions personnalisées {@link UserNotFoundException} et
+ * {@link UserAlreadyExistException}
  * sont levées en cas de problème métier.
  */
 @Service
@@ -37,6 +38,7 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
     /**
      * Récupère un utilisateur par son identifiant UUID.
      *
@@ -55,10 +57,23 @@ public class UserService {
      *
      * @param email l'email de l'utilisateur recherché.
      * @return l'utilisateur correspondant.
-     * @throws UserNotFoundException si aucun utilisateur n'est trouvé avec cet email.
+     * @throws UserNotFoundException si aucun utilisateur n'est trouvé avec cet
+     *                               email.
      */
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
+    }
+
+    /**
+     * Récupère un utilisateur par son nom.
+     *
+     * @param name le nom de l'utilisateur recherché.
+     * @return l'utilisateur correspondant.
+     * @throws UserNotFoundException si aucun utilisateur n'est trouvé avec ce nom.
+     */
+    public User getUserByName(String name) {
+        return userRepository.findByName(name)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
     }
 

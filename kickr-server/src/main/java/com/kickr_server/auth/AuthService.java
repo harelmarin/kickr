@@ -11,7 +11,6 @@ import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.exception.auth.LogOutException;
 import com.kickr_server.user.User;
 
-
 import com.kickr_server.exception.auth.InvalidCredentialsException;
 import com.kickr_server.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,25 +27,25 @@ public class AuthService {
     private final RefreshTokenService refreshTokenService;
     private final RefreshTokenRepository refreshTokenRepository;
 
-
-
     /**
      * Authentifie un utilisateur avec son email et son mot de passe.
      *
      * @param request les identifiants de l'utilisateur
-     * @return un objet AuthResponse contenant le token JWT, le refresh token et le DTO de l'utilisateur
-     * @throws InvalidCredentialsException si l'email ou le mot de passe est incorrect
+     * @return un objet AuthResponse contenant le token JWT, le refresh token et le
+     *         DTO de l'utilisateur
+     * @throws InvalidCredentialsException si l'email ou le mot de passe est
+     *                                     incorrect
      */
     public AuthResponse authenticate(AuthRequest request) {
         User user;
         try {
-            user = userService.getUserByEmail(request.email());
+            user = userService.getUserByName(request.username());
         } catch (Exception e) {
-            throw new InvalidCredentialsException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new InvalidCredentialsException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
         String accessToken = jwtService.generateToken(user.getEmail());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
@@ -70,17 +69,18 @@ public class AuthService {
      * <p>
      * Cette méthode :
      * <ul>
-     *   <li>Vérifie que le refresh token existe en base</li>
-     *   <li>Contrôle sa date d’expiration</li>
-     *   <li>Génère un nouveau access token si le refresh token est valide</li>
-     *   <li>Supprime le refresh token de la base</li>
-     *   <li></li>
+     * <li>Vérifie que le refresh token existe en base</li>
+     * <li>Contrôle sa date d’expiration</li>
+     * <li>Génère un nouveau access token si le refresh token est valide</li>
+     * <li>Supprime le refresh token de la base</li>
+     * <li></li>
      * </ul>
      * Si le refresh token est invalide ou expiré, une exception est levée.
      * </p>
      *
      * @param refreshTokenStr le refresh token envoyé par le client
-     * @return un objet {@link RefreshTokenResponse} contenant le nouvel access token et le refresh token
+     * @return un objet {@link RefreshTokenResponse} contenant le nouvel access
+     *         token et le refresh token
      */
     public RefreshTokenResponse refreshAccessToken(String refreshTokenStr) {
         RefreshToken refreshToken = refreshTokenService.findByToken(refreshTokenStr)

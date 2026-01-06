@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { LoginDropdown, RegisterDropdown } from '../auth/authForm.tsx';
+import { UserMenu } from '../auth/UserMenu';
+import { useAuth } from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
+  const { isAuthenticated } = useAuth();
   const [openDropdown, setOpenDropdown] = useState<'login' | 'register' | null>(
     null,
   );
@@ -74,29 +77,42 @@ export const Header = () => {
             </Link>
           </nav>
 
-          {/* Auth Buttons */}
-          <div className="flex items-center gap-3" ref={containerRef}>
-            <button
-              className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm hidden md:block"
-              onClick={() => toggleDropdown('login')}
-            >
-              Sign In
-            </button>
-            <button
-              className="btn btn-primary text-sm px-6 py-2"
-              onClick={() => toggleDropdown('register')}
-            >
-              Join Free
-            </button>
+          {/* Auth Buttons or User Menu */}
+          {isAuthenticated ? (
+            <UserMenu />
+          ) : (
+            <div className="flex items-center gap-3" ref={containerRef}>
+              <button
+                className="text-secondary hover:text-green-bright font-semibold transition-colors text-sm hidden md:block"
+                onClick={() => toggleDropdown('login')}
+              >
+                Sign In
+              </button>
+              <button
+                className="btn btn-primary text-sm px-6 py-2"
+                onClick={() => toggleDropdown('register')}
+              >
+                Join Free
+              </button>
 
-            {/* Dropdown */}
-            {openDropdown && (
-              <div className="absolute top-full right-0 mt-3 z-20 w-72 animate-scale-in">
-                {openDropdown === 'login' && <LoginDropdown />}
-                {openDropdown === 'register' && <RegisterDropdown />}
-              </div>
-            )}
-          </div>
+              {/* Dropdown */}
+              {openDropdown && (
+                <div className="absolute top-full right-0 mt-3 z-20 w-72 animate-scale-in">
+                  {openDropdown === 'login' && (
+                    <LoginDropdown
+                      onSuccess={() => setOpenDropdown(null)}
+                    />
+                  )}
+                  {openDropdown === 'register' && (
+                    <RegisterDropdown
+                      onSuccess={() => setOpenDropdown(null)}
+                      onSwitchToLogin={() => setOpenDropdown('login')}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </header>
