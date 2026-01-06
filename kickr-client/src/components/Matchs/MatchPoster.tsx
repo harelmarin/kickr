@@ -27,12 +27,14 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
                     <img src={match.awayLogo} alt="" className="w-16 h-16 object-contain filter drop-shadow-lg transition-transform duration-500 group-hover:scale-110" title={match.awayTeam} />
                 </div>
 
-                {/* Score Ribbon (Bottom) */}
+                {/* Aesthetic floating score badge */}
                 {isPast && (
-                    <div className="absolute bottom-0 inset-x-0 bg-kickr py-1.5 text-center transition-transform duration-300 translate-y-full group-hover:translate-y-0">
-                        <span className="text-black font-black text-[12px] tracking-tight">
-                            {match.homeScore} — {match.awayScore}
-                        </span>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+                        <div className="bg-[#1b2228]/90 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full shadow-2xl flex items-center gap-3">
+                            <span className="text-[13px] font-black text-white italic display-font leading-none">{match.homeScore}</span>
+                            <div className="w-[1px] h-3 bg-white/10"></div>
+                            <span className="text-[13px] font-black text-white italic display-font leading-none">{match.awayScore}</span>
+                        </div>
                     </div>
                 )}
 
@@ -44,15 +46,26 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
             <div className="flex flex-col px-0.5">
                 <Link
                     to={`/matches/${match.id}`}
-                    className="text-[12px] font-bold text-[#99aabb] group-hover:text-white transition-colors truncate"
+                    className="flex items-center gap-1.5 text-[11px] font-bold text-[#8899aa] group-hover:text-white transition-colors truncate uppercase tracking-tight"
                 >
-                    {match.homeTeam} v {match.awayTeam}
+                    <span className="truncate">{match.homeTeam}</span>
+                    <span className="text-[#3c444d]">•</span>
+                    <span className="truncate">{match.awayTeam}</span>
                 </Link>
 
-                <div className="flex items-center gap-1 mt-1">
+                <div className="flex items-center justify-between mt-1">
                     <span className="text-[#5c6470] text-[10px] font-bold uppercase tracking-widest">
                         {new Date(match.matchDate).toLocaleDateString('fr', { day: '2-digit', month: 'short' })}
                     </span>
+                    {match.averageRating && match.averageRating > 0 && (
+                        <div className="flex items-center gap-0.5 text-kickr text-[10px] font-bold">
+                            <span>★</span>
+                            <span>{match.averageRating.toFixed(1)}</span>
+                            {match.reviewsCount && match.reviewsCount > 0 && (
+                                <span className="text-[#445566] ml-1">({match.reviewsCount})</span>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

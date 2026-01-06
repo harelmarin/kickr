@@ -6,17 +6,17 @@ export const CompetitionsPage = () => {
 
   if (isLoading)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#14181c]">
-        <div className="w-16 h-16 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex items-center justify-center min-h-screen bg-[#0a0b0d]">
+        <div className="w-12 h-12 border-4 border-kickr border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
 
   return (
-    <main className="min-h-screen bg-[#14181c] py-16">
+    <main className="min-h-screen bg-[#0a0b0d] py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <header className="mb-12">
-          <h1 className="text-4xl font-display text-white mb-2 italic">Leagues</h1>
-          <p className="text-[#99aabb] uppercase tracking-[0.2em] text-[11px] font-bold">
+        <header className="mb-20">
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">Leagues</h1>
+          <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
             Major football competitions around the globe
           </p>
         </header>
@@ -28,17 +28,17 @@ export const CompetitionsPage = () => {
               to={`/competitions/${comp.id}`}
               className="group"
             >
-              <div className="aspect-square bg-[#2c3440] rounded-xl border border-white/5 p-8 flex items-center justify-center mb-4 transition-all duration-300 group-hover:border-[var(--color-primary)] group-hover:bg-[#1b2228] shadow-lg">
+              <div className="aspect-square bg-[#1b2228] rounded-md border border-white/5 p-8 flex items-center justify-center mb-4 transition-all duration-300 poster-hover-effect">
                 <img
                   src={comp.logoUrl}
                   alt={comp.name}
-                  className="max-w-full max-h-full object-contain filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
+                  className="max-w-[75%] max-h-[75%] object-contain filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <h3 className="text-center text-sm font-bold text-white group-hover:text-[var(--color-primary)] transition-colors tracking-tight">
+              <h3 className="text-center text-[11px] font-bold text-[#8899aa] group-hover:text-white transition-colors tracking-widest uppercase">
                 {comp.name}
               </h3>
-              <p className="text-center text-[10px] text-[#667788] uppercase tracking-widest mt-1">
+              <p className="text-center text-[9px] text-[#5c6470] uppercase font-black tracking-[0.2em] mt-2 leading-none">
                 {comp.country || 'International'}
               </p>
             </Link>

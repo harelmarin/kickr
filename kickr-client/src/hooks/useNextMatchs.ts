@@ -19,3 +19,18 @@ export const useMatchesByTeam = (teamId: string) => {
     enabled: !!teamId,
   });
 };
+
+export const useSearchMatches = (params: {
+  competitionId?: string;
+  finished?: boolean;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}) => {
+  return useQuery<MatchesPageResponse, Error>({
+    queryKey: ['matches', 'search', params],
+    queryFn: () => matchService.searchMatches(params),
+    placeholderData: (prev) => prev,
+    staleTime: 60 * 1000,
+  });
+};

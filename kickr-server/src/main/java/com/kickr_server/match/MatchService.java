@@ -6,6 +6,7 @@ import com.kickr_server.config.AppConfig;
 import com.kickr_server.dto.match.MatchDto;
 import com.kickr_server.team.Team;
 import com.kickr_server.team.TeamRepository;
+import com.kickr_server.usermatch.UserMatchRepository;
 import com.kickr_server.utils.DateTimeConverter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,15 +38,18 @@ public class MatchService {
         private final MatchRepository matchRepository;
         private final TeamRepository teamRepository;
         private final CompetitionRepository competitionRepository;
+        private final UserMatchRepository userMatchRepository;
         private final ObjectMapper objectMapper;
 
         public MatchService(RestTemplate restTemplate, AppConfig appConfig, MatchRepository matchRepository,
-                        TeamRepository teamRepository, CompetitionRepository competitionRepository) {
+                        TeamRepository teamRepository, CompetitionRepository competitionRepository,
+                        UserMatchRepository userMatchRepository) {
                 this.restTemplate = restTemplate;
                 this.footballApiKey = appConfig.getFootballApiKey();
                 this.matchRepository = matchRepository;
                 this.teamRepository = teamRepository;
                 this.competitionRepository = competitionRepository;
+                this.userMatchRepository = userMatchRepository;
 
                 this.objectMapper = new ObjectMapper();
                 this.objectMapper.registerModule(new JavaTimeModule());
@@ -54,6 +58,7 @@ public class MatchService {
         /**
          * Récupère la liste des prochains matchs depuis l'API Football.
          */
+        @SuppressWarnings("unused")
         private List<MatchDto> fetchNextMatches() throws Exception {
                 int season = 2025;
                 int[] leagueIds = {
@@ -153,7 +158,9 @@ public class MatchService {
                                                 location,
                                                 goals.path("home").isNull() ? null : goals.path("home").asInt(),
                                                 goals.path("away").isNull() ? null : goals.path("away").asInt(),
-                                                externalId);
+                                                externalId,
+                                                0.0,
+                                                0L);
 
                                 matches.add(match);
                         }
@@ -177,8 +184,6 @@ public class MatchService {
                                 // Compétitions européennes
                                 2, 3, 848
                 };
-
-                List<MatchDto> allMatches = new ArrayList<>();
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.set("x-apisports-key", footballApiKey);
@@ -320,6 +325,30 @@ public class MatchService {
         public Optional<MatchDto> getMatchById(Integer externalId) {
                 return matchRepository.findByExternalFixtureId(externalId)
                                 .map(MatchDto::fromEntity);
+        }
+
+        public Page<MatchDto> findMatchesWithFilters(java.util.UUID competitionId, Boolean isFinished, String sort,
+                        int page, int size) {
+                Pageable pageable = PageRequest.of(page, size);
+                Page<Match> matchPage = matchRepository.findMatchesWithFilters(competitionId, isFinished, sort,
+                                pageable);
+
+                // Récupérer les stats pour les matchs de la page
+                List<java.util.UUID> matchIds = matchPage.getContent().stream().map(Match::getId).toList();
+                List<Object[]> stats = userMatchRepository.findStatsByMatchIds(matchIds);
+
+                // Mapper les stats par matchId
+                java.util.Map<java.util.UUID, Double> ratingsMap = new java.util.HashMap<>();
+                java.util.Map<java.util.UUID, Long> countsMap = new java.util.HashMap<>();
+                for (Object[] stat : stats) {
+                        ratingsMap.put((java.util.UUID) stat[0], (Double) stat[1]);
+                        countsMap.put((java.util.UUID) stat[0], (Long) stat[2]);
+                }
+
+                return matchPage.map(m -> MatchDto.fromEntityWithStats(
+                                m,
+                                ratingsMap.get(m.getId()),
+                                countsMap.get(m.getId())));
         }
 
 }

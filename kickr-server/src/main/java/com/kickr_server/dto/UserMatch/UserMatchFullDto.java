@@ -38,9 +38,9 @@ public class UserMatchFullDto {
                 entity.getMatch().getLocation(),
                 entity.getMatch().getHomeScore(),
                 entity.getMatch().getAwayScore(),
-                entity.getMatch().getExternalFixtureId()
-        );
-
+                entity.getMatch().getExternalFixtureId(),
+                0.0,
+                0L);
 
         return new UserMatchFullDto(
                 entity.getId(),
@@ -48,7 +48,6 @@ public class UserMatchFullDto {
                 matchDto,
                 entity.getNote(),
                 entity.getComment(),
-                entity.getWatchedAt()
-        );
+                entity.getWatchedAt());
     }
 }

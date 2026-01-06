@@ -10,22 +10,22 @@ export const CompetitionDetailPage = () => {
   if (isLoadingComp || !competition) return null;
 
   return (
-    <main className="min-h-screen bg-[#14181c]">
+    <main className="min-h-screen bg-[#0a0b0d]">
       {/* League Hero Area */}
-      <div className="bg-[#1b2228] border-b border-black py-20 relative overflow-hidden">
+      <div className="bg-[#14181c] border-b border-white/5 py-24 relative overflow-hidden">
         {/* Abstract Background Decoration */}
         <div className="absolute right-0 top-0 w-1/3 h-full opacity-5 pointer-events-none">
           <img src={competition.logoUrl} className="w-full h-full object-contain grayscale scale-150 rotate-12" alt="" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
-          <div className="w-40 h-40 bg-[#2c3440] rounded-2xl p-6 shadow-2xl border border-white/5">
+          <div className="w-40 h-40 bg-[#1b2228] rounded-md p-6 shadow-2xl border border-white/5">
             <img src={competition.logoUrl} alt={competition.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
           <div className="text-center md:text-left">
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none">{competition.name}</h1>
-            <p className="text-[#99aabb] uppercase tracking-[0.3em] font-bold text-[11px] mb-6">
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font">{competition.name}</h1>
+            <p className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[11px] mb-8">
               Official {competition.country || 'International'} League Page
             </p>
 
@@ -40,8 +40,8 @@ export const CompetitionDetailPage = () => {
 
       {/* League Content: Clubs List */}
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <header className="mb-10">
-          <h2 className="section-title">PARTICIPATING CLUBS IN {competition.name.toUpperCase()}</h2>
+        <header className="mb-12 border-b border-white/5 pb-4">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">CLUBS IN {competition.name.toUpperCase()}</h2>
         </header>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
@@ -56,14 +56,14 @@ export const CompetitionDetailPage = () => {
                 to={`/teams/${team.id}`}
                 className="group"
               >
-                <div className="aspect-square bg-[#1b2228] rounded-xl border border-white/5 p-6 flex items-center justify-center mb-3 transition-all duration-300 group-hover:border-[var(--color-primary)] group-hover:bg-[#2c3440] shadow-md relative overflow-hidden">
+                <div className="aspect-square bg-[#1b2228] rounded-md border border-white/5 p-6 flex items-center justify-center mb-3 transition-all duration-300 poster-hover-effect relative overflow-hidden">
                   <img
                     src={team.logoUrl}
                     alt={team.name}
-                    className="max-w-full max-h-full object-contain filter drop-shadow-xl relative z-10 transition-transform duration-500 group-hover:scale-105"
+                    className="max-w-[70%] max-h-[70%] object-contain filter drop-shadow-xl relative z-10 transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-                <h3 className="text-[11px] font-bold text-[#99aabb] text-center group-hover:text-white transition-colors truncate px-2 uppercase tracking-widest">
+                <h3 className="text-[11px] font-bold text-[#8899aa] text-center group-hover:text-white transition-colors truncate px-2 uppercase tracking-tight">
                   {team.name}
                 </h3>
               </Link>

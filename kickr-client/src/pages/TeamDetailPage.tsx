@@ -11,25 +11,25 @@ export const TeamDetailPage = () => {
   if (isLoadingTeam || !team) return null;
 
   return (
-    <main className="min-h-screen bg-[#14181c]">
+    <main className="min-h-screen bg-[#0a0b0d]">
       {/* Team Profile Header - Cinematic Identity */}
-      <div className="bg-[#1b2228] border-b border-black pt-20 pb-16 relative overflow-hidden">
+      <div className="bg-[#14181c] border-b border-white/5 pt-20 pb-20 relative overflow-hidden">
         {/* Subtle Crest Backdrop */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.03] pointer-events-none">
           <img src={team.logoUrl} className="w-full h-full object-contain grayscale" alt="" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-end gap-12 relative z-10">
-          <div className="w-48 h-48 bg-[#2c3440] rounded shadow-2xl p-8 border border-white/10 relative group flex-shrink-0">
+          <div className="w-48 h-48 bg-[#1b2228] rounded-md shadow-2xl p-8 border border-white/10 relative group flex-shrink-0">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
           <div className="flex-1 text-left mb-2">
-            <h1 className="text-6xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic">{team.name}</h1>
+            <h1 className="text-6xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
             <div className="flex flex-wrap items-center gap-6">
-              <span className="text-[#99aabb] uppercase tracking-[0.2em] font-bold text-xs">{team.country}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#445566]"></span>
-              <span className="text-[#99aabb] uppercase tracking-[0.2em] font-bold text-xs">{team.competitionId ? 'Division 1' : 'Club International'}</span>
+              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.country}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2c3440]"></span>
+              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.competitionId ? 'Division 1' : 'Club International'}</span>
             </div>
           </div>
 
@@ -96,7 +96,7 @@ const BigStat = ({ label, value }: { label: string; value: string }) => (
 const MiniStat = ({ label, value, description }: { label: string; value: string; description: string }) => (
   <div>
     <div className="text-[9px] font-bold text-[#667788] uppercase tracking-widest mb-1">{label}</div>
-    <div className="text-2xl font-black text-[var(--color-primary)] font-display italic">{value}</div>
+    <div className="text-2xl font-black text-kickr font-display italic">{value}</div>
     <div className="text-[9px] text-[#445566] uppercase font-bold tracking-tighter mt-1">{description}</div>
   </div>
 );

@@ -64,6 +64,12 @@ public class MatchDto {
     @JsonProperty("id")
     private Integer externalFixtureId;
 
+    @JsonProperty("average_rating")
+    private Double averageRating;
+
+    @JsonProperty("reviews_count")
+    private Long reviewsCount;
+
     /**
      * Convertit une entité Match en DTO.
      */
@@ -85,6 +91,17 @@ public class MatchDto {
                 match.getLocation(),
                 match.getHomeScore(),
                 match.getAwayScore(),
-                match.getExternalFixtureId());
+                match.getExternalFixtureId(),
+                0.0,
+                0L);
+    }
+
+    public static MatchDto fromEntityWithStats(Match match, Double avgRating, Long reviewsCount) {
+        MatchDto dto = fromEntity(match);
+        if (dto != null) {
+            dto.setAverageRating(avgRating != null ? avgRating : 0.0);
+            dto.setReviewsCount(reviewsCount != null ? reviewsCount : 0L);
+        }
+        return dto;
     }
 }

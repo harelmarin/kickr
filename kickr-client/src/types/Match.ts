@@ -11,4 +11,6 @@ export interface Match {
   matchDate: string;
   competition: string;
   location: string;
+  averageRating?: number;
+  reviewsCount?: number;
 }

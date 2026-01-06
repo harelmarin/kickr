@@ -73,4 +73,15 @@ public class MatchController {
                                                 org.springframework.http.HttpStatus.NOT_FOUND, "Match non trouvé"));
         }
 
+        @Operation(summary = "Recherche des matchs avec filtres (ligue, statut, tri)")
+        @GetMapping("/search")
+        public Page<MatchDto> searchMatches(
+                        @Parameter(description = "ID de la compétition") @RequestParam(required = false) java.util.UUID competitionId,
+                        @Parameter(description = "Match terminé (true/false)") @RequestParam(required = false) Boolean finished,
+                        @Parameter(description = "Tri (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
+                        @Parameter(description = "Page") @RequestParam(defaultValue = "0") int page,
+                        @Parameter(description = "Limite") @RequestParam(defaultValue = "18") int limit) {
+                return matchService.findMatchesWithFilters(competitionId, finished, sort, page, limit);
+        }
+
 }
