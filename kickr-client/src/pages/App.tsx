@@ -16,6 +16,8 @@ import { UserDetailPage } from './UserDetailPage';
 import { UserMatchesPage } from './UserMatchesPage';
 import { UserDiaryPage } from './UserDiaryPage';
 import { ReviewDetailPage } from './ReviewDetailPage';
+import { RegisterPage } from './RegisterPage';
+import { CommunityPage } from './CommunityPage';
 
 function App() {
   const { checkAuth, user } = useAuth();
@@ -31,6 +33,8 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/community" element={<CommunityPage />} />
             <Route path="/competitions" element={<CompetitionsPage />} />
             <Route path="/competitions/:id" element={<CompetitionDetailPage />} />
             <Route path="/teams" element={<TeamsPage />} />

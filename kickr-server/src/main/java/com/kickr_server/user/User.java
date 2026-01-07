@@ -5,8 +5,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,7 +23,10 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@ToString(exclude = "password")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -36,8 +42,8 @@ public class User {
     /**
      * Nom de l'utilisateur.
      * <ul>
-     *   <li>Ne peut pas être vide.</li>
-     *   <li>Doit être unique dans la base.</li>
+     * <li>Ne peut pas être vide.</li>
+     * <li>Doit être unique dans la base.</li>
      * </ul>
      */
     @NotBlank(message = "Le nom ne peut pas être vide")
@@ -47,9 +53,9 @@ public class User {
     /**
      * Adresse email de l'utilisateur.
      * <ul>
-     *   <li>Ne peut pas être vide.</li>
-     *   <li>Doit respecter le format email.</li>
-     *   <li>Doit être unique dans la base.</li>
+     * <li>Ne peut pas être vide.</li>
+     * <li>Doit respecter le format email.</li>
+     * <li>Doit être unique dans la base.</li>
      * </ul>
      */
     @Email(message = "L'email doit être valide")
@@ -63,10 +69,7 @@ public class User {
      * ⚠️ Stocké sous forme chiffrée (ex: BCrypt), jamais en clair.
      */
     @Column(nullable = false)
-    @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$",
-            message = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial"
-    )
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", message = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial")
     private String password;
 
     /**

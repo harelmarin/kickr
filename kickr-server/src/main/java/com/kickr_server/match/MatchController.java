@@ -1,6 +1,7 @@
 package com.kickr_server.match;
 
 import com.kickr_server.dto.match.MatchDto;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/matchs")
 @RequiredArgsConstructor
+@RateLimiter(name = "userMatchRateLimiter")
 public class MatchController {
 
         private final MatchService matchService;

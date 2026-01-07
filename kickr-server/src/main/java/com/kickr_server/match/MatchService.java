@@ -10,7 +10,6 @@ import com.kickr_server.usermatch.UserMatchRepository;
 import com.kickr_server.utils.DateTimeConverter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +33,15 @@ import java.util.UUID;
 @Service
 public class MatchService {
 
+        private static final int[] LEAGUE_IDS = {
+                        // Championnats
+                        39, 140, 135, 78, 61,
+                        // Coupes nationales
+                        45, 143, 137, 81, 66,
+                        // Compétitions européennes
+                        2, 3, 848
+        };
+
         private final RestTemplate restTemplate;
         private final String footballApiKey;
         private final MatchRepository matchRepository;
@@ -44,16 +52,14 @@ public class MatchService {
 
         public MatchService(RestTemplate restTemplate, AppConfig appConfig, MatchRepository matchRepository,
                         TeamRepository teamRepository, CompetitionRepository competitionRepository,
-                        UserMatchRepository userMatchRepository) {
+                        UserMatchRepository userMatchRepository, ObjectMapper objectMapper) {
                 this.restTemplate = restTemplate;
                 this.footballApiKey = appConfig.getFootballApiKey();
                 this.matchRepository = matchRepository;
                 this.teamRepository = teamRepository;
                 this.competitionRepository = competitionRepository;
                 this.userMatchRepository = userMatchRepository;
-
-                this.objectMapper = new ObjectMapper();
-                this.objectMapper.registerModule(new JavaTimeModule());
+                this.objectMapper = objectMapper;
         }
 
         /**
@@ -62,17 +68,9 @@ public class MatchService {
         @SuppressWarnings("unused")
         private List<MatchDto> fetchNextMatches() throws Exception {
                 int season = 2025;
-                int[] leagueIds = {
-                                // Championnats
-                                39, 140, 135, 78, 61,
-                                // Coupes nationales
-                                // 45, 143, 137, 81, 66,
-                                // Compétitions européennes
-                                2, 3, 848
-                };
                 List<MatchDto> matches = new ArrayList<>();
 
-                for (int leagueId : leagueIds) {
+                for (int leagueId : LEAGUE_IDS) {
                         String url = "https://v3.football.api-sports.io/fixtures?league=" + leagueId + "&season="
                                         + season;
 
@@ -178,22 +176,13 @@ public class MatchService {
         public void fetchAndSaveNextMatches() throws Exception {
                 int season = 2025;
 
-                int[] leagueIds = {
-                                // Championnats
-                                39, 140, 135, 78, 61,
-                                // Coupes nationales
-                                45, 143, 137, 81, 66,
-                                // Compétitions européennes
-                                2, 3, 848
-                };
-
                 HttpHeaders headers = new HttpHeaders();
                 headers.set("x-apisports-key", footballApiKey);
                 headers.set("Accept", "application/json");
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
 
-                for (int leagueId : leagueIds) {
+                for (int leagueId : LEAGUE_IDS) {
                         String url = "https://v3.football.api-sports.io/fixtures?league=" + leagueId + "&season="
                                         + season;
 

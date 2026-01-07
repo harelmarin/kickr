@@ -16,40 +16,41 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
         try {
             await login({ username, password });
             onSuccess?.();
-        } catch (err) {
-            // Error is handled by the useAuth hook
-        }
+        } catch (err) { }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="p-8 flex flex-col gap-6 bg-[#1b2228] border border-white/5 rounded-xl shadow-2xl">
-            <div className="mb-2">
-                <h3 className="text-[11px] font-black text-[#667788] uppercase tracking-[0.3em] mb-1">Welcome Back</h3>
-                <p className="text-white text-xl font-black tracking-tight">Sign in to Kickr</p>
+        <form onSubmit={handleSubmit} className="p-7 flex flex-col gap-5 bg-[#1b2228]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] relative overflow-hidden">
+            {/* Top Shine */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
+
+            <div className="mb-1">
+                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-1">Scout Access</h3>
+                <p className="text-white text-lg font-black tracking-tight italic">Welcome Back</p>
             </div>
 
-            <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                    <label className="text-[9px] font-black text-[#445566] uppercase tracking-[0.2em] pl-1">Username</label>
+            <div className="space-y-3">
+                <div className="relative group">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs opacity-40 group-focus-within:opacity-100 group-focus-within:text-kickr transition-all">👤</span>
                     <input
                         type="text"
-                        placeholder="Enter your username"
+                        placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
-                        className="bg-[#14181c] border border-white/10 rounded-lg px-4 py-3.5 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none"
+                        className="w-full bg-black/40 border border-white/5 rounded-xl pl-11 pr-4 py-3 text-xs font-bold text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-black/60 transition-all outline-none"
                     />
                 </div>
 
-                <div className="flex flex-col gap-2">
-                    <label className="text-[9px] font-black text-[#445566] uppercase tracking-[0.2em] pl-1">Password</label>
+                <div className="relative group">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs opacity-40 group-focus-within:opacity-100 group-focus-within:text-kickr transition-all">🔑</span>
                     <input
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="bg-[#14181c] border border-white/10 rounded-lg px-4 py-3.5 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none"
+                        className="w-full bg-black/40 border border-white/5 rounded-xl pl-11 pr-4 py-3 text-xs font-bold text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-black/60 transition-all outline-none"
                     />
                 </div>
             </div>
@@ -57,10 +58,16 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
             <button
                 type="submit"
                 disabled={isLoading}
-                className="btn-primary-kickr py-3.5 rounded-lg text-[11px] font-black uppercase tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                className="w-full py-3.5 rounded-xl bg-kickr text-white text-[10px] font-black uppercase tracking-[0.3em] shadow-lg shadow-kickr/20 hover:brightness-110 active:scale-[0.97] transition-all disabled:opacity-50 mt-1"
             >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? 'Verifying...' : 'Sign In'}
             </button>
+
+            <div className="text-center">
+                <button type="button" className="text-[9px] font-bold text-[#445566] hover:text-[#99aabb] uppercase tracking-widest transition-colors">
+                    Forgot details?
+                </button>
+            </div>
         </form>
     );
 };

@@ -3,6 +3,7 @@ package com.kickr_server.competitions;
 import com.kickr_server.competitions.Competition;
 import com.kickr_server.competitions.CompetitionService;
 import com.kickr_server.dto.competition.CompetitionDto;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/competitions")
 @RequiredArgsConstructor
 @Tag(name = "Competitions", description = "Endpoints pour gérer les compétitions")
+@RateLimiter(name = "userRateLimiter")
 public class CompetitionController {
 
     private final CompetitionService competitionService;

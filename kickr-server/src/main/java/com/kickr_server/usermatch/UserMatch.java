@@ -24,7 +24,10 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "user_matches")
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

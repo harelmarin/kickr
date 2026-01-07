@@ -15,10 +15,10 @@ public class AppConfig {
         return new RestTemplate();
     }
 
-    @Value("${jwt.secret}")
+    @Value("${jwt.secret:default_jwt_secret_must_be_changed_in_production_1234567890}")
     private String jwtSecret;
 
-    @Value("${football.api.key}")
+    @Value("${football.api.key:none}")
     private String footballApiKey;
 
 }

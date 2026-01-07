@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { matchService } from '../services/matchService';
 import { useAuth } from '../hooks/useAuth';
@@ -9,6 +9,7 @@ import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLike
 
 export const MatchDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -51,7 +52,7 @@ export const MatchDetailPage = () => {
 
   const handleSaveRating = async () => {
     if (!user) {
-      toast.error('Please log in to rate this match');
+      navigate('/register');
       return;
     }
 
@@ -382,12 +383,13 @@ export const MatchDetailPage = () => {
 
 const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLiked, likesCount }: { reviewId: string; userId: string; user: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean; likesCount?: number }) => {
   const { user: currentUser } = useAuth();
+  const navigate = useNavigate();
   const { data: isLikedByMe } = useReviewLikeStatus(reviewId, currentUser?.id);
   const toggleLike = useToggleReviewLike();
 
   const handleLike = () => {
     if (!currentUser) {
-      toast.error('Please log in to like reviews');
+      navigate('/register');
       return;
     }
     toggleLike.mutate({ reviewId, userId: currentUser.id });

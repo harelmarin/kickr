@@ -16,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -226,11 +225,7 @@ public class UserMatchService {
         if (followedUsers.isEmpty()) {
             return List.of();
         }
-        return userMatchRepository.findByUserIn(followedUsers)
-                .stream()
-                .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
-                .limit(limit)
-                .toList();
+        return userMatchRepository.findLatestMatchesOfUsers(followedUsers, PageRequest.of(0, limit));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.kickr_server.search;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/search")
 @RequiredArgsConstructor
 @Tag(name = "Search", description = "Search API for users, teams, and competitions")
+@RateLimiter(name = "userRateLimiter")
 public class SearchController {
 
     private final SearchService searchService;

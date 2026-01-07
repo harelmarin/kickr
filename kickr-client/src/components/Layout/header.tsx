@@ -1,29 +1,26 @@
-import { useState, useRef, useEffect } from 'react';
-import { LoginDropdown, RegisterDropdown } from '../auth/authForm.tsx';
+import { useRef, useEffect } from 'react';
+import { LoginDropdown } from '../auth/authForm.tsx';
 import { UserMenu } from '../auth/UserMenu';
 import { useAuth } from '../../hooks/useAuth';
+import { useUIStore } from '../../hooks/useUIStore';
 import { Link, NavLink } from 'react-router-dom';
 import { SearchBar } from '../Search/SearchBar';
 import { NotificationBell } from './NotificationBell';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
-  const [openDropdown, setOpenDropdown] = useState<'login' | 'register' | null>(null);
+  const { authModalMode, openAuthModal, closeAuthModal } = useUIStore();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const toggleDropdown = (type: 'login' | 'register') => {
-    setOpenDropdown((prev) => (prev === type ? null : type));
-  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setOpenDropdown(null);
+        closeAuthModal();
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [closeAuthModal]);
 
   return (
     <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
@@ -39,6 +36,7 @@ export const Header = () => {
           <NavSlot to="/matches" label="Matches" />
           <NavSlot to="/competitions" label="Leagues" />
           <NavSlot to="/teams" label="Teams" />
+          <NavSlot to="/community" label="Community" />
         </nav>
 
         {/* Right Section: Search & Profile */}
@@ -55,27 +53,21 @@ export const Header = () => {
             <div className="flex items-center gap-5 border-l border-white/10 pl-5" ref={containerRef}>
               <button
                 className="text-[#99aabb] hover:text-white font-bold uppercase tracking-widest text-[10px] transition-colors"
-                onClick={() => toggleDropdown('login')}
+                onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
               >
                 Sign In
               </button>
-              <button
+              <Link
+                to="/register"
                 className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95"
-                onClick={() => toggleDropdown('register')}
               >
                 Sign Up
-              </button>
+              </Link>
 
-              {/* Dropdowns */}
-              {openDropdown && (
+              {/* Dropdown */}
+              {authModalMode === 'login' && (
                 <div className="absolute top-full right-6 mt-3 z-50 w-80 animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-lg overflow-hidden">
-                  {openDropdown === 'login' && <LoginDropdown onSuccess={() => setOpenDropdown(null)} />}
-                  {openDropdown === 'register' && (
-                    <RegisterDropdown
-                      onSuccess={() => setOpenDropdown(null)}
-                      onSwitchToLogin={() => setOpenDropdown('login')}
-                    />
-                  )}
+                  <LoginDropdown onSuccess={() => closeAuthModal()} />
                 </div>
               )}
             </div>

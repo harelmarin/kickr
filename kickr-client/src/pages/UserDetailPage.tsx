@@ -21,7 +21,7 @@ export const UserDetailPage = () => {
 
     const handleFollowToggle = () => {
         if (!currentUser) {
-            navigate('/auth/login');
+            navigate('/register');
             return;
         }
         followAction.mutate({

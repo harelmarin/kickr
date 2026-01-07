@@ -49,6 +49,7 @@ public class UserMatchController {
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Liste des dernières évaluations")
         })
+        @RateLimiter(name = "userMatchRateLimiter")
         @GetMapping("/latest")
         public List<UserMatchFullDto> getLatestReviews(
                         @Parameter(description = "Nombre maximum d'évaluations", example = "10") @RequestParam(defaultValue = "10") int limit) {

@@ -1,6 +1,7 @@
 package com.kickr_server.team;
 
 import com.kickr_server.dto.team.TeamDto;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/teams")
 @RequiredArgsConstructor
 @Tag(name = "Teams", description = "Endpoints pour gérer les équipes")
+@RateLimiter(name = "userRateLimiter")
 public class TeamController {
 
     private final TeamService teamService;
@@ -31,13 +33,9 @@ public class TeamController {
     @GetMapping("/search")
     @Operation(summary = "Rechercher des équipes avec pagination")
     public Page<TeamDto> searchTeams(
-            @Parameter(description = "Terme de recherche (nom de l'équipe)")
-            @RequestParam(required = false) String search,
-            @Parameter(description = "Numéro de page (0-based)", example = "0")
-            @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Nombre d'éléments par page", example = "20")
-            @RequestParam(defaultValue = "20") int size
-    ) {
+            @Parameter(description = "Terme de recherche (nom de l'équipe)") @RequestParam(required = false) String search,
+            @Parameter(description = "Numéro de page (0-based)", example = "0") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Nombre d'éléments par page", example = "20") @RequestParam(defaultValue = "20") int size) {
         return teamService.searchTeams(search, page, size);
     }
 

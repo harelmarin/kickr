@@ -1,14 +1,21 @@
 import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
 import { Link } from 'react-router-dom';
 import { useLatestReviews, useUserMatchesByUser, useFollowingReviews } from '../hooks/useUserMatch';
+import { useGlobalFeed } from '../hooks/usePreviewFeed';
 import { useAuth } from '../hooks/useAuth';
+import { useUsers } from '../hooks/useUser';
 import { ReviewCard } from '../components/Review/ReviewCard';
 
 export default function HomePage() {
   const { user } = useAuth();
   const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(3);
   const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 3);
+  const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(3);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
+  const { data: communityScouts } = useUsers();
+
+  const activeFeed = user ? followingReviews : (globalFeed || latestReviews);
+  const isLoadingFeed = user ? isFollowingLoading : (isGlobalLoading || isLatestLoading);
 
   const sortedUserReviews = userReviews
     ? [...userReviews].sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).slice(0, 3)
@@ -34,13 +41,17 @@ export default function HomePage() {
             <span className="text-kickr">Rate matchdays.</span>
           </h1>
           <p className="text-xl md:text-2xl text-[#99aabb] mb-12 font-medium max-w-3xl mx-auto leading-relaxed">
-            The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life.
+            {user
+              ? "The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life."
+              : "Discover tactical reviews from our global network, follow your friends, and log your favorite matchdays. Join the pitch."}
           </p>
           <div className="flex items-center justify-center gap-6">
             {!user ? (
-              <Link to="/matches" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all">
-                Get Started — It's Free
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/register" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all shadow-xl shadow-kickr/20 hover:scale-[1.02]">
+                  Join the Pitch — It's Free
+                </Link>
+              </div>
             ) : (
               <div className="bg-black/40 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-2">
                 <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px]">
@@ -65,31 +76,38 @@ export default function HomePage() {
           {/* Main Column: Social & Discover */}
           <div className="lg:col-span-3 space-y-24">
 
-            {/* 1. Following Feed (Personalized) */}
-            {user && (
-              <section className="section-contrast p-8 rounded-2xl">
-                <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr glow-kickr">Your Network Activity</span>
-                  <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">Friend Feed →</Link>
+            {/* 1. Feed Section (Personalized or Discovery) */}
+            <section className="section-contrast p-8 rounded-2xl">
+              <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr glow-kickr">
+                  {user ? "Your Network Activity" : "Live from the community"}
+                </span>
+                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">
+                  {user ? "Friend Feed →" : "All Reviews →"}
+                </Link>
+              </div>
+
+              {isLoadingFeed ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
+                  {[1, 2].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
                 </div>
-                {isFollowingLoading ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
-                    {[1, 2].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
-                  </div>
-                ) : followingReviews && followingReviews.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {followingReviews.map((review) => (
-                      <ReviewCard key={review.id} review={review} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="bg-white/[0.02] border border-dashed border-white/10 rounded-2xl p-12 text-center">
-                    <p className="text-[#445566] text-xs font-bold uppercase tracking-widest mb-4">No reviews from your network yet</p>
-                    <Link to="/matches" className="text-kickr text-[10px] font-black uppercase tracking-widest hover:underline">Find users to follow</Link>
-                  </div>
-                )}
-              </section>
-            )}
+              ) : activeFeed && activeFeed.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  {activeFeed.map((review) => (
+                    <ReviewCard key={review.id} review={review} />
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-white/[0.02] border border-dashed border-white/10 rounded-2xl p-12 text-center">
+                  <p className="text-[#445566] text-xs font-bold uppercase tracking-widest mb-4">
+                    {user ? "No reviews from your network yet" : "No reviews yet. Be the first to share your thoughts!"}
+                  </p>
+                  <Link to="/matches" className="text-kickr text-[10px] font-black uppercase tracking-widest hover:underline">
+                    {user ? "Find users to follow" : "Log a match now"}
+                  </Link>
+                </div>
+              )}
+            </section>
 
             {/* 2. Upcoming Matches Section */}
             <section className="bg-[#14181c]/50 p-8 rounded-2xl border border-white/5">
@@ -100,26 +118,28 @@ export default function HomePage() {
               <NextMatchesHomePage />
             </section>
 
-            {/* 3. Recent Reviews Section */}
-            <section className="section-contrast p-8 rounded-2xl">
-              <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-white mb-10 border-b border-kickr/20 pb-4">Recent reviews from the crowd</h2>
-              {isLatestLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
-                  {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
-                </div>
-              ) : latestReviews && latestReviews.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  {latestReviews.map((review) => (
-                    <ReviewCard
-                      key={review.id}
-                      review={review}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <p className="text-[#445566] text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
-              )}
-            </section>
+            {/* 3. Recent Reviews Section (Global) - Only show if user is logged in to avoid duplication for guests */}
+            {user && (
+              <section className="section-contrast p-8 rounded-2xl">
+                <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-white mb-10 border-b border-kickr/20 pb-4">Recent reviews from the crowd</h2>
+                {isLatestLoading ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
+                    {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
+                  </div>
+                ) : latestReviews && latestReviews.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    {latestReviews.map((review) => (
+                      <ReviewCard
+                        key={review.id}
+                        review={review}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-[#445566] text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
+                )}
+              </section>
+            )}
 
             {/* 3. Popular / Trending Matches */}
             <section>
@@ -183,13 +203,37 @@ export default function HomePage() {
               </section>
             )}
 
-            <section className="bg-[#1b2228] border border-white/5 rounded p-8 shadow-xl">
-              <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Kickr HQ Stats</h3>
-              <div className="space-y-8">
-                <Stat label="Matches Logged" value="1.2M" />
-                <Stat label="Reviews this week" value="45K" />
-                <Stat label="Active Members" value="280K" />
+            {/* Discover Tacticians Section */}
+            <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
+              <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">Rising Tacticians</h3>
+              <div className="space-y-6">
+                {communityScouts && communityScouts.length > 0 ? (
+                  communityScouts
+                    .filter(s => s.id !== user?.id)
+                    .slice(0, 4)
+                    .map((scout) => (
+                      <Link
+                        key={scout.id}
+                        to={`/user/${scout.id}`}
+                        className="flex items-center gap-4 group/scout"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-white/10 flex items-center justify-center text-xs font-black text-kickr uppercase group-hover:border-kickr/40 group-hover:scale-110 transition-all">
+                          {scout.name[0]}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white text-sm font-black italic truncate group-hover:text-kickr transition-colors tracking-tight">{scout.name}</p>
+                          <p className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">{scout.matchesCount} Matchs</p>
+                        </div>
+                        <span className="text-kickr opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                      </Link>
+                    ))
+                ) : (
+                  <p className="text-[10px] text-[#445566] italic text-center py-4">Finding analysts...</p>
+                )}
               </div>
+              <Link to="/community" className="block text-center text-[9px] font-black uppercase tracking-[0.3em] text-[#5c6470] hover:text-white transition-colors mt-8 pt-4 border-t border-white/5">
+                The Tacticians Network
+              </Link>
             </section>
 
             {/* Trending Leagues */}
@@ -209,13 +253,6 @@ export default function HomePage() {
     </main>
   );
 }
-
-const Stat = ({ label, value }: any) => (
-  <div className="flex flex-col">
-    <span className="text-[9px] font-bold text-[#5c6470] uppercase tracking-widest mb-1">{label}</span>
-    <span className="text-2xl font-black text-white italic">{value}</span>
-  </div>
-);
 
 const LeagueItem = ({ name }: { name: string }) => (
   <Link to="/competitions" className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2 hover:border-kickr/30 transition-all">

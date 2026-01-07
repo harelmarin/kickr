@@ -20,7 +20,8 @@ public class FeedService {
     private final UserMatchRepository userMatchRepository;
 
     /**
-     * Récupère tous les matchs notés par les utilisateurs suivis par un utilisateur donné,
+     * Récupère tous les matchs notés par les utilisateurs suivis par un utilisateur
+     * donné,
      * triés par date de visionnage décroissante.
      */
     public List<UserMatchFullDto> getFeedFull(UUID userId) {
@@ -43,6 +44,16 @@ public class FeedService {
                 .map(userMatchRepository::findTopByUserOrderByWatchedAtDesc)
                 .filter(java.util.Objects::nonNull)
                 .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
+                .map(UserMatchFullDto::fromEntity)
+                .toList();
+    }
+
+    /**
+     * Récupère le feed global (les dernières évaluations de tous les utilisateurs).
+     */
+    public List<UserMatchFullDto> getGlobalFeedFull(int limit) {
+        return userMatchRepository.findLatestReviews(org.springframework.data.domain.PageRequest.of(0, limit))
+                .stream()
                 .map(UserMatchFullDto::fromEntity)
                 .toList();
     }

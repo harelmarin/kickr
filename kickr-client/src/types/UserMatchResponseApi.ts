@@ -7,5 +7,7 @@ export interface UserMatchResponseApi {
   match: MatchApiResponse;
   note: number;
   comment: string;
+  isLiked: boolean;
+  likesCount: number;
   watchedAt: string;
 }

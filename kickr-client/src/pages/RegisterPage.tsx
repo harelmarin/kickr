@@ -1,0 +1,194 @@
+import { useState, type FormEvent } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useAuth } from '../hooks/useAuth';
+import { useUIStore } from '../hooks/useUIStore';
+
+export const RegisterPage = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { register, isLoading } = useAuth();
+    const { openAuthModal } = useUIStore();
+    const navigate = useNavigate();
+
+    // Real-time password validation
+    const hasMinLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const isPasswordValid = hasMinLength && hasUppercase && hasLowercase && hasNumber;
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        if (!isPasswordValid) {
+            toast.error("Please meet all password requirements.");
+            return;
+        }
+
+        try {
+            await register({ name, email, password });
+            toast.success('Account created! You can now log in.');
+            setTimeout(() => {
+                navigate('/');
+                setTimeout(() => {
+                    openAuthModal('login');
+                }, 500);
+            }, 1500);
+        } catch (err) {
+            // Error handled in useAuth
+        }
+    };
+
+    return (
+        <main className="flex-1 flex flex-col lg:flex-row min-h-[calc(100vh-64px)] bg-[#0a0b0d]">
+
+            {/* Visual / Marketing Side (Left) */}
+            <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-20 border-r border-white/5">
+                {/* Background Atmosphere */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-br from-kickr/20 via-black to-black opacity-60"></div>
+                    <div
+                        className="absolute inset-0 bg-cover bg-center grayscale opacity-30"
+                        style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000")' }}
+                    ></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(68,102,255,0.1),transparent_70%)]"></div>
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10 max-w-lg">
+                    <div className="mb-12 inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl backdrop-blur-md">
+                        <span className="text-2xl">🏆</span>
+                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.3em]">Season 2024/25 Live</span>
+                    </div>
+
+                    <h1 className="text-6xl font-black text-white italic tracking-tighter uppercase leading-[0.9] mb-8">
+                        The Pitch <br />
+                        Is Yours <br />
+                        To <span className="text-kickr glow-kickr">Analyze.</span>
+                    </h1>
+
+                    <div className="space-y-8 mt-12">
+                        <FeatureItem icon="📝" title="Tactical Diary" description="Log every match you watch with precise ratings and tactical notes." />
+                        <FeatureItem icon="🤝" title="Tacticians Network" description="Follow analysts worldwide and discover their vision of the beautiful game." />
+                        <FeatureItem icon="📊" title="Personal Stats" description="Visualize your watching habits and favorite teams across the leagues." />
+                    </div>
+                </div>
+            </div>
+
+            {/* Form Side (Right) */}
+            <div className="flex-1 flex items-center justify-center p-8 md:p-12 lg:p-24 relative overflow-hidden">
+                {/* Mobile-only background elements */}
+                <div className="lg:hidden absolute inset-0 -z-10 bg-gradient-to-b from-kickr/10 to-transparent opacity-50"></div>
+
+                <div className="w-full max-w-md animate-fade-in-up">
+                    <div className="lg:hidden text-center mb-10">
+                        <Link to="/" className="inline-flex items-center gap-2 mb-4">
+                            <span className="text-3xl">⚽</span>
+                            <span className="text-2xl font-black font-display tracking-tighter text-white">KICKR</span>
+                        </Link>
+                    </div>
+
+                    <div className="mb-12">
+                        <h2 className="text-3xl font-black text-white tracking-tight mb-2">Join the Tacticians</h2>
+                        <p className="text-[#667788] text-sm font-medium">Create your credentials and start analyzing.</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Identity</label>
+                                <input
+                                    type="text"
+                                    placeholder="Your analyst name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    className="w-full bg-[#1b2228]/50 border border-white/5 rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Email</label>
+                                <input
+                                    type="email"
+                                    placeholder="name@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    className="w-full bg-[#1b2228]/50 border border-white/5 rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none"
+                                />
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Secure Pass</label>
+                                    <input
+                                        type="password"
+                                        placeholder="••••••••"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                        className="w-full bg-[#1b2228]/50 border border-white/5 rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none"
+                                    />
+                                </div>
+
+                                {/* Password Checker with labels */}
+                                <div className="space-y-3">
+                                    <div className="grid grid-cols-4 gap-2">
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasMinLength ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasUppercase ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasLowercase ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasNumber ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
+                                    </div>
+                                    <div className="flex justify-between px-1">
+                                        <span className={`text-[8px] font-bold uppercase tracking-tighter ${hasMinLength ? 'text-kickr' : 'text-[#445566]'}`}>8+ Chars</span>
+                                        <span className={`text-[8px] font-bold uppercase tracking-tighter ${hasUppercase ? 'text-kickr' : 'text-[#445566]'}`}>Upper</span>
+                                        <span className={`text-[8px] font-bold uppercase tracking-tighter ${hasLowercase ? 'text-kickr' : 'text-[#445566]'}`}>Lower</span>
+                                        <span className={`text-[8px] font-bold uppercase tracking-tighter ${hasNumber ? 'text-kickr' : 'text-[#445566]'}`}>Number</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full btn-primary-kickr py-4 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] shadow-lg shadow-kickr/10 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
+                        >
+                            {isLoading ? 'Processing...' : 'Access the Field'}
+                        </button>
+                    </form>
+
+                    <div className="mt-12 pt-8 border-t border-white/5 text-center">
+                        <p className="text-[#5c6470] text-[11px] font-bold uppercase tracking-widest">
+                            Found your credentials?{' '}
+                            <button
+                                onClick={() => {
+                                    navigate('/');
+                                    openAuthModal('login');
+                                }}
+                                className="text-kickr hover:text-white transition-colors underline decoration-kickr/20 underline-offset-8 ml-1"
+                            >
+                                Sign In
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    );
+};
+
+const FeatureItem = ({ icon, title, description }: { icon: string; title: string; description: string }) => (
+    <div className="flex gap-5 group">
+        <div className="w-10 h-10 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center text-lg border border-white/10 group-hover:border-kickr/30 group-hover:bg-kickr/5 transition-all">
+            {icon}
+        </div>
+        <div>
+            <h3 className="text-white text-sm font-black uppercase tracking-wider mb-1 group-hover:text-kickr transition-colors">{title}</h3>
+            <p className="text-[#667788] text-xs leading-relaxed max-w-xs">{description}</p>
+        </div>
+    </div>
+);

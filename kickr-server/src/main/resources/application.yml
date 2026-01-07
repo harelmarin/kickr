@@ -26,17 +26,17 @@ spring:
     locations: classpath:db/migration
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:default_jwt_secret_must_be_changed_in_production_1234567890}
 football:
   api:
-    key: ${FOOTBALL_API_KEY}
+    key: ${FOOTBALL_API_KEY:none}
 
 
 logging:
   level:
-    com.ampara: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    root: INFO
+    com.kickr_server: INFO
+    org.hibernate.SQL: WARN
 
 springdoc:
   api-docs:
@@ -44,6 +44,17 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     display-request-duration: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+    metrics:
+      enabled: true
 
 
 

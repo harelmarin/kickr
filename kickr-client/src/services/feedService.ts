@@ -26,3 +26,15 @@ export const fetchPreviewFeed = async (
     return [];
   }
 };
+
+export const fetchGlobalFeed = async (limit = 20): Promise<UserMatchResponseApi[]> => {
+  try {
+    const response = await axiosInstance.get('/feed/global', {
+      params: { limit },
+    });
+    return Array.isArray(response.data) ? response.data : [];
+  } catch (err) {
+    console.error('Erreur lors du fetch du feed global :', err);
+    return [];
+  }
+};
