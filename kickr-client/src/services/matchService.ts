@@ -22,6 +22,8 @@ const mapApiResponseToMatch = (m: MatchApiResponse): Match => ({
   location: m.location,
   homeScore: m.home_score,
   awayScore: m.away_score,
+  // Check multiple possible names for the internal UUID
+  matchUuid: m.match_uuid || (m as any).matchUuid || (m as any).uuid,
   averageRating: m.average_rating,
   reviewsCount: m.reviews_count,
 });
@@ -99,6 +101,7 @@ export const matchService = {
     try {
       const response = await axiosInstance.get(`/matchs/${id}`);
       const m = response.data;
+      console.log('Raw match data from API:', m);
       if (!m) return null;
       return mapApiResponseToMatch(m);
     } catch (err) {

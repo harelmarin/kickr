@@ -38,6 +38,7 @@ public class UserMatchFullDto {
                 entity.getMatch().getLocation(),
                 entity.getMatch().getHomeScore(),
                 entity.getMatch().getAwayScore(),
+                entity.getMatch().getId(), // matchUuid
                 entity.getMatch().getExternalFixtureId(),
                 0.0,
                 0L);

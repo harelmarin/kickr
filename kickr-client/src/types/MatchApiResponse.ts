@@ -11,6 +11,7 @@ export interface MatchApiResponse {
   location: string;
   home_score?: number;
   away_score?: number;
+  match_uuid?: string;
   average_rating?: number;
   reviews_count?: number;
 }

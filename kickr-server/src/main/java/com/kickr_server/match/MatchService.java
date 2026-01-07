@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service pour récupérer et sauvegarder les informations des matchs de football
@@ -158,6 +159,7 @@ public class MatchService {
                                                 location,
                                                 goals.path("home").isNull() ? null : goals.path("home").asInt(),
                                                 goals.path("away").isNull() ? null : goals.path("away").asInt(),
+                                                null,
                                                 externalId,
                                                 0.0,
                                                 0L);
@@ -307,15 +309,27 @@ public class MatchService {
         /**
          * Récupère tous les matchs d'une équipe spécifique (passés et futurs).
          */
-        public List<MatchDto> getAllMatchesByTeamId(java.util.UUID teamId) {
+        public List<MatchDto> getAllMatchesByTeamId(UUID teamId) {
                 Optional<Team> teamOpt = teamRepository.findById(teamId);
                 if (teamOpt.isEmpty()) {
                         return List.of();
                 }
                 Team team = teamOpt.get();
-                return matchRepository.findByHomeTeamOrAwayTeamOrderByMatchDateDesc(team, team)
-                                .stream()
-                                .map(MatchDto::fromEntity)
+                List<Match> matchEntities = matchRepository.findByHomeTeamOrAwayTeamOrderByMatchDateDesc(team, team);
+
+                List<UUID> matchIds = matchEntities.stream().map(Match::getId).toList();
+                List<Object[]> stats = userMatchRepository.findStatsByMatchIds(matchIds);
+
+                java.util.Map<UUID, Double> ratingsMap = new java.util.HashMap<>();
+                java.util.Map<UUID, Long> countsMap = new java.util.HashMap<>();
+                for (Object[] stat : stats) {
+                        ratingsMap.put((UUID) stat[0], (Double) stat[1]);
+                        countsMap.put((UUID) stat[0], (Long) stat[2]);
+                }
+
+                return matchEntities.stream()
+                                .map(m -> MatchDto.fromEntityWithStats(m, ratingsMap.get(m.getId()),
+                                                countsMap.get(m.getId())))
                                 .toList();
         }
 
@@ -324,10 +338,18 @@ public class MatchService {
          */
         public Optional<MatchDto> getMatchById(Integer externalId) {
                 return matchRepository.findByExternalFixtureId(externalId)
-                                .map(MatchDto::fromEntity);
+                                .map((Match m) -> {
+                                        List<Object[]> stats = userMatchRepository
+                                                        .findStatsByMatchIds(List.of(m.getId()));
+                                        if (!stats.isEmpty()) {
+                                                return MatchDto.fromEntityWithStats(m, (Double) stats.get(0)[1],
+                                                                (Long) stats.get(0)[2]);
+                                        }
+                                        return MatchDto.fromEntity(m);
+                                });
         }
 
-        public Page<MatchDto> findMatchesWithFilters(java.util.UUID competitionId, Boolean isFinished, String sort,
+        public Page<MatchDto> findMatchesWithFilters(UUID competitionId, Boolean isFinished, String sort,
                         int page, int size) {
                 Pageable pageable = PageRequest.of(page, size);
                 Page<Match> matchPage = matchRepository.findMatchesWithFilters(competitionId, isFinished, sort,

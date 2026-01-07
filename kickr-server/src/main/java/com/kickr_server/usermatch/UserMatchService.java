@@ -10,25 +10,29 @@ import com.kickr_server.match.MatchRepository;
 import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Service métier pour la gestion des évaluations de matchs par les utilisateurs.
+ * Service métier pour la gestion des évaluations de matchs par les
+ * utilisateurs.
  *
  * <p>
  * Ce service fournit des méthodes pour :
  * <ul>
- *     <li>Créer et mettre à jour les évaluations de matchs</li>
- *     <li>Récupérer les évaluations par utilisateur ou par match</li>
- *     <li>Récupérer les évaluations des utilisateurs suivis</li>
+ * <li>Créer et mettre à jour les évaluations de matchs</li>
+ * <li>Récupérer les évaluations par utilisateur ou par match</li>
+ * <li>Récupérer les évaluations des utilisateurs suivis</li>
  * </ul>
  *
  * <p>
- * La validation des notes (y compris les demi-notes) est effectuée directement via l'entité {@link UserMatch}.
+ * La validation des notes (y compris les demi-notes) est effectuée directement
+ * via l'entité {@link UserMatch}.
  */
 @Service
 @RequiredArgsConstructor
@@ -38,6 +42,14 @@ public class UserMatchService {
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
     private final FollowService followService;
+
+    /**
+     * Récupère les dernières évaluations globales.
+     */
+    public List<UserMatch> getLatestReviews(int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return userMatchRepository.findLatestReviews(pageable);
+    }
 
     /**
      * Récupère toutes les évaluations de matchs.
@@ -73,7 +85,8 @@ public class UserMatchService {
      *
      * @param userId  l'UUID de l'utilisateur
      * @param matchId l'UUID du match
-     * @return le {@link UserMatch} correspondant, ou null si aucune évaluation n'existe
+     * @return le {@link UserMatch} correspondant, ou null si aucune évaluation
+     *         n'existe
      */
     public UserMatch getByUserIdAndMatchId(UUID userId, UUID matchId) {
         return userMatchRepository.findByUserIdAndMatchId(userId, matchId);
@@ -88,9 +101,10 @@ public class UserMatchService {
      *
      * @param dto DTO contenant les informations de l'évaluation
      * @return l'entité {@link UserMatch} enregistrée en base
-     * @throws UserNotFoundException si l'utilisateur n'existe pas
-     * @throws IllegalArgumentException si le match n'existe pas
-     * @throws IllegalCommentLengthException si le commentaire dépasse 1000 caractères
+     * @throws UserNotFoundException         si l'utilisateur n'existe pas
+     * @throws IllegalArgumentException      si le match n'existe pas
+     * @throws IllegalCommentLengthException si le commentaire dépasse 1000
+     *                                       caractères
      */
     public UserMatch save(UserMatchDto dto) {
         Match match = matchRepository.findById(dto.matchId)
@@ -118,14 +132,16 @@ public class UserMatchService {
      * Met à jour une évaluation existante.
      *
      * <p>
-     * La note peut être un entier ou un demi. La validation est effectuée via {@link UserMatch#setNote(double)}.
+     * La note peut être un entier ou un demi. La validation est effectuée via
+     * {@link UserMatch#setNote(double)}.
      *
      * @param id      l'UUID de l'évaluation à mettre à jour
      * @param note    nouvelle note
      * @param comment nouveau commentaire
      * @return l'entité {@link UserMatch} mise à jour
-     * @throws UserMatchNotFoundException si l'évaluation n'existe pas
-     * @throws IllegalCommentLengthException si le commentaire dépasse 1000 caractères
+     * @throws UserMatchNotFoundException    si l'évaluation n'existe pas
+     * @throws IllegalCommentLengthException si le commentaire dépasse 1000
+     *                                       caractères
      */
     public UserMatch update(UUID id, double note, String comment) {
         UserMatch existing = userMatchRepository.findById(id)
@@ -142,7 +158,8 @@ public class UserMatchService {
     }
 
     /**
-     * Récupère toutes les évaluations des utilisateurs suivis par un utilisateur donné,
+     * Récupère toutes les évaluations des utilisateurs suivis par un utilisateur
+     * donné,
      * triées par date de visionnage décroissante.
      *
      * @param userId l'UUID de l'utilisateur

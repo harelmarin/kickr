@@ -1,7 +1,13 @@
 import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
 import { Link } from 'react-router-dom';
+import { useLatestReviews, useUserMatchesByUser } from '../hooks/useUserMatch';
+import { useAuth } from '../hooks/useAuth';
 
 export default function HomePage() {
+  const { user } = useAuth();
+  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(4);
+  const { data: userReviews } = useUserMatchesByUser(user?.id || '');
+
   return (
     <main className="flex flex-col min-h-screen bg-[#14181c]">
       {/* Cinematic Hero */}
@@ -25,9 +31,13 @@ export default function HomePage() {
             The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life.
           </p>
           <div className="flex items-center justify-center gap-6">
-            <Link to="/matches" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all">
-              Get Started — It's Free
-            </Link>
+            {!user ? (
+              <Link to="/matches" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all">
+                Get Started — It's Free
+              </Link>
+            ) : (
+              <span className="text-kickr font-bold uppercase tracking-widest text-sm">Welcome back, {user.name}</span>
+            )}
           </div>
         </div>
       </section>
@@ -51,35 +61,25 @@ export default function HomePage() {
             {/* 2. Recent Reviews Section */}
             <section>
               <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788] mb-10 border-b border-white/5 pb-4">Recent reviews from the crowd</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <ActivityCard
-                  user="TheTactician"
-                  match="Man City v Real Madrid"
-                  rating={4.5}
-                  content="Une masterclass tactique. Le positionnement de Rodri a tout changé en deuxième période."
-                />
-                <ActivityCard
-                  user="Kopite96"
-                  match="Liverpool v Arsenal"
-                  rating={5}
-                  content="L'ambiance à Anfield était indescriptible. Ce match restera dans l'histoire de la Premier League."
-                />
-                <ActivityCard
-                  user="Ultra_Paris"
-                  match="PSG v Barcelona"
-                  rating={2.5}
-                  content="Trop de pertes de balles au milieu. La défense a manqué d'agressivité sur les transitions."
-                />
-                <ActivityCard
-                  user="CalcioFan"
-                  match="Inter v Milan"
-                  rating={4}
-                  content="Un derby della Madonnina comme on les aime. On sentait la tension dès l'échauffement."
-                />
-              </div>
+              {isLatestLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
+                  {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
+                </div>
+              ) : latestReviews && latestReviews.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  {latestReviews.map((review) => (
+                    <ReviewCard
+                      key={review.id}
+                      review={review}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[#445566] text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
+              )}
             </section>
 
-            {/* 3. Popular / Trending Matches (Reusing grid for now) */}
+            {/* 3. Popular / Trending Matches */}
             <section>
               <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Trending on Kickr</span>
@@ -92,6 +92,47 @@ export default function HomePage() {
 
           {/* Right Sidebar */}
           <div className="hidden lg:block space-y-16">
+            {user && (
+              <section className="bg-[#1b2228] border border-white/5 rounded p-8 shadow-xl">
+                <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-6">Your Recent Activity</h3>
+                <div className="space-y-6">
+                  {userReviews && userReviews.length > 0 ? (
+                    userReviews.slice(0, 3).map(review => (
+                      <Link key={review.id} to={`/matches/${review.match.id}`} className="flex items-center gap-4 group/sb p-3 -mx-3 rounded-xl hover:bg-white/5 transition-all">
+                        {/* Rating Box */}
+                        <div className="flex-shrink-0 w-12 h-12 bg-black/20 rounded-lg flex flex-col items-center justify-center border border-white/5 group-hover/sb:border-kickr/40 transition-colors">
+                          <span className="text-kickr text-lg font-black italic leading-none">{review.note}</span>
+                          <span className="text-[6px] text-[#445566] font-black uppercase tracking-widest mt-1">Note</span>
+                        </div>
+
+                        {/* Match Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <img src={review.match.homeLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80" />
+                            <span className="text-white text-[10px] font-black tracking-tight truncate uppercase italic">{review.match.homeTeam}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <img src={review.match.awayLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80" />
+                            <span className="text-white text-[10px] font-black tracking-tight truncate uppercase italic">{review.match.awayTeam}</span>
+                          </div>
+                          {review.comment && review.comment.trim() !== "" && (
+                            <p className="text-[9px] text-[#5c6470] line-clamp-1 italic mt-1.5 border-l border-kickr/30 pl-2 leading-none">
+                              {review.comment}
+                            </p>
+                          )}
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <p className="text-[10px] text-[#5c6470] italic text-center py-4">No matches logged yet.</p>
+                  )}
+                  <Link to={`/user/${user.id}`} className="block text-center text-[9px] font-bold uppercase tracking-widest text-[#99aabb] hover:text-white transition-colors pt-2">
+                    View diary →
+                  </Link>
+                </div>
+              </section>
+            )}
+
             <section className="bg-[#1b2228] border border-white/5 rounded p-8 shadow-xl">
               <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Kickr HQ Stats</h3>
               <div className="space-y-8">
@@ -101,7 +142,7 @@ export default function HomePage() {
               </div>
             </section>
 
-            {/* Trending Leagues Without Fan Count */}
+            {/* Trending Leagues */}
             <section>
               <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Trending Leagues</h3>
               <div className="flex flex-col gap-5">
@@ -119,19 +160,54 @@ export default function HomePage() {
   );
 }
 
-const ActivityCard = ({ user, match, rating, content }: any) => (
-  <div className="bg-[#14181c] border-b border-white/5 pb-10 group">
-    <div className="flex items-center gap-3 mb-4">
-      <div className="w-8 h-8 rounded-full bg-[#2c3440]"></div>
-      <div className="flex flex-col">
-        <span className="text-white text-xs font-bold hover:text-kickr cursor-pointer transition-colors">{user}</span>
-        <span className="text-[#5c6470] text-[10px] font-bold uppercase tracking-widest leading-none">Rated {match}</span>
+const ReviewCard = ({ review }: any) => (
+  <div className="flex gap-5 group/review">
+    {/* Mini Poster Sidebar Look */}
+    <Link
+      to={`/matches/${review.match.id}`}
+      className="relative w-20 aspect-[2/3] bg-[#2c3440] rounded border border-white/10 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 group-hover/review:border-kickr/40"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#2c3440] flex flex-col items-center justify-center p-2 gap-1.5 text-center">
+        <img src={review.match.homeLogo} className="w-7 h-7 object-contain drop-shadow-lg" alt="" />
+        <span className="text-[6px] font-black text-white/5 tracking-[0.4em] uppercase">vs</span>
+        <img src={review.match.awayLogo} className="w-7 h-7 object-contain drop-shadow-lg" alt="" />
       </div>
-      <span className="ml-auto text-kickr font-bold text-xs">
-        {'★'.repeat(Math.floor(rating))}{rating % 1 !== 0 ? '½' : ''}
-      </span>
+    </Link>
+
+    <div className="flex flex-col flex-1">
+      <div className="flex flex-col gap-1.5 mb-2">
+        <div className="flex items-center justify-between">
+          <Link to={`/matches/${review.match.id}`} className="text-white text-sm font-black tracking-tight hover:text-kickr transition-colors uppercase leading-tight">
+            {review.match.homeTeam} v {review.match.awayTeam}
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="flex text-kickr text-[9px]">
+            {'★'.repeat(Math.round(review.note))}
+            <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+          </div>
+          <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest">
+            {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' })}
+          </span>
+        </div>
+      </div>
+
+      {review.comment && review.comment.trim() !== "" && (
+        <p className="text-[#99aabb] text-[13px] leading-relaxed italic line-clamp-2 pl-3 border-l-2 border-kickr/20 mb-3">
+          {review.comment}
+        </p>
+      )}
+
+      <div className="flex items-center gap-2">
+        <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center text-[8px] text-white font-bold border border-white/5 uppercase">
+          {review.user.name[0]}
+        </div>
+        <span className="text-[#445566] text-[10px] font-black uppercase tracking-widest group-hover/review:text-white transition-colors">
+          {review.user.name}
+        </span>
+      </div>
     </div>
-    <p className="text-sm text-[#99aabb] leading-relaxed italic line-clamp-3">"{content}"</p>
   </div>
 );
 

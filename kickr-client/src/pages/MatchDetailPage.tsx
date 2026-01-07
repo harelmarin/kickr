@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { matchService } from '../services/matchService';
+import { useAuth } from '../hooks/useAuth';
+import { useCreateUserMatch, useUserMatchesByMatch } from '../hooks/useUserMatch';
 
 export const MatchDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [review, setReview] = useState('');
@@ -15,6 +19,43 @@ export const MatchDetailPage = () => {
     queryFn: () => matchService.fetchMatchById(id!),
     enabled: !!id,
   });
+
+  const { data: userMatches } = useUserMatchesByMatch(match?.matchUuid || '');
+  const createUserMatch = useCreateUserMatch();
+
+  const handleSaveRating = async () => {
+    if (!user) {
+      toast.error('Please log in to rate this match');
+      return;
+    }
+
+    if (rating === 0) {
+      toast.error('Please select a rating (stars)');
+      return;
+    }
+
+    if (!match || !match.matchUuid) {
+      console.warn('Match data incomplete:', { match });
+      toast.error('Match data is incomplete. Please try refreshing the page.');
+      return;
+    }
+
+    try {
+      await createUserMatch.mutateAsync({
+        userId: user.id,
+        matchId: match.matchUuid,
+        note: rating,
+        comment: review,
+      });
+
+      toast.success('Rating saved successfully! 🎉');
+      setRating(0);
+      setReview('');
+    } catch (error: any) {
+      console.error('Error saving rating:', error);
+      toast.error(error.response?.data?.message || 'Failed to save rating');
+    }
+  };
 
   if (isLoading) return <LoadingState />;
   if (isError || !match) return <ErrorState />;
@@ -88,9 +129,22 @@ export const MatchDetailPage = () => {
                 </h1>
                 <span className="text-2xl font-medium text-[#667788]">{matchDate.getFullYear()}</span>
               </div>
-              <p className="text-lg font-medium text-white italic opacity-80 decoration-kickr">
+              <p className="text-lg font-medium text-white italic opacity-80 decoration-kickr mb-4">
                 The matchday that shook the {match.competition}.
               </p>
+
+              {match.averageRating && match.averageRating > 0 && (
+                <div className="flex items-center gap-3 bg-white/5 w-fit px-4 py-2 rounded-full border border-white/10">
+                  <div className="flex text-kickr">
+                    {'★'.repeat(Math.round(match.averageRating))}
+                    {'☆'.repeat(5 - Math.round(match.averageRating))}
+                  </div>
+                  <span className="text-white font-black text-sm">{match.averageRating.toFixed(1)}</span>
+                  <span className="text-[#667788] text-xs font-bold uppercase tracking-widest border-l border-white/10 pl-3">
+                    {match.reviewsCount} Ratings
+                  </span>
+                </div>
+              )}
             </header>
 
             {/* Summary / Description (Could be real data later) */}
@@ -103,19 +157,24 @@ export const MatchDetailPage = () => {
 
             {/* Community Reviews Section */}
             <section className="mt-16 pt-8 border-t border-white/10">
-              <h2 className="text-xs font-bold text-[#667788] uppercase tracking-[0.2em] mb-8">REVIEWS FROM FRIENDS</h2>
-              <div className="space-y-8">
-                <ReviewItem
-                  user="Alex"
-                  rating={4.5}
-                  content="Quelle intensité ! Le pressing de match.homeTeam était incroyable en première période."
-                />
-                <ReviewItem
-                  user="Sarah"
-                  rating={3}
-                  content="Un peu déçue par le manque d'occasions franches, mais tactiquement c'était du haut niveau."
-                />
-              </div>
+              <h2 className="text-xs font-bold text-[#667788] uppercase tracking-[0.2em] mb-8">
+                COMMUNITY REVIEWS ({userMatches?.length || 0})
+              </h2>
+              {userMatches && userMatches.length > 0 ? (
+                <div className="space-y-8">
+                  {userMatches.map((userMatch) => (
+                    <ReviewItem
+                      key={userMatch.id}
+                      user={userMatch.user.name}
+                      rating={userMatch.note}
+                      content={userMatch.comment}
+                      watchedAt={userMatch.watchedAt}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[#667788] text-sm italic">No reviews yet. Be the first to review this match!</p>
+              )}
             </section>
           </div>
 
@@ -165,8 +224,12 @@ export const MatchDetailPage = () => {
                   />
                 </div>
 
-                <button className="w-full btn-primary-kickr py-3 rounded text-[11px] hover:brightness-110 active:scale-[0.98]">
-                  SAVE ENTRY
+                <button
+                  onClick={handleSaveRating}
+                  disabled={rating === 0 || createUserMatch.isPending}
+                  className="w-full btn-primary-kickr py-3 rounded text-[11px] hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                >
+                  {createUserMatch.isPending ? 'SAVING...' : 'SAVE ENTRY'}
                 </button>
               </div>
             </div>
@@ -178,7 +241,7 @@ export const MatchDetailPage = () => {
   );
 };
 
-const ReviewItem = ({ user, rating, content }: { user: string; rating: number; content: string }) => (
+const ReviewItem = ({ user, rating, content, watchedAt }: { user: string; rating: number; content: string; watchedAt?: string }) => (
   <div className="flex gap-4 border-b border-white/5 pb-8">
     <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0"></div>
     <div className="flex-1">
@@ -187,6 +250,11 @@ const ReviewItem = ({ user, rating, content }: { user: string; rating: number; c
         <span className="text-kickr font-bold text-xs">
           {'★'.repeat(Math.floor(rating))}{rating % 1 !== 0 ? '½' : ''}
         </span>
+        {watchedAt && (
+          <span className="text-[#667788] text-xs ml-auto">
+            {new Date(watchedAt).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </span>
+        )}
       </div>
       <p className="text-sm leading-relaxed text-[#99aabb]">{content}</p>
     </div>

@@ -27,4 +27,7 @@ public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
 
     @Query("SELECT um.match.id, AVG(um.note), COUNT(um) FROM UserMatch um WHERE um.match.id IN :matchIds GROUP BY um.match.id")
     List<Object[]> findStatsByMatchIds(@Param("matchIds") List<UUID> matchIds);
+
+    @Query("SELECT um FROM UserMatch um ORDER BY um.watchedAt DESC")
+    List<UserMatch> findLatestReviews(Pageable pageable);
 }

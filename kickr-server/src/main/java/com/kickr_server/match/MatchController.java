@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/matchs")
@@ -56,7 +57,7 @@ public class MatchController {
         })
         @GetMapping("/team/{teamId}")
         public List<MatchDto> getAllMatchesByTeam(
-                        @Parameter(description = "ID de l'équipe") @PathVariable java.util.UUID teamId) {
+                        @Parameter(description = "ID de l'équipe") @PathVariable UUID teamId) {
                 return matchService.getAllMatchesByTeamId(teamId);
         }
 
@@ -76,7 +77,7 @@ public class MatchController {
         @Operation(summary = "Recherche des matchs avec filtres (ligue, statut, tri)")
         @GetMapping("/search")
         public Page<MatchDto> searchMatches(
-                        @Parameter(description = "ID de la compétition") @RequestParam(required = false) java.util.UUID competitionId,
+                        @Parameter(description = "ID de la compétition") @RequestParam(required = false) UUID competitionId,
                         @Parameter(description = "Match terminé (true/false)") @RequestParam(required = false) Boolean finished,
                         @Parameter(description = "Tri (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
                         @Parameter(description = "Page") @RequestParam(defaultValue = "0") int page,

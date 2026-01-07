@@ -61,6 +61,9 @@ public class MatchDto {
     @JsonProperty("away_score")
     private Integer awayScore;
 
+    @JsonProperty("match_uuid")
+    private UUID matchUuid;
+
     @JsonProperty("id")
     private Integer externalFixtureId;
 
@@ -91,6 +94,7 @@ public class MatchDto {
                 match.getLocation(),
                 match.getHomeScore(),
                 match.getAwayScore(),
+                match.getId(), // matchUuid
                 match.getExternalFixtureId(),
                 0.0,
                 0L);

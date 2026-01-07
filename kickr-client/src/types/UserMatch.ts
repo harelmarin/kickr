@@ -17,6 +17,8 @@ export interface UserMatch {
     location: string;
     homeScore: number;
     awayScore: number;
+    matchUuid: string;
+    id: string; // external fixture ID
   };
   note: number;
   comment: string;
