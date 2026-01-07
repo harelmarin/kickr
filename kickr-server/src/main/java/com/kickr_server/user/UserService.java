@@ -1,6 +1,7 @@
 package com.kickr_server.user;
 
-import com.kickr_server.dto.generic.ApiResponseDto;
+import com.kickr_server.dto.User.UserDto;
+import com.kickr_server.usermatch.UserMatchRepository;
 import com.kickr_server.exception.user.UserAlreadyExistException;
 import com.kickr_server.exception.user.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,15 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMatchRepository userMatchRepository;
+
+    public UserDto getUserDtoWithStats(UUID id) {
+        User user = getUserById(id);
+        long matchesCount = userMatchRepository.countByUserId(id);
+        // Mocking followers/following for now as requested by user's request for
+        // profile UI
+        return UserDto.fromEntityWithStats(user, 124, 89, matchesCount);
+    }
 
     /**
      * Récupère la liste de tous les utilisateurs.

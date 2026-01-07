@@ -4,4 +4,7 @@ export interface User {
     email: string;
     createdAt: string;
     updatedAt: string;
+    followersCount: number;
+    followingCount: number;
+    matchesCount: number;
 }

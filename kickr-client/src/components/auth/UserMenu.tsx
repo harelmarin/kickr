@@ -31,7 +31,7 @@ export const UserMenu: FC = () => {
                 </div>
 
                 <div className="py-1">
-                    <MenuLink to="/profile" label="Profile" />
+                    <MenuLink to={`/user/${user.id}`} label="Profile" />
                     <MenuLink to="/settings" label="Settings" />
                 </div>
 

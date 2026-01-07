@@ -14,6 +14,8 @@ import java.util.UUID;
 public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
     List<UserMatch> findByUserId(UUID userId);
 
+    long countByUserId(UUID userId);
+
     List<UserMatch> findByMatchId(UUID matchId);
 
     UserMatch findByUserIdAndMatchId(UUID userId, UUID matchId);

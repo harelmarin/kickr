@@ -11,9 +11,11 @@ import { TeamDetailPage } from './TeamDetailPage';
 import { TeamsPage } from './TeamsPage';
 import { MatchDetailPage } from './MatchDetailPage';
 import { MatchesPage } from './MatchesPage';
+import { Navigate } from 'react-router-dom';
+import { UserDetailPage } from './UserDetailPage';
 
 function App() {
-  const { checkAuth } = useAuth();
+  const { checkAuth, user } = useAuth();
 
   useEffect(() => {
     checkAuth();
@@ -32,6 +34,11 @@ function App() {
             <Route path="/teams/:id" element={<TeamDetailPage />} />
             <Route path="/matches" element={<MatchesPage />} />
             <Route path="/matches/:id" element={<MatchDetailPage />} />
+            <Route path="/user/:id" element={<UserDetailPage />} />
+            <Route
+              path="/profile"
+              element={user ? <Navigate to={`/user/${user.id}`} replace /> : <Navigate to="/" replace />}
+            />
           </Routes>
         </Layout>
       </BrowserRouter>

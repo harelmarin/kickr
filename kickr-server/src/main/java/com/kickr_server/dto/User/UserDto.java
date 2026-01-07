@@ -13,8 +13,10 @@ public record UserDto(
         String name,
         String email,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
-) {
+        LocalDateTime updatedAt,
+        long followersCount,
+        long followingCount,
+        long matchesCount) {
     /**
      * Convertit un User en UserDto.
      *
@@ -27,7 +29,19 @@ public record UserDto(
                 user.getName(),
                 user.getEmail(),
                 user.getCreatedAt(),
-                user.getUpdatedAt()
-        );
+                user.getUpdatedAt(),
+                0L, 0L, 0L);
+    }
+
+    public static UserDto fromEntityWithStats(User user, long followers, long following, long matches) {
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt(),
+                followers,
+                following,
+                matches);
     }
 }

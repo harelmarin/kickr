@@ -52,8 +52,7 @@ public class UserController {
     @RateLimiter(name = "userRateLimiter")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable UUID id) {
-        var user = userService.getUserById(id);
-        return UserDto.fromEntity(user);
+        return userService.getUserDtoWithStats(id);
     }
 
     /**

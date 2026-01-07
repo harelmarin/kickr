@@ -22,6 +22,15 @@ export const MatchDetailPage = () => {
 
   const { data: userMatches } = useUserMatchesByMatch(match?.matchUuid || '');
   const createUserMatch = useCreateUserMatch();
+  const myMatchEntry = userMatches?.find(m => m.user.id === user?.id);
+
+  // Pre-fill form if entry exists
+  useState(() => {
+    if (myMatchEntry) {
+      setRating(myMatchEntry.note);
+      setReview(myMatchEntry.comment);
+    }
+  });
 
   const handleSaveRating = async () => {
     if (!user) {
@@ -48,9 +57,7 @@ export const MatchDetailPage = () => {
         comment: review,
       });
 
-      toast.success('Rating saved successfully! 🎉');
-      setRating(0);
-      setReview('');
+      toast.success(myMatchEntry ? 'Rating updated successfully! 🔄' : 'Rating saved successfully! 🎉');
     } catch (error: any) {
       console.error('Error saving rating:', error);
       toast.error(error.response?.data?.message || 'Failed to save rating');
@@ -165,6 +172,7 @@ export const MatchDetailPage = () => {
                   {userMatches.map((userMatch) => (
                     <ReviewItem
                       key={userMatch.id}
+                      userId={userMatch.user.id}
                       user={userMatch.user.name}
                       rating={userMatch.note}
                       content={userMatch.comment}
@@ -183,7 +191,12 @@ export const MatchDetailPage = () => {
             <div className="bg-[#1b2228] border border-white/10 rounded-lg overflow-hidden shadow-xl sticky top-24">
               <div className="p-6 bg-[#2c3440] border-b border-white/5 flex items-center justify-between">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-[#8899aa] uppercase tracking-widest">Logged by you</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold text-[#8899aa] uppercase tracking-widest">
+                      {myMatchEntry ? 'Watched by you' : 'Logged by you'}
+                    </span>
+                    {myMatchEntry && <span className="text-[#4466ff] text-[10px]">●</span>}
+                  </div>
                   <span className="text-white font-bold">{matchDate.toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 </div>
                 <button
@@ -201,7 +214,7 @@ export const MatchDetailPage = () => {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-4xl transition-all duration-200 ${star <= (hoveredRating || rating) ? 'text-kickr' : 'text-[#445566]'
+                        className={`text-4xl transition-all duration-200 ${star <= (hoveredRating || rating) ? (myMatchEntry ? 'text-[#4466ff]' : 'text-kickr') : 'text-[#445566]'
                           }`}
                         onMouseEnter={() => setHoveredRating(star)}
                         onMouseLeave={() => setHoveredRating(0)}
@@ -211,7 +224,9 @@ export const MatchDetailPage = () => {
                       </button>
                     ))}
                   </div>
-                  <div className="text-center text-[10px] font-bold text-[#667788] uppercase tracking-widest">Rate this match</div>
+                  <div className="text-center text-[10px] font-bold text-[#667788] uppercase tracking-widest">
+                    {myMatchEntry ? 'Your rating' : 'Rate this match'}
+                  </div>
                 </div>
 
                 {/* Review Text Area */}
@@ -227,9 +242,10 @@ export const MatchDetailPage = () => {
                 <button
                   onClick={handleSaveRating}
                   disabled={rating === 0 || createUserMatch.isPending}
-                  className="w-full btn-primary-kickr py-3 rounded text-[11px] hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className={`w-full py-3 rounded text-[11px] font-bold hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all ${myMatchEntry ? 'bg-[#4466ff] text-white' : 'btn-primary-kickr'
+                    }`}
                 >
-                  {createUserMatch.isPending ? 'SAVING...' : 'SAVE ENTRY'}
+                  {createUserMatch.isPending ? 'SAVING...' : myMatchEntry ? 'UPDATE ENTRY' : 'SAVE ENTRY'}
                 </button>
               </div>
             </div>
@@ -241,22 +257,27 @@ export const MatchDetailPage = () => {
   );
 };
 
-const ReviewItem = ({ user, rating, content, watchedAt }: { user: string; rating: number; content: string; watchedAt?: string }) => (
+const ReviewItem = ({ userId, user, rating, content, watchedAt }: { userId: string; user: string; rating: number; content: string; watchedAt?: string }) => (
   <div className="flex gap-4 border-b border-white/5 pb-8">
-    <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0"></div>
+    <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase">
+      {user[0]}
+    </div>
     <div className="flex-1">
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-white font-bold">{user}</span>
-        <span className="text-kickr font-bold text-xs">
-          {'★'.repeat(Math.floor(rating))}{rating % 1 !== 0 ? '½' : ''}
+        <Link to={`/user/${userId}`} className="text-white font-bold hover:text-kickr transition-colors">{user}</Link>
+        <span className="text-kickr font-bold text-xs pl-2 border-l border-white/10 ml-2">
+          {'★'.repeat(Math.round(rating))}
+          <span className="text-white/5">{'★'.repeat(5 - Math.round(rating))}</span>
         </span>
         {watchedAt && (
-          <span className="text-[#667788] text-xs ml-auto">
-            {new Date(watchedAt).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
+          <span className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto">
+            {new Date(watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
           </span>
         )}
       </div>
-      <p className="text-sm leading-relaxed text-[#99aabb]">{content}</p>
+      {content && content.trim() !== "" && (
+        <p className="text-sm leading-relaxed text-[#99aabb] italic">"{content}"</p>
+      )}
     </div>
   </div>
 );

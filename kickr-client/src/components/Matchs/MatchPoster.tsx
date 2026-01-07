@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Match } from '../../types/Match';
+import { useMyUserMatches } from '../../hooks/useUserMatch';
 
 interface MatchPosterProps {
     match: Match;
@@ -12,6 +13,8 @@ interface MatchPosterProps {
  */
 export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
     const isPast = match.homeScore !== null;
+    const { data: myMatches } = useMyUserMatches();
+    const myMatchEntry = myMatches?.find(m => m.match.matchUuid === match.matchUuid);
 
     return (
         <div className={`flex flex-col gap-2 group ${className}`}>
@@ -65,16 +68,14 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
                         {new Date(match.matchDate).toLocaleDateString('fr', { day: '2-digit', month: 'short' })}
                     </span>
                     {isPast ? (
-                        // Show rating only for finished matches
-                        match.averageRating && match.averageRating > 0 && (
-                            <div className="flex items-center gap-1">
-                                <div className="flex text-kickr text-[8px]">
-                                    {'★'.repeat(Math.round(match.averageRating))}
-                                    {'☆'.repeat(5 - Math.round(match.averageRating))}
+                        <div className="flex flex-col items-end">
+                            {/* User's own rating if it exists - Now in Electric Blue */}
+                            {myMatchEntry && (
+                                <div className="text-[#4466ff] text-[9px] flex mb-0.5 drop-shadow-sm font-bold">
+                                    {'★'.repeat(Math.round(myMatchEntry.note))}
                                 </div>
-                                <span className="text-[#445566] text-[9px] font-bold">({match.reviewsCount})</span>
-                            </div>
-                        )
+                            )}
+                        </div>
                     ) : (
                         // Show time for upcoming matches
                         <span className="text-[#8899aa] text-[10px] font-bold">

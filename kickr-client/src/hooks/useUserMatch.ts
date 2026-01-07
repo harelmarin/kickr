@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userMatchService, type CreateUserMatchDto, type UpdateUserMatchDto } from '../services/userMatchService';
 import type { UserMatch } from '../types/UserMatch';
+import { useAuth } from './useAuth';
 
 // Hook to get user matches for a specific match
 export const useUserMatchesByMatch = (matchId: string) => {
@@ -13,13 +14,19 @@ export const useUserMatchesByMatch = (matchId: string) => {
 };
 
 // Hook to get user matches for a specific user
-export const useUserMatchesByUser = (userId: string) => {
+export const useUserMatchesByUser = (userId?: string) => {
     return useQuery<UserMatch[], Error>({
         queryKey: ['userMatches', 'user', userId],
-        queryFn: () => userMatchService.getByUserId(userId),
+        queryFn: () => userId ? userMatchService.getByUserId(userId) : Promise.resolve([]),
         enabled: !!userId,
         staleTime: 30 * 1000,
     });
+};
+
+// Hook to get matches for current logged in user
+export const useMyUserMatches = () => {
+    const { user } = useAuth();
+    return useUserMatchesByUser(user?.id);
 };
 
 // Hook to get latest global reviews
