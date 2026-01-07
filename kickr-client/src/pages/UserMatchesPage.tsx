@@ -34,7 +34,7 @@ export const UserMatchesPage = () => {
     }).sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
+        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6 pitch-pattern">
             <div className="max-w-7xl mx-auto">
 
                 <header className="mb-20">
@@ -53,7 +53,7 @@ export const UserMatchesPage = () => {
                     </div>
 
                     {/* Cinematic Filter Bar */}
-                    <div className="mt-12 flex flex-col md:flex-row items-start md:items-center justify-between border-y border-white/5 py-4 gap-8">
+                    <div className="mt-12 flex flex-col md:flex-row items-start md:items-center justify-between border-y border-kickr/20 py-4 gap-8 section-contrast rounded-xl px-6">
                         <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
 
                             {/* Search Filter */}

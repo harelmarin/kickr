@@ -38,7 +38,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
+        <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20 pitch-pattern">
             <div className="max-w-6xl mx-auto px-6">
 
                 {/* Profile Header */}
@@ -112,10 +112,10 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-24">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-12">
-                            <div className="flex items-center justify-between border-b border-white/5 pb-6">
-                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em]">Recent Diary Entries →</Link>
-                                <span className="text-[10px] font-bold text-[#445566] uppercase tracking-widest">{reviews?.length || 0} Total</span>
+                        <section id="diary-entries" className="space-y-12 section-contrast p-8 rounded-2xl">
+                            <div className="flex items-center justify-between border-b border-kickr/20 pb-6">
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em] glow-kickr">Recent Diary Entries →</Link>
+                                <span className="text-[10px] font-bold text-kickr uppercase tracking-widest">{reviews?.length || 0} Total</span>
                             </div>
 
                             {isReviewsLoading ? (
@@ -139,7 +139,7 @@ export const UserDetailPage = () => {
                         </section>
 
                         {/* Network Section (Followers/Following) */}
-                        <section id="network-section" className="space-y-16 pt-12 border-t border-white/5">
+                        <section id="network-section" className="space-y-16 pt-12 bg-[#14181c]/50 p-8 rounded-2xl border border-white/5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                                 {/* Following Column */}
                                 <div className="space-y-8">
@@ -189,7 +189,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Sidebar: Stats & Favorites */}
-                    <div className="space-y-12">
+                    <div className="space-y-12 pitch-stripes">
                         <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
                             <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Ratings Distribution</h3>
                             <RatingsChart reviews={reviews || []} />

@@ -41,7 +41,7 @@ export const UserDiaryPage = () => {
     }, {} as Record<string, typeof filteredReviews>);
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
+        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6 pitch-pattern">
             <div className="max-w-5xl mx-auto">
 
                 <header className="mb-16">
@@ -60,7 +60,7 @@ export const UserDiaryPage = () => {
                     </div>
 
                     {/* Filter Bar */}
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between border-y border-white/5 py-4 gap-8">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between border-y border-kickr/20 py-4 gap-8 section-contrast rounded-xl px-6">
                         <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
                             <div className="flex flex-col gap-1">
                                 <span className="text-[8px] uppercase font-black text-[#445566] tracking-[0.2em]">Filter Team</span>
@@ -117,7 +117,7 @@ export const UserDiaryPage = () => {
                 ) : Object.keys(groupedReviews).length > 0 ? (
                     <div className="space-y-16">
                         {Object.entries(groupedReviews).map(([monthYear, monthReviews]) => (
-                            <section key={monthYear}>
+                            <section key={monthYear} className="bg-[#14181c]/50 p-6 rounded-2xl border border-white/5">
                                 <h2 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.3em] mb-6 border-b border-white/5 pb-2">
                                     {monthYear}
                                 </h2>

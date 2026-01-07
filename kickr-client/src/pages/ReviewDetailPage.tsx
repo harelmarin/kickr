@@ -58,7 +58,7 @@ export const ReviewDetailPage: FC = () => {
     }
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-20 pb-20">
+        <main className="min-h-screen bg-[#0a0b0d] pt-20 pb-20 pitch-pattern">
             <div className="max-w-5xl mx-auto px-6">
                 {/* Horizontal Match Header / Ticket */}
                 <header className="mb-8">

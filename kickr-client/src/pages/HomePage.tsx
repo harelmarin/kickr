@@ -15,7 +15,7 @@ export default function HomePage() {
     : [];
 
   return (
-    <main className="flex flex-col min-h-screen bg-[#14181c]">
+    <main className="flex flex-col min-h-screen bg-[#0a0b0d]">
       {/* Cinematic Hero */}
       <section className="relative h-[650px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -59,7 +59,7 @@ export default function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+      <div className="max-w-7xl mx-auto px-6 py-20 w-full pitch-pattern">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
 
           {/* Main Column: Social & Discover */}
@@ -67,10 +67,10 @@ export default function HomePage() {
 
             {/* 1. Following Feed (Personalized) */}
             {user && (
-              <section>
-                <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr">Your Network Activity</span>
-                  <Link to="/matches" className="text-[10px] text-[#445566] hover:text-white transition-colors">Friend Feed</Link>
+              <section className="section-contrast p-8 rounded-2xl">
+                <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr glow-kickr">Your Network Activity</span>
+                  <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">Friend Feed →</Link>
                 </div>
                 {isFollowingLoading ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
@@ -92,17 +92,17 @@ export default function HomePage() {
             )}
 
             {/* 2. Upcoming Matches Section */}
-            <section>
-              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Upcoming Matches</span>
-                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-white transition-colors">Calendar</Link>
+            <section className="bg-[#14181c]/50 p-8 rounded-2xl border border-white/5">
+              <div className="flex items-center justify-between mb-10 border-b border-white/10 pb-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white">Upcoming Matches</span>
+                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">View All →</Link>
               </div>
               <NextMatchesHomePage />
             </section>
 
             {/* 3. Recent Reviews Section */}
-            <section>
-              <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788] mb-10 border-b border-white/5 pb-4">Recent reviews from the crowd</h2>
+            <section className="section-contrast p-8 rounded-2xl">
+              <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-white mb-10 border-b border-kickr/20 pb-4">Recent reviews from the crowd</h2>
               {isLatestLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
                   {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}

@@ -7,27 +7,34 @@
    ========================================================================== */
 :root {
   --kickr-primary: #4466ff;
-  /* THE COLOR YOU WANT TO CHANGE */
   --kickr-primary-rgb: 68, 102, 255;
-  /* RGB version for transparency (used in shadows) */
-
   --color-bg-primary: #0a0b0d;
   --color-bg-secondary: #14181c;
   --color-bg-tertiary: #1b2228;
-}
-
-@theme {
-  --color-primary: var(--kickr-primary);
-  --color-brand: var(--kickr-primary);
+  --pitch-green: #1a4d2e;
+  --pitch-light: #2d6a4f;
 }
 
 @layer base {
-  body {
-    background-color: var(--color-bg-primary);
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    margin: 0;
+  * {
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #0a0b0d;
+    color: #ffffff;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
   }
 
   /* Universal Selection Color */
@@ -59,12 +66,7 @@
   }
 
   .btn-primary-kickr {
-    background-color: var(--kickr-primary);
-    color: #000;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    transition: all 0.2s;
+    @apply bg-kickr text-black font-black uppercase tracking-widest text-[11px] px-8 py-3 rounded-lg hover:scale-105 transition-all shadow-lg active:scale-95;
   }
 
   .btn-primary-kickr:hover {
@@ -73,14 +75,76 @@
   }
 
   /* Match Poster Hover Glow */
-  .poster-hover-effect:hover {
-    border-color: var(--kickr-primary) !important;
+  .poster-hover-effect {
+    @apply transition-all duration-300;
   }
-}
 
-/* Typography Utilities */
-.display-font {
-  font-family: 'Outfit', sans-serif;
+  .poster-hover-effect:hover {
+    @apply border-kickr/50;
+  }
+
+  .display-font {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+  }
+
+  .card-glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl;
+  }
+
+  .text-gradient-kickr {
+    @apply bg-gradient-to-r from-kickr to-[#6688ff] bg-clip-text text-transparent;
+  }
+
+  .section-divider {
+    @apply border-t border-white/10 my-16;
+  }
+
+  .input-kickr {
+    @apply bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:border-kickr focus:ring-2 focus:ring-kickr/20 outline-none transition-all;
+  }
+
+  .badge-kickr {
+    @apply bg-kickr/10 text-kickr border border-kickr/20 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest;
+  }
+
+  .stat-card {
+    @apply bg-white/5 border border-white/10 rounded-xl p-6 hover:border-kickr/30 transition-all cursor-pointer;
+  }
+
+  /* Football pitch pattern */
+  .pitch-pattern {
+    background-image:
+      linear-gradient(90deg, rgba(68, 102, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(rgba(68, 102, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Diagonal stripes like a pitch */
+  .pitch-stripes {
+    background: repeating-linear-gradient(45deg,
+        transparent,
+        transparent 10px,
+        rgba(68, 102, 255, 0.02) 10px,
+        rgba(68, 102, 255, 0.02) 20px);
+  }
+
+  /* Section with strong contrast */
+  .section-contrast {
+    @apply bg-[#14181c] border-y border-white/10 relative;
+  }
+
+  .section-contrast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--kickr-primary), transparent);
+    opacity: 0.3;
+  }
 }
 
 /* Custom Scrollbar */
@@ -104,4 +168,40 @@
 /* Pitch Backdrop Gradient */
 .pitch-gradient {
   background: radial-gradient(circle at top, rgba(var(--kickr-primary-rgb), 0.05) 0%, transparent 70%);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Glowing accent */
+  .glow-kickr {
+    box-shadow: 0 0 20px rgba(68, 102, 255, 0.3);
+  }
 }

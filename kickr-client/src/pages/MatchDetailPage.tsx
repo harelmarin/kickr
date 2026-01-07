@@ -98,7 +98,7 @@ export const MatchDetailPage = () => {
   const isPast = match.homeScore !== null;
 
   return (
-    <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
+    <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb] pitch-pattern">
       {/* Cinematic Hero Backdrop */}
       <div className="relative h-[480px] w-full overflow-hidden">
         {/* Atmospheric Background Image - Using a high-quality stadium shot */}
