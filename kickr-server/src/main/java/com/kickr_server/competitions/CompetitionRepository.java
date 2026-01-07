@@ -9,5 +9,8 @@ import java.util.UUID;
 @Repository
 public interface CompetitionRepository extends JpaRepository<Competition, UUID> {
     Optional<Competition> findByName(String name);
+
     Optional<Competition> findByExternalId(Integer externalId);
+
+    java.util.List<Competition> findByNameContainingIgnoreCase(String query);
 }

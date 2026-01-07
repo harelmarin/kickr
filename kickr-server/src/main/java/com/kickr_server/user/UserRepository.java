@@ -20,7 +20,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
      * Vérifie si un utilisateur existe avec l'email donné.
      *
      * @param email l'email à vérifier
-     * @return {@code true} si un utilisateur avec cet email existe, {@code false} sinon
+     * @return {@code true} si un utilisateur avec cet email existe, {@code false}
+     *         sinon
      */
     boolean existsByEmail(String email);
 
@@ -28,7 +29,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
      * Vérifie si un utilisateur existe avec le nom donné.
      *
      * @param name le nom à vérifier
-     * @return {@code true} si un utilisateur avec ce nom existe, {@code false} sinon
+     * @return {@code true} si un utilisateur avec ce nom existe, {@code false}
+     *         sinon
      */
     boolean existsByName(String name);
 
@@ -36,7 +38,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
      * Vérifie si un utilisateur existe avec l'UUID donné.
      *
      * @param id l'identifiant UUID à vérifier (non null)
-     * @return {@code true} si un utilisateur avec cet id existe, {@code false} sinon
+     * @return {@code true} si un utilisateur avec cet id existe, {@code false}
+     *         sinon
      */
     boolean existsById(@NonNull UUID id);
 
@@ -55,6 +58,15 @@ public interface UserRepository extends JpaRepository<User, UUID> {
      * @return un {@link Optional} contenant l'utilisateur si trouvé, vide sinon
      */
     Optional<User> findByName(String name);
+
+    /**
+     * Searches for users whose name or email contains the given query string
+     * (case-insensitive).
+     *
+     * @param query the search query
+     * @return a list of users matching the query
+     */
+    java.util.List<User> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String query, String emailQuery);
 
     /**
      * Supprime un utilisateur par son identifiant UUID.

@@ -12,12 +12,17 @@ import java.util.UUID;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, UUID> {
     Optional<Team> findByName(String name);
+
     Optional<Team> findByExternalId(Integer externalId);
+
     List<Team> findByCompetitionId(UUID competitionId);
-    
+
     // Pagination avec recherche
     Page<Team> findByNameContainingIgnoreCase(String name, Pageable pageable);
-    
+
     // Pagination sans recherche
     Page<Team> findAllByOrderByNameAsc(Pageable pageable);
+
+    // Search without pagination
+    List<Team> findByNameContainingIgnoreCase(String query);
 }
