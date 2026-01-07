@@ -15,10 +15,12 @@ import java.util.UUID;
 /**
  * Entité représentant l’évaluation d’un match par un utilisateur.
  * <p>
- * Cette entité fait le lien entre {@link User} et {@link Match}, en ajoutant des informations
+ * Cette entité fait le lien entre {@link User} et {@link Match}, en ajoutant
+ * des informations
  * comme une note, un commentaire et la date de visionnage.
  * <p>
- * Un enregistrement {@code UserMatch} correspond donc à un utilisateur ayant noté un match.
+ * Un enregistrement {@code UserMatch} correspond donc à un utilisateur ayant
+ * noté un match.
  */
 @Entity
 @Table(name = "user_matches")
@@ -38,7 +40,8 @@ public class UserMatch {
     /**
      * Le match concerné par l’évaluation.
      * <p>
-     * Si le match est supprimé, toutes les évaluations liées seront aussi supprimées
+     * Si le match est supprimé, toutes les évaluations liées seront aussi
+     * supprimées
      * (grâce à {@link OnDelete}).
      */
     @ManyToOne
@@ -49,7 +52,8 @@ public class UserMatch {
     /**
      * L’utilisateur qui a fait l’évaluation.
      * <p>
-     * Si l’utilisateur est supprimé, toutes ses évaluations liées seront supprimées.
+     * Si l’utilisateur est supprimé, toutes ses évaluations liées seront
+     * supprimées.
      */
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -64,13 +68,19 @@ public class UserMatch {
     @Max(5)
     private double note;
 
-
-
     /**
      * Commentaire facultatif laissé par l’utilisateur (limité à 1000 caractères).
      */
     @Column(length = 1000)
     private String comment;
+
+    /**
+     * Indique si l'utilisateur a marqué ce match comme favori (liked).
+     * Par défaut à false.
+     */
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean isLiked = false;
 
     /**
      * Date et heure auxquelles l’utilisateur a marqué le match comme "vu".
@@ -97,4 +107,3 @@ public class UserMatch {
     }
 
 }
-

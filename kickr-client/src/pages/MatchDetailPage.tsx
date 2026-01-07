@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -25,14 +25,24 @@ export const MatchDetailPage = () => {
   const deleteUserMatch = useDeleteUserMatch();
   const myMatchEntry = userMatches?.find(m => m.user.id === user?.id);
 
+  const previousEntryId = useRef<string | null>(null);
+
   // Pre-fill form if entry exists
   useEffect(() => {
-    if (myMatchEntry) {
-      setRating(myMatchEntry.note);
-      setReview(myMatchEntry.comment);
-    } else {
-      setRating(0);
-      setReview('');
+    const currentEntryId = myMatchEntry?.id || null;
+
+    // Only update if we're loading a different entry or initializing for the first time
+    if (currentEntryId !== previousEntryId.current) {
+      if (myMatchEntry) {
+        setRating(myMatchEntry.note);
+        setReview(myMatchEntry.comment);
+        setIsLiked(myMatchEntry.isLiked || false);
+      } else {
+        setRating(0);
+        setReview('');
+        setIsLiked(false);
+      }
+      previousEntryId.current = currentEntryId;
     }
   }, [myMatchEntry]);
 
@@ -59,9 +69,10 @@ export const MatchDetailPage = () => {
         matchId: match.matchUuid,
         note: rating,
         comment: review,
+        isLiked: isLiked,
       });
 
-      toast.success(myMatchEntry ? 'Rating updated successfully! 🔄' : 'Rating saved successfully! 🎉');
+      toast.success(myMatchEntry ? 'Rating updated successfully!' : 'Rating saved successfully!');
     } catch (error: any) {
       console.error('Error saving rating:', error);
       toast.error(error.response?.data?.message || 'Failed to save rating');
@@ -130,9 +141,20 @@ export const MatchDetailPage = () => {
               </div>
 
               {isPast && (
-                <div className="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-xl p-4 text-center border-t border-white/10">
-                  <div className="text-kickr font-display font-black text-2xl italic tracking-tighter">
-                    {match.homeScore} — {match.awayScore}
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/95 to-transparent backdrop-blur-xl p-6 text-center border-t border-white/10">
+                  <div className="flex items-center justify-center gap-6">
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="text-[10px] font-black text-[#667788] uppercase tracking-[0.2em]">Final</span>
+                      <div className="flex items-center gap-4">
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="text-5xl font-black text-white tracking-tighter leading-none">{match.homeScore}</div>
+                        </div>
+                        <div className="text-white/20 font-black text-3xl">—</div>
+                        <div className="flex flex-col items-center gap-1">
+                          <div className="text-5xl font-black text-white tracking-tighter leading-none">{match.awayScore}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -179,19 +201,19 @@ export const MatchDetailPage = () => {
 
               <div className="flex flex-col gap-4 mb-4">
                 <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[1.1]">
-                  <Link to={`/teams/${match.homeTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/home uppercase italic">
+                  <Link to={`/teams/${match.homeTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/home uppercase italic text-white">
                     {match.homeTeam}
                     <span className="absolute bottom-0 left-0 w-0 h-1 bg-kickr group-hover/home:w-full transition-all duration-500"></span>
                   </Link>
-                  <span className="mx-2 md:mx-4 text-white/10 font-thin not-italic">/</span>
-                  <Link to={`/teams/${match.awayTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/away uppercase italic">
+                  <span className="mx-2 md:mx-4 text-white/30 font-thin not-italic">vs</span>
+                  <Link to={`/teams/${match.awayTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/away uppercase italic text-white">
                     {match.awayTeam}
                     <span className="absolute bottom-0 left-0 w-0 h-1 bg-kickr group-hover/away:w-full transition-all duration-500"></span>
                   </Link>
                 </h1>
 
                 <div className="flex items-center gap-4">
-                  <span className="text-xl md:text-2xl font-black uppercase tracking-[0.15em] italic text-[#445566]">
+                  <span className="text-xl md:text-2xl font-black uppercase tracking-[0.15em] italic text-[#99aabb]">
                     {matchDate.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                   </span>
                 </div>
@@ -232,6 +254,7 @@ export const MatchDetailPage = () => {
                       rating={userMatch.note}
                       content={userMatch.comment}
                       watchedAt={userMatch.watchedAt}
+                      isLiked={userMatch.isLiked}
                     />
                   ))}
                 </div>
@@ -322,30 +345,35 @@ export const MatchDetailPage = () => {
   );
 };
 
-const ReviewItem = ({ userId, user, rating, content, watchedAt }: { userId: string; user: string; rating: number; content: string; watchedAt?: string }) => (
-  <div className="flex gap-4 border-b border-white/5 pb-8">
-    <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase">
-      {user[0]}
-    </div>
-    <div className="flex-1">
-      <div className="flex items-center gap-2 mb-2">
-        <Link to={`/user/${userId}`} className="text-white font-bold hover:text-kickr transition-colors">{user}</Link>
-        <span className="text-kickr font-bold text-xs pl-2 border-l border-white/10 ml-2">
-          {'★'.repeat(Math.round(rating))}
-          <span className="text-white/5">{'★'.repeat(5 - Math.round(rating))}</span>
-        </span>
-        {watchedAt && (
-          <span className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto">
-            {new Date(watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+const ReviewItem = ({ userId, user, rating, content, watchedAt, isLiked }: { userId: string; user: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean }) => {
+  return (
+    <div className="flex gap-4 border-b border-white/5 pb-8">
+      <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase">
+        {user[0]}
+      </div>
+      <div className="flex-1">
+        <div className="flex items-center gap-2 mb-2">
+          <Link to={`/user/${userId}`} className="text-white font-bold hover:text-kickr transition-colors">{user}</Link>
+          <span className="text-kickr font-bold text-xs pl-2 border-l border-white/10 ml-2">
+            {'★'.repeat(Math.round(rating))}
+            <span className="text-white/5">{'★'.repeat(5 - Math.round(rating))}</span>
           </span>
+          {isLiked === true && (
+            <span className="text-[#ff8000] text-sm ml-1" title="Liked">❤</span>
+          )}
+          {watchedAt && (
+            <span className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto">
+              {new Date(watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          )}
+        </div>
+        {content && content.trim() !== "" && (
+          <p className="text-sm leading-relaxed text-[#99aabb] italic">"{content}"</p>
         )}
       </div>
-      {content && content.trim() !== "" && (
-        <p className="text-sm leading-relaxed text-[#99aabb] italic">"{content}"</p>
-      )}
     </div>
-  </div>
-);
+  );
+};
 
 const LoadingState = () => (
   <div className="min-h-screen bg-[#14181c] flex items-center justify-center">

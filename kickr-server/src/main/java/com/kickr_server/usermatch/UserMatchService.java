@@ -124,6 +124,7 @@ public class UserMatchService {
             // Update existing entry
             userMatch.setNote(dto.note);
             userMatch.setComment(dto.comment);
+            userMatch.setLiked(dto.isLiked);
             // We can also update the watchedAt date to the current time if preferred
             // userMatch.setWatchedAt(LocalDateTime.now());
         } else {
@@ -132,6 +133,7 @@ public class UserMatchService {
                     .user(user)
                     .match(match)
                     .comment(dto.comment)
+                    .isLiked(dto.isLiked)
                     .build();
             userMatch.setNote(dto.note);
         }

@@ -12,7 +12,8 @@ import java.util.UUID;
 /**
  * DTO pour transférer les données d'une évaluation de match par un utilisateur.
  * <p>
- * Utilisé pour les requêtes POST/PUT et pour les réponses GET afin de ne pas exposer directement l'entité.
+ * Utilisé pour les requêtes POST/PUT et pour les réponses GET afin de ne pas
+ * exposer directement l'entité.
  */
 @Data
 @NoArgsConstructor
@@ -23,9 +24,10 @@ public class UserMatchDto {
     public UUID id;
     public UUID userId;
     public UUID matchId;
-    public  double note;
-    public  String comment;
-    public  LocalDateTime watchedAt;
+    public double note;
+    public String comment;
+    public boolean isLiked;
+    public LocalDateTime watchedAt;
 
     /**
      * Crée un DTO à partir d'une entité {@link UserMatch}.
@@ -40,6 +42,7 @@ public class UserMatchDto {
                 .matchId(entity.getMatch().getId())
                 .note(entity.getNote())
                 .comment(entity.getComment())
+                .isLiked(entity.isLiked())
                 .watchedAt(entity.getWatchedAt())
                 .build();
     }

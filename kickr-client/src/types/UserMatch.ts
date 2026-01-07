@@ -22,5 +22,6 @@ export interface UserMatch {
   };
   note: number;
   comment: string;
+  isLiked: boolean;
   watchedAt: string;
 }

@@ -20,6 +20,7 @@ public class UserMatchFullDto {
     private MatchDto match;
     private double note;
     private String comment;
+    private boolean isLiked;
     private LocalDateTime watchedAt;
 
     public static UserMatchFullDto fromEntity(UserMatch entity) {
@@ -49,6 +50,7 @@ public class UserMatchFullDto {
                 matchDto,
                 entity.getNote(),
                 entity.getComment(),
+                entity.isLiked(),
                 entity.getWatchedAt());
     }
 }

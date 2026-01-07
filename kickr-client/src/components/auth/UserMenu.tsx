@@ -24,7 +24,7 @@ export const UserMenu: FC = () => {
             </button>
 
             {/* Premium Dropdown */}
-            <div className="absolute top-[calc(100%+0.75rem)] right-0 w-44 bg-[#1b2228] border border-white/10 rounded shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100]">
+            <div className="absolute top-[calc(100%+0.75rem)] left-0 w-44 bg-[#1b2228] border border-white/10 rounded shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100]">
                 <div className="px-4 py-3 border-b border-white/5 bg-black/10">
                     <p className="text-[9px] font-black text-white uppercase tracking-widest truncate">{user.name}</p>
                     <p className="text-[8px] text-[#5c6470] uppercase font-bold tracking-tight truncate mt-0.5">{user.email}</p>

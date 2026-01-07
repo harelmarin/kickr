@@ -37,7 +37,7 @@ export const useAuth = create<AuthState>((set) => ({
                 error: null
             });
 
-            toast.success(`Welcome back, ${response.user.name}! 🎉`, {
+            toast.success(`Welcome back, ${response.user.name}!`, {
                 id: toastId,
             });
         } catch (error: any) {
@@ -65,7 +65,7 @@ export const useAuth = create<AuthState>((set) => ({
             await authService.register(data);
             set({ isLoading: false, error: null });
 
-            toast.success('Account created successfully! 🎊\nYou can now log in.', {
+            toast.success('Account created successfully!\nYou can now log in.', {
                 id: toastId,
                 duration: 5000,
             });
@@ -94,7 +94,7 @@ export const useAuth = create<AuthState>((set) => ({
                 error: null
             });
 
-            toast.success('See you soon! 👋', {
+            toast.success('See you soon!', {
                 id: toastId,
             });
         } catch (error) {

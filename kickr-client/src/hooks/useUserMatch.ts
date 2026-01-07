@@ -79,7 +79,7 @@ export const useDeleteUserMatch = () => {
             // Invalidate and refetch everything related
             queryClient.invalidateQueries({ queryKey: ['userMatches'] });
             queryClient.invalidateQueries({ queryKey: ['matches'] });
-            toast.success('Entry removed successfully 🗑️');
+            toast.success('Entry removed successfully');
         },
     });
 };
