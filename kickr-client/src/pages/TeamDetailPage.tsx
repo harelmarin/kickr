@@ -1,12 +1,47 @@
 import { useParams } from 'react-router-dom';
+import { useState, useMemo } from 'react';
 import { useTeam } from '../hooks/useTeams';
 import { useMatchesByTeam } from '../hooks/useNextMatchs';
 import { MatchPoster } from '../components/Matchs/MatchPoster';
+import type { Match } from '../types/Match';
 
 export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
+  const [sort, setSort] = useState<'date' | 'popularity' | 'rating'>('date');
+
   const { data: team, isLoading: isLoadingTeam } = useTeam(id!);
   const { data: matches, isLoading: isLoadingMatches } = useMatchesByTeam(id!);
+
+  // Filter and sort matches
+  const filteredAndSortedMatches = useMemo(() => {
+    if (!matches) return [];
+
+    let filtered = [...matches];
+
+    // Filter by status
+    if (status === 'finished') {
+      filtered = filtered.filter(m => m.homeScore !== null);
+    } else if (status === 'upcoming') {
+      filtered = filtered.filter(m => m.homeScore === null);
+    }
+
+    // Sort
+    filtered.sort((a, b) => {
+      switch (sort) {
+        case 'date':
+          return new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime();
+        case 'rating':
+          return (b.averageRating || 0) - (a.averageRating || 0);
+        case 'popularity':
+          return (b.reviewsCount || 0) - (a.reviewsCount || 0);
+        default:
+          return 0;
+      }
+    });
+
+    return filtered;
+  }, [matches, status, sort]);
 
   if (isLoadingTeam || !team) return null;
 
@@ -47,16 +82,57 @@ export const TeamDetailPage = () => {
           {/* Main List of Matches */}
           <div className="lg:col-span-3 space-y-16">
             <section>
-              <div className="flex items-center justify-between section-title mb-10 border-b border-white/5 pb-4">
+              <div className="flex flex-col gap-6 mb-10 border-b border-white/5 pb-6">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">MATCHOGRAPHY</span>
+
+                {/* Filters */}
+                <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
+                  {/* Status Filter */}
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
+                    <select
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value as any)}
+                      className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
+                    >
+                      <option value="all" className="bg-[#14181c]">All Matches</option>
+                      <option value="finished" className="bg-[#14181c]">Finished</option>
+                      <option value="upcoming" className="bg-[#14181c]">Upcoming</option>
+                    </select>
+                  </div>
+
+                  {/* Sort Filter */}
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Sort by</span>
+                    <select
+                      value={sort}
+                      onChange={(e) => setSort(e.target.value as any)}
+                      className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
+                    >
+                      <option value="date" className="bg-[#14181c]">Date</option>
+                      <option value="popularity" className="bg-[#14181c]">Popularity</option>
+                      <option value="rating" className="bg-[#14181c]">Highest Rated</option>
+                    </select>
+                  </div>
+
+                  {/* Match Count */}
+                  <div className="ml-auto text-[10px] uppercase tracking-widest text-[#445566] font-bold">
+                    {filteredAndSortedMatches.length} {filteredAndSortedMatches.length === 1 ? 'Match' : 'Matches'}
+                  </div>
+                </div>
               </div>
+
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
                 {isLoadingMatches ? (
                   Array.from({ length: 10 }).map((_, i) => (
                     <div key={i} className="aspect-[2/3] bg-white/5 animate-pulse rounded" />
                   ))
+                ) : filteredAndSortedMatches.length === 0 ? (
+                  <div className="col-span-full py-20 text-center">
+                    <p className="text-[#445566] uppercase tracking-widest text-xs font-bold">No matches found for these filters.</p>
+                  </div>
                 ) : (
-                  matches?.map(match => (
+                  filteredAndSortedMatches.map(match => (
                     <MatchPoster key={match.id} match={match} />
                   ))
                 )}

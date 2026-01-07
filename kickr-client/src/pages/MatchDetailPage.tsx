@@ -40,9 +40,13 @@ export const MatchDetailPage = () => {
           <div className="w-full lg:w-[230px] flex-shrink-0">
             <div className="aspect-[2/3] bg-[#2c3440] rounded shadow-2xl border border-white/10 overflow-hidden relative group">
               <div className="absolute inset-0 flex flex-col items-center justify-around py-10 px-4 bg-gradient-to-br from-[#1b2228] to-[#2c3440]">
-                <img src={match.homeLogo} alt={match.homeTeam} className="w-20 h-20 object-contain drop-shadow-xl" />
+                <Link to={`/teams/${match.homeTeamId}`} className="transition-transform hover:scale-110">
+                  <img src={match.homeLogo} alt={match.homeTeam} className="w-20 h-20 object-contain drop-shadow-xl" />
+                </Link>
                 <div className="text-white font-black italic tracking-tighter text-xl">VS</div>
-                <img src={match.awayLogo} alt={match.awayTeam} className="w-20 h-20 object-contain drop-shadow-xl" />
+                <Link to={`/teams/${match.awayTeamId}`} className="transition-transform hover:scale-110">
+                  <img src={match.awayLogo} alt={match.awayTeam} className="w-20 h-20 object-contain drop-shadow-xl" />
+                </Link>
               </div>
               <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-md p-3 text-center border-t border-white/10">
                 <div className="text-white font-black text-lg">
@@ -55,7 +59,10 @@ export const MatchDetailPage = () => {
             <div className="mt-6 space-y-4 text-[13px] border-t border-white/5 pt-6">
               <div className="flex justify-between">
                 <span className="text-[#667788]">Competition</span>
-                <Link to={`/competitions/${match.competition}`} className="text-white hover:text-kickr transition-colors">{match.competition}</Link>
+                <Link to={`/competitions/${match.competition}`} className="text-white hover:text-kickr transition-colors relative inline-block group">
+                  {match.competition}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-kickr group-hover:w-full transition-all duration-300"></span>
+                </Link>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#667788]">Stade</span>
@@ -69,7 +76,15 @@ export const MatchDetailPage = () => {
             <header className="mb-8">
               <div className="flex items-baseline gap-4 mb-2">
                 <h1 className="text-5xl font-black text-white tracking-tighter">
-                  {match.homeTeam} v {match.awayTeam}
+                  <Link to={`/teams/${match.homeTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/home">
+                    {match.homeTeam}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-kickr group-hover/home:w-full transition-all duration-300"></span>
+                  </Link>
+                  {' v '}
+                  <Link to={`/teams/${match.awayTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/away">
+                    {match.awayTeam}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-kickr group-hover/away:w-full transition-all duration-300"></span>
+                  </Link>
                 </h1>
                 <span className="text-2xl font-medium text-[#667788]">{matchDate.getFullYear()}</span>
               </div>

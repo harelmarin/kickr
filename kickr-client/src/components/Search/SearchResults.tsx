@@ -91,8 +91,9 @@ export const SearchResults = ({ results, isLoading, query, onClose }: SearchResu
 
                             {/* Content */}
                             <div className="flex-1 min-w-0">
-                                <h4 className="text-white font-semibold text-sm truncate group-hover:text-white/90">
+                                <h4 className="text-white font-semibold text-sm truncate group-hover:text-white/90 relative inline-block">
                                     {result.name}
+                                    <span className="absolute bottom-0 left-0 w-0 h-px bg-kickr group-hover:w-full transition-all duration-300"></span>
                                 </h4>
                                 {result.subtitle && (
                                     <p className="text-[#667788] text-xs truncate mt-0.5">{result.subtitle}</p>
