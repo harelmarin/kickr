@@ -27,6 +27,7 @@ const mapApiResponseToUserMatch = (um: any): UserMatch => ({
     note: um.note,
     comment: um.comment,
     isLiked: um.liked ?? um.isLiked ?? um.is_liked ?? false, // Handle 'liked', 'isLiked', and 'is_liked'
+    likesCount: um.likesCount ?? um.likes_count ?? 0,
     watchedAt: um.watchedAt ?? um.watched_at,
     match: um.match ? {
         homeTeam: um.match.home_team ?? um.match.homeTeam,
@@ -51,8 +52,8 @@ export const userMatchService = {
     },
 
     // Get all user matches for a specific match
-    getByMatchId: async (matchId: string): Promise<UserMatch[]> => {
-        const response = await api.get<any[]>(`/user_match/match/${matchId}`);
+    getByMatchId: async (matchId: string, sortBy = 'watchedAt', direction = 'desc'): Promise<UserMatch[]> => {
+        const response = await api.get<any[]>(`/user_match/match/${matchId}?sortBy=${sortBy}&direction=${direction}`);
         return response.data.map(mapApiResponseToUserMatch);
     },
 

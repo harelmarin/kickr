@@ -27,6 +27,7 @@ public class UserMatchDto {
     public double note;
     public String comment;
     public boolean isLiked;
+    public int likesCount;
     public LocalDateTime watchedAt;
 
     /**
@@ -43,6 +44,7 @@ public class UserMatchDto {
                 .note(entity.getNote())
                 .comment(entity.getComment())
                 .isLiked(entity.isLiked())
+                .likesCount(entity.getLikesCount())
                 .watchedAt(entity.getWatchedAt())
                 .build();
     }

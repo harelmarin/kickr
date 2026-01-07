@@ -23,5 +23,6 @@ export interface UserMatch {
   note: number;
   comment: string;
   isLiked: boolean;
+  likesCount: number;
   watchedAt: string;
 }

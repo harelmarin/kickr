@@ -59,7 +59,7 @@ export default function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full pitch-pattern">
+      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
 
           {/* Main Column: Social & Discover */}
@@ -218,8 +218,8 @@ const Stat = ({ label, value }: any) => (
 );
 
 const LeagueItem = ({ name }: { name: string }) => (
-  <div className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2">
-    <span className="text-xs font-bold text-[#99aabb] group-hover:text-white transition-colors">{name}</span>
-    <span className="text-[#445566] transition-transform group-hover:translate-x-1">→</span>
-  </div>
+  <Link to="/competitions" className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2 hover:border-kickr/30 transition-all">
+    <span className="text-xs font-bold text-[#99aabb] group-hover:text-kickr transition-colors">{name}</span>
+    <span className="text-[#445566] transition-transform group-hover:translate-x-1 group-hover:text-kickr">→</span>
+  </Link>
 );

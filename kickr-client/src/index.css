@@ -1,10 +1,14 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
 
 /* ==========================================================================
    KICKR GLOBAL THEME - CHANGE THE RAW HEX BELOW TO CHANGE THE ENTIRE SITE
    ========================================================================== */
+@theme {
+  --color-kickr: #4466ff;
+}
+
 :root {
   --kickr-primary: #4466ff;
   --kickr-primary-rgb: 68, 102, 255;
@@ -50,101 +54,101 @@
   }
 }
 
-@layer components {
-  /* Use these classes in your components to stay synced with the theme */
+/* Custom component classes */
+.text-kickr {
+  color: var(--kickr-primary);
+}
 
-  .text-kickr {
-    color: var(--kickr-primary);
-  }
+.bg-kickr {
+  background-color: var(--kickr-primary);
+}
 
-  .bg-kickr {
-    background-color: var(--kickr-primary);
-  }
+.border-kickr {
+  border-color: var(--kickr-primary);
+}
 
-  .border-kickr {
-    border-color: var(--kickr-primary);
-  }
+.btn-primary-kickr {
+  background-color: var(--kickr-primary);
+  color: black;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
 
-  .btn-primary-kickr {
-    @apply bg-kickr text-black font-black uppercase tracking-widest text-[11px] px-8 py-3 rounded-lg hover:scale-105 transition-all shadow-lg active:scale-95;
-  }
+.btn-primary-kickr:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px rgba(var(--kickr-primary-rgb), 0.3);
+}
 
-  .btn-primary-kickr:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 20px rgba(var(--kickr-primary-rgb), 0.3);
-  }
+.btn-primary-kickr:active {
+  transform: scale(0.95);
+}
 
-  /* Match Poster Hover Glow */
-  .poster-hover-effect {
-    @apply transition-all duration-300;
-  }
+.poster-hover-effect {
+  transition: all 0.3s;
+}
 
-  .poster-hover-effect:hover {
-    @apply border-kickr/50;
-  }
+.poster-hover-effect:hover {
+  border-color: rgba(var(--kickr-primary-rgb), 0.5);
+}
 
-  .display-font {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-  }
+.display-font {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
 
-  .card-glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl;
-  }
+.card-glass {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
 
-  .text-gradient-kickr {
-    @apply bg-gradient-to-r from-kickr to-[#6688ff] bg-clip-text text-transparent;
-  }
+.text-gradient-kickr {
+  background: linear-gradient(to right, var(--kickr-primary), #6688ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
-  .section-divider {
-    @apply border-t border-white/10 my-16;
-  }
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
 
-  .input-kickr {
-    @apply bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:border-kickr focus:ring-2 focus:ring-kickr/20 outline-none transition-all;
-  }
+.pitch-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
 
-  .badge-kickr {
-    @apply bg-kickr/10 text-kickr border border-kickr/20 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest;
-  }
+.pitch-stripes {
+  background-image: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.02) 10px,
+      rgba(255, 255, 255, 0.02) 20px);
+}
 
-  .stat-card {
-    @apply bg-white/5 border border-white/10 rounded-xl p-6 hover:border-kickr/30 transition-all cursor-pointer;
-  }
+.section-contrast {
+  background-color: rgba(20, 24, 28, 0.5);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 40px rgba(var(--kickr-primary-rgb), 0.05);
+}
 
-  /* Football pitch pattern */
-  .pitch-pattern {
-    background-image:
-      linear-gradient(90deg, rgba(68, 102, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(rgba(68, 102, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-
-  /* Diagonal stripes like a pitch */
-  .pitch-stripes {
-    background: repeating-linear-gradient(45deg,
-        transparent,
-        transparent 10px,
-        rgba(68, 102, 255, 0.02) 10px,
-        rgba(68, 102, 255, 0.02) 20px);
-  }
-
-  /* Section with strong contrast */
-  .section-contrast {
-    @apply bg-[#14181c] border-y border-white/10 relative;
-  }
-
-  .section-contrast::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--kickr-primary), transparent);
-    opacity: 0.3;
-  }
+.glow-kickr {
+  box-shadow: 0 0 30px rgba(var(--kickr-primary-rgb), 0.15);
 }
 
 /* Custom Scrollbar */
@@ -165,27 +169,9 @@
   background: var(--kickr-primary);
 }
 
-/* Pitch Backdrop Gradient */
-.pitch-gradient {
-  background: radial-gradient(circle at top, rgba(var(--kickr-primary-rgb), 0.05) 0%, transparent 70%);
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-in;
+    animation: fadeIn 0.3s ease-in;
   }
 
   @keyframes fadeIn {
@@ -198,10 +184,5 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  /* Glowing accent */
-  .glow-kickr {
-    box-shadow: 0 0 20px rgba(68, 102, 255, 0.3);
   }
 }

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { matchService } from '../services/matchService';
 import { useAuth } from '../hooks/useAuth';
 import { useCreateUserMatch, useUserMatchesByMatch, useDeleteUserMatch } from '../hooks/useUserMatch';
+import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
 
 export const MatchDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +14,8 @@ export const MatchDetailPage = () => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [review, setReview] = useState('');
   const [isLiked, setIsLiked] = useState(false);
+  const [sortBy, setSortBy] = useState<'watchedAt' | 'likesCount'>('watchedAt');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   const { data: match, isLoading, isError } = useQuery({
     queryKey: ['match', id],
@@ -20,7 +23,7 @@ export const MatchDetailPage = () => {
     enabled: !!id,
   });
 
-  const { data: userMatches } = useUserMatchesByMatch(match?.matchUuid || '');
+  const { data: userMatches } = useUserMatchesByMatch(match?.matchUuid || '', sortBy, sortDirection);
   const createUserMatch = useCreateUserMatch();
   const deleteUserMatch = useDeleteUserMatch();
   const myMatchEntry = userMatches?.find(m => m.user.id === user?.id);
@@ -98,7 +101,7 @@ export const MatchDetailPage = () => {
   const isPast = match.homeScore !== null;
 
   return (
-    <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb] pitch-pattern">
+    <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
       {/* Cinematic Hero Backdrop */}
       <div className="relative h-[480px] w-full overflow-hidden">
         {/* Atmospheric Background Image - Using a high-quality stadium shot */}
@@ -239,20 +242,44 @@ export const MatchDetailPage = () => {
 
             {/* Community Reviews Section */}
             <section className="mt-16 pt-8 border-t border-white/10">
-              <h2 className="text-xs font-bold text-[#667788] uppercase tracking-[0.2em] mb-8">
-                COMMUNITY REVIEWS ({userMatches?.length || 0})
-              </h2>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-xs font-bold text-[#667788] uppercase tracking-[0.2em]">
+                  COMMUNITY REVIEWS ({userMatches?.length || 0})
+                </h2>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 bg-[#1b2228] border border-white/10 rounded-lg px-3 py-2">
+                    <span className="text-[10px] font-bold text-[#667788] uppercase tracking-wider">Sort:</span>
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as 'watchedAt' | 'likesCount')}
+                      className="bg-transparent text-white text-xs font-bold uppercase tracking-wider focus:outline-none cursor-pointer"
+                    >
+                      <option value="watchedAt">Date</option>
+                      <option value="likesCount">Likes</option>
+                    </select>
+                  </div>
+                  <button
+                    onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
+                    className="bg-[#1b2228] border border-white/10 text-white text-sm px-3 py-2 rounded-lg hover:border-kickr/50 transition-all"
+                    title={sortDirection === 'desc' ? 'Descending' : 'Ascending'}
+                  >
+                    {sortDirection === 'desc' ? '↓' : '↑'}
+                  </button>
+                </div>
+              </div>
               {userMatches && userMatches.length > 0 ? (
                 <div className="space-y-8">
                   {userMatches.map((userMatch) => (
                     <ReviewItem
                       key={userMatch.id}
+                      reviewId={userMatch.id}
                       userId={userMatch.user.id}
                       user={userMatch.user.name}
                       rating={userMatch.note}
                       content={userMatch.comment}
                       watchedAt={userMatch.watchedAt}
                       isLiked={userMatch.isLiked}
+                      likesCount={userMatch.likesCount}
                     />
                   ))}
                 </div>
@@ -287,7 +314,7 @@ export const MatchDetailPage = () => {
                 </div>
                 <button
                   onClick={() => setIsLiked(!isLiked)}
-                  className={`text-2xl transition-all ${isLiked ? 'text-[#ff8000] scale-110' : 'text-[#445566] hover:text-white'}`}
+                  className={`text-lg transition-all ${isLiked ? 'text-[#ff8000]' : 'text-[#445566] hover:text-white'}`}
                 >
                   ❤
                 </button>
@@ -353,7 +380,19 @@ export const MatchDetailPage = () => {
   );
 };
 
-const ReviewItem = ({ userId, user, rating, content, watchedAt, isLiked }: { userId: string; user: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean }) => {
+const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLiked, likesCount }: { reviewId: string; userId: string; user: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean; likesCount?: number }) => {
+  const { user: currentUser } = useAuth();
+  const { data: isLikedByMe } = useReviewLikeStatus(reviewId, currentUser?.id);
+  const toggleLike = useToggleReviewLike();
+
+  const handleLike = () => {
+    if (!currentUser) {
+      toast.error('Please log in to like reviews');
+      return;
+    }
+    toggleLike.mutate({ reviewId, userId: currentUser.id });
+  };
+
   return (
     <div className="flex gap-4 border-b border-white/5 pb-8">
       <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase">
@@ -378,6 +417,21 @@ const ReviewItem = ({ userId, user, rating, content, watchedAt, isLiked }: { use
         {content && content.trim() !== "" && (
           <p className="text-sm leading-relaxed text-[#99aabb] italic">"{content}"</p>
         )}
+        <div className="flex items-center gap-2 mt-3">
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-1.5 text-xs transition-all ${isLikedByMe
+              ? 'text-kickr'
+              : 'text-[#667788] hover:text-kickr'
+              }`}
+            title={isLikedByMe ? 'Unlike' : 'Like this review'}
+          >
+            <span className="text-base">{isLikedByMe ? '👍' : '👍'}</span>
+            {likesCount && likesCount > 0 && (
+              <span className="font-bold">{likesCount}</span>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

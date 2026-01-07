@@ -5,6 +5,8 @@ import { useUserMatch } from '../hooks/useUserMatch';
 import { useReviewComments, useAddReviewComment } from '../hooks/useReviewComments';
 import { useAuth } from '../hooks/useAuth';
 import { useUpdateUserMatch } from '../hooks/useUserMatch';
+import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
+import toast from 'react-hot-toast';
 
 export const ReviewDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -58,7 +60,7 @@ export const ReviewDetailPage: FC = () => {
     }
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-20 pb-20 pitch-pattern">
+        <main className="min-h-screen bg-[#0a0b0d] pt-20 pb-20">
             <div className="max-w-5xl mx-auto px-6">
                 {/* Horizontal Match Header / Ticket */}
                 <header className="mb-8">
@@ -96,52 +98,18 @@ export const ReviewDetailPage: FC = () => {
                     </Link>
 
                     {/* Sub-header info */}
-                    <div className="mt-6 px-2 flex items-center justify-between">
+                    <Link to={`/matches/${review.match.id}`} className="mt-6 px-2 flex items-center justify-between hover:opacity-70 transition-opacity">
                         <div className="flex items-center gap-4">
                             <span className="text-[#667788] text-[10px] font-black uppercase tracking-[0.3em]">{review.match.competition}</span>
                             <span className="text-white/10 text-[8px]">●</span>
                             <span className="text-[#445566] text-[10px] font-black uppercase tracking-[0.3em]">{new Date(review.match.matchDate).getFullYear()}</span>
                         </div>
-                        <div className="text-[10px] font-black text-kickr/40 uppercase tracking-[0.2em]">Match Details →</div>
-                    </div>
+                        <div className="text-[10px] font-black text-kickr/40 uppercase tracking-[0.2em] group-hover:text-kickr transition-colors">Match Details →</div>
+                    </Link>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
-                    {/* Sidebar with User Info */}
-                    <aside className="lg:col-span-1 border-r border-white/5 pr-10 hidden lg:block">
-                        <div className="sticky top-32 space-y-12">
-                            <div className="flex flex-col items-center text-center">
-                                <Link to={`/user/${review.user.id}`} className="w-20 h-20 rounded-2xl bg-gradient-to-br from-kickr to-kickr/50 flex items-center justify-center text-2xl font-black text-black mb-4 shadow-2xl relative group/avatar overflow-hidden">
-                                    <div className="absolute inset-0 bg-white opacity-0 group-hover/avatar:opacity-10 transition-opacity"></div>
-                                    {review.user.name[0].toUpperCase()}
-                                </Link>
-                                <span className="text-[10px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Reviewed by</span>
-                                <Link to={`/user/${review.user.id}`} className="text-white font-black uppercase text-base hover:text-kickr transition-colors tracking-tighter italic">{review.user.name}</Link>
-                            </div>
-
-                            <div className="pt-10 border-t border-white/5 space-y-6">
-                                <div className="flex flex-col">
-                                    <span className="text-[10px] font-black text-[#445566] uppercase tracking-[0.2em] mb-3">Community Rating</span>
-                                    <div className="flex gap-1.5">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                            <span key={star} className={`text-lg ${star <= Math.round(review.note) ? 'text-kickr' : 'text-white/5'}`}>★</span>
-                                        ))}
-                                    </div>
-                                </div>
-                                {review.isLiked && (
-                                    <div className="flex items-center gap-3 text-[#ff8000] text-[10px] font-black uppercase tracking-[0.3em] bg-[#ff8000]/5 py-2 px-3 rounded-lg border border-[#ff8000]/10">
-                                        <span>❤ Liked match</span>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </aside>
-
-                    <div className="lg:col-span-3">
-
-
-
-
+                <div className="max-w-3xl mx-auto">
+                    <div className="space-y-12">
                         <header className="border-b border-white/10 pb-6 mb-8">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
@@ -177,39 +145,44 @@ export const ReviewDetailPage: FC = () => {
 
                                 <div className="flex flex-col">
                                     <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Date Logged</span>
-                                    <span className="text-white font-bold text-sm tracking-tight">
-                                        {new Date(review.watchedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
-                                    </span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-white font-bold text-sm tracking-tight">
+                                            {new Date(review.watchedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
+                                        </span>
+                                        {review.isLiked && (
+                                            <span
+                                                className={`text-[#ff8000] text-sm ${currentUser?.id === review.user.id ? 'cursor-pointer hover:scale-110 transition-transform' : ''}`}
+                                                onClick={currentUser?.id === review.user.id ? handleToggleLike : undefined}
+                                                title={currentUser?.id === review.user.id ? "Unfavorite match" : undefined}
+                                            >
+                                                ❤
+                                            </span>
+                                        )}
+                                        {!review.isLiked && currentUser?.id === review.user.id && (
+                                            <span
+                                                className="text-[#445566] hover:text-orange-500/50 text-sm cursor-pointer transition-colors"
+                                                onClick={handleToggleLike}
+                                                title="Favorite match"
+                                            >
+                                                ❤
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
 
-                                {review.isLiked && (
-                                    <div className="ml-auto">
-                                        <div className="w-12 h-12 bg-orange-500/10 rounded-full flex items-center justify-center border border-orange-500/20">
-                                            <svg className="w-6 h-6 text-orange-500 fill-current" viewBox="0 0 24 24">
-                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
 
-                            <div className="text-[#99aabb] text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 border-kickr/20 pl-8 py-2 mb-4 bg-white/[0.02] rounded-r-xl">
+                            <div className="text-[#99aabb] text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 border-kickr/20 pl-8 py-2 mb-8 bg-white/[0.02] rounded-r-xl">
                                 "{review.comment || "No comment provided."}"
+                            </div>
+
+                            {/* Like Button at the end */}
+                            <div className="flex justify-end mb-12">
+                                <LikeButton reviewId={review.id} likesCount={review.likesCount} />
                             </div>
                         </header>
 
-                        {/* Actions */}
-                        <div className="flex gap-4 mb-12">
-                            <button
-                                onClick={handleToggleLike}
-                                className={`flex items-center gap-2 px-6 py-2 rounded-lg border border-white/10 text-[11px] font-black uppercase tracking-widest transition-all ${review.isLiked ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 'bg-white/5 text-[#667788] hover:text-white hover:bg-white/10'}`}
-                            >
-                                <svg className={`w-4 h-4 ${review.isLiked ? 'fill-current' : 'stroke-current fill-none'}`} strokeWidth={2} viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                </svg>
-                                {review.isLiked ? 'Liked' : 'Like'}
-                            </button>
-                        </div>
+
 
                         {/* Comments Section */}
                         <section>
@@ -223,12 +196,20 @@ export const ReviewDetailPage: FC = () => {
                                 ) : comments && comments.length > 0 ? (
                                     comments.map(comment => (
                                         <div key={comment.id} className="flex gap-4 group">
-                                            <div className="w-8 h-8 rounded-full bg-[#2c3440] flex items-center justify-center text-[10px] font-black text-[#99aabb] flex-shrink-0">
+                                            <Link
+                                                to={`/user/${comment.userId}`}
+                                                className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase hover:border-kickr/50 hover:scale-110 transition-all shadow-lg flex-shrink-0"
+                                            >
                                                 {comment.userName[0].toUpperCase()}
-                                            </div>
+                                            </Link>
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-center gap-2 mb-1">
-                                                    <span className="text-white text-xs font-black">{comment.userName}</span>
+                                                    <Link
+                                                        to={`/user/${comment.userId}`}
+                                                        className="text-white text-xs font-black hover:text-kickr transition-colors"
+                                                    >
+                                                        {comment.userName}
+                                                    </Link>
                                                     <span className="text-[#445566] text-[10px] uppercase tracking-widest">
                                                         {new Date(comment.createdAt).toLocaleDateString()}
                                                     </span>
@@ -250,7 +231,7 @@ export const ReviewDetailPage: FC = () => {
                                         value={commentText}
                                         onChange={(e) => setCommentText(e.target.value)}
                                         placeholder="Add a comment..."
-                                        className="w-full bg-transparent border-none outline-none text-[#99aabb] text-sm mb-4 min-h-[100px] resize-none focus:ring-0"
+                                        className="w-full bg-black/20 border border-white/10 rounded-lg p-4 outline-none text-[#99aabb] text-sm mb-4 min-h-[100px] resize-none focus:border-kickr/50 focus:ring-1 focus:ring-kickr/20 transition-all"
                                     />
                                     <div className="flex justify-end">
                                         <button
@@ -264,8 +245,7 @@ export const ReviewDetailPage: FC = () => {
                                 </form>
                             ) : (
                                 <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-                                    <p className="text-[#667788] text-xs uppercase tracking-widest mb-4">You must be logged in to comment</p>
-                                    <Link to="/auth/login" className="text-kickr font-black uppercase text-[10px] tracking-widest hover:underline">Sign In</Link>
+                                    <p className="text-[#667788] text-xs uppercase tracking-widest">You must be logged in to comment.</p>
                                 </div>
                             )}
                         </section>
@@ -273,5 +253,36 @@ export const ReviewDetailPage: FC = () => {
                 </div>
             </div>
         </main>
+    );
+};
+
+const LikeButton: FC<{ reviewId: string; likesCount: number }> = ({ reviewId, likesCount }) => {
+    const { user: currentUser } = useAuth();
+    const { data: isLikedByMe } = useReviewLikeStatus(reviewId, currentUser?.id);
+    const toggleLike = useToggleReviewLike();
+
+    const handleLike = () => {
+        if (!currentUser) {
+            toast.error('Please log in to like reviews');
+            return;
+        }
+        toggleLike.mutate({ reviewId, userId: currentUser.id });
+    };
+
+    return (
+        <div className="flex flex-col items-center">
+            <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Like</span>
+            <button
+                onClick={handleLike}
+                className={`flex items-center gap-1.5 text-xs transition-all ${isLikedByMe ? 'text-kickr' : 'text-[#667788] hover:text-kickr'
+                    }`}
+                title={isLikedByMe ? 'Unlike' : 'Like this review'}
+            >
+                <span className="text-lg">{isLikedByMe ? '👍' : '👍'}</span>
+                {likesCount > 0 && (
+                    <span className="font-bold">{likesCount}</span>
+                )}
+            </button>
+        </div>
     );
 };

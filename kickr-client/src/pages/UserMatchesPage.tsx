@@ -1,17 +1,26 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { useUser } from '../hooks/useUser';
 import { MatchPoster } from '../components/Matchs/MatchPoster';
 
 export const UserMatchesPage = () => {
     const { id } = useParams<{ id: string }>();
+    const [searchParams] = useSearchParams();
     const { data: user } = useUser(id);
     const { data: reviews, isLoading, isError } = useUserMatchesByUser(id || '');
 
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
     const [minRating, setMinRating] = useState<number>(0);
+
+    // Read rating from URL parameter
+    useEffect(() => {
+        const ratingParam = searchParams.get('rating');
+        if (ratingParam) {
+            setMinRating(Number(ratingParam));
+        }
+    }, [searchParams]);
 
     if (isError) return <ErrorState />;
 
@@ -27,14 +36,17 @@ export const UserMatchesPage = () => {
             (status === 'finished' && isPast) ||
             (status === 'upcoming' && !isPast);
 
-        // Rating filter
-        const matchesRating = review.note >= minRating;
+        // Rating filter - exact match if from URL, otherwise minimum
+        const ratingParam = searchParams.get('rating');
+        const matchesRating = ratingParam
+            ? Math.round(review.note) === Number(ratingParam)
+            : review.note >= minRating;
 
         return matchesSearch && matchesStatus && matchesRating;
     }).sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6 pitch-pattern">
+        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
             <div className="max-w-7xl mx-auto">
 
                 <header className="mb-20">

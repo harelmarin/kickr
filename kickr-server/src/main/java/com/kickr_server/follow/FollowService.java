@@ -9,6 +9,7 @@ import com.kickr_server.notification.NotificationService;
 import com.kickr_server.notification.NotificationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +42,7 @@ public class FollowService {
          * @throws FollowerNotFoundException si le follower ou le followed n'existe pas
          * @throws IllegalStateException     si le follower suit déjà l'utilisateur
          */
+        @Transactional
         public void follow(UUID followerId, UUID followedId) {
                 User follower = userRepository.findById(followerId)
                                 .orElseThrow(() -> new FollowerNotFoundException("User not found"));
@@ -71,6 +73,7 @@ public class FollowService {
          * @param followedId l'UUID de l'utilisateur à ne plus suivre
          * @throws IllegalArgumentException si le follower ou le followed n'existe pas
          */
+        @Transactional
         public void unfollow(UUID followerId, UUID followedId) {
                 User follower = userRepository.findById(followerId)
                                 .orElseThrow(() -> new FollowerNotFoundException("User not found"));

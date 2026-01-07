@@ -9,27 +9,15 @@ export const UserDiaryPage = () => {
     const { data: reviews, isLoading, isError } = useUserMatchesByUser(id || '');
 
     const [search, setSearch] = useState('');
-    const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
-    const [minRating, setMinRating] = useState<number>(0);
 
     if (isError) return <ErrorState />;
 
     const filteredReviews = (reviews || []).filter(review => {
-        // Search filter
         const matchesSearch = search === '' ||
             review.match.homeTeam.toLowerCase().includes(search.toLowerCase()) ||
             review.match.awayTeam.toLowerCase().includes(search.toLowerCase());
 
-        // Status filter
-        const isPast = review.match.homeScore !== null;
-        const matchesStatus = status === 'all' ||
-            (status === 'finished' && isPast) ||
-            (status === 'upcoming' && !isPast);
-
-        // Rating filter
-        const matchesRating = review.note >= minRating;
-
-        return matchesSearch && matchesStatus && matchesRating;
+        return matchesSearch;
     }).sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     const groupedReviews = filteredReviews.reduce((acc, review) => {
@@ -41,7 +29,7 @@ export const UserDiaryPage = () => {
     }, {} as Record<string, typeof filteredReviews>);
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6 pitch-pattern">
+        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
             <div className="max-w-5xl mx-auto">
 
                 <header className="mb-16">
@@ -59,46 +47,17 @@ export const UserDiaryPage = () => {
                         </div>
                     </div>
 
-                    {/* Filter Bar */}
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between border-y border-kickr/20 py-4 gap-8 section-contrast rounded-xl px-6">
-                        <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-                            <div className="flex flex-col gap-1">
-                                <span className="text-[8px] uppercase font-black text-[#445566] tracking-[0.2em]">Filter Team</span>
-                                <input
-                                    type="text"
-                                    placeholder="Search..."
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    className="bg-transparent text-[11px] font-bold text-white placeholder-[#445566] outline-none w-28"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-1">
-                                <span className="text-[8px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
-                                <select
-                                    value={status}
-                                    onChange={(e) => setStatus(e.target.value as any)}
-                                    className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                                >
-                                    <option value="all" className="bg-[#14181c]">All</option>
-                                    <option value="finished" className="bg-[#14181c]">Finished</option>
-                                    <option value="upcoming" className="bg-[#14181c]">Upcoming</option>
-                                </select>
-                            </div>
-
-                            <div className="flex flex-col gap-1">
-                                <span className="text-[8px] uppercase font-black text-[#445566] tracking-[0.2em]">Rating</span>
-                                <select
-                                    value={minRating}
-                                    onChange={(e) => setMinRating(Number(e.target.value))}
-                                    className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                                >
-                                    <option value="0" className="bg-[#14181c]">Any</option>
-                                    {[1, 2, 3, 4, 5].map(r => (
-                                        <option key={r} value={r} className="bg-[#14181c]">{r}+ Stars</option>
-                                    ))}
-                                </select>
-                            </div>
+                    {/* Search Bar */}
+                    <div className="flex items-center border-y border-kickr/20 py-4 section-contrast rounded-xl px-6">
+                        <div className="flex flex-col gap-1">
+                            <span className="text-[8px] uppercase font-black text-[#445566] tracking-[0.2em]">Search Teams</span>
+                            <input
+                                type="text"
+                                placeholder="Type to filter..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="bg-transparent text-[11px] font-bold text-white placeholder-[#445566] outline-none w-64"
+                            />
                         </div>
                     </div>
                 </header>
@@ -163,13 +122,13 @@ export const UserDiaryPage = () => {
 
                                             {/* Rating & Action Column */}
                                             <div className="w-32 flex-shrink-0 flex items-center justify-end gap-4">
+                                                {review.isLiked && (
+                                                    <span className="text-[#ff8000] text-sm">❤</span>
+                                                )}
                                                 <div className="flex text-kickr text-[10px]">
                                                     {'★'.repeat(Math.round(review.note))}
                                                     <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
                                                 </div>
-                                                {review.isLiked && (
-                                                    <span className="text-[#ff8000] text-sm">❤</span>
-                                                )}
                                             </div>
                                         </div>
                                     ))}

@@ -79,8 +79,10 @@ public class UserMatchController {
         @RateLimiter(name = "userMatchRateLimiter")
         @GetMapping("/match/{id}")
         public List<UserMatchFullDto> getUserMatchByMatch(
-                        @Parameter(description = "UUID du match", required = true) @PathVariable UUID id) {
-                return userMatchService.getByMatchId(id).stream()
+                        @Parameter(description = "UUID du match", required = true) @PathVariable UUID id,
+                        @RequestParam(defaultValue = "watchedAt") String sortBy,
+                        @RequestParam(defaultValue = "desc") String direction) {
+                return userMatchService.getByMatchId(id, sortBy, direction).stream()
                                 .map(UserMatchFullDto::fromEntity)
                                 .toList();
         }

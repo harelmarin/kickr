@@ -79,6 +79,17 @@ public class UserMatchService {
     }
 
     /**
+     * Récupère toutes les évaluations d'un match spécifique avec tri.
+     */
+    public List<UserMatch> getByMatchId(UUID id, String sortBy, String direction) {
+        Pageable pageable = PageRequest.of(0, 100,
+                direction.equalsIgnoreCase("desc") ? org.springframework.data.domain.Sort.Direction.DESC
+                        : org.springframework.data.domain.Sort.Direction.ASC,
+                sortBy);
+        return userMatchRepository.findByMatchId(id, pageable);
+    }
+
+    /**
      * Récupère toutes les évaluations d'un match spécifique.
      *
      * @param id l'UUID du match

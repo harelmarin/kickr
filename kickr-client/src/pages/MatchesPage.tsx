@@ -24,7 +24,7 @@ export const MatchesPage = () => {
   if (isError) return <ErrorState />;
 
   return (
-    <main className="min-h-screen bg-[#0a0b0d] py-20 pitch-pattern">
+    <main className="min-h-screen bg-[#0a0b0d] py-20">
       <div className="max-w-7xl mx-auto px-6">
 
         <header className="mb-20">

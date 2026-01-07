@@ -5,10 +5,10 @@ import { useAuth } from './useAuth';
 import toast from 'react-hot-toast';
 
 // Hook to get user matches for a specific match
-export const useUserMatchesByMatch = (matchId: string) => {
+export const useUserMatchesByMatch = (matchId: string, sortBy = 'watchedAt', direction = 'desc') => {
     return useQuery<UserMatch[], Error>({
-        queryKey: ['userMatches', 'match', matchId],
-        queryFn: () => userMatchService.getByMatchId(matchId),
+        queryKey: ['userMatches', 'match', matchId, sortBy, direction],
+        queryFn: () => userMatchService.getByMatchId(matchId, sortBy, direction),
         enabled: !!matchId,
         staleTime: 30 * 1000, // 30 seconds
     });

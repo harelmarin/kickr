@@ -21,6 +21,9 @@ export const useAddReviewComment = () => {
             queryClient.invalidateQueries({ queryKey: ['reviewComments', data.userMatchId] });
             toast.success('Comment added!');
         },
+        onError: (error: any) => {
+            toast.error(error.response?.data?.message || 'Failed to add comment');
+        }
     });
 };
 

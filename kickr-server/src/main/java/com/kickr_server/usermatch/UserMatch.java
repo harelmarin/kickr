@@ -83,6 +83,13 @@ public class UserMatch {
     private boolean isLiked = false;
 
     /**
+     * Nombre de likes sociaux reçus sur cette review.
+     */
+    @Builder.Default
+    @Column(nullable = false)
+    private int likesCount = 0;
+
+    /**
      * Date et heure auxquelles l’utilisateur a marqué le match comme "vu".
      * Par défaut, définie à l’instant de la création si non spécifiée.
      */
