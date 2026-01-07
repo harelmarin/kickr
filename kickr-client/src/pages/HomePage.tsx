@@ -1,13 +1,18 @@
 import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
 import { Link } from 'react-router-dom';
-import { useLatestReviews, useUserMatchesByUser } from '../hooks/useUserMatch';
+import { useLatestReviews, useUserMatchesByUser, useFollowingReviews } from '../hooks/useUserMatch';
 import { useAuth } from '../hooks/useAuth';
 import { ReviewCard } from '../components/Review/ReviewCard';
 
 export default function HomePage() {
   const { user } = useAuth();
-  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(4);
+  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(3);
+  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 3);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
+
+  const sortedUserReviews = userReviews
+    ? [...userReviews].sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).slice(0, 3)
+    : [];
 
   return (
     <main className="flex flex-col min-h-screen bg-[#14181c]">
@@ -60,7 +65,33 @@ export default function HomePage() {
           {/* Main Column: Social & Discover */}
           <div className="lg:col-span-3 space-y-24">
 
-            {/* 1. Upcoming Matches Section */}
+            {/* 1. Following Feed (Personalized) */}
+            {user && (
+              <section>
+                <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr">Your Network Activity</span>
+                  <Link to="/matches" className="text-[10px] text-[#445566] hover:text-white transition-colors">Friend Feed</Link>
+                </div>
+                {isFollowingLoading ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
+                    {[1, 2].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
+                  </div>
+                ) : followingReviews && followingReviews.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    {followingReviews.map((review) => (
+                      <ReviewCard key={review.id} review={review} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-white/[0.02] border border-dashed border-white/10 rounded-2xl p-12 text-center">
+                    <p className="text-[#445566] text-xs font-bold uppercase tracking-widest mb-4">No reviews from your network yet</p>
+                    <Link to="/matches" className="text-kickr text-[10px] font-black uppercase tracking-widest hover:underline">Find users to follow</Link>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* 2. Upcoming Matches Section */}
             <section>
               <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Upcoming Matches</span>
@@ -69,12 +100,12 @@ export default function HomePage() {
               <NextMatchesHomePage />
             </section>
 
-            {/* 2. Recent Reviews Section */}
+            {/* 3. Recent Reviews Section */}
             <section>
               <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788] mb-10 border-b border-white/5 pb-4">Recent reviews from the crowd</h2>
               {isLatestLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
-                  {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
+                  {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
                 </div>
               ) : latestReviews && latestReviews.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -107,24 +138,32 @@ export default function HomePage() {
               <section className="bg-[#1b2228] border border-white/5 rounded p-8 shadow-xl">
                 <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-6">Your Recent Activity</h3>
                 <div className="space-y-6">
-                  {userReviews && userReviews.length > 0 ? (
-                    userReviews.slice(0, 3).map(review => (
-                      <Link key={review.id} to={`/matches/${review.match.id}`} className="flex items-center gap-4 group/sb p-3 -mx-3 rounded-xl hover:bg-white/5 transition-all">
+                  {sortedUserReviews && sortedUserReviews.length > 0 ? (
+                    sortedUserReviews.map(review => (
+                      <Link
+                        key={review.id}
+                        to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
+                        className="flex items-center gap-4 group/sb p-3 -mx-3 rounded-xl hover:bg-white/5 transition-all"
+                      >
                         {/* Rating Box */}
-                        <div className="flex-shrink-0 w-12 h-12 bg-black/20 rounded-lg flex flex-col items-center justify-center border border-white/5 group-hover/sb:border-kickr/40 transition-colors">
+                        <div className="flex-shrink-0 w-12 h-12 bg-black/20 rounded-lg flex flex-col items-center justify-center border border-white/5 group-hover/sb:border-kickr/40 transition-colors relative">
                           <span className="text-kickr text-lg font-black italic leading-none">{review.note}</span>
                           <span className="text-[6px] text-[#445566] font-black uppercase tracking-widest mt-1">Note</span>
+                          {review.isLiked && (
+                            <span className="absolute -top-1 -right-1 text-[#ff8000] text-xs" title="Liked">❤</span>
+                          )}
                         </div>
 
-                        {/* Match Info */}
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <img src={review.match.homeLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80" />
-                            <span className="text-white text-[10px] font-black tracking-tight truncate uppercase italic">{review.match.homeTeam}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <img src={review.match.awayLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80" />
-                            <span className="text-white text-[10px] font-black tracking-tight truncate uppercase italic">{review.match.awayTeam}</span>
+                          <div className="flex items-center gap-3 mb-1 overflow-hidden">
+                            <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                              <img src={review.match.homeLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-60 flex-shrink-0" />
+                              <span className="text-white text-[9px] font-black tracking-tighter truncate uppercase italic">{review.match.homeTeam}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 min-w-0 flex-1 justify-end">
+                              <span className="text-white text-[9px] font-black tracking-tighter truncate uppercase italic text-right">{review.match.awayTeam}</span>
+                              <img src={review.match.awayLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-60 flex-shrink-0" />
+                            </div>
                           </div>
                           {review.comment && review.comment.trim() !== "" && (
                             <p className="text-[9px] text-[#5c6470] line-clamp-1 italic mt-1.5 border-l border-kickr/30 pl-2 leading-none">
@@ -137,8 +176,8 @@ export default function HomePage() {
                   ) : (
                     <p className="text-[10px] text-[#5c6470] italic text-center py-4">No matches logged yet.</p>
                   )}
-                  <Link to={`/user/${user.id}`} className="block text-center text-[9px] font-bold uppercase tracking-widest text-[#99aabb] hover:text-white transition-colors pt-2">
-                    View diary →
+                  <Link to={`/user/${user.id}/diary`} className="block text-center text-[9px] font-bold uppercase tracking-widest text-[#99aabb] hover:text-white transition-colors pt-2">
+                    View full diary →
                   </Link>
                 </div>
               </section>

@@ -4,7 +4,7 @@ import { MatchPoster } from './MatchPoster';
 
 export function NextMatchesHomePage() {
   const [currentPage, setCurrentPage] = useState(0);
-  const matchesPerPage = 12; // Grid friendly
+  const matchesPerPage = 9; // Grid friendly
 
   const { data, isLoading } = useNextMatchs(
     currentPage,
@@ -16,9 +16,9 @@ export function NextMatchesHomePage() {
 
   if (isLoading && matches.length === 0) {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[1, 2, 3, 4, 5, 6].map(i => (
-          <div key={i} className="aspect-[2/3] bg-white/5 animate-pulse rounded" />
+          <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-xl" />
         ))}
       </div>
     );
@@ -26,8 +26,8 @@ export function NextMatchesHomePage() {
 
   return (
     <div className="space-y-12">
-      {/* High-density Poster Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-10">
+      {/* High-density Horizontal Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
         {matches.map((match) => (
           <MatchPoster key={match.id} match={match} />
         ))}

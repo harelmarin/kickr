@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/useUser';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { ReviewCard } from '../components/Review/ReviewCard';
 import { useAuth } from '../hooks/useAuth';
+import { useFollowStatus, useFollowAction, useFollowers, useFollowing } from '../hooks/useFollow';
 
 export const UserDetailPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -11,7 +13,26 @@ export const UserDetailPage = () => {
     const { user: currentUser } = useAuth();
     const navigate = useNavigate();
 
+    const { data: isFollowing } = useFollowStatus(currentUser?.id, id);
+    const { data: followers } = useFollowers(id);
+    const { data: following } = useFollowing(id);
+    const followAction = useFollowAction();
+
     const isOwnProfile = currentUser?.id === id;
+
+    const handleFollowToggle = () => {
+        if (!currentUser) {
+            navigate('/auth/login');
+            return;
+        }
+        followAction.mutate({
+            followerId: currentUser.id,
+            followedId: id!,
+            action: isFollowing ? 'unfollow' : 'follow'
+        });
+    };
+
+    const [isHoveringFollow, setIsHoveringFollow] = useState(false);
 
     if (isUserLoading) return <LoadingState />;
     if (!user) return <NotFoundState />;
@@ -50,12 +71,12 @@ export const UserDetailPage = () => {
                             />
                             <Stat
                                 label="Following"
-                                value={user.followingCount.toString()}
+                                value={following?.length.toString() || user.followingCount.toString()}
                                 onClick={() => document.getElementById('network-section')?.scrollIntoView({ behavior: 'smooth' })}
                             />
                             <Stat
                                 label="Fans"
-                                value={user.followersCount.toString()}
+                                value={followers?.length.toString() || user.followersCount.toString()}
                                 onClick={() => document.getElementById('network-section')?.scrollIntoView({ behavior: 'smooth' })}
                             />
                         </div>
@@ -67,8 +88,21 @@ export const UserDetailPage = () => {
                                 Edit Profile
                             </button>
                         ) : (
-                            <button className="bg-kickr text-black text-[11px] font-black uppercase tracking-widest px-10 py-3 rounded-lg hover:scale-105 transition-all shadow-lg shadow-kickr/20">
-                                Follow
+                            <button
+                                onClick={handleFollowToggle}
+                                onMouseEnter={() => setIsHoveringFollow(true)}
+                                onMouseLeave={() => setIsHoveringFollow(false)}
+                                disabled={followAction.isPending}
+                                className={`${isFollowing
+                                    ? 'bg-white/5 text-white border border-white/10 hover:border-red-500/50 hover:text-red-500'
+                                    : 'bg-kickr text-black'
+                                    } text-[11px] font-black uppercase tracking-widest px-10 py-3 rounded-lg hover:scale-105 transition-all shadow-lg active:scale-95 disabled:opacity-50 min-w-[140px]`}
+                            >
+                                {followAction.isPending
+                                    ? 'Updating...'
+                                    : isFollowing
+                                        ? (isHoveringFollow ? 'Unfollow' : 'Following')
+                                        : 'Follow'}
                             </button>
                         )}
                     </div>
@@ -80,7 +114,7 @@ export const UserDetailPage = () => {
                         {/* Diary Section */}
                         <section id="diary-entries" className="space-y-12">
                             <div className="flex items-center justify-between border-b border-white/5 pb-6">
-                                <h2 className="text-sm font-black text-white uppercase tracking-[0.2em]">Recent Diary Entries</h2>
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em]">Recent Diary Entries →</Link>
                                 <span className="text-[10px] font-bold text-[#445566] uppercase tracking-widest">{reviews?.length || 0} Total</span>
                             </div>
 
@@ -90,7 +124,10 @@ export const UserDetailPage = () => {
                                 </div>
                             ) : reviews && reviews.length > 0 ? (
                                 <div className="grid grid-cols-1 gap-12">
-                                    {reviews.map(review => (
+                                    {([...reviews]
+                                        .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
+                                        .slice(0, 3)
+                                    ).map(review => (
                                         <ReviewCard key={review.id} review={review} />
                                     ))}
                                 </div>
@@ -111,18 +148,18 @@ export const UserDetailPage = () => {
                                         <span className="text-[9px] font-black px-2 py-0.5 bg-white/5 rounded text-[#445566]">{user.followingCount}</span>
                                     </div>
                                     <div className="space-y-4">
-                                        {/* Mock Following Data */}
-                                        {[1, 2, 3].map((_, i) => (
-                                            <div key={i} className="flex items-center justify-between group">
+                                        {following && following.length > 0 ? following.map((f) => (
+                                            <div key={f.id} className="flex items-center justify-between group">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-[#1b2228] border border-white/5 flex items-center justify-center text-[10px] font-black text-[#5c6470] group-hover:bg-kickr/10 group-hover:text-kickr transition-all">
-                                                        U
+                                                    <div className="w-8 h-8 rounded-lg bg-[#1b2228] border border-white/5 flex items-center justify-center text-[10px] font-black text-kickr uppercase">
+                                                        {f.name[0]}
                                                     </div>
-                                                    <Link to="#" className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors">Scout_{i + 1337}</Link>
+                                                    <Link to={`/user/${f.id}`} className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors uppercase">{f.name}</Link>
                                                 </div>
-                                                <span className="text-[8px] font-black text-[#334455] uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Mutual</span>
                                             </div>
-                                        ))}
+                                        )) : (
+                                            <p className="text-[9px] text-[#445566] italic uppercase font-bold">Not following anyone yet.</p>
+                                        )}
                                     </div>
                                 </div>
 
@@ -130,21 +167,21 @@ export const UserDetailPage = () => {
                                 <div className="space-y-8">
                                     <div className="flex items-center gap-3">
                                         <h2 className="text-xs font-bold text-white uppercase tracking-widest">Followers</h2>
-                                        <span className="text-[9px] font-black px-2 py-0.5 bg-white/5 rounded text-[#445566]">{user.followersCount}</span>
+                                        <span className="text-[9px] font-black px-2 py-0.5 bg-white/5 rounded text-[#445566]">{followers?.length || 0}</span>
                                     </div>
                                     <div className="space-y-4">
-                                        {/* Mock Followers Data */}
-                                        {[1, 2, 3, 4].map((_, i) => (
-                                            <div key={i} className="flex items-center justify-between group">
+                                        {followers && followers.length > 0 ? followers.map((f) => (
+                                            <div key={f.id} className="flex items-center justify-between group">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-[#1b2228] border border-white/5 flex items-center justify-center text-[10px] font-black text-[#5c6470] group-hover:bg-kickr/10 group-hover:text-kickr transition-all">
-                                                        F
+                                                    <div className="w-8 h-8 rounded-lg bg-[#1b2228] border border-white/5 flex items-center justify-center text-[10px] font-black text-kickr uppercase">
+                                                        {f.name[0]}
                                                     </div>
-                                                    <Link to="#" className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors">Fan_Zone_{i + 42}</Link>
+                                                    <Link to={`/user/${f.id}`} className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors uppercase">{f.name}</Link>
                                                 </div>
-                                                <button className="text-[8px] font-black text-kickr uppercase tracking-widest hover:underline opacity-0 group-hover:opacity-100 transition-opacity">Follow back</button>
                                             </div>
-                                        ))}
+                                        )) : (
+                                            <p className="text-[9px] text-[#445566] italic uppercase font-bold">No followers yet.</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

@@ -122,10 +122,10 @@ export const TeamDetailPage = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-12">
                 {isLoadingMatches ? (
-                  Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="aspect-[2/3] bg-white/5 animate-pulse rounded" />
+                  Array.from({ length: 9 }).map((_, i) => (
+                    <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-xl" />
                   ))
                 ) : filteredAndSortedMatches.length === 0 ? (
                   <div className="col-span-full py-20 text-center">

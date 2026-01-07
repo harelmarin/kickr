@@ -44,7 +44,7 @@ export const UserMatchesPage = () => {
                         </Link>
                         <div>
                             <h1 className="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase display-font">
-                                {user?.name}'s Diary
+                                {user?.name}'s Matches
                             </h1>
                             <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold mt-1">
                                 {filteredReviews.length} Matches Logged by {user?.name}
@@ -103,14 +103,37 @@ export const UserMatchesPage = () => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-12">
                     {isLoading ? (
-                        Array.from({ length: 12 }).map((_, i) => (
-                            <div key={i} className="aspect-[2/3] bg-white/5 animate-pulse rounded" />
+                        Array.from({ length: 9 }).map((_, i) => (
+                            <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-xl" />
                         ))
                     ) : (
                         filteredReviews.map((review) => (
-                            <MatchPoster key={review.id} match={review.match as any} />
+                            <div key={review.id} className="flex flex-col gap-3 group/item">
+                                <MatchPoster match={review.match as any} />
+
+                                <div className="px-1 flex flex-col gap-3">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex text-kickr text-[10px]">
+                                            {'★'.repeat(Math.round(review.note))}
+                                            <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+                                        </div>
+                                        {review.isLiked && (
+                                            <span className="text-[#ff8000] text-xs">❤</span>
+                                        )}
+                                    </div>
+
+                                    {review.comment && review.comment.trim() !== "" && (
+                                        <Link
+                                            to={`/reviews/${review.id}`}
+                                            className="block text-[#667788] text-[11px] italic leading-relaxed line-clamp-2 pl-3 border-l border-kickr/20 hover:text-white hover:border-kickr/50 transition-all"
+                                        >
+                                            "{review.comment}"
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
                         ))
                     )}
                 </div>

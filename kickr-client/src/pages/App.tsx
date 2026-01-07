@@ -14,6 +14,8 @@ import { MatchesPage } from './MatchesPage';
 import { Navigate } from 'react-router-dom';
 import { UserDetailPage } from './UserDetailPage';
 import { UserMatchesPage } from './UserMatchesPage';
+import { UserDiaryPage } from './UserDiaryPage';
+import { ReviewDetailPage } from './ReviewDetailPage';
 
 function App() {
   const { checkAuth, user } = useAuth();
@@ -37,6 +39,8 @@ function App() {
             <Route path="/matches/:id" element={<MatchDetailPage />} />
             <Route path="/user/:id" element={<UserDetailPage />} />
             <Route path="/user/:id/matches" element={<UserMatchesPage />} />
+            <Route path="/user/:id/diary" element={<UserDiaryPage />} />
+            <Route path="/reviews/:id" element={<ReviewDetailPage />} />
             <Route
               path="/profile"
               element={user ? <Navigate to={`/user/${user.id}`} replace /> : <Navigate to="/" replace />}

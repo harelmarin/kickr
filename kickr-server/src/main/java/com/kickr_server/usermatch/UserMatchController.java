@@ -34,6 +34,17 @@ public class UserMatchController {
                                 .toList();
         }
 
+        @Operation(summary = "Récupère une évaluation par son ID")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Évaluation trouvée"),
+                        @ApiResponse(responseCode = "404", description = "Évaluation non trouvée")
+        })
+        @RateLimiter(name = "userMatchRateLimiter")
+        @GetMapping("/{id}")
+        public UserMatchFullDto getById(@PathVariable UUID id) {
+                return UserMatchFullDto.fromEntity(userMatchService.findById(id));
+        }
+
         @Operation(summary = "Récupère les dernières évaluations globales")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Liste des dernières évaluations")
@@ -113,5 +124,20 @@ public class UserMatchController {
                         @Parameter(description = "UUID de l'évaluation à supprimer", required = true) @PathVariable UUID id) {
                 userMatchService.delete(id);
                 return ApiResponseDto.success("Évaluation supprimée", null);
+        }
+
+        @Operation(summary = "Récupère les évaluations des utilisateurs suivis")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Liste des évaluations des utilisateurs suivis"),
+                        @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+        })
+        @RateLimiter(name = "userMatchRateLimiter")
+        @GetMapping("/following/{userId}")
+        public List<UserMatchFullDto> getFollowingReviews(
+                        @Parameter(description = "UUID de l'utilisateur", required = true) @PathVariable UUID userId,
+                        @Parameter(description = "Nombre maximum d'évaluations", example = "20") @RequestParam(defaultValue = "20") int limit) {
+                return userMatchService.getFollowingReviews(userId, limit).stream()
+                                .map(UserMatchFullDto::fromEntity)
+                                .toList();
         }
 }

@@ -19,7 +19,7 @@ export const searchService = {
                 id: user.id,
                 name: user.name,
                 type: 'user',
-                subtitle: user.email
+                subtitle: 'Member'
             });
         });
 

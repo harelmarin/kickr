@@ -42,7 +42,7 @@ export const SearchResults = ({ results, isLoading, query, onClose }: SearchResu
     const getResultLink = (result: SearchResult) => {
         switch (result.type) {
             case 'user':
-                return `/members/${result.id}`;
+                return `/user/${result.id}`;
             case 'team':
                 return `/teams/${result.id}`;
             case 'competition':

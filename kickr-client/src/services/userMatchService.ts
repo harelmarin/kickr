@@ -56,6 +56,14 @@ export const userMatchService = {
         return response.data.map(mapApiResponseToUserMatch);
     },
 
+    // Get a specific user match by ID
+    getById: async (id: string): Promise<UserMatch> => {
+        const response = await api.get<any>(`/user_match/${id}`);
+        // Handle ApiResponse wrapper if present, else use raw data
+        const data = response.data.data ? response.data.data : response.data;
+        return mapApiResponseToUserMatch(data);
+    },
+
     // Create a new user match rating
     create: async (dto: CreateUserMatchDto): Promise<UserMatch> => {
         const response = await api.post<ApiResponse<any>>('/user_match', dto);
@@ -65,6 +73,12 @@ export const userMatchService = {
     // Get latest reviews globally
     getLatest: async (limit = 10): Promise<UserMatch[]> => {
         const response = await api.get<any[]>(`/user_match/latest?limit=${limit}`);
+        return response.data.map(mapApiResponseToUserMatch);
+    },
+
+    // Get latest reviews from followed users
+    getFollowingReviews: async (userId: string, limit = 20): Promise<UserMatch[]> => {
+        const response = await api.get<any[]>(`/user_match/following/${userId}?limit=${limit}`);
         return response.data.map(mapApiResponseToUserMatch);
     },
 

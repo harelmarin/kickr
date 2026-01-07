@@ -14,6 +14,15 @@ export const useUserMatchesByMatch = (matchId: string) => {
     });
 };
 
+// Hook to get a single user match by ID
+export const useUserMatch = (id: string) => {
+    return useQuery<UserMatch, Error>({
+        queryKey: ['userMatch', id],
+        queryFn: () => userMatchService.getById(id),
+        enabled: !!id,
+    });
+};
+
 // Hook to get user matches for a specific user
 export const useUserMatchesByUser = (userId?: string) => {
     return useQuery<UserMatch[], Error>({
@@ -35,6 +44,16 @@ export const useLatestReviews = (limit = 10) => {
     return useQuery<UserMatch[], Error>({
         queryKey: ['userMatches', 'latest', limit],
         queryFn: () => userMatchService.getLatest(limit),
+        staleTime: 30 * 1000,
+    });
+};
+
+// Hook to get reviews from followed users
+export const useFollowingReviews = (userId?: string, limit = 20) => {
+    return useQuery<UserMatch[], Error>({
+        queryKey: ['userMatches', 'following', userId, limit],
+        queryFn: () => userId ? userMatchService.getFollowingReviews(userId, limit) : Promise.resolve([]),
+        enabled: !!userId,
         staleTime: 30 * 1000,
     });
 };

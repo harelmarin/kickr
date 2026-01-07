@@ -9,6 +9,8 @@ import com.kickr_server.match.Match;
 import com.kickr_server.match.MatchRepository;
 import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
+import com.kickr_server.notification.NotificationService;
+import com.kickr_server.notification.NotificationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,7 @@ public class UserMatchService {
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
     private final FollowService followService;
+    private final NotificationService notificationService;
 
     /**
      * Récupère les dernières évaluations globales.
@@ -68,6 +71,11 @@ public class UserMatchService {
      */
     public List<UserMatch> getByUserId(UUID id) {
         return userMatchRepository.findByUserId(id);
+    }
+
+    public UserMatch findById(UUID id) {
+        return userMatchRepository.findById(id)
+                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation not found"));
     }
 
     /**
@@ -119,8 +127,9 @@ public class UserMatchService {
 
         // Check if an evaluation already exists for this user and match
         UserMatch userMatch = userMatchRepository.findByUserIdAndMatchId(dto.userId, dto.matchId);
+        boolean isNewReview = (userMatch == null);
 
-        if (userMatch != null) {
+        if (!isNewReview) {
             // Update existing entry
             userMatch.setNote(dto.note);
             userMatch.setComment(dto.comment);
@@ -138,7 +147,23 @@ public class UserMatchService {
             userMatch.setNote(dto.note);
         }
 
-        return userMatchRepository.save(userMatch);
+        UserMatch savedMatch = userMatchRepository.save(userMatch);
+
+        if (isNewReview) {
+            // Notify followers
+            List<User> followers = followService.getFollowers(user.getId());
+            for (User follower : followers) {
+                notificationService.createNotification(
+                        follower,
+                        user,
+                        NotificationType.NEW_REVIEW,
+                        user.getName() + " reviewed a new match: " + match.getHomeTeam().getName() + " vs "
+                                + match.getAwayTeam().getName(),
+                        savedMatch.getId().toString());
+            }
+        }
+
+        return savedMatch;
     }
 
     /**
@@ -178,11 +203,22 @@ public class UserMatchService {
      * @param userId l'UUID de l'utilisateur
      * @return liste des {@link UserMatch} des utilisateurs suivis
      */
-    public List<UserMatch> getMatchesFromFollowedUsers(UUID userId) {
+    /**
+     * Récupère les évaluations des utilisateurs suivis par un utilisateur donné.
+     *
+     * @param userId l'UUID de l'utilisateur
+     * @param limit  le nombre maximum de résultats
+     * @return liste des évaluations des utilisateurs suivis
+     */
+    public List<UserMatch> getFollowingReviews(UUID userId, int limit) {
         List<User> followedUsers = followService.getFollowing(userId);
+        if (followedUsers.isEmpty()) {
+            return List.of();
+        }
         return userMatchRepository.findByUserIn(followedUsers)
                 .stream()
                 .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
+                .limit(limit)
                 .toList();
     }
 

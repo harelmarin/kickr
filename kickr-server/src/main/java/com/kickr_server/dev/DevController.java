@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.persistence.EntityManager;
 
 @RestController
 @RequestMapping("/api/dev")
@@ -20,6 +21,7 @@ public class DevController {
     private final UserMatchRepository userMatchRepository;
     private final FollowRepository followRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final EntityManager entityManager;
 
     @DeleteMapping("/reset-data")
     @Transactional
@@ -33,5 +35,19 @@ public class DevController {
         return ApiResponseDto.success(
                 "All testing data (users, matches ratings, follows) has been wiped. Matches and Competitions are preserved.",
                 null);
+    }
+
+    @RequestMapping("/fix-notifications")
+    @Transactional
+    public ApiResponseDto<String> fixNotifications() {
+        try {
+            entityManager
+                    .createNativeQuery("ALTER TABLE notifications DROP CONSTRAINT IF EXISTS notifications_type_check")
+                    .executeUpdate();
+            return ApiResponseDto.success(
+                    "Notification constraint dropped successfully. Database should now allow COMMENT type.", null);
+        } catch (Exception e) {
+            return ApiResponseDto.error("Failed to fix notifications: " + e.getMessage(), null);
+        }
     }
 }

@@ -7,16 +7,19 @@ interface ReviewCardProps {
 
 export const ReviewCard = ({ review }: ReviewCardProps) => (
     <div className="flex gap-5 group/review">
-        {/* Mini Poster Sidebar Look */}
+        {/* Mini Ticket Look */}
         <Link
-            to={`/matches/${review.match.id}`}
-            className="relative w-20 aspect-[2/3] bg-[#2c3440] rounded border border-white/10 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 group-hover/review:border-kickr/40"
+            to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
+            className="relative w-32 h-20 bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-3 px-3 poster-hover-effect"
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#2c3440] flex flex-col items-center justify-center p-2 gap-1.5 text-center">
-                <img src={review.match.homeLogo} className="w-7 h-7 object-contain drop-shadow-lg" alt="" />
-                <span className="text-[6px] font-black text-white/5 tracking-[0.4em] uppercase">vs</span>
-                <img src={review.match.awayLogo} className="w-7 h-7 object-contain drop-shadow-lg" alt="" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
+            <img src={review.match.homeLogo} className="w-8 h-8 object-contain drop-shadow-lg z-10" alt="" />
+            <div className="flex items-center gap-2 z-10">
+                <span className="text-[16px] font-black text-white italic leading-none">{review.match.homeScore}</span>
+                <div className="w-[1px] h-4 bg-kickr/40"></div>
+                <span className="text-[16px] font-black text-white italic leading-none">{review.match.awayScore}</span>
             </div>
+            <img src={review.match.awayLogo} className="w-8 h-8 object-contain drop-shadow-lg z-10" alt="" />
         </Link>
 
         <div className="flex flex-col flex-1">
@@ -32,6 +35,9 @@ export const ReviewCard = ({ review }: ReviewCardProps) => (
                         {'★'.repeat(Math.round(review.note))}
                         <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
                     </div>
+                    {review.isLiked && (
+                        <span className="text-[#ff8000] text-xs ml-0.5" title="Liked">❤</span>
+                    )}
                     <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest">
                         {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' })}
                     </span>
@@ -39,9 +45,11 @@ export const ReviewCard = ({ review }: ReviewCardProps) => (
             </div>
 
             {review.comment && review.comment.trim() !== "" && (
-                <p className="text-[#99aabb] text-[13px] leading-relaxed italic line-clamp-2 pl-3 border-l-2 border-kickr/20 mb-3">
-                    {review.comment}
-                </p>
+                <Link to={`/reviews/${review.id}`} className="block hover:opacity-80 transition-opacity">
+                    <p className="text-[#99aabb] text-[13px] leading-relaxed italic line-clamp-2 pl-3 border-l-2 border-kickr/20 mb-3">
+                        {review.comment}
+                    </p>
+                </Link>
             )}
 
             <div className="flex items-center gap-2">

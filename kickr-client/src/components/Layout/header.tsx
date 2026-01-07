@@ -4,6 +4,7 @@ import { UserMenu } from '../auth/UserMenu';
 import { useAuth } from '../../hooks/useAuth';
 import { Link, NavLink } from 'react-router-dom';
 import { SearchBar } from '../Search/SearchBar';
+import { NotificationBell } from './NotificationBell';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
@@ -46,7 +47,8 @@ export const Header = () => {
           <SearchBar />
 
           {isAuthenticated ? (
-            <div className="flex items-center gap-4 border-l border-white/10 pl-5">
+            <div className="flex items-center gap-6 border-l border-white/10 pl-5">
+              <NotificationBell />
               <UserMenu />
             </div>
           ) : (

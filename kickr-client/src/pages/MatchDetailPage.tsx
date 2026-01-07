@@ -100,7 +100,7 @@ export const MatchDetailPage = () => {
   return (
     <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
       {/* Cinematic Hero Backdrop */}
-      <div className="relative h-[650px] w-full overflow-hidden">
+      <div className="relative h-[480px] w-full overflow-hidden">
         {/* Atmospheric Background Image - Using a high-quality stadium shot */}
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] scale-110 brightness-[0.4] grayscale-[0.2] saturate-[0.8]"
@@ -116,86 +116,84 @@ export const MatchDetailPage = () => {
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#4466ff]/5 rounded-full blur-[120px] mix-blend-screen opacity-20"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 -mt-[480px] relative z-10 pb-20">
-        <div className="flex flex-col lg:flex-row gap-16">
+      <div className="max-w-7xl mx-auto px-6 -mt-[420px] relative z-10 pb-20">
+        {/* Massive Horizontal Match Header */}
+        <header className="mb-20">
+          <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#1b2228]/60 backdrop-blur-xl rounded-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border border-white/10 relative group poster-hover-effect">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228]/80 to-[#2c3440]/80"></div>
 
-          {/* Left: The "Match Poster" */}
-          <div className="w-full lg:w-[240px] flex-shrink-0">
-            <div className="aspect-[2/3] bg-[#2c3440] rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6)] border border-white/10 overflow-hidden relative group">
-              <div className="absolute inset-0 flex flex-col items-center justify-around py-12 px-5 bg-gradient-to-br from-[#1b2228] to-[#2c3440]">
-                <div className="flex flex-col items-center gap-3">
-                  <Link to={`/teams/${match.homeTeamId}`} className="transition-transform hover:scale-110 active:scale-95 duration-300">
-                    <img src={match.homeLogo} alt={match.homeTeam} className="w-20 h-20 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]" />
-                  </Link>
-                  <span className="text-[9px] font-black text-[#5c6470] uppercase tracking-[0.3em] italic">{match.homeTeam}</span>
-                </div>
-
-                <div className="text-white/20 font-black italic tracking-tighter text-2xl select-none">VS</div>
-
-                <div className="flex flex-col items-center gap-3">
-                  <Link to={`/teams/${match.awayTeamId}`} className="transition-transform hover:scale-110 active:scale-95 duration-300">
-                    <img src={match.awayLogo} alt={match.awayTeam} className="w-20 h-20 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]" />
-                  </Link>
-                  <span className="text-[9px] font-black text-[#5c6470] uppercase tracking-[0.3em] italic">{match.awayTeam}</span>
-                </div>
-              </div>
-
-              {isPast && (
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/95 to-transparent backdrop-blur-xl p-6 text-center border-t border-white/10">
-                  <div className="flex items-center justify-center gap-6">
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="text-[10px] font-black text-[#667788] uppercase tracking-[0.2em]">Final</span>
-                      <div className="flex items-center gap-4">
-                        <div className="flex flex-col items-center gap-1">
-                          <div className="text-5xl font-black text-white tracking-tighter leading-none">{match.homeScore}</div>
-                        </div>
-                        <div className="text-white/20 font-black text-3xl">—</div>
-                        <div className="flex flex-col items-center gap-1">
-                          <div className="text-5xl font-black text-white tracking-tighter leading-none">{match.awayScore}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Quick Stats / Info below poster */}
-            <div className="mt-8 space-y-6 text-[13px] border-t border-white/5 pt-8">
-              <div className="flex flex-col gap-3">
-                <span className="text-[10px] uppercase font-black text-[#445566] tracking-[0.2em]">Competition</span>
-                <Link
-                  to={match.competitionId ? `/competitions/${match.competitionId}` : '#'}
-                  className="flex items-center gap-4 group transition-all pb-2 border-b border-white/5"
-                >
-                  <img src={match.competitionLogo} alt="" className="w-6 h-6 object-contain filter brightness-110 opacity-70 group-hover:opacity-100 transition-opacity" />
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-[12px] font-black text-[#99aabb] group-hover:text-white uppercase tracking-wider truncate transition-colors">{match.competition}</span>
-                    <span className="text-white text-[9px] font-bold group-hover:text-kickr transition-colors tracking-widest uppercase mt-0.5">VIEW LEAGUE →</span>
-                  </div>
+            <div className="absolute inset-0 flex items-center justify-between px-10 sm:px-20 py-6">
+              {/* Home Team */}
+              <div className="flex flex-col md:flex-row items-center gap-6 flex-1">
+                <Link to={`/teams/${match.homeTeamId}`} className="transition-all active:scale-95 duration-500 drop-shadow-2xl">
+                  <img src={match.homeLogo} alt={match.homeTeam} className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain" />
                 </Link>
+                <div className="hidden md:flex flex-col">
+                  <span className="text-white font-black uppercase italic tracking-tighter text-2xl sm:text-4xl md:text-5xl leading-none">{match.homeTeam}</span>
+                  <span className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em] mt-2 italic flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-kickr"></span> Host Team
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[10px] uppercase font-black text-[#445566] tracking-[0.2em]">Stade</span>
-                <span className="text-white font-bold text-sm">{match.location}</span>
+
+              {/* Central Score / VS Cluster */}
+              <div className="flex items-center gap-6 sm:gap-12 md:gap-16">
+                {isPast ? (
+                  <div className="flex items-center gap-4 sm:gap-10 md:gap-12">
+                    <span className="text-4xl sm:text-6xl md:text-8xl font-black text-white italic leading-none drop-shadow-2xl tabular-nums">{match.homeScore}</span>
+                    <div className="w-[2px] md:w-[3px] h-12 md:h-20 bg-kickr/60 rounded-full"></div>
+                    <span className="text-4xl sm:text-6xl md:text-8xl font-black text-white italic leading-none drop-shadow-2xl tabular-nums">{match.awayScore}</span>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center">
+                    <div className="text-kickr font-black italic tracking-tighter text-4xl sm:text-6xl animate-pulse">VS</div>
+                  </div>
+                )}
               </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[10px] uppercase font-black text-[#445566] tracking-[0.2em]">Date</span>
-                <span className="text-white font-bold text-sm">
-                  {matchDate.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
-                </span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[10px] uppercase font-black text-[#445566] tracking-[0.2em]">Heure de coup d'envoi</span>
-                <span className="text-white font-bold text-sm">
-                  {matchDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
-                </span>
+
+              {/* Away Team */}
+              <div className="flex flex-col md:flex-row-reverse items-center gap-6 flex-1">
+                <Link to={`/teams/${match.awayTeamId}`} className="transition-all active:scale-95 duration-500 drop-shadow-2xl">
+                  <img src={match.awayLogo} alt={match.awayTeam} className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain" />
+                </Link>
+                <div className="hidden md:flex flex-col items-end text-right">
+                  <span className="text-white font-black uppercase italic tracking-tighter text-2xl sm:text-4xl md:text-5xl leading-none">{match.awayTeam}</span>
+                  <span className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em] mt-2 italic flex items-center gap-2">
+                    Visitor <span className="w-2 h-2 rounded-full bg-kickr/30"></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Center: Match Details & Reviews */}
-          <div className="flex-1 mt-12">
+          {/* Quick Match Bar Info */}
+          <div className="mt-8 flex items-center justify-between px-4 border-b border-white/5 pb-8">
+            <div className="flex items-center gap-8 md:gap-12 overflow-x-auto no-scrollbar">
+              <div className="flex flex-col flex-shrink-0">
+                <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Competition</span>
+                <Link to={match.competitionId ? `/competitions/${match.competitionId}` : '#'} className="flex items-center gap-3 group">
+                  <img src={match.competitionLogo} alt="" className="w-5 h-5 object-contain opacity-60 group-hover:opacity-100 transition-opacity" />
+                  <span className="text-white font-black uppercase tracking-tight text-xs sm:text-sm group-hover:text-kickr transition-colors whitespace-nowrap">{match.competition}</span>
+                </Link>
+              </div>
+              <div className="w-px h-8 bg-white/5 hidden sm:block"></div>
+              <div className="flex flex-col flex-shrink-0">
+                <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Venue & Location</span>
+                <span className="text-[#99aabb] text-xs font-bold uppercase tracking-widest whitespace-nowrap">{match.location || 'Stadium'}</span>
+              </div>
+              <div className="w-px h-8 bg-white/5 hidden sm:block"></div>
+              <div className="flex flex-col flex-shrink-0">
+                <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Match Date</span>
+                <span className="text-[#99aabb] text-xs font-bold uppercase tracking-widest whitespace-nowrap">
+                  {matchDate.toLocaleDateString('fr', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="flex flex-col lg:flex-row gap-16">
+          <div className="flex-1">
             <header className="mb-12">
 
 
@@ -270,12 +268,22 @@ export const MatchDetailPage = () => {
               <div className="p-6 bg-[#2c3440] border-b border-white/5 flex items-center justify-between">
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-[#8899aa] uppercase tracking-widest">
-                      {myMatchEntry ? 'Watched by you' : 'Logged by you'}
+                    <span className="text-[10px] font-bold text-[#8899aa] uppercase tracking-widest leading-none">
+                      {myMatchEntry ? 'Watched' : 'Log'}
                     </span>
-                    {myMatchEntry && <span className="text-[#4466ff] text-[10px]">●</span>}
+                    {myMatchEntry ? (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#4466ff] text-[10px]">●</span>
+                        <span className="text-white font-bold text-xs uppercase tracking-tight">
+                          {new Date(myMatchEntry.watchedAt).toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-white font-bold text-xs uppercase tracking-tight">
+                        {matchDate.toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </span>
+                    )}
                   </div>
-                  <span className="text-white font-bold">{matchDate.toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 </div>
                 <button
                   onClick={() => setIsLiked(!isLiked)}
