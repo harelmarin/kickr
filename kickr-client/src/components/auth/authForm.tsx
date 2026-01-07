@@ -1,4 +1,5 @@
 import { type FC, useState, type FormEvent } from 'react';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../hooks/useAuth';
 
 interface LoginDropdownProps {
@@ -8,7 +9,7 @@ interface LoginDropdownProps {
 export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { login, isLoading, error } = useAuth();
+    const { login, isLoading } = useAuth();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -23,12 +24,6 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     return (
         <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
             <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.3em] mb-2">Sign In</h3>
-
-            {error && (
-                <div className="text-[10px] font-bold text-[#ff4b4b] bg-[#ff4b4b]/10 p-3 rounded border border-[#ff4b4b]/20 uppercase tracking-widest">
-                    {error}
-                </div>
-            )}
 
             <input
                 type="text"
@@ -66,10 +61,19 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { register, isLoading, error } = useAuth();
+    const { register, isLoading } = useAuth();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        // Password validation regex: at least 8 chars, 1 uppercase, 1 lowercase, 1 number
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            toast.error("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
+            return;
+        }
+
         try {
             await register({ name, email, password });
             setName('');
@@ -85,12 +89,6 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     return (
         <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
             <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.3em] mb-2">Create Account</h3>
-
-            {error && (
-                <div className="text-[10px] font-bold text-[#ff4b4b] bg-[#ff4b4b]/10 p-3 rounded border border-[#ff4b4b]/20 uppercase tracking-widest">
-                    {error}
-                </div>
-            )}
 
             <input
                 type="text"
@@ -108,15 +106,19 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 required
                 className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
             />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
-            />
+            <div className="flex flex-col gap-2">
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="bg-[#14181c] border border-white/10 rounded px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#445566] focus:border-white/30 transition-all"
+                />
+                <p className="text-[8px] font-bold text-[#445566] uppercase tracking-wider leading-relaxed px-1">
+                    Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a number.
+                </p>
+            </div>
             <button
                 type="submit"
                 disabled={isLoading}

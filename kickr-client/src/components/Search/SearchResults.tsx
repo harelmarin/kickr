@@ -53,7 +53,7 @@ export const SearchResults = ({ results, isLoading, query, onClose }: SearchResu
     };
 
     return (
-        <div className="absolute top-full left-0 mt-2 w-[280px] bg-[#1b2228] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[400px] overflow-y-auto">
+        <div className="absolute top-full right-0 mt-2 w-80 bg-[#1b2228] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[400px] overflow-y-auto">
             {isLoading ? (
                 <div className="p-4 text-center text-[#667788]">
                     <div className="flex items-center justify-center gap-2">
@@ -75,28 +75,29 @@ export const SearchResults = ({ results, isLoading, query, onClose }: SearchResu
                             className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors group"
                         >
                             {/* Image or Icon */}
-                            <div className="w-10 h-10 rounded-full bg-[#2c3440] flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
                                 {result.imageUrl ? (
                                     <img
                                         src={result.imageUrl}
                                         alt={result.name}
-                                        className="w-full h-full object-cover"
+                                        className={`w-full h-full ${result.type === 'user' ? 'object-cover rounded-full bg-[#2c3440]' : 'object-contain'}`}
                                     />
                                 ) : (
-                                    <span className="text-lg">
-                                        {result.type === 'user' ? '👤' : result.type === 'team' ? '⚽' : '🏆'}
-                                    </span>
+                                    <div className={`w-full h-full rounded-full bg-[#2c3440] flex items-center justify-center`}>
+                                        <span className="text-lg">
+                                            {result.type === 'user' ? '👤' : result.type === 'team' ? '⚽' : '🏆'}
+                                        </span>
+                                    </div>
                                 )}
                             </div>
 
                             {/* Content */}
                             <div className="flex-1 min-w-0">
-                                <h4 className="text-white font-semibold text-sm truncate group-hover:text-white/90 relative inline-block">
+                                <h4 className="text-white font-bold text-[13px] truncate group-hover:text-white transition-colors block leading-tight">
                                     {result.name}
-                                    <span className="absolute bottom-0 left-0 w-0 h-px bg-kickr group-hover:w-full transition-all duration-300"></span>
                                 </h4>
                                 {result.subtitle && (
-                                    <p className="text-[#667788] text-xs truncate mt-0.5">{result.subtitle}</p>
+                                    <p className="text-[#667788] text-[9px] uppercase font-black tracking-wider truncate mt-0.5 opacity-80">{result.subtitle}</p>
                                 )}
                             </div>
 

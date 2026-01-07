@@ -37,9 +37,17 @@ export default function HomePage() {
                 Get Started — It's Free
               </Link>
             ) : (
-              <span className="text-kickr font-bold uppercase tracking-widest text-sm">
-                Welcome back, <Link to={`/user/${user.id}`} className="underline hover:text-white transition-colors">{user.name}</Link>
-              </span>
+              <div className="bg-black/40 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-2">
+                <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px]">
+                  Welcome back,
+                </span>
+                <Link
+                  to={`/user/${user.id}`}
+                  className="text-kickr font-black uppercase tracking-widest text-[11px] hover:text-white transition-colors underline decoration-kickr/30 underline-offset-4"
+                >
+                  {user.name}
+                </Link>
+              </div>
             )}
           </div>
         </div>

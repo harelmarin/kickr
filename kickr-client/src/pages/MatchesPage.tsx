@@ -7,7 +7,7 @@ export const MatchesPage = () => {
   const [page, setPage] = useState(0);
   const [competitionId, setCompetitionId] = useState<string | undefined>(undefined);
   const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
-  const [sort, setSort] = useState<'date' | 'popularity' | 'rating'>('date');
+  const [sort, setSort] = useState<string>('date');
 
   const { data: competitions } = useCompetitions();
 
@@ -83,7 +83,7 @@ export const MatchesPage = () => {
                   }}
                   className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
                 >
-                  <option value="date" className="bg-[#14181c]">Date</option>
+                  <option value="date" className="bg-[#14181c]">Date (Newest)</option>
                   <option value="popularity" className="bg-[#14181c]">Popularity</option>
                   <option value="rating" className="bg-[#14181c]">Highest Rated</option>
                 </select>

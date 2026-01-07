@@ -28,7 +28,7 @@ export const ReviewCard = ({ review }: ReviewCardProps) => (
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <div className="flex text-kickr text-[9px]">
+                    <div className="flex text-[#4466ff] text-[9px]">
                         {'★'.repeat(Math.round(review.note))}
                         <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
                     </div>

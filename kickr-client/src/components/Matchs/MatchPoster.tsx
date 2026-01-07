@@ -27,13 +27,17 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-4 bg-gradient-to-br from-[#1b2228] to-[#2c3440]">
                     {/* Home Team */}
                     <div className="flex flex-col items-center gap-2">
-                        <Link
-                            to={`/teams/${match.homeTeamId}`}
-                            className="transition-transform hover:scale-110 z-10"
-                            onClick={(e) => e.stopPropagation()}
-                        >
+                        {match.homeTeamId ? (
+                            <Link
+                                to={`/teams/${match.homeTeamId}`}
+                                className="transition-transform hover:scale-110 z-10"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <img src={match.homeLogo} alt="" className="w-14 h-14 object-contain filter drop-shadow-lg" title={match.homeTeam} />
+                            </Link>
+                        ) : (
                             <img src={match.homeLogo} alt="" className="w-14 h-14 object-contain filter drop-shadow-lg" title={match.homeTeam} />
-                        </Link>
+                        )}
                         {isPast && (
                             <span className="text-xl font-black text-white italic display-font leading-none">{match.homeScore}</span>
                         )}
@@ -47,13 +51,17 @@ export const MatchPoster = ({ match, className = '' }: MatchPosterProps) => {
                         {isPast && (
                             <span className="text-xl font-black text-white italic display-font leading-none">{match.awayScore}</span>
                         )}
-                        <Link
-                            to={`/teams/${match.awayTeamId}`}
-                            className="transition-transform hover:scale-110 z-10"
-                            onClick={(e) => e.stopPropagation()}
-                        >
+                        {match.awayTeamId ? (
+                            <Link
+                                to={`/teams/${match.awayTeamId}`}
+                                className="transition-transform hover:scale-110 z-10"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <img src={match.awayLogo} alt="" className="w-14 h-14 object-contain filter drop-shadow-lg" title={match.awayTeam} />
+                            </Link>
+                        ) : (
                             <img src={match.awayLogo} alt="" className="w-14 h-14 object-contain filter drop-shadow-lg" title={match.awayTeam} />
-                        </Link>
+                        )}
                     </div>
                 </div>
 

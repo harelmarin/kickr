@@ -14,30 +14,31 @@ export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
         <>
             {children}
             <Toaster
-                position="top-right"
+                position="top-center"
                 toastOptions={{
-                    // Style par défaut
                     duration: 4000,
                     style: {
-                        background: '#1f2937',
+                        background: 'rgba(27, 34, 40, 0.9)',
+                        backdropFilter: 'blur(12px)',
                         color: '#fff',
-                        border: '1px solid #374151',
-                        borderRadius: '0.5rem',
-                        padding: '1rem',
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        borderRadius: '12px',
+                        padding: '12px 24px',
+                        fontSize: '13px',
+                        fontWeight: '600',
+                        letterSpacing: '-0.01em',
+                        boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
                     },
-                    // Success
                     success: {
                         duration: 3000,
                         iconTheme: {
-                            primary: '#10b981',
+                            primary: '#4466ff',
                             secondary: '#fff',
                         },
                         style: {
-                            background: '#1f2937',
-                            border: '1px solid #10b981',
+                            border: '1px solid rgba(68, 102, 255, 0.2)',
                         },
                     },
-                    // Error
                     error: {
                         duration: 5000,
                         iconTheme: {
@@ -45,15 +46,7 @@ export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
                             secondary: '#fff',
                         },
                         style: {
-                            background: '#1f2937',
-                            border: '1px solid #ef4444',
-                        },
-                    },
-                    // Loading
-                    loading: {
-                        iconTheme: {
-                            primary: '#3b82f6',
-                            secondary: '#fff',
+                            border: '1px solid rgba(239, 68, 68, 0.2)',
                         },
                     },
                 }}

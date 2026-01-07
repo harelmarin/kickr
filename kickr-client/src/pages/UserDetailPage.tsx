@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/useUser';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { ReviewCard } from '../components/Review/ReviewCard';
@@ -9,6 +9,7 @@ export const UserDetailPage = () => {
     const { data: user, isLoading: isUserLoading } = useUser(id);
     const { data: reviews, isLoading: isReviewsLoading } = useUserMatchesByUser(id || '');
     const { user: currentUser } = useAuth();
+    const navigate = useNavigate();
 
     const isOwnProfile = currentUser?.id === id;
 
@@ -42,9 +43,21 @@ export const UserDetailPage = () => {
                         </p>
 
                         <div className="flex gap-12">
-                            <Stat label="Matches" value={user.matchesCount.toString()} />
-                            <Stat label="Following" value={user.followingCount.toString()} />
-                            <Stat label="Fans" value={user.followersCount.toString()} />
+                            <Stat
+                                label="Matches"
+                                value={user.matchesCount.toString()}
+                                onClick={() => navigate(`/user/${id}/matches`)}
+                            />
+                            <Stat
+                                label="Following"
+                                value={user.followingCount.toString()}
+                                onClick={() => document.getElementById('network-section')?.scrollIntoView({ behavior: 'smooth' })}
+                            />
+                            <Stat
+                                label="Fans"
+                                value={user.followersCount.toString()}
+                                onClick={() => document.getElementById('network-section')?.scrollIntoView({ behavior: 'smooth' })}
+                            />
                         </div>
                     </div>
 
@@ -63,27 +76,79 @@ export const UserDetailPage = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
                     {/* Main Content: Activity */}
-                    <div className="lg:col-span-2 space-y-12">
-                        <div className="flex items-center justify-between border-b border-white/5 pb-6">
-                            <h2 className="text-sm font-black text-white uppercase tracking-[0.2em]">Recent Diary Entries</h2>
-                            <span className="text-[10px] font-bold text-[#445566] uppercase tracking-widest">{reviews?.length || 0} Total</span>
-                        </div>
+                    <div className="lg:col-span-2 space-y-24">
+                        {/* Diary Section */}
+                        <section id="diary-entries" className="space-y-12">
+                            <div className="flex items-center justify-between border-b border-white/5 pb-6">
+                                <h2 className="text-sm font-black text-white uppercase tracking-[0.2em]">Recent Diary Entries</h2>
+                                <span className="text-[10px] font-bold text-[#445566] uppercase tracking-widest">{reviews?.length || 0} Total</span>
+                            </div>
 
-                        {isReviewsLoading ? (
-                            <div className="space-y-12 animate-pulse">
-                                {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl"></div>)}
+                            {isReviewsLoading ? (
+                                <div className="space-y-12 animate-pulse">
+                                    {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl"></div>)}
+                                </div>
+                            ) : reviews && reviews.length > 0 ? (
+                                <div className="grid grid-cols-1 gap-12">
+                                    {reviews.map(review => (
+                                        <ReviewCard key={review.id} review={review} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="py-20 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
+                                    <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No match entries in the diary yet.</p>
+                                </div>
+                            )}
+                        </section>
+
+                        {/* Network Section (Followers/Following) */}
+                        <section id="network-section" className="space-y-16 pt-12 border-t border-white/5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                                {/* Following Column */}
+                                <div className="space-y-8">
+                                    <div className="flex items-center gap-3">
+                                        <h2 className="text-xs font-bold text-white uppercase tracking-widest">Following</h2>
+                                        <span className="text-[9px] font-black px-2 py-0.5 bg-white/5 rounded text-[#445566]">{user.followingCount}</span>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {/* Mock Following Data */}
+                                        {[1, 2, 3].map((_, i) => (
+                                            <div key={i} className="flex items-center justify-between group">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-[#1b2228] border border-white/5 flex items-center justify-center text-[10px] font-black text-[#5c6470] group-hover:bg-kickr/10 group-hover:text-kickr transition-all">
+                                                        U
+                                                    </div>
+                                                    <Link to="#" className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors">Scout_{i + 1337}</Link>
+                                                </div>
+                                                <span className="text-[8px] font-black text-[#334455] uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Mutual</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Followers Column */}
+                                <div className="space-y-8">
+                                    <div className="flex items-center gap-3">
+                                        <h2 className="text-xs font-bold text-white uppercase tracking-widest">Followers</h2>
+                                        <span className="text-[9px] font-black px-2 py-0.5 bg-white/5 rounded text-[#445566]">{user.followersCount}</span>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {/* Mock Followers Data */}
+                                        {[1, 2, 3, 4].map((_, i) => (
+                                            <div key={i} className="flex items-center justify-between group">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-[#1b2228] border border-white/5 flex items-center justify-center text-[10px] font-black text-[#5c6470] group-hover:bg-kickr/10 group-hover:text-kickr transition-all">
+                                                        F
+                                                    </div>
+                                                    <Link to="#" className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors">Fan_Zone_{i + 42}</Link>
+                                                </div>
+                                                <button className="text-[8px] font-black text-kickr uppercase tracking-widest hover:underline opacity-0 group-hover:opacity-100 transition-opacity">Follow back</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                        ) : reviews && reviews.length > 0 ? (
-                            <div className="grid grid-cols-1 gap-12">
-                                {reviews.map(review => (
-                                    <ReviewCard key={review.id} review={review} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="py-20 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
-                                <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No match entries in the diary yet.</p>
-                            </div>
-                        )}
+                        </section>
                     </div>
 
                     {/* Sidebar: Stats & Favorites */}
@@ -152,7 +217,7 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                                 className="w-full bg-gradient-to-t from-kickr/40 to-kickr group-hover:brightness-110 transition-all duration-700 ease-out relative rounded-t-sm"
                                 style={{ height: `${heightPercentage}%`, minHeight: count > 0 ? '2px' : '0' }}
                             >
-                                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-kickr shadow-[0_0_15px_rgba(255,212,0,0.8)]"></div>
+                                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-kickr shadow-[0_0_15px_rgba(68,102,255,0.8)]"></div>
                             </div>
 
                             <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none text-center">
@@ -172,11 +237,14 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
     );
 };
 
-const Stat = ({ label, value }: { label: string; value: string }) => (
-    <div className="flex flex-col">
+const Stat = ({ label, value, onClick }: { label: string; value: string; onClick?: () => void }) => (
+    <button
+        onClick={onClick}
+        className="flex flex-col items-start hover:opacity-70 transition-opacity text-left cursor-pointer"
+    >
         <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.25em] mb-1">{label}</span>
         <span className="text-3xl font-black text-white italic leading-none">{value}</span>
-    </div>
+    </button>
 );
 
 const LoadingState = () => (

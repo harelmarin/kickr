@@ -37,8 +37,8 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         +
                         "GROUP BY m.id " +
                         "ORDER BY " +
-                        "CASE WHEN :sort = 'popularity' THEN COUNT(um) END DESC, " +
-                        "CASE WHEN :sort = 'rating' THEN AVG(um.note) END DESC, " +
+                        "CASE WHEN :sort = 'popularity' THEN COUNT(um.id) END DESC, " +
+                        "CASE WHEN :sort = 'rating' THEN COALESCE(AVG(um.note), 0) END DESC, " +
                         "CASE WHEN :sort = 'date' AND :isFinished = false THEN m.matchDate END ASC, " +
                         "CASE WHEN (:sort = 'date' AND (:isFinished = true OR :isFinished IS NULL)) OR (:sort <> 'date') THEN m.matchDate END DESC")
         Page<Match> findMatchesWithFilters(
