@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userMatchService, type CreateUserMatchDto, type UpdateUserMatchDto } from '../services/userMatchService';
 import type { UserMatch } from '../types/UserMatch';
 import { useAuth } from './useAuth';
+import toast from 'react-hot-toast';
 
 // Hook to get user matches for a specific match
 export const useUserMatchesByMatch = (matchId: string) => {
@@ -64,6 +65,21 @@ export const useUpdateUserMatch = () => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['userMatches'] });
             queryClient.invalidateQueries({ queryKey: ['matches'] }); // Refresh match stats
+        },
+    });
+};
+
+// Hook to delete a user match rating
+export const useDeleteUserMatch = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (id: string) => userMatchService.delete(id),
+        onSuccess: () => {
+            // Invalidate and refetch everything related
+            queryClient.invalidateQueries({ queryKey: ['userMatches'] });
+            queryClient.invalidateQueries({ queryKey: ['matches'] });
+            toast.success('Entry removed successfully 🗑️');
         },
     });
 };

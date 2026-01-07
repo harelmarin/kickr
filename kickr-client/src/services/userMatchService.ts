@@ -61,9 +61,19 @@ export const userMatchService = {
         return response.data.map(mapApiResponseToUserMatch);
     },
 
-    // Update an existing user match rating
     update: async (id: string, dto: UpdateUserMatchDto): Promise<UserMatch> => {
         const response = await api.put<ApiResponse<any>>(`/user_match/${id}`, dto);
         return mapApiResponseToUserMatch(response.data.data);
     },
+
+    // Delete a user match rating
+    delete: async (id: string): Promise<void> => {
+        await api.delete(`/user_match/${id}`);
+    },
+
+    // DEV ONLY: Reset all test data
+    resetTestData: async (): Promise<any> => {
+        const response = await api.delete('/dev/reset-data');
+        return response.data;
+    }
 };

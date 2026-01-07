@@ -12,6 +12,9 @@ export interface MatchApiResponse {
   home_score?: number;
   away_score?: number;
   match_uuid?: string;
+  competition_id?: string;
+  competition_name?: string;
+  competition_logo?: string;
   average_rating?: number;
   reviews_count?: number;
 }

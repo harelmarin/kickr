@@ -113,17 +113,28 @@ public class UserMatchService {
         User user = userRepository.findById(dto.userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if (dto.comment.length() > 1000) {
+        if (dto.comment != null && dto.comment.length() > 1000) {
             throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 characters");
         }
 
-        UserMatch userMatch = UserMatch.builder()
-                .user(user)
-                .match(match)
-                .comment(dto.comment)
-                .build();
+        // Check if an evaluation already exists for this user and match
+        UserMatch userMatch = userMatchRepository.findByUserIdAndMatchId(dto.userId, dto.matchId);
 
-        userMatch.setNote(dto.note);
+        if (userMatch != null) {
+            // Update existing entry
+            userMatch.setNote(dto.note);
+            userMatch.setComment(dto.comment);
+            // We can also update the watchedAt date to the current time if preferred
+            // userMatch.setWatchedAt(LocalDateTime.now());
+        } else {
+            // Create new entry
+            userMatch = UserMatch.builder()
+                    .user(user)
+                    .match(match)
+                    .comment(dto.comment)
+                    .build();
+            userMatch.setNote(dto.note);
+        }
 
         return userMatchRepository.save(userMatch);
     }
@@ -171,5 +182,18 @@ public class UserMatchService {
                 .stream()
                 .sorted(Comparator.comparing(UserMatch::getWatchedAt).reversed())
                 .toList();
+    }
+
+    /**
+     * Supprime une évaluation.
+     *
+     * @param id l'UUID de l'évaluation à supprimer
+     * @throws UserMatchNotFoundException si l'évaluation n'existe pas
+     */
+    public void delete(UUID id) {
+        if (!userMatchRepository.existsById(id)) {
+            throw new UserMatchNotFoundException("Evaluation not found");
+        }
+        userMatchRepository.deleteById(id);
     }
 }

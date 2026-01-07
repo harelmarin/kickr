@@ -38,7 +38,6 @@ export const Header = () => {
           <NavSlot to="/matches" label="Matches" />
           <NavSlot to="/competitions" label="Leagues" />
           <NavSlot to="/teams" label="Teams" />
-          <NavSlot to="/members" label="Members" />
         </nav>
 
         {/* Right Section: Search & Profile */}

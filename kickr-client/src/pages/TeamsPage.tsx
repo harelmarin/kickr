@@ -57,11 +57,11 @@ export const TeamsPage = () => {
               to={`/teams/${team.id}`}
               className="group"
             >
-              <div className="aspect-square bg-[#1b2228] rounded-md border border-white/5 p-8 flex items-center justify-center mb-3 transition-all duration-300 poster-hover-effect relative overflow-hidden">
+              <div className="aspect-square bg-[#1b2228] rounded-md border border-white/5 p-6 flex items-center justify-center mb-3 transition-all duration-300 poster-hover-effect relative overflow-hidden">
                 <img
                   src={team.logoUrl}
                   alt={team.name}
-                  className="max-w-[70%] max-h-[70%] object-contain filter drop-shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-110"
+                  className="max-w-[60%] max-h-[60%] object-contain filter drop-shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <h3 className="text-[11px] font-bold text-[#8899aa] text-center group-hover:text-white transition-colors tracking-tight uppercase truncate px-2">

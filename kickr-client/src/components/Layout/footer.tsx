@@ -34,6 +34,28 @@ export const Footer = () => {
               { label: 'Instagram', to: '#' },
               { label: 'Github', to: '#' },
             ]} />
+
+            {/* Dev Tools (Only in semi-hidden way or just for now) */}
+            <div className="hidden sm:block">
+              <h4 className="text-[#ef4444] text-[11px] font-black uppercase tracking-[0.3em] mb-6">Dev Utils</h4>
+              <button
+                onClick={async () => {
+                  if (window.confirm("FATAL ACTION: This will delete ALL users, reviews, and follows. Core matches and competitions will stay. Continue?")) {
+                    try {
+                      const { userMatchService } = await import('../../services/userMatchService');
+                      await userMatchService.resetTestData();
+                      window.location.href = '/';
+                      setTimeout(() => window.location.reload(), 100);
+                    } catch (e) {
+                      alert("Reset failed: " + e);
+                    }
+                  }
+                }}
+                className="text-[#667788] hover:text-red-500 transition-colors text-[10px] font-bold uppercase tracking-widest text-left"
+              >
+                Reset all test data
+              </button>
+            </div>
           </div>
         </div>
 

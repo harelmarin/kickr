@@ -24,6 +24,8 @@ const mapApiResponseToMatch = (m: MatchApiResponse): Match => ({
   awayScore: m.away_score,
   // Check multiple possible names for the internal UUID
   matchUuid: m.match_uuid || (m as any).matchUuid || (m as any).uuid,
+  competitionId: m.competition_id,
+  competitionLogo: m.competition_logo,
   averageRating: m.average_rating,
   reviewsCount: m.reviews_count,
 });

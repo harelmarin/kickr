@@ -49,11 +49,11 @@ export const CompetitionsPage = () => {
               to={`/competitions/${comp.id}`}
               className="group"
             >
-              <div className="aspect-square bg-[#1b2228] rounded-md border border-white/5 p-8 flex items-center justify-center mb-4 transition-all duration-300 poster-hover-effect relative overflow-hidden">
+              <div className="aspect-square bg-[#1b2228] rounded-md border border-white/5 p-6 flex items-center justify-center mb-4 transition-all duration-300 poster-hover-effect relative overflow-hidden">
                 <img
                   src={comp.logoUrl}
                   alt={comp.name}
-                  className="max-w-[75%] max-h-[75%] object-contain filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110 relative z-10"
+                  className="max-w-[60%] max-h-[60%] object-contain filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110 relative z-10"
                 />
               </div>
               <h3 className="text-center text-[11px] font-bold text-[#8899aa] group-hover:text-white transition-colors tracking-tight uppercase px-2 truncate">

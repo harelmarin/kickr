@@ -101,4 +101,17 @@ public class UserMatchController {
                 var entity = userMatchService.update(id, dto.getNote(), dto.getComment());
                 return ApiResponseDto.success("Évaluation mise à jour", UserMatchFullDto.fromEntity(entity));
         }
+
+        @Operation(summary = "Supprime une évaluation")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Évaluation supprimée"),
+                        @ApiResponse(responseCode = "404", description = "Évaluation non trouvée")
+        })
+        @RateLimiter(name = "userMatchRateLimiter")
+        @DeleteMapping("/{id}")
+        public ApiResponseDto<Void> deleteUserMatch(
+                        @Parameter(description = "UUID de l'évaluation à supprimer", required = true) @PathVariable UUID id) {
+                userMatchService.delete(id);
+                return ApiResponseDto.success("Évaluation supprimée", null);
+        }
 }

@@ -10,6 +10,8 @@ export interface Match {
   awayScore?: number | null;
   matchDate: string;
   competition: string;
+  competitionId?: string;
+  competitionLogo?: string;
   location: string;
   matchUuid?: string;
   averageRating?: number;
