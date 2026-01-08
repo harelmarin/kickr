@@ -1,5 +1,6 @@
 import { Header } from './header';
 import { Footer } from './footer';
+import { MobileBottomNav } from './MobileBottomNav';
 import { useLocation } from 'react-router-dom';
 
 type RootLayoutProps = {
@@ -12,10 +13,11 @@ export const Layout = ({ children }: RootLayoutProps) => {
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (
-    <div className="bg-[#14181c] min-h-screen flex flex-col">
+    <div className="bg-[#14181c] min-h-screen flex flex-col pb-28 md:pb-0">
       <Header />
       <div className="flex-1 animate-fade-in">{children}</div>
       {!shouldHideFooter && <Footer />}
+      <MobileBottomNav />
     </div>
   );
 };

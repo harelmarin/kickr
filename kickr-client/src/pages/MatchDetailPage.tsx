@@ -198,8 +198,8 @@ export const MatchDetailPage = () => {
           </div>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-16">
-          <div className="flex-1">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
+          <div className="flex-1 order-2 lg:order-1">
             <header className="mb-12">
               <div className="flex items-center gap-6 mb-8 pt-2">
                 <div className="flex items-center gap-4">
@@ -278,7 +278,7 @@ export const MatchDetailPage = () => {
           </div>
 
           {/* Right: Actions Sidebar (The Letterboxd Box) */}
-          <div className="w-full lg:w-[320px] flex-shrink-0">
+          <div className="w-full lg:w-[320px] flex-shrink-0 order-1 lg:order-2">
             <div className="bg-[#1b2228] border border-white/10 rounded-lg overflow-hidden shadow-xl sticky top-24">
               <div className="p-6 bg-[#2c3440] border-b border-white/5 flex items-center justify-between">
                 <div className="flex flex-col">

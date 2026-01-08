@@ -31,20 +31,20 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
     };
 
     return (
-        <div className={`flex gap-5 group/review ${review.isModerated ? 'opacity-60' : ''}`}>
+        <div className={`flex gap-3 sm:gap-5 group/review ${review.isModerated ? 'opacity-60' : ''}`}>
             {/* Mini Ticket Look */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                className="relative w-32 h-20 bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-3 px-3 poster-hover-effect"
+                className="relative w-24 h-16 sm:w-32 sm:h-20 bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-3 poster-hover-effect"
             >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
-                <img src={review.match.homeLogo} className="w-8 h-8 object-contain drop-shadow-lg z-10" alt="" />
-                <div className="flex items-center gap-2 z-10">
-                    <span className="text-[16px] font-black text-white italic leading-none">{review.match.homeScore}</span>
-                    <div className="w-[1px] h-4 bg-kickr/40"></div>
-                    <span className="text-[16px] font-black text-white italic leading-none">{review.match.awayScore}</span>
+                <img src={review.match.homeLogo} className="w-6 h-6 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
+                <div className="flex items-center gap-1 sm:gap-2 z-10">
+                    <span className="text-sm sm:text-[16px] font-black text-white italic leading-none">{review.match.homeScore}</span>
+                    <div className="w-[1px] h-3 sm:h-4 bg-kickr/40"></div>
+                    <span className="text-sm sm:text-[16px] font-black text-white italic leading-none">{review.match.awayScore}</span>
                 </div>
-                <img src={review.match.awayLogo} className="w-8 h-8 object-contain drop-shadow-lg z-10" alt="" />
+                <img src={review.match.awayLogo} className="w-6 h-6 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
             </Link>
 
             <div className="flex flex-col flex-1">

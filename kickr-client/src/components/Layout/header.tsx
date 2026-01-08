@@ -36,9 +36,9 @@ export const Header = () => {
     <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
       <div className="max-w-7xl mx-auto flex items-center h-full px-6">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group mr-10">
+        <Link to="/" className="flex items-center gap-2 group mr-2 md:mr-10">
           <span className="text-2xl">⚽</span>
-          <span className="text-xl font-black font-display tracking-tighter text-white">KICKR</span>
+          <span className="hidden sm:block text-xl font-black font-display tracking-tighter text-white">KICKR</span>
         </Link>
 
         {/* Navigation */}
@@ -50,7 +50,7 @@ export const Header = () => {
         </nav>
 
         {/* Right Section: Search & Profile */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-2 md:gap-5">
           {/* Search Bar */}
           <SearchBar />
 
@@ -69,7 +69,7 @@ export const Header = () => {
               </button>
               <Link
                 to="/register"
-                className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95"
+                className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-3 sm:px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95"
               >
                 Sign Up
               </Link>

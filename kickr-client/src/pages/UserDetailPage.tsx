@@ -43,14 +43,14 @@ export const UserDetailPage = () => {
                     <div className="flex items-start justify-between mb-8">
                         <div className="flex items-center gap-10">
                             {/* Avatar */}
-                            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-3xl font-black text-kickr">
+                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
                                 {user.name[0].toUpperCase()}
                             </div>
 
                             {/* Name & Info */}
                             <div>
                                 <div className="flex items-center gap-3 mb-2">
-                                    <h1 className="text-4xl font-black text-white tracking-tight">{user.name}</h1>
+                                    <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{user.name}</h1>
                                     {isOwnProfile && (
                                         <span className="bg-kickr/10 text-kickr text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-md border border-kickr/20">
                                             You
@@ -66,14 +66,14 @@ export const UserDetailPage = () => {
                         {/* Action Button */}
                         <div>
                             {isOwnProfile ? (
-                                <button className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-6 py-2.5 rounded-lg border border-white/10 transition-all">
+                                <button className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg border border-white/10 transition-all">
                                     Edit Profile
                                 </button>
                             ) : (
                                 <button
                                     onClick={handleFollowToggle}
                                     disabled={followAction.isPending}
-                                    className={`group flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all ${isFollowing
+                                    className={`group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg transition-all ${isFollowing
                                         ? 'bg-white/5 border border-white/10 hover:border-red-500/50'
                                         : 'bg-kickr/10 border border-kickr/30 hover:bg-kickr/20'
                                         } disabled:opacity-50`}
@@ -97,7 +97,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center gap-8 px-6 py-4 bg-[#1b2228] border border-white/5 rounded-xl">
+                    <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 px-4 sm:px-6 py-3 sm:py-4 bg-[#1b2228] border border-white/5 rounded-xl">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}
@@ -385,7 +385,7 @@ const StatHorizontal = ({ label, value, onClick }: { label: string; value: strin
         onClick={onClick}
         className="flex items-center gap-3 hover:opacity-70 transition-opacity cursor-pointer group"
     >
-        <span className="text-2xl font-black text-white group-hover:text-kickr transition-colors">{value}</span>
+        <span className="text-lg sm:text-2xl font-black text-white group-hover:text-kickr transition-colors">{value}</span>
         <span className="text-[10px] font-bold text-[#667788] uppercase tracking-widest">{label}</span>
     </button>
 );

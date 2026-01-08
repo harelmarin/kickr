@@ -120,12 +120,12 @@ export const TeamDetailPage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-end gap-12 relative z-10">
-          <div className="w-48 h-48 bg-[#1b2228] rounded-md shadow-2xl p-8 border border-white/10 relative group flex-shrink-0">
+          <div className="w-32 h-32 sm:w-48 sm:h-48 bg-[#1b2228] rounded-md shadow-2xl p-8 border border-white/10 relative group flex-shrink-0">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
           <div className="flex-1 text-left mb-2">
-            <h1 className="text-6xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
             <div className="flex flex-wrap items-center gap-6">
               <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.country}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#2c3440]"></span>
