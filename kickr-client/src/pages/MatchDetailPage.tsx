@@ -103,37 +103,34 @@ export const MatchDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
-      {/* Cinematic Hero Backdrop */}
+      {/* Simplified Hero Backdrop */}
       <div className="relative h-[480px] w-full overflow-hidden">
-        {/* Atmospheric Background Image - Using a high-quality stadium shot */}
+        {/* Background Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] scale-110 brightness-[0.4] grayscale-[0.2] saturate-[0.8]"
+          className="absolute inset-0 bg-cover bg-center brightness-[0.3] grayscale"
           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&q=80&w=2000')` }}
         ></div>
 
-        {/* Layered Gradients for Cinematic Depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-[#14181c]/40 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#14181c] via-transparent to-[#14181c]/20"></div>
-
-        {/* Subtle Mesh Glow Elements */}
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-kickr/5 rounded-full blur-[150px] mix-blend-screen opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#4466ff]/5 rounded-full blur-[120px] mix-blend-screen opacity-20"></div>
+        {/* Simple Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/60 to-transparent"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-[420px] relative z-10 pb-20">
         {/* Massive Horizontal Match Header */}
         <header className="mb-20">
-          <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#1b2228]/60 backdrop-blur-xl rounded-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border border-white/10 relative group poster-hover-effect">
+          <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#1b2228]/80 rounded-2xl overflow-hidden border border-white/10 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228]/80 to-[#2c3440]/80"></div>
 
-            <div className="absolute inset-0 flex items-center justify-between px-10 sm:px-20 py-6">
+            <div className="absolute inset-0 grid grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8 md:px-12 py-6 gap-4 sm:gap-8 md:gap-12">
               {/* Home Team */}
-              <div className="flex flex-col md:flex-row items-center gap-6 flex-1">
-                <Link to={`/teams/${match.homeTeamId}`} className="transition-all active:scale-95 duration-500 drop-shadow-2xl">
-                  <img src={match.homeLogo} alt={match.homeTeam} className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain" />
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 justify-self-start w-full overflow-hidden">
+                <Link to={`/teams/${match.homeTeamId}`} className="transition-all active:scale-95 duration-500 flex-shrink-0">
+                  <img src={match.homeLogo} alt={match.homeTeam} className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 object-contain" />
                 </Link>
-                <div className="hidden md:flex flex-col">
-                  <span className="text-white font-black uppercase italic tracking-tighter text-2xl sm:text-4xl md:text-5xl leading-none">{match.homeTeam}</span>
+                <div className="hidden md:flex flex-col min-w-0 w-full">
+                  <Link to={`/teams/${match.homeTeamId}`} className="group/home w-full">
+                    <span className="text-white font-black uppercase italic tracking-tighter text-lg sm:text-2xl md:text-3xl leading-tight group-hover/home:text-kickr transition-colors block break-words w-full">{match.homeTeam}</span>
+                  </Link>
                   <span className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em] mt-2 italic flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-kickr"></span> Host Team
                   </span>
@@ -141,27 +138,29 @@ export const MatchDetailPage = () => {
               </div>
 
               {/* Central Score / VS Cluster */}
-              <div className="flex items-center gap-6 sm:gap-12 md:gap-16">
+              <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 px-2 sm:px-4 md:px-8">
                 {isPast ? (
-                  <div className="flex items-center gap-4 sm:gap-10 md:gap-12">
-                    <span className="text-4xl sm:text-6xl md:text-8xl font-black text-white italic leading-none drop-shadow-2xl tabular-nums">{match.homeScore}</span>
-                    <div className="w-[2px] md:w-[3px] h-12 md:h-20 bg-kickr/60 rounded-full"></div>
-                    <span className="text-4xl sm:text-6xl md:text-8xl font-black text-white italic leading-none drop-shadow-2xl tabular-nums">{match.awayScore}</span>
+                  <div className="flex items-center gap-3 sm:gap-6 md:gap-10">
+                    <span className="text-3xl sm:text-5xl md:text-7xl font-black text-white italic leading-none tabular-nums">{match.homeScore}</span>
+                    <div className="w-[2px] md:w-[3px] h-10 md:h-16 bg-kickr/60 rounded-full"></div>
+                    <span className="text-3xl sm:text-5xl md:text-7xl font-black text-white italic leading-none tabular-nums">{match.awayScore}</span>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
-                    <div className="text-kickr font-black italic tracking-tighter text-4xl sm:text-6xl animate-pulse">VS</div>
+                    <div className="text-kickr font-black italic tracking-tighter text-3xl sm:text-5xl animate-pulse">VS</div>
                   </div>
                 )}
               </div>
 
               {/* Away Team */}
-              <div className="flex flex-col md:flex-row-reverse items-center gap-6 flex-1">
-                <Link to={`/teams/${match.awayTeamId}`} className="transition-all active:scale-95 duration-500 drop-shadow-2xl">
-                  <img src={match.awayLogo} alt={match.awayTeam} className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain" />
+              <div className="flex flex-col md:flex-row-reverse items-center md:items-start gap-4 md:gap-6 justify-self-end w-full overflow-hidden">
+                <Link to={`/teams/${match.awayTeamId}`} className="transition-all active:scale-95 duration-500 flex-shrink-0">
+                  <img src={match.awayLogo} alt={match.awayTeam} className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 object-contain" />
                 </Link>
-                <div className="hidden md:flex flex-col items-end text-right">
-                  <span className="text-white font-black uppercase italic tracking-tighter text-2xl sm:text-4xl md:text-5xl leading-none">{match.awayTeam}</span>
+                <div className="hidden md:flex flex-col items-end text-right min-w-0 w-full">
+                  <Link to={`/teams/${match.awayTeamId}`} className="group/away w-full">
+                    <span className="text-white font-black uppercase italic tracking-tighter text-lg sm:text-2xl md:text-3xl leading-tight group-hover/away:text-kickr transition-colors block break-words w-full text-right">{match.awayTeam}</span>
+                  </Link>
                   <span className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em] mt-2 italic flex items-center gap-2">
                     Visitor <span className="w-2 h-2 rounded-full bg-kickr/30"></span>
                   </span>
@@ -190,6 +189,9 @@ export const MatchDetailPage = () => {
                 <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Match Date</span>
                 <span className="text-[#99aabb] text-xs font-bold uppercase tracking-widest whitespace-nowrap">
                   {matchDate.toLocaleDateString('fr', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                  <span className="text-kickr ml-3 border-l border-white/10 pl-3">
+                    {matchDate.toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })}
+                  </span>
                 </span>
               </div>
             </div>
@@ -199,44 +201,29 @@ export const MatchDetailPage = () => {
         <div className="flex flex-col lg:flex-row gap-16">
           <div className="flex-1">
             <header className="mb-12">
-
-
-              <div className="flex flex-col gap-4 mb-4">
-                <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[1.1]">
-                  <Link to={`/teams/${match.homeTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/home uppercase italic text-white">
-                    {match.homeTeam}
-                    <span className="absolute bottom-0 left-0 w-0 h-1 bg-kickr group-hover/home:w-full transition-all duration-500"></span>
-                  </Link>
-                  <span className="mx-2 md:mx-4 text-white/30 font-thin not-italic">vs</span>
-                  <Link to={`/teams/${match.awayTeamId}`} className="hover:text-kickr transition-colors relative inline-block group/away uppercase italic text-white">
-                    {match.awayTeam}
-                    <span className="absolute bottom-0 left-0 w-0 h-1 bg-kickr group-hover/away:w-full transition-all duration-500"></span>
-                  </Link>
-                </h1>
-
-                <div className="flex items-center gap-4">
-                  <span className="text-xl md:text-2xl font-black uppercase tracking-[0.15em] italic text-[#99aabb]">
-                    {matchDate.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
-                  </span>
-                </div>
-              </div>
-
               <div className="flex items-center gap-6 mb-8 pt-2">
                 <div className="flex items-center gap-4">
                   {match.averageRating && match.averageRating > 0 ? (
-                    <div className="flex items-center gap-3 bg-kickr/[0.03] border border-kickr/10 px-4 py-2 rounded-lg">
-                      <div className="flex text-kickr text-sm">
-                        {'★'.repeat(Math.round(match.averageRating))}
-                        <span className="text-white/5">{'★'.repeat(5 - Math.round(match.averageRating))}</span>
+                    <div className="flex items-center gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-2">Community Consensus</span>
+                        <div className="flex items-center gap-3 bg-kickr/[0.03] border border-kickr/10 px-4 py-2 rounded-lg">
+                          <div className="flex text-kickr text-sm">
+                            {'★'.repeat(Math.round(match.averageRating))}
+                            <span className="text-white/5">{'★'.repeat(5 - Math.round(match.averageRating))}</span>
+                          </div>
+                          <span className="text-white font-black italic">{match.averageRating.toFixed(1)}</span>
+                        </div>
                       </div>
-                      <span className="text-white font-black italic">{match.averageRating.toFixed(1)}</span>
                     </div>
                   ) : (
-                    <span className="text-[10px] font-bold text-[#445566] uppercase tracking-widest">Awaiting community ratings</span>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-2">Community Consensus</span>
+                      <span className="text-[10px] font-bold text-[#445566] uppercase tracking-widest bg-white/[0.02] border border-white/5 px-4 py-2 rounded-lg italic">Awaiting community intel...</span>
+                    </div>
                   )}
                 </div>
               </div>
-
             </header>
 
 
@@ -411,13 +398,16 @@ const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLike
             <span className="text-[#ff8000] text-sm ml-1" title="Liked">❤</span>
           )}
           {watchedAt && (
-            <span className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto">
+            <Link to={`/reviews/${reviewId}`} className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto hover:text-kickr transition-colors">
               {new Date(watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-            </span>
+            </Link>
           )}
         </div>
         {content && content.trim() !== "" && (
-          <p className="text-sm leading-relaxed text-[#99aabb] italic">"{content}"</p>
+          <Link to={`/reviews/${reviewId}`} className="block group/comment">
+            <p className="text-sm leading-relaxed text-[#99aabb] italic group-hover/comment:text-white transition-colors">"{content}"</p>
+            <span className="text-[10px] font-black text-kickr/40 uppercase tracking-widest mt-2 block group-hover/comment:text-kickr transition-colors">Detailed Log View →</span>
+          </Link>
         )}
         <div className="flex items-center gap-2 mt-3">
           <button

@@ -59,6 +59,7 @@ export const matchService = {
   searchMatches: async (params: {
     competitionId?: string;
     finished?: boolean;
+    query?: string;
     sort?: string;
     page?: number;
     limit?: number;
@@ -84,6 +85,26 @@ export const matchService = {
       totalElements: response.data.totalElements || 0,
       last: response.data.last || false,
     };
+  },
+
+  getTrendingMatches: async (limit = 6): Promise<Match[]> => {
+    try {
+      const response = await axiosInstance.get('/matchs/trending', {
+        params: { limit: limit * 2 }, // Demander plus pour filtrer
+      });
+      const content = response.data?.content;
+      if (!content || !Array.isArray(content)) {
+        return [];
+      }
+      // Filtrer uniquement les matchs avec au moins une note et limiter
+      return content
+        .map(mapApiResponseToMatch)
+        .filter(match => match.reviewsCount && match.reviewsCount > 0)
+        .slice(0, limit);
+    } catch (err) {
+      console.error('Erreur lors de la récupération des matchs trending:', err);
+      return [];
+    }
   },
 
   getAllMatchesByTeam: async (teamId: string): Promise<Match[]> => {

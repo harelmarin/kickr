@@ -35,13 +35,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMatchRepository userMatchRepository;
+    private final com.kickr_server.follow.FollowRepository followRepository;
 
     public UserDto getUserDtoWithStats(UUID id) {
         User user = getUserById(id);
         long matchesCount = userMatchRepository.countByUserId(id);
-        // Mocking followers/following for now as requested by user's request for
-        // profile UI
-        return UserDto.fromEntityWithStats(user, 124, 89, matchesCount);
+        long followersCount = followRepository.countByFollowedId(id);
+        long followingCount = followRepository.countByFollowerId(id);
+        return UserDto.fromEntityWithStats(user, (int) followersCount, (int) followingCount, matchesCount);
     }
 
     /**
@@ -53,7 +54,9 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(user -> {
                     long matchesCount = userMatchRepository.countByUserId(user.getId());
-                    return UserDto.fromEntityWithStats(user, 124, 89, matchesCount);
+                    long followersCount = followRepository.countByFollowedId(user.getId());
+                    long followingCount = followRepository.countByFollowerId(user.getId());
+                    return UserDto.fromEntityWithStats(user, (int) followersCount, (int) followingCount, matchesCount);
                 })
                 .collect(java.util.stream.Collectors.toList());
     }

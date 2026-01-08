@@ -35,6 +35,8 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         "WHERE (:competitionId IS NULL OR m.competition.id = :competitionId) " +
                         "AND (:isFinished IS NULL OR (:isFinished = true AND m.homeScore IS NOT NULL) OR (:isFinished = false AND m.homeScore IS NULL)) "
                         +
+                        "AND (:query IS NULL OR :query = '' OR LOWER(CAST(m.homeTeam.name AS string)) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(CAST(m.awayTeam.name AS string)) LIKE LOWER(CONCAT('%', :query, '%'))) "
+                        +
                         "GROUP BY m.id " +
                         "ORDER BY " +
                         "CASE WHEN :sort = 'popularity' THEN COUNT(um.id) END DESC, " +
@@ -44,6 +46,7 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
         Page<Match> findMatchesWithFilters(
                         @org.springframework.data.repository.query.Param("competitionId") UUID competitionId,
                         @org.springframework.data.repository.query.Param("isFinished") Boolean isFinished,
+                        @org.springframework.data.repository.query.Param("query") String query,
                         @org.springframework.data.repository.query.Param("sort") String sort,
                         Pageable pageable);
 }

@@ -144,11 +144,6 @@
   padding: 2rem;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 40px rgba(var(--kickr-primary-rgb), 0.05);
-}
-
-.glow-kickr {
-  box-shadow: 0 0 30px rgba(var(--kickr-primary-rgb), 0.15);
 }
 
 /* Custom Scrollbar */

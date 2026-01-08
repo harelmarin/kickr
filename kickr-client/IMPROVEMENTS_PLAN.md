@@ -315,28 +315,29 @@ npm install @axe-core/react
 ## 📊 Priorisation Recommandée
 
 ### Phase 1 : Sécurité & Stabilité (Semaine 1-2)
-1. ✅ Gestion d'erreurs robuste
-2. ✅ Validation côté client
-3. ✅ Gestion sécurisée des tokens
-4. ✅ Build optimization
+1. ✅ **Gestion d'erreurs robuste** (ErrorBoundary implémenté)
+2. ✅ **Validation côté client** (React Hook Form + Zod sur Register et Login)
+3. ⏳ Gestion sécurisée des tokens (En cours)
+4. ✅ **Build optimization** (Lazy loading sur toutes les routes)
 
 ### Phase 2 : UX Essentielle (Semaine 3-4)
-1. ✅ Animations & micro-interactions
-2. ✅ Infinite scroll / Pagination
-3. ✅ Feedback visuel amélioré
-4. ✅ Responsive design amélioré
+1. ✅ **Animations & micro-interactions** (Framer Motion sur toutes les pages)
+2. ✅ **Loading skeletons** (Match, Review, User, League skeletons)
+3. ⏳ Infinite scroll / Pagination (Pagination classique optimisée)
+4. ✅ **Feedback visuel amélioré** (Toasts, animations de boutons)
+5. ✅ **Responsive design amélioré** (Grilles et formulaires mobiles)
 
 ### Phase 3 : Production Ready (Semaine 5-6)
-1. ✅ Monitoring & Analytics
-2. ✅ HTTPS forcé
-3. ✅ PWA
-4. ✅ Performance optimization
+1. ⏳ Monitoring & Analytics
+2. ⏳ HTTPS forcé (Infrastructure)
+3. ⏳ PWA (Prévu)
+4. ⏳ Performance optimization
 
 ### Phase 4 : Polish & Features (Semaine 7+)
-1. ✅ Dark mode toggle
-2. ✅ Filtres avancés
-3. ✅ Onboarding
-4. ✅ Keyboard shortcuts
+1. ⏳ Dark mode toggle (Déjà sombre par défaut, à automatiser)
+2. ✅ **Filtres avancés** (Recherche textuelle, tri, filtres compétitions sur Matches, Teams, Leagues, Community)
+3. ⏳ Onboarding (Prévu)
+4. ⏳ Keyboard shortcuts (Prévu)
 
 ---
 

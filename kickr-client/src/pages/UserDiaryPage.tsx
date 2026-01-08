@@ -149,7 +149,7 @@ export const UserDiaryPage = () => {
 const ErrorState = () => (
     <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#0a0b0d]">
         <div className="max-w-md">
-            <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Scouting Report Error</h2>
+            <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Tactical Log Error</h2>
             <p className="text-[#667788] text-sm mb-8 leading-relaxed">Impossible de charger le journal des matchs pour le moment.</p>
             <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Réessayer</button>
         </div>

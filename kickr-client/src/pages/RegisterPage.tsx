@@ -1,34 +1,49 @@
-import { useState, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
 import { useUIStore } from '../hooks/useUIStore';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const registerSchema = z.object({
+    name: z.string().min(3, "Name must be at least 3 characters").max(20, "Name must be less than 20 characters"),
+    email: z.string().email("Please enter a valid tactical email"),
+    password: z.string()
+        .min(8, "Password must be at least 8 characters")
+        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+        .regex(/[0-9]/, "Password must contain at least one number"),
+});
+
+type RegisterFormData = z.infer<typeof registerSchema>;
 
 export const RegisterPage = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const { register, isLoading } = useAuth();
+    const { register: registerUser, isLoading } = useAuth();
     const { openAuthModal } = useUIStore();
     const navigate = useNavigate();
 
-    // Real-time password validation
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm<RegisterFormData>({
+        resolver: zodResolver(registerSchema),
+        mode: "onChange"
+    });
+
+    const password = watch("password", "");
+
+    // Real-time password feedback (for the UI bars)
     const hasMinLength = password.length >= 8;
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasNumber = /\d/.test(password);
-    const isPasswordValid = hasMinLength && hasUppercase && hasLowercase && hasNumber;
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-
-        if (!isPasswordValid) {
-            toast.error("Please meet all password requirements.");
-            return;
-        }
-
+    const onSubmit = async (data: RegisterFormData) => {
         try {
-            await register({ name, email, password });
+            await registerUser(data);
             toast.success('Account created! You can now log in.');
             setTimeout(() => {
                 navigate('/');
@@ -37,7 +52,7 @@ export const RegisterPage = () => {
                 }, 500);
             }, 1500);
         } catch (err) {
-            // Error handled in useAuth
+            // Error handled in useAuth hook
         }
     };
 
@@ -66,7 +81,7 @@ export const RegisterPage = () => {
                     <h1 className="text-6xl font-black text-white italic tracking-tighter uppercase leading-[0.9] mb-8">
                         The Pitch <br />
                         Is Yours <br />
-                        To <span className="text-kickr glow-kickr">Analyze.</span>
+                        To <span className="text-kickr">Analyze.</span>
                     </h1>
 
                     <div className="space-y-8 mt-12">
@@ -95,18 +110,19 @@ export const RegisterPage = () => {
                         <p className="text-[#667788] text-sm font-medium">Create your credentials and start analyzing.</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Identity</label>
                                 <input
                                     type="text"
                                     placeholder="Your analyst name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required
-                                    className="w-full bg-[#1b2228]/50 border border-white/5 rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none"
+                                    {...register("name")}
+                                    className={`w-full bg-[#1b2228]/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                 />
+                                {errors.name && (
+                                    <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
+                                )}
                             </div>
 
                             <div className="space-y-2">
@@ -114,11 +130,12 @@ export const RegisterPage = () => {
                                 <input
                                     type="email"
                                     placeholder="name@example.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    className="w-full bg-[#1b2228]/50 border border-white/5 rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none"
+                                    {...register("email")}
+                                    className={`w-full bg-[#1b2228]/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                 />
+                                {errors.email && (
+                                    <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
+                                )}
                             </div>
 
                             <div className="space-y-4">
@@ -127,11 +144,12 @@ export const RegisterPage = () => {
                                     <input
                                         type="password"
                                         placeholder="••••••••"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                        className="w-full bg-[#1b2228]/50 border border-white/5 rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none"
+                                        {...register("password")}
+                                        className={`w-full bg-[#1b2228]/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                     />
+                                    {errors.password && (
+                                        <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.password.message}</p>
+                                    )}
                                 </div>
 
                                 {/* Password Checker with labels */}

@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchMatches } from '../hooks/useNextMatchs';
 import { useCompetitions } from '../hooks/useCompetitions';
 import { MatchPoster } from '../components/Matchs/MatchPoster';
+import { MatchPosterSkeleton } from '../components/ui/LoadingSkeletons';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const MatchesPage = () => {
   const [page, setPage] = useState(0);
   const [competitionId, setCompetitionId] = useState<string | undefined>(undefined);
   const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
   const [sort, setSort] = useState<string>('date');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+      setPage(0);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const { data: competitions } = useCompetitions();
 
@@ -18,142 +31,225 @@ export const MatchesPage = () => {
     limit: 18,
     competitionId,
     finished,
+    query: debouncedQuery,
     sort
   });
 
   if (isError) return <ErrorState />;
 
   return (
-    <main className="min-h-screen bg-[#0a0b0d] py-20">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="min-h-screen bg-[#0a0b0d] py-20"
+    >
       <div className="max-w-7xl mx-auto px-6">
 
-        <header className="mb-20">
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">
-            The Pitch <span className="text-kickr">Matches</span>
-          </h1>
-          <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
-            Explore {data?.totalElements || '...'} matchdays on Kickr
-          </p>
+        <header className="mb-16">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">
+              The Pitch <span className="text-kickr">Matches</span>
+            </h1>
+            <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
+              Explore {data?.totalElements || '...'} matchdays on Kickr
+            </p>
+          </motion.div>
 
-          {/* Cinematic Filter Bar */}
-          <div className="mt-12 flex flex-col md:flex-row items-start md:items-center justify-between border-y border-kickr/20 py-4 gap-8 section-contrast rounded-xl px-6">
-            <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
+          {/* Advanced Filter Bar */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-12 flex flex-col gap-6"
+          >
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between border border-white/5 p-6 section-contrast rounded-2xl gap-8 relative overflow-hidden">
 
-              {/* League Filter */}
-              <div className="flex flex-col gap-1">
-                <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">League</span>
-                <select
-                  value={competitionId || ''}
-                  onChange={(e) => {
-                    setCompetitionId(e.target.value || undefined);
-                    setPage(0);
-                  }}
-                  className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                >
-                  <option value="" className="bg-[#14181c]">All Leagues</option>
-                  {competitions?.map(c => (
-                    <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
-                  ))}
-                </select>
+              <div className="flex flex-wrap items-center gap-x-10 gap-y-6 relative z-10">
+                {/* Search Input */}
+                <div className="flex flex-col gap-2 w-full sm:w-64">
+                  <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Search Team</span>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs opacity-40">🔍</span>
+                    <input
+                      type="text"
+                      placeholder="Enter team name..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full bg-black/20 border border-white/5 rounded-xl pl-9 pr-4 py-2.5 text-[11px] font-bold text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* League Filter */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">League</span>
+                  <select
+                    value={competitionId || ''}
+                    onChange={(e) => {
+                      setCompetitionId(e.target.value || undefined);
+                      setPage(0);
+                    }}
+                    className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-[11px] font-bold text-[#8899aa] focus:text-white focus:border-kickr/40 outline-none cursor-pointer min-w-[160px]"
+                  >
+                    <option value="" className="bg-[#14181c]">All Competitions</option>
+                    {competitions?.map(c => (
+                      <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Status Filter */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Status</span>
+                  <div className="flex bg-black/20 p-1 rounded-xl border border-white/5">
+                    {['all', 'finished', 'upcoming'].map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => { setStatus(s as any); setPage(0); }}
+                        className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white shadow-lg shadow-kickr/20' : 'text-[#445566] hover:text-[#99aabb]'}`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sort Filter */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Rank by</span>
+                  <select
+                    value={sort}
+                    onChange={(e) => {
+                      setSort(e.target.value as any);
+                      setPage(0);
+                    }}
+                    className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-[11px] font-bold text-[#8899aa] focus:text-white focus:border-kickr/40 outline-none cursor-pointer"
+                  >
+                    <option value="date" className="bg-[#14181c]">Match Date</option>
+                    <option value="popularity" className="bg-[#14181c]">Crowd Hype</option>
+                    <option value="rating" className="bg-[#14181c]">Tactical Score</option>
+                  </select>
+                </div>
               </div>
 
-              {/* Status Filter */}
-              <div className="flex flex-col gap-1">
-                <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
-                <select
-                  value={status}
-                  onChange={(e) => {
-                    setStatus(e.target.value as any);
-                    setPage(0);
-                  }}
-                  className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                >
-                  <option value="all" className="bg-[#14181c]">All Matches</option>
-                  <option value="finished" className="bg-[#14181c]">Finished</option>
-                  <option value="upcoming" className="bg-[#14181c]">Upcoming</option>
-                </select>
+              <div className="flex flex-col items-end gap-1 relative z-10 lg:border-l lg:border-white/5 lg:pl-8">
+                <span className="text-[24px] font-black text-white italic leading-none tracking-tighter">
+                  {isLoading ? '...' : (data?.totalElements || 0)}
+                </span>
+                <span className="text-[9px] uppercase tracking-widest text-[#445566] font-bold">Fixtures Found</span>
               </div>
-
-              {/* Sort Filter */}
-              <div className="flex flex-col gap-1">
-                <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Sort by</span>
-                <select
-                  value={sort}
-                  onChange={(e) => {
-                    setSort(e.target.value as any);
-                    setPage(0);
-                  }}
-                  className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                >
-                  <option value="date" className="bg-[#14181c]">Date (Newest)</option>
-                  <option value="popularity" className="bg-[#14181c]">Popularity</option>
-                  <option value="rating" className="bg-[#14181c]">Highest Rated</option>
-                </select>
-              </div>
-
             </div>
-
-            <div className="text-[10px] uppercase tracking-widest text-[#445566] font-bold">
-              Page {page + 1} of {data?.totalPages || 1}
-            </div>
-          </div>
+          </motion.div>
         </header>
 
         {/* Poster Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
           {isLoading ? (
             Array.from({ length: 9 }).map((_, i) => (
-              <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-xl" />
+              <MatchPosterSkeleton key={i} />
             ))
           ) : (
-            data?.content.map((match) => (
-              <MatchPoster key={match.id} match={match} />
-            ))
+            <AnimatePresence mode="popLayout">
+              {data?.content.map((match, index) => (
+                <motion.div
+                  key={match.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3, delay: index * 0.03 }}
+                >
+                  <MatchPoster match={match} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           )}
         </div>
 
         {/* Empty State */}
         {!isLoading && data?.content.length === 0 && (
-          <div className="py-20 text-center">
-            <p className="text-[#445566] uppercase tracking-widest text-xs font-bold">No matches found for these filters.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="py-32 text-center"
+          >
+            <div className="text-4xl mb-6 opacity-20">🏟️</div>
+            <p className="text-[#445566] uppercase tracking-[0.3em] text-[10px] font-black">No tactical data found for these filters.</p>
+            <button
+              onClick={() => { setSearchQuery(''); setCompetitionId(undefined); setStatus('all'); }}
+              className="mt-6 text-kickr text-[9px] font-black uppercase tracking-widest hover:underline"
+            >
+              Reset Filters
+            </button>
+          </motion.div>
         )}
 
         {/* Pagination Controls */}
-        <div className="mt-24 flex justify-center gap-10 border-t border-white/5 pt-10">
-          <button
-            onClick={() => {
-              setPage(p => Math.max(0, p - 1));
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            disabled={page === 0}
-            className="text-[11px] font-black uppercase tracking-[0.25em] text-[#667788] hover:text-white transition-colors disabled:opacity-20"
-          >
-            ← Previous
-          </button>
-          <button
-            onClick={() => {
-              setPage(p => p + 1);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            disabled={data?.last}
-            className="text-[11px] font-black uppercase tracking-[0.25em] text-[#667788] hover:text-white transition-colors disabled:opacity-20"
-          >
-            Next →
-          </button>
-        </div>
+        {!isLoading && data && data.totalPages > 1 && (
+          <div className="mt-24 flex items-center justify-center gap-8 border-t border-white/5 pt-12">
+            <button
+              onClick={() => {
+                setPage(p => Math.max(0, p - 1));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              disabled={page === 0}
+              className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-[#445566] disabled:opacity-20 hover:text-white transition-all shadow-glow"
+            >
+              <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
+              Prev
+            </button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: Math.min(5, data.totalPages) }).map((_, i) => {
+                const pageNum = i;
+                // Simplified pagination for now
+                return (
+                  <button
+                    key={i}
+                    onClick={() => { setPage(pageNum); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${page === pageNum ? 'bg-kickr text-white' : 'text-[#445566] hover:bg-white/5 hover:text-white'}`}
+                  >
+                    {pageNum + 1}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => {
+                setPage(p => p + 1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              disabled={data?.last}
+              className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-[#445566] disabled:opacity-20 hover:text-white transition-all"
+            >
+              Next
+              <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+          </div>
+        )}
 
       </div>
-    </main>
+    </motion.main>
   );
 };
 
 const ErrorState = () => (
   <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#0a0b0d]">
-    <div className="max-w-md">
-      <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter">Connexion Interrompue</h2>
-      <p className="text-[#667788] text-sm mb-8 leading-relaxed">Les tribunes sont vides... Il semble y avoir un souci de connexion avec les serveurs de matchs.</p>
-      <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Réessayer</button>
-    </div>
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="max-w-md"
+    >
+      <div className="text-5xl mb-8">📡</div>
+      <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Signal Interrupted</h2>
+      <p className="text-[#667788] text-sm mb-8 leading-relaxed font-medium">The stadium feed is temporarily down. Our tactical analysts are working on restoring the connection.</p>
+      <button onClick={() => window.location.reload()} className="btn-primary-kickr px-10 py-4 rounded text-[10px] shadow-xl shadow-kickr/20 hover:scale-[1.05]">
+        Reconnect Session
+      </button>
+    </motion.div>
   </div>
 );

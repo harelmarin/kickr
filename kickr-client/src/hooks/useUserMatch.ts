@@ -48,6 +48,15 @@ export const useLatestReviews = (limit = 10) => {
     });
 };
 
+// Hook to get popular reviews (sorted by likes)
+export const usePopularReviews = (limit = 10) => {
+    return useQuery<UserMatch[], Error>({
+        queryKey: ['userMatches', 'popular', limit],
+        queryFn: () => userMatchService.getPopular(limit),
+        staleTime: 30 * 1000,
+    });
+};
+
 // Hook to get reviews from followed users
 export const useFollowingReviews = (userId?: string, limit = 20) => {
     return useQuery<UserMatch[], Error>({

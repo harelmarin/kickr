@@ -23,6 +23,7 @@ export const useMatchesByTeam = (teamId: string) => {
 export const useSearchMatches = (params: {
   competitionId?: string;
   finished?: boolean;
+  query?: string;
   sort?: string;
   page?: number;
   limit?: number;
@@ -31,6 +32,14 @@ export const useSearchMatches = (params: {
     queryKey: ['matches', 'search', params],
     queryFn: () => matchService.searchMatches(params),
     placeholderData: (prev) => prev,
+    staleTime: 60 * 1000,
+  });
+};
+
+export const useTrendingMatches = (limit = 6) => {
+  return useQuery<Match[], Error>({
+    queryKey: ['matches', 'trending', limit],
+    queryFn: () => matchService.getTrendingMatches(limit),
     staleTime: 60 * 1000,
   });
 };

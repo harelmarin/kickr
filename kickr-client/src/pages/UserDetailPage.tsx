@@ -99,9 +99,9 @@ export const UserDetailPage = () => {
                     {/* Stats Bar */}
                     <div className="flex items-center gap-8 px-6 py-4 bg-[#1b2228] border border-white/5 rounded-xl">
                         <StatHorizontal
-                            label="Matches"
+                            label="Logs"
                             value={user.matchesCount.toString()}
-                            onClick={() => navigate(`/user/${id}/matches`)}
+                            onClick={() => navigate(`/user/${id}/diary`)}
                         />
                         <div className="w-px h-8 bg-white/10" />
                         <StatHorizontal
@@ -138,7 +138,7 @@ export const UserDetailPage = () => {
                         {/* Diary Section */}
                         <section id="diary-entries" className="space-y-12 section-contrast p-8 rounded-2xl">
                             <div className="flex items-center justify-between border-b border-kickr/20 pb-6">
-                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em] glow-kickr">Recent Diary Entries →</Link>
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em]">Recent Diary Entries →</Link>
                                 <span className="text-[10px] font-bold text-kickr uppercase tracking-widest">{reviews?.length || 0} Total</span>
                             </div>
 
@@ -238,7 +238,7 @@ export const UserDetailPage = () => {
 
                             <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
                                 <div className="flex flex-col">
-                                    <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Total Ratings</span>
+                                    <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Total Logs</span>
                                     <span className="text-xl font-black text-white italic">{reviews?.length || 0}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
@@ -261,7 +261,7 @@ export const UserDetailPage = () => {
                             <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Quick Stats</h3>
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[11px] font-bold text-[#99aabb]">Total Reviews</span>
+                                    <span className="text-[11px] font-bold text-[#99aabb]">Total Logs</span>
                                     <span className="text-sm font-black text-white">{reviews?.length || 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
@@ -323,7 +323,7 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
 
                             <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none text-center">
                                 <span className="text-[11px] font-black text-white italic leading-none">{count}</span>
-                                <span className="text-[7px] font-bold text-kickr uppercase tracking-tighter">{percentageOfTotal}%</span>
+                                <span className="text-[8px] font-bold text-white/70 uppercase tracking-tighter">{percentageOfTotal}%</span>
                             </div>
                         </div>
 
@@ -400,7 +400,7 @@ const NotFoundState = () => (
     <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center text-center">
         <div>
             <h2 className="text-4xl font-black text-white mb-4 italic tracking-tighter uppercase">User Not Found</h2>
-            <p className="text-[#667788] mb-8">This scout hasn't joined Kickr yet.</p>
+            <p className="text-[#667788] mb-8">This tactician hasn't joined Kickr yet.</p>
             <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Go Home</Link>
         </div>
     </div>

@@ -81,10 +81,22 @@ public class MatchController {
         public Page<MatchDto> searchMatches(
                         @Parameter(description = "ID de la compétition") @RequestParam(required = false) UUID competitionId,
                         @Parameter(description = "Match terminé (true/false)") @RequestParam(required = false) Boolean finished,
+                        @Parameter(description = "Recherche textuelle (équipe)") @RequestParam(required = false) String query,
                         @Parameter(description = "Tri (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
                         @Parameter(description = "Page") @RequestParam(defaultValue = "0") int page,
                         @Parameter(description = "Limite") @RequestParam(defaultValue = "18") int limit) {
-                return matchService.findMatchesWithFilters(competitionId, finished, sort, page, limit);
+                return matchService.findMatchesWithFilters(competitionId, finished, query, sort, page, limit);
+        }
+
+        @Operation(summary = "Récupère les matchs les mieux notés (trending)")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Liste des matchs trending")
+        })
+        @GetMapping("/trending")
+        public Page<MatchDto> getTrendingMatches(
+                        @Parameter(description = "Nombre de matchs à retourner") @RequestParam(defaultValue = "6") int limit) {
+                // Récupérer plus de matchs pour compenser ceux sans notes
+                return matchService.findMatchesWithFilters(null, true, "", "rating", 0, limit * 2);
         }
 
 }

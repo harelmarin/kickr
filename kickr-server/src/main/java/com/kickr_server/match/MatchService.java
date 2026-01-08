@@ -338,10 +338,10 @@ public class MatchService {
                                 });
         }
 
-        public Page<MatchDto> findMatchesWithFilters(UUID competitionId, Boolean isFinished, String sort,
+        public Page<MatchDto> findMatchesWithFilters(UUID competitionId, Boolean isFinished, String query, String sort,
                         int page, int size) {
                 Pageable pageable = PageRequest.of(page, size);
-                Page<Match> matchPage = matchRepository.findMatchesWithFilters(competitionId, isFinished, sort,
+                Page<Match> matchPage = matchRepository.findMatchesWithFilters(competitionId, isFinished, query, sort,
                                 pageable);
 
                 // Récupérer les stats pour les matchs de la page
@@ -360,6 +360,44 @@ public class MatchService {
                                 m,
                                 ratingsMap.get(m.getId()),
                                 countsMap.get(m.getId())));
+        }
+
+        /**
+         * Récupère les matchs les mieux notés (trending)
+         * Filtre uniquement les matchs qui ont au moins une note
+         */
+        public Page<MatchDto> getTrendingMatches(int limit) {
+                // Récupérer plus de matchs pour avoir assez après filtrage
+                Pageable pageable = PageRequest.of(0, Math.max(limit * 3, 20));
+                Page<Match> matchPage = matchRepository.findMatchesWithFilters(null, true, null, "rating", pageable);
+
+                // Récupérer les stats pour les matchs de la page
+                List<java.util.UUID> matchIds = matchPage.getContent().stream().map(Match::getId).toList();
+                List<Object[]> stats = userMatchRepository.findStatsByMatchIds(matchIds);
+
+                // Mapper les stats par matchId
+                java.util.Map<java.util.UUID, Double> ratingsMap = new java.util.HashMap<>();
+                java.util.Map<java.util.UUID, Long> countsMap = new java.util.HashMap<>();
+                for (Object[] stat : stats) {
+                        ratingsMap.put((java.util.UUID) stat[0], (Double) stat[1]);
+                        countsMap.put((java.util.UUID) stat[0], (Long) stat[2]);
+                }
+
+                // Filtrer uniquement les matchs qui ont au moins une note et limiter
+                List<MatchDto> filteredMatches = matchPage.getContent().stream()
+                                .filter(m -> countsMap.containsKey(m.getId()) && countsMap.get(m.getId()) > 0)
+                                .limit(limit)
+                                .map(m -> MatchDto.fromEntityWithStats(
+                                                m,
+                                                ratingsMap.get(m.getId()),
+                                                countsMap.get(m.getId())))
+                                .toList();
+
+                // Créer une page avec les résultats filtrés
+                return new org.springframework.data.domain.PageImpl<>(
+                                filteredMatches,
+                                PageRequest.of(0, limit),
+                                filteredMatches.size());
         }
 
 }

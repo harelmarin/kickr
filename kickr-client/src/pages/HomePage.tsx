@@ -1,18 +1,23 @@
 import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
 import { Link } from 'react-router-dom';
-import { useLatestReviews, useUserMatchesByUser, useFollowingReviews } from '../hooks/useUserMatch';
+import { useLatestReviews, useUserMatchesByUser, useFollowingReviews, usePopularReviews } from '../hooks/useUserMatch';
 import { useGlobalFeed } from '../hooks/usePreviewFeed';
 import { useAuth } from '../hooks/useAuth';
 import { useUsers } from '../hooks/useUser';
 import { ReviewCard } from '../components/Review/ReviewCard';
+import { ReviewCardSkeleton } from '../components/ui/LoadingSkeletons';
+import { motion } from 'framer-motion';
+import { useTrendingMatches } from '../hooks/useNextMatchs';
 
 export default function HomePage() {
   const { user } = useAuth();
   const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(3);
+  const { data: popularReviews, isLoading: isPopularLoading } = usePopularReviews(6);
   const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 3);
   const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(3);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
   const { data: communityScouts } = useUsers();
+  const { data: trendingMatches, isLoading: isTrendingLoading } = useTrendingMatches(6);
 
   const activeFeed = user ? followingReviews : (globalFeed || latestReviews);
   const isLoadingFeed = user ? isFollowingLoading : (isGlobalLoading || isLatestLoading);
@@ -22,7 +27,12 @@ export default function HomePage() {
     : [];
 
   return (
-    <main className="flex flex-col min-h-screen bg-[#0a0b0d]">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="flex flex-col min-h-screen bg-[#0a0b0d]"
+    >
       {/* Cinematic Hero */}
       <section className="relative h-[650px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -36,24 +46,44 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
-          <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font">
+          <motion.h1
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font"
+          >
             Track football. <br />
             <span className="text-kickr">Rate matchdays.</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-[#99aabb] mb-12 font-medium max-w-3xl mx-auto leading-relaxed">
+          </motion.h1>
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-xl md:text-2xl text-[#99aabb] mb-12 font-medium max-w-3xl mx-auto leading-relaxed"
+          >
             {user
               ? "The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life."
               : "Discover tactical reviews from our global network, follow your friends, and log your favorite matchdays. Join the pitch."}
-          </p>
+          </motion.p>
           <div className="flex items-center justify-center gap-6">
             {!user ? (
-              <div className="flex flex-col sm:flex-row gap-4">
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
                 <Link to="/register" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all shadow-xl shadow-kickr/20 hover:scale-[1.02]">
                   Join the Pitch — It's Free
                 </Link>
-              </div>
+              </motion.div>
             ) : (
-              <div className="bg-black/40 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-2">
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="bg-black/40 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-2"
+              >
                 <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px]">
                   Welcome back,
                 </span>
@@ -63,7 +93,7 @@ export default function HomePage() {
                 >
                   {user.name}
                 </Link>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
@@ -79,7 +109,7 @@ export default function HomePage() {
             {/* 1. Feed Section (Personalized or Discovery) */}
             <section className="section-contrast p-8 rounded-2xl">
               <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr glow-kickr">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr">
                   {user ? "Your Network Activity" : "Live from the community"}
                 </span>
                 <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">
@@ -88,8 +118,9 @@ export default function HomePage() {
               </div>
 
               {isLoadingFeed ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
-                  {[1, 2].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <ReviewCardSkeleton />
+                  <ReviewCardSkeleton />
                 </div>
               ) : activeFeed && activeFeed.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -109,46 +140,104 @@ export default function HomePage() {
               )}
             </section>
 
-            {/* 2. Upcoming Matches Section */}
-            <section className="bg-[#14181c]/50 p-8 rounded-2xl border border-white/5">
-              <div className="flex items-center justify-between mb-10 border-b border-white/10 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white">Upcoming Matches</span>
-                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">View All →</Link>
+            {/* 2. Upcoming Matches */}
+            <section>
+              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Upcoming Matches</span>
+                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">All Matches →</Link>
               </div>
+              <p className="text-[#445566] text-xs italic mb-8">Next matches to watch and log.</p>
               <NextMatchesHomePage />
             </section>
 
-            {/* 3. Recent Reviews Section (Global) - Only show if user is logged in to avoid duplication for guests */}
-            {user && (
-              <section className="section-contrast p-8 rounded-2xl">
-                <h2 className="text-[11px] font-bold uppercase tracking-[0.25em] text-white mb-10 border-b border-kickr/20 pb-4">Recent reviews from the crowd</h2>
-                {isLatestLoading ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
-                    {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded"></div>)}
-                  </div>
-                ) : latestReviews && latestReviews.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {latestReviews.map((review) => (
-                      <ReviewCard
-                        key={review.id}
-                        review={review}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-[#445566] text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
-                )}
-              </section>
-            )}
+            {/* 3. Popular Reviews from the Community */}
+            <section className="section-contrast p-8 rounded-2xl">
+              <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white">Popular Logs from the Community</span>
+                <Link to="/community" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">View All →</Link>
+              </div>
+              {isPopularLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <ReviewCardSkeleton />
+                  <ReviewCardSkeleton />
+                  <ReviewCardSkeleton />
+                  <ReviewCardSkeleton />
+                </div>
+              ) : popularReviews && popularReviews.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  {popularReviews.slice(0, 4).map((review) => (
+                    <ReviewCard
+                      key={review.id}
+                      review={review}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[#445566] text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
+              )}
+            </section>
 
-            {/* 3. Popular / Trending Matches */}
+            {/* 3. Trending Matches - Best Rated */}
             <section>
               <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Trending on Kickr</span>
-                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-white transition-colors">Popular</Link>
+                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">All Matches →</Link>
               </div>
-              <p className="text-[#445566] text-xs italic mb-8">Matches that everyone is talking about right now.</p>
-              <NextMatchesHomePage />
+              <p className="text-[#445566] text-xs italic mb-8">The best-rated matches according to our community.</p>
+              {isTrendingLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div key={i} className="h-64 bg-white/5 rounded-xl animate-pulse"></div>
+                  ))}
+                </div>
+              ) : trendingMatches && trendingMatches.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {trendingMatches.map((match) => (
+                    <Link
+                      key={match.matchUuid}
+                      to={`/matches/${match.id}`}
+                      className="group block bg-[#1b2228]/60 border border-white/5 rounded-xl p-6 hover:border-kickr/40 hover:bg-[#1b2228] transition-all"
+                    >
+                      <div className="flex items-center justify-between gap-6">
+                        {/* Home Team */}
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <img src={match.homeLogo} alt={match.homeTeam} className="w-12 h-12 object-contain flex-shrink-0" />
+                          <span className="text-white font-bold text-sm truncate">{match.homeTeam}</span>
+                        </div>
+
+                        {/* Score */}
+                        <div className="flex items-center gap-3 flex-shrink-0">
+                          <span className="text-2xl font-black text-white tabular-nums">{match.homeScore}</span>
+                          <span className="text-[#445566] font-black">-</span>
+                          <span className="text-2xl font-black text-white tabular-nums">{match.awayScore}</span>
+                        </div>
+
+                        {/* Away Team */}
+                        <div className="flex items-center gap-3 flex-1 min-w-0 justify-end">
+                          <span className="text-white font-bold text-sm truncate text-right">{match.awayTeam}</span>
+                          <img src={match.awayLogo} alt={match.awayTeam} className="w-12 h-12 object-contain flex-shrink-0" />
+                        </div>
+                      </div>
+
+                      {/* Match Info */}
+                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] text-[#445566] uppercase tracking-widest font-bold">{match.competition}</span>
+                        </div>
+                        {match.averageRating && match.averageRating > 0 && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-kickr text-sm">★</span>
+                            <span className="text-white font-bold text-sm">{match.averageRating.toFixed(1)}</span>
+                            <span className="text-[10px] text-[#445566]">({match.reviewsCount} reviews)</span>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[#445566] text-sm italic">No rated matches yet.</p>
+              )}
             </section>
           </div>
 
@@ -222,7 +311,7 @@ export default function HomePage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-black italic truncate group-hover:text-kickr transition-colors tracking-tight">{scout.name}</p>
-                          <p className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">{scout.matchesCount} Matchs</p>
+                          <p className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">{scout.matchesCount} Logs</p>
                         </div>
                         <span className="text-kickr opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                       </Link>
@@ -250,7 +339,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 }
 

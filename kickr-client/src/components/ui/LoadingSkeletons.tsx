@@ -1,0 +1,63 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+export const MatchPosterSkeleton = () => (
+    <div className="flex flex-col gap-3">
+        <div className="aspect-[2.5/1] rounded-xl overflow-hidden shadow-2xl">
+            <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+        <div className="flex justify-between items-center px-1 mt-1">
+            <Skeleton width={80} height={10} baseColor="#1b2228" highlightColor="#252a31" />
+            <Skeleton width={40} height={10} baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+    </div>
+);
+
+export const ReviewCardSkeleton = () => (
+    <div className="flex gap-5">
+        <div className="w-32 h-20 rounded-xl overflow-hidden flex-shrink-0">
+            <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+        <div className="flex flex-col flex-1 gap-2 pt-1">
+            <Skeleton width="60%" height={14} baseColor="#1b2228" highlightColor="#252a31" />
+            <Skeleton width="40%" height={10} baseColor="#1b2228" highlightColor="#252a31" />
+            <Skeleton width="100%" height={30} baseColor="#1b2228" highlightColor="#252a31" className="mt-2" />
+        </div>
+    </div>
+);
+
+export const UserCardSkeleton = () => (
+    <div className="bg-[#14181c]/60 backdrop-blur-xl border border-white/5 rounded-2xl p-8 flex flex-col items-center gap-6">
+        <div className="w-24 h-24 rounded-2xl overflow-hidden">
+            <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+        <div className="flex flex-col items-center gap-2 w-full text-center">
+            <Skeleton width="70%" height={24} baseColor="#1b2228" highlightColor="#252a31" />
+            <Skeleton width="40%" height={10} baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+        <div className="w-full h-px bg-white/5 mt-4"></div>
+        <div className="grid grid-cols-2 gap-8 w-full">
+            <div className="flex flex-col items-center gap-2">
+                <Skeleton width={30} height={20} baseColor="#1b2228" highlightColor="#252a31" />
+                <Skeleton width={40} height={8} baseColor="#1b2228" highlightColor="#252a31" />
+            </div>
+            <div className="flex flex-col items-center gap-2">
+                <Skeleton width={30} height={20} baseColor="#1b2228" highlightColor="#252a31" />
+                <Skeleton width={40} height={8} baseColor="#1b2228" highlightColor="#252a31" />
+            </div>
+        </div>
+    </div>
+);
+
+export const LeagueCardSkeleton = () => (
+    <div className="flex flex-col gap-4">
+        <div className="aspect-square bg-[#14181c] rounded-2xl border border-white/5 p-8 flex items-center justify-center relative overflow-hidden">
+            <div className="w-full h-full rounded-xl overflow-hidden">
+                <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
+            </div>
+        </div>
+        <div className="flex flex-col items-center gap-1">
+            <Skeleton width="60%" height={10} baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+    </div>
+);
