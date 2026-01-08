@@ -17,18 +17,17 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!window.confirm('Moderate this review? The comment will be replaced by a moderation message.')) {
-            return;
-        }
+        const moderatePromise = adminService.moderateReview(review.id);
 
-        try {
-            await adminService.moderateReview(review.id);
-            toast.success('Review moderated');
-            if (onModerate) onModerate();
-            else window.location.reload();
-        } catch (error) {
-            toast.error('Failed to moderate review');
-        }
+        toast.promise(moderatePromise, {
+            loading: 'Moderating...',
+            success: () => {
+                if (onModerate) onModerate();
+                else window.location.reload();
+                return 'Review moderated';
+            },
+            error: 'Failed to moderate review'
+        });
     };
 
     return (

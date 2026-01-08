@@ -21,7 +21,9 @@ export const CompetitionsPage = () => {
     <main className="min-h-screen bg-[#0a0b0d] py-20">
       <div className="max-w-7xl mx-auto px-6">
         <header className="mb-16">
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">Leagues</h1>
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">
+            The World <span className="text-kickr">Leagues</span>
+          </h1>
           <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
             Major football competitions around the globe
           </p>

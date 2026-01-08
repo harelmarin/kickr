@@ -176,16 +176,16 @@ export const ReviewDetailPage: FC = () => {
                                         <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Moderation</span>
                                         {!review.isModerated && (
                                             <button
-                                                onClick={async () => {
-                                                    if (window.confirm('Moderate this review?')) {
-                                                        try {
-                                                            await adminService.moderateReview(review.id);
-                                                            toast.success('Review moderated');
-                                                            window.location.reload();
-                                                        } catch (e) {
-                                                            toast.error('Failed to moderate');
-                                                        }
-                                                    }
+                                                onClick={() => {
+                                                    const promise = adminService.moderateReview(review.id);
+                                                    toast.promise(promise, {
+                                                        loading: 'Moderating...',
+                                                        success: () => {
+                                                            setTimeout(() => window.location.reload(), 500);
+                                                            return 'Review moderated';
+                                                        },
+                                                        error: 'Failed to moderate'
+                                                    });
                                                 }}
                                                 className="text-[10px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
                                             >
@@ -242,16 +242,16 @@ export const ReviewDetailPage: FC = () => {
 
                                                     {currentUser?.role === 'ADMIN' && !comment.isModerated && (
                                                         <button
-                                                            onClick={async () => {
-                                                                if (window.confirm('Moderate this comment?')) {
-                                                                    try {
-                                                                        await adminService.moderateComment(comment.id);
-                                                                        toast.success('Comment moderated');
-                                                                        window.location.reload();
-                                                                    } catch (e) {
-                                                                        toast.error('Failed to moderate');
-                                                                    }
-                                                                }
+                                                            onClick={() => {
+                                                                const promise = adminService.moderateComment(comment.id);
+                                                                toast.promise(promise, {
+                                                                    loading: 'Moderating...',
+                                                                    success: () => {
+                                                                        setTimeout(() => window.location.reload(), 500);
+                                                                        return 'Comment moderated';
+                                                                    },
+                                                                    error: 'Failed to moderate'
+                                                                });
                                                             }}
                                                             className="text-[9px] font-black text-[#ff4444]/40 hover:text-[#ff4444] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all"
                                                         >

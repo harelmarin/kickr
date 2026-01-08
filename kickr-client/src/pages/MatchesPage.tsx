@@ -28,7 +28,9 @@ export const MatchesPage = () => {
       <div className="max-w-7xl mx-auto px-6">
 
         <header className="mb-20">
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">Matches</h1>
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">
+            The Pitch <span className="text-kickr">Matches</span>
+          </h1>
           <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
             Explore {data?.totalElements || '...'} matchdays on Kickr
           </p>

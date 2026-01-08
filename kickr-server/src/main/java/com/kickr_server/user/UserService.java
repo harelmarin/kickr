@@ -4,8 +4,10 @@ import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.usermatch.UserMatchRepository;
 import com.kickr_server.exception.user.UserAlreadyExistException;
 import com.kickr_server.exception.user.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +29,8 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -38,6 +42,20 @@ public class UserService {
         // Mocking followers/following for now as requested by user's request for
         // profile UI
         return UserDto.fromEntityWithStats(user, 124, 89, matchesCount);
+    }
+
+    /**
+     * Récupère la liste de tous les utilisateurs avec leurs statistiques.
+     *
+     * @return liste des utilisateurs sous forme de DTO avec stats.
+     */
+    public List<UserDto> findAllWithStats() {
+        return userRepository.findAll().stream()
+                .map(user -> {
+                    long matchesCount = userMatchRepository.countByUserId(user.getId());
+                    return UserDto.fromEntityWithStats(user, 124, 89, matchesCount);
+                })
+                .collect(java.util.stream.Collectors.toList());
     }
 
     /**
@@ -97,12 +115,19 @@ public class UserService {
      * @throws UserAlreadyExistException si l'email ou le nom existe déjà.
      */
     public User save(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserAlreadyExistException("Utilisateur déjà existant");
+        log.info("Saving user: {} (id: {})", user.getEmail(), user.getId());
+        if (user.getId() == null) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new UserAlreadyExistException("Email déjà utilisé");
+            }
+            if (userRepository.existsByName(user.getName())) {
+                throw new UserAlreadyExistException("Nom déjà utilisé");
+            }
         }
-        if (userRepository.existsByName(user.getName())) {
-            throw new UserAlreadyExistException("Nom déjà utilisé");
-        }
+        return userRepository.save(user);
+    }
+
+    public User update(User user) {
         return userRepository.save(user);
     }
 

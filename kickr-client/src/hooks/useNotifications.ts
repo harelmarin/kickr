@@ -42,3 +42,15 @@ export const useMarkAllAsRead = () => {
         },
     });
 };
+
+export const useClearAllNotifications = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (userId: string) => notificationService.clearAllNotifications(userId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['notifications'] });
+            queryClient.invalidateQueries({ queryKey: ['unreadCount'] });
+        },
+    });
+};

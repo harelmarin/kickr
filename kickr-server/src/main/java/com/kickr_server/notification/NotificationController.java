@@ -35,4 +35,9 @@ public class NotificationController {
     public void markAllAsRead(@PathVariable UUID userId) {
         notificationService.markAllAsRead(userId);
     }
+
+    @DeleteMapping("/user/{userId}/clear-all")
+    public void deleteAllNotifications(@PathVariable UUID userId) {
+        notificationService.clearAll(userId);
+    }
 }

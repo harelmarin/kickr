@@ -1,5 +1,6 @@
 package com.kickr_server.admin;
 
+import lombok.extern.slf4j.Slf4j;
 import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.dto.UserMatch.UserMatchDto;
 import com.kickr_server.dto.generic.ApiResponseDto;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +33,8 @@ import java.util.UUID;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "Bearer Authentication")
+@Transactional
+@Slf4j
 public class AdminController {
 
     private final UserService userService;
@@ -59,10 +63,10 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/users/{id}/promote")
     public ApiResponseDto<UserDto> promoteToAdmin(@PathVariable UUID id) {
+        log.info("Promoting user {} to ADMIN", id);
         User user = userService.getUserById(id);
         user.setRole(Role.ADMIN);
-        User updatedUser = userService.save(user);
-        return ApiResponseDto.success("User promoted to ADMIN", UserDto.fromEntity(updatedUser));
+        return ApiResponseDto.success("User promoted to ADMIN", UserDto.fromEntity(user));
     }
 
     @Operation(summary = "Rétrograder un ADMIN en USER")
@@ -74,10 +78,10 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/users/{id}/demote")
     public ApiResponseDto<UserDto> demoteToUser(@PathVariable UUID id) {
+        log.info("Demoting user {} to USER", id);
         User user = userService.getUserById(id);
         user.setRole(Role.USER);
-        User updatedUser = userService.save(user);
-        return ApiResponseDto.success("User demoted to USER", UserDto.fromEntity(updatedUser));
+        return ApiResponseDto.success("User demoted to USER", UserDto.fromEntity(user));
     }
 
     @Operation(summary = "Supprimer un utilisateur (ADMIN uniquement)")

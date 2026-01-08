@@ -31,5 +31,9 @@ export const notificationService = {
 
     markAllAsRead: async (userId: string): Promise<void> => {
         await api.post(`/notifications/user/${userId}/read-all`);
+    },
+
+    clearAllNotifications: async (userId: string): Promise<void> => {
+        await api.delete(`/notifications/user/${userId}/clear-all`);
     }
 };

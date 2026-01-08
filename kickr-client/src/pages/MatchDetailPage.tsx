@@ -86,12 +86,12 @@ export const MatchDetailPage = () => {
   const handleDeleteEntry = async () => {
     if (!myMatchEntry) return;
 
-    if (window.confirm('Are you sure you want to remove your rating for this match?')) {
-      try {
-        await deleteUserMatch.mutateAsync(myMatchEntry.id);
-      } catch (error) {
-        console.error('Error deleting entry:', error);
-      }
+    try {
+      await deleteUserMatch.mutateAsync(myMatchEntry.id);
+      toast.success('Rating removed');
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+      toast.error('Failed to remove rating');
     }
   };
 

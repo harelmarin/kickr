@@ -94,6 +94,27 @@ public class User {
     @Column(nullable = false)
     private Role role = Role.USER;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.usermatch.UserMatch> userMatches;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.usermatch.ReviewComment> reviewComments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.usermatch.ReviewLike> reviewLikes;
+
+    @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.notification.Notification> notificationsSent;
+
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.notification.Notification> notificationsReceived;
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.follow.Follow> following;
+
+    @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<com.kickr_server.follow.Follow> followers;
+
     /**
      * Callback JPA appelé avant l'insertion.
      * Initialise {@link #createdAt} et {@link #updatedAt} à l'instant actuel.

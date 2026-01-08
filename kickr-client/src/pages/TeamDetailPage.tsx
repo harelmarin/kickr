@@ -3,12 +3,11 @@ import { useState, useMemo } from 'react';
 import { useTeam } from '../hooks/useTeams';
 import { useMatchesByTeam } from '../hooks/useNextMatchs';
 import { MatchPoster } from '../components/Matchs/MatchPoster';
-import type { Match } from '../types/Match';
 
 export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
-  const [sort, setSort] = useState<'date' | 'popularity' | 'rating'>('date');
+  const [sort, setSort] = useState<'date' | 'rating'>('date');
 
   const { data: team, isLoading: isLoadingTeam } = useTeam(id!);
   const { data: matches, isLoading: isLoadingMatches } = useMatchesByTeam(id!);
@@ -33,8 +32,6 @@ export const TeamDetailPage = () => {
           return new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime();
         case 'rating':
           return (b.averageRating || 0) - (a.averageRating || 0);
-        case 'popularity':
-          return (b.reviewsCount || 0) - (a.reviewsCount || 0);
         default:
           return 0;
       }
@@ -42,6 +39,74 @@ export const TeamDetailPage = () => {
 
     return filtered;
   }, [matches, status, sort]);
+
+  const totalDiaryEntries = useMemo(() => {
+    if (!matches) return 0;
+    return matches.reduce((acc, match) => acc + (match.reviewsCount || 0), 0);
+  }, [matches]);
+
+  const stats = useMemo(() => {
+    if (!matches || matches.length === 0) return {
+      winRate: '0%', drawRate: '0%', lossRate: '0%',
+      wins: 0, draws: 0, losses: 0,
+      avgScored: '0.0', avgConceded: '0.0',
+      globalAverageRating: '0.0',
+      form: [] as ('W' | 'D' | 'L')[]
+    };
+
+    const finished = matches
+      .filter(m => m.homeScore !== null && m.awayScore !== null)
+      .sort((a, b) => new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime());
+
+    let wins = 0, draws = 0, losses = 0;
+    let scored = 0, conceded = 0;
+    let cleanSheets = 0;
+
+    finished.forEach(m => {
+      const isHome = m.homeTeamId === id;
+      const hS = m.homeScore!;
+      const aS = m.awayScore!;
+
+      const teamScore = isHome ? hS : aS;
+      const opponentScore = isHome ? aS : hS;
+
+      scored += teamScore;
+      conceded += opponentScore;
+
+      if (opponentScore === 0) cleanSheets++;
+
+      if (teamScore > opponentScore) wins++;
+      else if (teamScore === opponentScore) draws++;
+      else losses++;
+    });
+
+    const total = finished.length || 1;
+    const form = finished.slice(0, 5).map(m => {
+      const isHome = m.homeTeamId === id;
+      const teamScore = isHome ? m.homeScore! : m.awayScore!;
+      const oppScore = isHome ? m.awayScore! : m.homeScore!;
+      if (teamScore > oppScore) return 'W';
+      if (teamScore === oppScore) return 'D';
+      return 'L';
+    });
+
+    const ratedMatches = matches.filter(m => m.averageRating !== undefined && m.averageRating > 0);
+    const avgRating = ratedMatches.length > 0
+      ? ratedMatches.reduce((acc, m) => acc + (m.averageRating || 0), 0) / ratedMatches.length
+      : 0;
+
+    return {
+      wins, draws, losses,
+      winRate: `${Math.round((wins / total) * 100)}%`,
+      drawRate: `${Math.round((draws / total) * 100)}%`,
+      lossRate: `${Math.round((losses / total) * 100)}%`,
+      avgScored: (scored / total).toFixed(1),
+      avgConceded: (conceded / total).toFixed(1),
+      globalAverageRating: avgRating.toFixed(1),
+      cleanSheets,
+      form
+    };
+  }, [matches, id]);
 
   if (isLoadingTeam || !team) return null;
 
@@ -69,8 +134,7 @@ export const TeamDetailPage = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-12 mb-2">
-            <BigStat label="Popularity" value="High" />
-            <BigStat label="Diary entries" value="12k" />
+            <BigStat label="Diary entries" value={totalDiaryEntries >= 1000 ? `${(totalDiaryEntries / 1000).toFixed(1)}k` : totalDiaryEntries.toString()} />
           </div>
         </div>
       </div>
@@ -110,7 +174,6 @@ export const TeamDetailPage = () => {
                       className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
                     >
                       <option value="date" className="bg-[#14181c]">Date</option>
-                      <option value="popularity" className="bg-[#14181c]">Popularity</option>
                       <option value="rating" className="bg-[#14181c]">Highest Rated</option>
                     </select>
                   </div>
@@ -142,16 +205,55 @@ export const TeamDetailPage = () => {
 
           {/* Sidebar: Tactical Overview */}
           <div className="space-y-12">
-            <section className="bg-[#1b2228] rounded border border-white/5 p-8 shadow-xl">
-              <h3 className="text-[10px] font-black text-[#667788] uppercase tracking-[0.3em] mb-8">CLUB PERFORMANCE</h3>
-              <div className="space-y-8">
-                <MiniStat label="Average Rating" value="4.2" description="Community score" />
-                <MiniStat label="Winning Season" value="82%" description="In all venues" />
+            <section className="bg-[#1b2228] rounded-2xl border border-white/5 p-8 shadow-xl">
+              <h3 className="text-[10px] font-black text-[#667788] uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">CLUB PERFORMANCE</h3>
+
+              <div className="mb-10">
+                <div className="flex justify-between text-[9px] font-bold uppercase tracking-widest text-[#445566] mb-3">
+                  <span>Results Distribution</span>
+                  <span className="text-white">{stats.wins}W - {stats.draws}D - {stats.losses}L</span>
+                </div>
+                <div className="h-2 w-full flex rounded-full overflow-hidden bg-white/5">
+                  <div style={{ width: stats.winRate }} className="bg-kickr h-full" title={`Wins: ${stats.winRate}`}></div>
+                  <div style={{ width: stats.drawRate }} className="bg-[#445566] h-full" title={`Draws: ${stats.drawRate}`}></div>
+                  <div style={{ width: stats.lossRate }} className="bg-[#ef4444]/60 h-full" title={`Losses: ${stats.lossRate}`}></div>
+                </div>
               </div>
 
-              <div className="mt-12 pt-8 border-t border-white/5">
+              <div className="space-y-8 mb-10">
+                <div className="flex items-center justify-between">
+                  <MiniStat label="Attack" value={stats.avgScored} description="Avg goals" />
+                  <div className="w-px h-10 bg-white/5"></div>
+                  <MiniStat label="Community" value={stats.globalAverageRating} description="Avg stars" />
+                  <div className="w-px h-10 bg-white/5"></div>
+                  <MiniStat label="Defense" value={stats.avgConceded} description="Avg goals" />
+                </div>
+              </div>
+
+              <div className="mb-10">
+                <h4 className="text-[9px] font-bold text-[#667788] uppercase tracking-widest mb-4">Recent Form</h4>
+                <div className="flex gap-2">
+                  {stats.form.map((res, i) => (
+                    <div
+                      key={i}
+                      className={`w-7 h-7 rounded flex items-center justify-center text-[10px] font-black ${res === 'W' ? 'bg-kickr text-black' :
+                        res === 'D' ? 'bg-[#445566] text-white' :
+                          'bg-[#ef4444]/20 text-[#ef4444] border border-[#ef4444]/20'
+                        }`}
+                    >
+                      {res}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-8 border-t border-white/5 space-y-4">
+                <div className="flex items-center justify-between uppercase tracking-widest">
+                  <span className="text-[9px] font-bold text-[#445566]">Clean Sheets</span>
+                  <span className="text-xl font-black text-white italic">{stats.cleanSheets}</span>
+                </div>
                 <p className="text-[11px] text-[#5c6470] italic leading-relaxed">
-                  Ce club est l'un des plus suivis sur Kickr. Leurs matchs génèrent en moyenne 1.5x plus de reviews que le reste de la ligue.
+                  Basé sur {matches?.filter(m => m.homeScore !== null).length || 0} matchs réels en base de données.
                 </p>
               </div>
             </section>

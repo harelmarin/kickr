@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -33,9 +32,7 @@ public class UserController {
     @RateLimiter(name = "userRateLimiter")
     @GetMapping
     public List<UserDto> getAllUsers() {
-        return userService.findAll().stream()
-                .map(UserDto::fromEntity)
-                .collect(Collectors.toList());
+        return userService.findAllWithStats();
     }
 
     /**

@@ -146,12 +146,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalMatchNoteException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleIllegalMatchNote(IllegalMatchNoteException ex) {
-        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return buildError(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalCommentLengthException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleIllegalCommentLength(IllegalCommentLengthException ex) {
-        return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return buildError(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     // ---------------------- ERROR 429 RATE LIMIT----------------------

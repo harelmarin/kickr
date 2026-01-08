@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Kickr - Contexte du Projet pour Agents IA
 
 ## 📋 Vue d'Ensemble

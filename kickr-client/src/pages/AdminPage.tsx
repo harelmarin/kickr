@@ -2,10 +2,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { adminService } from '../services/adminService';
 import { authService } from '../services/authService';
-import { isAdminFromToken } from '../utils/jwtUtils';
 import type { User } from '../types/User';
 import { NotFoundPage } from './NotFoundPage';
-import './AdminPage.css';
+import toast from 'react-hot-toast';
 
 export default function AdminPage() {
     const [users, setUsers] = useState<User[]>([]);
@@ -16,8 +15,6 @@ export default function AdminPage() {
     const currentUser = authService.getUser();
 
     useEffect(() => {
-        console.log('[AdminPage] Current user:', currentUser);
-        console.log('[AdminPage] Is admin from token:', isAdminFromToken());
         loadUsers();
     }, []);
 
@@ -35,39 +32,47 @@ export default function AdminPage() {
     };
 
     const handlePromote = async (userId: string) => {
-        if (!confirm('Promote this user to ADMIN?')) return;
-        try {
-            await adminService.promoteUser(userId);
-            await loadUsers();
-        } catch (err: any) {
-            alert(err.response?.data?.message || 'Failed to promote user');
-        }
+        if (!window.confirm('Promote this user to ADMIN?')) return;
+
+        toast.promise(
+            adminService.promoteUser(userId).then(() => loadUsers()),
+            {
+                loading: 'Promoting user...',
+                success: 'User promoted to ADMIN',
+                error: (err) => err.response?.data?.message || 'Failed to promote user'
+            }
+        );
     };
 
     const handleDemote = async (userId: string) => {
-        if (!confirm('Demote this user to USER?')) return;
-        try {
-            await adminService.demoteUser(userId);
-            await loadUsers();
-        } catch (err: any) {
-            alert(err.response?.data?.message || 'Failed to demote user');
-        }
+        if (!window.confirm('Demote this user to USER?')) return;
+
+        toast.promise(
+            adminService.demoteUser(userId).then(() => loadUsers()),
+            {
+                loading: 'Demoting user...',
+                success: 'User demoted to USER',
+                error: (err) => err.response?.data?.message || 'Failed to demote user'
+            }
+        );
     };
 
     const handleDelete = async (userId: string) => {
-        if (!confirm('DELETE this user? This cannot be undone!')) return;
-        try {
-            await adminService.deleteUser(userId);
-            await loadUsers();
-        } catch (err: any) {
-            alert(err.response?.data?.message || 'Failed to delete user');
-        }
+        if (!window.confirm('DELETE this user? This cannot be undone!')) return;
+
+        toast.promise(
+            adminService.deleteUser(userId).then(() => loadUsers()),
+            {
+                loading: 'Deleting user...',
+                success: 'User deleted successfully',
+                error: (err) => err.response?.data?.message || 'Failed to delete user'
+            }
+        );
     };
 
     const filteredUsers = useMemo(() => {
         let result = users;
 
-        // Filter by search query
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
             result = result.filter(user =>
@@ -76,7 +81,6 @@ export default function AdminPage() {
             );
         }
 
-        // Filter by date
         if (dateFilter !== 'all') {
             const now = new Date();
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -110,9 +114,9 @@ export default function AdminPage() {
 
     if (loading) {
         return (
-            <div className="admin-page">
-                <div className="loading">
-                    <div className="loading-spinner"></div>
+            <div className="min-h-screen bg-[#0a0b0d] pt-12 px-8">
+                <div className="flex flex-col items-center justify-center pt-24 gap-6">
+                    <div className="w-8 h-8 border-2 border-white/5 border-t-kickr rounded-full animate-spin"></div>
                 </div>
             </div>
         );
@@ -120,8 +124,8 @@ export default function AdminPage() {
 
     if (error) {
         return (
-            <div className="admin-page">
-                <div className="error-message">{error}</div>
+            <div className="min-h-screen bg-[#0a0b0d] pt-12 px-8">
+                <div className="text-center py-16 text-[#ef4444] text-[13px] font-semibold">{error}</div>
             </div>
         );
     }
@@ -132,142 +136,149 @@ export default function AdminPage() {
     };
 
     return (
-        <div className="admin-page">
-            <div className="admin-header">
-                <div className="admin-header-content">
-                    <div>
-                        <h1 className="admin-title">Administration</h1>
-                        <p className="admin-subtitle">{stats.total} users · {stats.admins} admins</p>
+        <div className="min-h-[calc(100vh-4rem)] bg-[#0a0b0d] pt-12 px-8 pb-8 max-w-[1400px] mx-auto">
+            {/* Header */}
+            <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+                <div>
+                    <h1 className="display-font text-[28px] text-white mb-2 uppercase italic tracking-tighter">Administration</h1>
+                    <p className="text-[10px] text-[#667788] uppercase tracking-[0.2em] font-extrabold">
+                        {stats.total} users · {stats.admins} admins
+                    </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center gap-6 w-full md:w-auto">
+                    {/* Date Filters */}
+                    <div className="flex gap-1.5 w-full sm:w-auto">
+                        {(['all', 'today', 'week', 'month'] as const).map((filter) => (
+                            <button
+                                key={filter}
+                                onClick={() => setDateFilter(filter)}
+                                className={`flex-1 sm:flex-none py-2 px-3.5 rounded border text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${dateFilter === filter
+                                    ? 'bg-kickr/15 border-kickr/30 text-kickr'
+                                    : 'bg-transparent border-white/5 text-[#667788] hover:border-white/10 hover:bg-white/[0.02] hover:text-[#99aabb]'
+                                    }`}
+                            >
+                                {filter}
+                            </button>
+                        ))}
                     </div>
 
-                    <div className="admin-filters">
-                        <div className="date-filters">
+                    {/* Search */}
+                    <div className="relative w-full sm:w-[320px]">
+                        <input
+                            type="text"
+                            placeholder="Search users..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-[#14181c] border border-white/5 rounded-md py-3 pr-10 pl-4 text-white text-[13px] font-medium focus:outline-none focus:border-white/10 focus:bg-white/[0.02] transition-all placeholder:text-[#667788] placeholder:font-normal"
+                        />
+                        {searchQuery && (
                             <button
-                                className={`filter-btn ${dateFilter === 'all' ? 'active' : ''}`}
-                                onClick={() => setDateFilter('all')}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#667788] hover:text-white transition-colors text-sm w-6 h-6 flex items-center justify-center"
+                                onClick={() => setSearchQuery('')}
                             >
-                                All
+                                ✕
                             </button>
-                            <button
-                                className={`filter-btn ${dateFilter === 'today' ? 'active' : ''}`}
-                                onClick={() => setDateFilter('today')}
-                            >
-                                Today
-                            </button>
-                            <button
-                                className={`filter-btn ${dateFilter === 'week' ? 'active' : ''}`}
-                                onClick={() => setDateFilter('week')}
-                            >
-                                Week
-                            </button>
-                            <button
-                                className={`filter-btn ${dateFilter === 'month' ? 'active' : ''}`}
-                                onClick={() => setDateFilter('month')}
-                            >
-                                Month
-                            </button>
-                        </div>
-
-                        <div className="search-container">
-                            <input
-                                type="text"
-                                placeholder="Search users..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="search-input"
-                            />
-                            {searchQuery && (
-                                <button
-                                    className="search-clear"
-                                    onClick={() => setSearchQuery('')}
-                                >
-                                    ✕
-                                </button>
-                            )}
-                        </div>
+                        )}
                     </div>
                 </div>
-            </div>
+            </header>
 
-            <div className="users-table-container">
-                <table className="users-table">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Joined</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredUsers.length === 0 ? (
+            {/* Table Container */}
+            <div className="bg-[#14181c] border border-white/5 rounded-lg overflow-hidden shadow-2xl">
+                <div className="overflow-x-auto no-scrollbar">
+                    <table className="w-full border-collapse min-w-[700px]">
+                        <thead className="bg-black/20 border-b border-white/5">
                             <tr>
-                                <td colSpan={5} className="no-results">
-                                    No users found
-                                </td>
+                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">User</th>
+                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">Email</th>
+                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">Role</th>
+                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">Joined</th>
+                                <th className="py-3.5 px-5 text-right text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]"></th>
                             </tr>
-                        ) : (
-                            filteredUsers.map(user => (
-                                <tr key={user.id} className={user.id === currentUser.id ? 'current-user' : ''}>
-                                    <td>
-                                        <div className="user-cell">
-                                            <div className="user-avatar">
-                                                {user.name.charAt(0).toUpperCase()}
-                                            </div>
-                                            <Link to={`/user/${user.id}`} className="user-name-link">
-                                                {user.name}
-                                                {user.id === currentUser.id && <span className="badge-you">You</span>}
-                                            </Link>
-                                        </div>
-                                    </td>
-                                    <td className="email-cell">{user.email}</td>
-                                    <td>
-                                        <span className={`role-badge role-${user.role.toLowerCase()}`}>
-                                            {user.role}
-                                        </span>
-                                    </td>
-                                    <td className="date-cell">
-                                        {new Date(user.createdAt).toLocaleDateString('en-US', {
-                                            month: 'short',
-                                            day: 'numeric',
-                                            year: 'numeric'
-                                        })}
-                                    </td>
-                                    <td>
-                                        {user.id !== currentUser.id ? (
-                                            <div className="action-buttons">
-                                                {user.role === 'USER' ? (
-                                                    <button
-                                                        className="btn-action"
-                                                        onClick={() => handlePromote(user.id)}
-                                                    >
-                                                        Promote
-                                                    </button>
-                                                ) : (
-                                                    <button
-                                                        className="btn-action"
-                                                        onClick={() => handleDemote(user.id)}
-                                                    >
-                                                        Demote
-                                                    </button>
-                                                )}
-                                                <button
-                                                    className="btn-action btn-delete"
-                                                    onClick={() => handleDelete(user.id)}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <span className="text-muted">—</span>
-                                        )}
+                        </thead>
+                        <tbody className="divide-y divide-white/[0.03]">
+                            {filteredUsers.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5} className="text-center py-10 text-[#667788] text-[12px] font-semibold italic">
+                                        No users found
                                     </td>
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                            ) : (
+                                filteredUsers.map(user => (
+                                    <tr
+                                        key={user.id}
+                                        className={`group transition-colors ${user.id === currentUser.id
+                                            ? 'bg-kickr/5 hover:bg-kickr/8'
+                                            : 'hover:bg-white/[0.02]'
+                                            }`}
+                                    >
+                                        <td className="py-3.5 px-5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-7 h-7 rounded bg-kickr/15 border border-kickr/20 text-kickr flex items-center justify-center font-black text-[11px] flex-shrink-0">
+                                                    {user.name.charAt(0).toUpperCase()}
+                                                </div>
+                                                <Link to={`/user/${user.id}`} className="flex items-center gap-6 flex-1 font-bold text-[13px] text-white hover:text-kickr transition-colors">
+                                                    {user.name}
+                                                    {user.id === currentUser.id && (
+                                                        <span className="bg-kickr text-black py-0.5 px-1.5 rounded-[3px] text-[9px] font-black uppercase tracking-tight">You</span>
+                                                    )}
+                                                </Link>
+                                            </div>
+                                        </td>
+                                        <td className="py-3.5 px-5 text-[#99aabb] text-[12px] font-medium">{user.email}</td>
+                                        <td className="py-3.5 px-5 focus-within:ring-0">
+                                            <span className={`inline-flex px-2.5 py-1 rounded-[3px] text-[9px] font-black uppercase tracking-widest border ${user.role === 'ADMIN'
+                                                ? 'bg-kickr/15 text-kickr border-kickr/20'
+                                                : 'bg-white/[0.03] text-[#99aabb] border-white/5'
+                                                }`}>
+                                                {user.role}
+                                            </span>
+                                        </td>
+                                        <td className="py-3.5 px-5 text-[#667788] text-[12px] font-medium">
+                                            {new Date(user.createdAt).toLocaleDateString('en-US', {
+                                                month: 'short',
+                                                day: 'numeric',
+                                                year: 'numeric'
+                                            })}
+                                        </td>
+                                        <td className="py-3.5 px-5">
+                                            {user.id !== currentUser.id ? (
+                                                <div className="flex gap-2 justify-end">
+                                                    {user.role === 'USER' ? (
+                                                        <button
+                                                            className="py-1.5 px-3 border border-white/5 rounded-md text-[10px] font-black uppercase tracking-widest bg-white/[0.02] text-[#99aabb] hover:bg-white/[0.08] hover:border-white/15 hover:text-white hover:-translate-y-px transition-all cursor-pointer"
+                                                            onClick={() => handlePromote(user.id)}
+                                                        >
+                                                            Promote
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            className="py-1.5 px-3 border border-white/5 rounded-md text-[10px] font-black uppercase tracking-widest bg-white/[0.02] text-[#99aabb] hover:bg-white/[0.08] hover:border-white/15 hover:text-white hover:-translate-y-px transition-all cursor-pointer"
+                                                            onClick={() => handleDemote(user.id)}
+                                                        >
+                                                            Demote
+                                                        </button>
+                                                    )}
+                                                    <button
+                                                        className="py-1.5 px-3 border border-red-500/10 rounded-md text-[10px] font-black uppercase tracking-widest bg-white/[0.02] text-red-500/50 hover:bg-red-500/15 hover:border-red-500 hover:text-red-500 hover:-translate-y-px transition-all cursor-pointer"
+                                                        onClick={() => handleDelete(user.id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <div className="text-right pr-4">
+                                                    <span className="text-[#667788] text-[12px]">——</span>
+                                                </div>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
