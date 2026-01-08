@@ -66,7 +66,9 @@ public class SecurityConfig {
                                                 // Public Read access to data
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/matchs/next",
-                                                                "/api/matchs/search", "/api/matchs/{id:[0-9]+}",
+                                                                "/api/matchs/search",
+                                                                "/api/matchs/trending",
+                                                                "/api/matchs/{id:[0-9]+}",
                                                                 "/api/matchs/team/**")
                                                 .permitAll()
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,

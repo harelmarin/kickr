@@ -45,6 +45,7 @@ export const useLatestReviews = (limit = 10) => {
         queryKey: ['userMatches', 'latest', limit],
         queryFn: () => userMatchService.getLatest(limit),
         staleTime: 30 * 1000,
+        retry: false,
     });
 };
 
@@ -54,6 +55,7 @@ export const usePopularReviews = (limit = 10) => {
         queryKey: ['userMatches', 'popular', limit],
         queryFn: () => userMatchService.getPopular(limit),
         staleTime: 30 * 1000,
+        retry: false,
     });
 };
 

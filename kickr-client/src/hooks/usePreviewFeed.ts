@@ -16,5 +16,6 @@ export const useGlobalFeed = (limit = 20) => {
     queryKey: ['userMatches', 'latest', limit], // Consistent query key
     queryFn: () => import('../services/userMatchService').then(m => m.userMatchService.getLatest(limit)),
     staleTime: 60 * 1000,
+    retry: false,
   });
 };

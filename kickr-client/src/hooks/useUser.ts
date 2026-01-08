@@ -15,5 +15,6 @@ export const useUsers = () => {
         queryKey: ['users'],
         queryFn: userService.getAll,
         staleTime: 5 * 60 * 1000,
+        retry: false,
     });
 };

@@ -1,26 +1,36 @@
-import { useRef, useEffect } from 'react';
 import { LoginDropdown } from '../auth/authForm.tsx';
 import { UserMenu } from '../auth/UserMenu';
 import { useAuth } from '../../hooks/useAuth';
 import { useUIStore } from '../../hooks/useUIStore';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { SearchBar } from '../Search/SearchBar';
 import { NotificationBell } from './NotificationBell';
+import { useEffect, useRef } from 'react';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
   const { authModalMode, openAuthModal, closeAuthModal } = useUIStore();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Fermer le modal lors d'un changement de route
+  useEffect(() => {
+    closeAuthModal();
+  }, [location.pathname, closeAuthModal]);
+
+  // Fermer le dropdown lors d'un clic en dehors
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (authModalMode === 'login' && dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         closeAuthModal();
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [closeAuthModal]);
+
+    if (authModalMode === 'login') {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [authModalMode, closeAuthModal]);
 
   return (
     <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
@@ -50,7 +60,7 @@ export const Header = () => {
               <UserMenu />
             </div>
           ) : (
-            <div className="flex items-center gap-5 border-l border-white/10 pl-5" ref={containerRef}>
+            <div className="flex items-center gap-5 border-l border-white/10 pl-5 relative" ref={dropdownRef}>
               <button
                 className="text-[#99aabb] hover:text-white font-bold uppercase tracking-widest text-[10px] transition-colors"
                 onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
@@ -64,9 +74,9 @@ export const Header = () => {
                 Sign Up
               </Link>
 
-              {/* Dropdown */}
+              {/* Dropdown sous le bouton */}
               {authModalMode === 'login' && (
-                <div className="absolute top-full right-6 mt-3 z-50 w-80 animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-lg overflow-hidden">
+                <div className="absolute top-full right-0 mt-3 z-50 w-80 animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-xl overflow-hidden">
                   <LoginDropdown onSuccess={() => closeAuthModal()} />
                 </div>
               )}

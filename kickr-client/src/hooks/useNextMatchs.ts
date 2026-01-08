@@ -41,5 +41,6 @@ export const useTrendingMatches = (limit = 6) => {
     queryKey: ['matches', 'trending', limit],
     queryFn: () => matchService.getTrendingMatches(limit),
     staleTime: 60 * 1000,
+    retry: false, // Éviter les boucles infinies en cas d'erreur
   });
 };
