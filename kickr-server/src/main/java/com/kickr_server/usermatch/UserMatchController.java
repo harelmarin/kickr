@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,7 +97,7 @@ public class UserMatchController {
         @RateLimiter(name = "userMatchRateLimiter")
         @PostMapping
         public ApiResponseDto<UserMatchFullDto> saveUserMatch(
-                        @Parameter(description = "DTO de l'évaluation à créer", required = true) @RequestBody UserMatchDto dto) {
+                        @Parameter(description = "DTO de l'évaluation à créer", required = true) @Valid @RequestBody UserMatchDto dto) {
                 var entity = userMatchService.save(dto);
                 return ApiResponseDto.success("Évaluation créée", UserMatchFullDto.fromEntity(entity));
         }
@@ -111,7 +112,7 @@ public class UserMatchController {
         @PutMapping("/{id}")
         public ApiResponseDto<UserMatchFullDto> updateUserMatch(
                         @Parameter(description = "UUID de l'évaluation à mettre à jour", required = true) @PathVariable UUID id,
-                        @Parameter(description = "DTO contenant la note et le commentaire mis à jour", required = true) @RequestBody UserMatchUpdateDto dto) {
+                        @Parameter(description = "DTO contenant la note et le commentaire mis à jour", required = true) @Valid @RequestBody UserMatchUpdateDto dto) {
                 var entity = userMatchService.update(id, dto.getNote(), dto.getComment());
                 return ApiResponseDto.success("Évaluation mise à jour", UserMatchFullDto.fromEntity(entity));
         }

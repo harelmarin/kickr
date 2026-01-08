@@ -14,7 +14,8 @@ import java.util.Date;
 /**
  * Service pour la génération, validation et extraction des informations JWT.
  * <p>
- * La clé secrète est récupérée depuis une variable d'environnement nommée JWT_SECRET.
+ * La clé secrète est récupérée depuis une variable d'environnement nommée
+ * JWT_SECRET.
  * Algorithme utilisé : HS512.
  */
 @Service
@@ -39,7 +40,7 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 180)) //3h
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 minutes
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
@@ -62,7 +63,6 @@ public class JwtService {
             throw new JwtTokenException("Invalid token, please log in again");
         }
     }
-
 
     /**
      * Extrait l'email (username) depuis le token JWT.

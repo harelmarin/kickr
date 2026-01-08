@@ -1,6 +1,8 @@
 package com.kickr_server.usermatch;
 
+import com.kickr_server.dto.UserMatch.ReviewCommentCreateDto;
 import com.kickr_server.dto.UserMatch.ReviewCommentDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +28,8 @@ public class ReviewCommentController {
     public ReviewCommentDto addComment(
             @PathVariable UUID reviewId,
             @PathVariable UUID userId,
-            @RequestBody java.util.Map<String, String> body) {
-        String content = body.get("content");
-        return ReviewCommentDto.fromEntity(reviewCommentService.addComment(reviewId, userId, content));
+            @Valid @RequestBody ReviewCommentCreateDto dto) {
+        return ReviewCommentDto.fromEntity(reviewCommentService.addComment(reviewId, userId, dto.content()));
     }
 
     @DeleteMapping("/{id}")

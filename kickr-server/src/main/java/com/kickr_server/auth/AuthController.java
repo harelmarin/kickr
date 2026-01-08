@@ -31,7 +31,7 @@ public class AuthController {
     })
     @RateLimiter(name = "authRateLimiter")
     @PostMapping("/login")
-    public ApiResponseDto<AuthResponse> login(@RequestBody AuthRequest request) {
+    public ApiResponseDto<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
         AuthResponse authResponse = authService.authenticate(request);
         return ApiResponseDto.success("Connexion réussi", authResponse);
     }
@@ -52,7 +52,6 @@ public class AuthController {
         UserDto userDto = authService.register(user);
         return ApiResponseDto.success("Registration successful", userDto);
     }
-
 
     @Operation(summary = "Régénérer un access token à partir d’un refresh token")
     @ApiResponses(value = {

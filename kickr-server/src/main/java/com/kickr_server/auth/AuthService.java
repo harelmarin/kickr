@@ -83,13 +83,19 @@ public class AuthService {
      *         token et le refresh token
      */
     public RefreshTokenResponse refreshAccessToken(String refreshTokenStr) {
-        RefreshToken refreshToken = refreshTokenService.findByToken(refreshTokenStr)
+        RefreshToken oldRefreshToken = refreshTokenService.findByToken(refreshTokenStr)
                 .map(refreshTokenService::verifyExpiration)
                 .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
 
-        String newAccessToken = jwtService.generateToken(refreshToken.getUser().getEmail());
-        refreshTokenRepository.delete(refreshToken);
-        RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(refreshToken.getUser());
+        // Créer le nouveau refresh token AVANT de supprimer l'ancien (rotation
+        // sécurisée)
+        User user = oldRefreshToken.getUser();
+        String newAccessToken = jwtService.generateToken(user.getEmail());
+        RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user);
+
+        // Supprimer l'ancien refresh token seulement après la création du nouveau
+        refreshTokenRepository.delete(oldRefreshToken);
+
         return new RefreshTokenResponse(newAccessToken, newRefreshToken.getToken());
     }
 

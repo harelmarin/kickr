@@ -33,27 +33,28 @@ import java.util.Map;
  * et renvoie une réponse HTTP standardisée sous forme de JSON. Chaque réponse
  * contient :
  * <ul>
- *     <li>Le code HTTP correspondant</li>
- *     <li>Le type d'erreur (nom du statut)</li>
- *     <li>Un message explicite destiné à l'utilisateur</li>
- *     <li>Un timestamp de l'événement</li>
+ * <li>Le code HTTP correspondant</li>
+ * <li>Le type d'erreur (nom du statut)</li>
+ * <li>Un message explicite destiné à l'utilisateur</li>
+ * <li>Un timestamp de l'événement</li>
  * </ul>
  * </p>
  *
  * <p>
  * Les exceptions gérées incluent :
  * <ul>
- *     <li>Exceptions générales et inattendues</li>
- *     <li>Exceptions liées aux utilisateurs (création, existence, non trouvé)</li>
- *     <li>Exceptions liées à l'authentification et aux tokens</li>
- *     <li>Exceptions liées aux suivis (follow/unfollow)</li>
- *     <li>Exceptions liées aux matchs et évaluations de matchs</li>
- *     <li>Exceptions de validation des DTO avec @Valid</li>
+ * <li>Exceptions générales et inattendues</li>
+ * <li>Exceptions liées aux utilisateurs (création, existence, non trouvé)</li>
+ * <li>Exceptions liées à l'authentification et aux tokens</li>
+ * <li>Exceptions liées aux suivis (follow/unfollow)</li>
+ * <li>Exceptions liées aux matchs et évaluations de matchs</li>
+ * <li>Exceptions de validation des DTO avec @Valid</li>
  * </ul>
  * </p>
  *
  * <p>
  * Exemple de format JSON renvoyé pour une exception :
+ * 
  * <pre>
  * {
  *   "status": 404,
@@ -75,7 +76,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseDto<Void>> handleGeneralException(Exception ex) {
-        return buildError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        // Logger l'exception complète pour le debugging (avec stack trace)
+        org.slf4j.LoggerFactory.getLogger(GlobalExceptionHandler.class)
+                .error("Unexpected error occurred", ex);
+
+        // Retourner un message générique à l'utilisateur (ne pas exposer les détails
+        // techniques)
+        return buildError(HttpStatus.INTERNAL_SERVER_ERROR,
+                "An unexpected error occurred. Please try again later.");
     }
 
     @ExceptionHandler(UserAlreadyExistException.class)
@@ -146,7 +154,6 @@ public class GlobalExceptionHandler {
         return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
-
     // ---------------------- ERROR 429 RATE LIMIT----------------------
 
     @ExceptionHandler(RequestNotPermitted.class)
@@ -161,10 +168,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleValidationException(MethodArgumentNotValidException ex) {
         StringBuilder sb = new StringBuilder();
-        ex.getBindingResult().getFieldErrors().forEach(fe ->
-                sb.append(fe.getField()).append(": ").append(fe.getDefaultMessage()).append("; ")
-        );
+        ex.getBindingResult().getFieldErrors()
+                .forEach(fe -> sb.append(fe.getField()).append(": ").append(fe.getDefaultMessage()).append("; "));
         return buildError(HttpStatus.BAD_REQUEST, sb.toString());
     }
 }
-

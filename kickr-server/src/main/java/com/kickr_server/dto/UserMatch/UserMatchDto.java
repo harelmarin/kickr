@@ -1,6 +1,7 @@
 package com.kickr_server.dto.UserMatch;
 
 import com.kickr_server.usermatch.UserMatch;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,10 +23,20 @@ import java.util.UUID;
 public class UserMatchDto {
 
     public UUID id;
+
+    @NotNull(message = "User ID is required")
     public UUID userId;
+
+    @NotNull(message = "Match ID is required")
     public UUID matchId;
+
+    @Min(value = 0, message = "Note must be at least 0")
+    @Max(value = 10, message = "Note must be at most 10")
     public double note;
+
+    @Size(max = 1000, message = "Comment must not exceed 1000 characters")
     public String comment;
+
     public boolean isLiked;
     public int likesCount;
     public LocalDateTime watchedAt;

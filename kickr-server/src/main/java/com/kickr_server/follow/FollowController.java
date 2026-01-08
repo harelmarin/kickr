@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class FollowController {
         })
         @RateLimiter(name = "followRateLimiter")
         @PostMapping("/follow")
-        public FollowResponseDto follow(@RequestBody FollowRequestDto request) {
+        public FollowResponseDto follow(@Valid @RequestBody FollowRequestDto request) {
                 followService.follow(request.followerId(), request.followedId());
                 return FollowResponseDto.success(request.followerId(), request.followedId(), true);
         }
@@ -40,7 +41,7 @@ public class FollowController {
         })
         @RateLimiter(name = "followRateLimiter")
         @PostMapping("/unfollow")
-        public FollowResponseDto unfollow(@RequestBody FollowRequestDto request) {
+        public FollowResponseDto unfollow(@Valid @RequestBody FollowRequestDto request) {
                 followService.unfollow(request.followerId(), request.followedId());
                 return FollowResponseDto.success(request.followerId(), request.followedId(), false);
         }
