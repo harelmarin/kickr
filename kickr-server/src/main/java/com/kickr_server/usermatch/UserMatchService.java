@@ -240,4 +240,20 @@ public class UserMatchService {
         }
         userMatchRepository.deleteById(id);
     }
+
+    /**
+     * Modère une évaluation en remplaçant son commentaire et en activant le flag
+     * isModerated.
+     *
+     * @param id l'UUID de l'évaluation à modérer
+     */
+    public UserMatch moderate(UUID id) {
+        UserMatch existing = userMatchRepository.findById(id)
+                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation not found"));
+
+        existing.setModerated(true);
+        existing.setComment("[Comment excluded by an administrator]");
+
+        return userMatchRepository.save(existing);
+    }
 }

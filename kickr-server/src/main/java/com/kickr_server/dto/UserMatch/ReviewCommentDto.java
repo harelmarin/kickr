@@ -10,7 +10,8 @@ public record ReviewCommentDto(
         UUID userId,
         String userName,
         String content,
-        LocalDateTime createdAt) {
+        LocalDateTime createdAt,
+        boolean isModerated) {
     public static ReviewCommentDto fromEntity(ReviewComment entity) {
         return new ReviewCommentDto(
                 entity.getId(),
@@ -18,6 +19,7 @@ public record ReviewCommentDto(
                 entity.getUser().getId(),
                 entity.getUser().getName(),
                 entity.getContent(),
-                entity.getCreatedAt());
+                entity.getCreatedAt(),
+                entity.isModerated());
     }
 }

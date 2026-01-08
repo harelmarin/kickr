@@ -1,0 +1,1 @@
+ALTER TABLE review_comments ADD COLUMN is_moderated BOOLEAN DEFAULT FALSE NOT NULL;

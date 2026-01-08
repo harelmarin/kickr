@@ -6,6 +6,7 @@ import { useReviewComments, useAddReviewComment } from '../hooks/useReviewCommen
 import { useAuth } from '../hooks/useAuth';
 import { useUpdateUserMatch } from '../hooks/useUserMatch';
 import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
+import { adminService } from '../services/adminService';
 import toast from 'react-hot-toast';
 
 export const ReviewDetailPage: FC = () => {
@@ -121,7 +122,7 @@ export const ReviewDetailPage: FC = () => {
                                     </p>
                                 </div>
                                 <Link
-                                    to={`/user/${review.user.id}/matches`}
+                                    to={`/user/${review.user.id}/diary`}
                                     className="text-[10px] font-black text-[#445566] uppercase tracking-[0.2em] hover:text-white transition-colors border border-white/10 px-4 py-2 rounded-lg"
                                 >
                                     View Diary →
@@ -170,9 +171,32 @@ export const ReviewDetailPage: FC = () => {
                                     </div>
                                 </div>
 
+                                {currentUser?.role === 'ADMIN' && (
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Moderation</span>
+                                        {!review.isModerated && (
+                                            <button
+                                                onClick={async () => {
+                                                    if (window.confirm('Moderate this review?')) {
+                                                        try {
+                                                            await adminService.moderateReview(review.id);
+                                                            toast.success('Review moderated');
+                                                            window.location.reload();
+                                                        } catch (e) {
+                                                            toast.error('Failed to moderate');
+                                                        }
+                                                    }
+                                                }}
+                                                className="text-[10px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
+                                            >
+                                                Moderate Review
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="text-[#99aabb] text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 border-kickr/20 pl-8 py-2 mb-8 bg-white/[0.02] rounded-r-xl">
+                            <div className={`${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'} text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 pl-8 py-2 mb-8 bg-white/[0.02] rounded-r-xl`}>
                                 "{review.comment || "No comment provided."}"
                             </div>
 
@@ -195,7 +219,7 @@ export const ReviewDetailPage: FC = () => {
                                     <div className="text-[#445566] text-xs">Loading comments...</div>
                                 ) : comments && comments.length > 0 ? (
                                     comments.map(comment => (
-                                        <div key={comment.id} className="flex gap-4 group">
+                                        <div key={comment.id} className={`flex gap-4 group ${comment.isModerated ? 'opacity-50' : ''}`}>
                                             <Link
                                                 to={`/user/${comment.userId}`}
                                                 className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase hover:border-kickr/50 hover:scale-110 transition-all shadow-lg flex-shrink-0"
@@ -203,18 +227,39 @@ export const ReviewDetailPage: FC = () => {
                                                 {comment.userName[0].toUpperCase()}
                                             </Link>
                                             <div className="flex-1 min-w-0">
-                                                <div className="flex items-center gap-2 mb-1">
-                                                    <Link
-                                                        to={`/user/${comment.userId}`}
-                                                        className="text-white text-xs font-black hover:text-kickr transition-colors"
-                                                    >
-                                                        {comment.userName}
-                                                    </Link>
-                                                    <span className="text-[#445566] text-[10px] uppercase tracking-widest">
-                                                        {new Date(comment.createdAt).toLocaleDateString()}
-                                                    </span>
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <Link
+                                                            to={`/user/${comment.userId}`}
+                                                            className="text-white text-xs font-black hover:text-kickr transition-colors"
+                                                        >
+                                                            {comment.userName}
+                                                        </Link>
+                                                        <span className="text-[#445566] text-[10px] uppercase tracking-widest">
+                                                            {new Date(comment.createdAt).toLocaleDateString()}
+                                                        </span>
+                                                    </div>
+
+                                                    {currentUser?.role === 'ADMIN' && !comment.isModerated && (
+                                                        <button
+                                                            onClick={async () => {
+                                                                if (window.confirm('Moderate this comment?')) {
+                                                                    try {
+                                                                        await adminService.moderateComment(comment.id);
+                                                                        toast.success('Comment moderated');
+                                                                        window.location.reload();
+                                                                    } catch (e) {
+                                                                        toast.error('Failed to moderate');
+                                                                    }
+                                                                }
+                                                            }}
+                                                            className="text-[9px] font-black text-[#ff4444]/40 hover:text-[#ff4444] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all"
+                                                        >
+                                                            Moderate
+                                                        </button>
+                                                    )}
                                                 </div>
-                                                <p className="text-[#99aabb] text-sm leading-relaxed truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:text-white transition-colors">
+                                                <p className={`text-[#99aabb] text-sm leading-relaxed truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:text-white transition-colors ${comment.isModerated ? 'italic text-[#ff4444]/60' : ''}`}>
                                                     {comment.content}
                                                 </p>
                                             </div>

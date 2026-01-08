@@ -1,5 +1,6 @@
 package com.kickr_server.auth.jwt;
 
+import com.kickr_server.auth.CustomUserDetailsService;
 import com.kickr_server.exception.auth.JwtTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Filtre JWT exécuté une fois par requête HTTP.
@@ -39,6 +40,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final CustomUserDetailsService userDetailsService;
 
     /**
      * Intercepte chaque requête HTTP pour vérifier le JWT.
@@ -61,9 +63,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 jwtService.validateToken(token);
                 String email = jwtService.extractUsername(token);
 
+                // Charger les détails de l'utilisateur avec ses rôles
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        email, null, List.of() // rôles si nécessaire
-                );
+                        userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             } catch (JwtTokenException e) {

@@ -32,6 +32,9 @@ export const UserMenu: FC = () => {
 
                 <div className="py-1">
                     <MenuLink to={`/user/${user.id}`} label="Profile" />
+                    {user.role === 'ADMIN' && (
+                        <MenuLink to="/admin" label="Admin Panel" />
+                    )}
                     <MenuLink to="/settings" label="Settings" />
                 </div>
 

@@ -35,6 +35,10 @@ public class ReviewComment {
     @Column(nullable = false, length = 1000)
     private String content;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isModerated = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

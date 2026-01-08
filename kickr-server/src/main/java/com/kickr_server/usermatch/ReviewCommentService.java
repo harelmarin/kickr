@@ -58,4 +58,13 @@ public class ReviewCommentService {
     public void deleteComment(UUID commentId) {
         reviewCommentRepository.deleteById(commentId);
     }
+
+    @Transactional
+    public ReviewComment moderate(UUID commentId) {
+        ReviewComment comment = reviewCommentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        comment.setModerated(true);
+        comment.setContent("[Comment excluded by an administrator]");
+        return reviewCommentRepository.save(comment);
+    }
 }

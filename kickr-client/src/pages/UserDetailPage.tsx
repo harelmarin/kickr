@@ -41,7 +41,7 @@ export const UserDetailPage = () => {
                 {/* Profile Header */}
                 <header className="mb-16">
                     <div className="flex items-start justify-between mb-8">
-                        <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-10">
                             {/* Avatar */}
                             <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-3xl font-black text-kickr">
                                 {user.name[0].toUpperCase()}
@@ -177,7 +177,7 @@ export const UserDetailPage = () => {
                                         )}
                                     </div>
                                     {following && following.length > 0 ? (
-                                        <div className="grid grid-cols-12 gap-2">
+                                        <div className="grid grid-cols-12 gap-3">
                                             {following.slice(0, 24).map((f) => (
                                                 <Link
                                                     key={f.id}
@@ -208,7 +208,7 @@ export const UserDetailPage = () => {
                                         )}
                                     </div>
                                     {followers && followers.length > 0 ? (
-                                        <div className="grid grid-cols-12 gap-2">
+                                        <div className="grid grid-cols-12 gap-3">
                                             {followers.slice(0, 24).map((f) => (
                                                 <Link
                                                     key={f.id}

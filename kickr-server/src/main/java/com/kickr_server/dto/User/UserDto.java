@@ -1,5 +1,6 @@
 package com.kickr_server.dto.User;
 
+import com.kickr_server.user.Role;
 import com.kickr_server.user.User;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public record UserDto(
         UUID id,
         String name,
         String email,
+        Role role,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         long followersCount,
@@ -28,6 +30,7 @@ public record UserDto(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
+                user.getRole(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 0L, 0L, 0L);
@@ -38,6 +41,7 @@ public record UserDto(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
+                user.getRole(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 followers,

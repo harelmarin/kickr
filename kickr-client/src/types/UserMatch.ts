@@ -25,4 +25,5 @@ export interface UserMatch {
   isLiked: boolean;
   likesCount: number;
   watchedAt: string;
+  isModerated?: boolean;
 }

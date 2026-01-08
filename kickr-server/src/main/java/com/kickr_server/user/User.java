@@ -87,6 +87,14 @@ public class User {
     private LocalDateTime updatedAt;
 
     /**
+     * Rôle de l'utilisateur dans l'application.
+     * Par défaut, un nouvel utilisateur a le rôle USER.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
+
+    /**
      * Callback JPA appelé avant l'insertion.
      * Initialise {@link #createdAt} et {@link #updatedAt} à l'instant actuel.
      */

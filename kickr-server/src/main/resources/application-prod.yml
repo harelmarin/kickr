@@ -1,10 +1,10 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
+  # Force HTTPS in production
+  ssl:
+    enabled: false  # Set to true when you have SSL certificates
 
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
-  
   application:
     name: kickr-server
 
@@ -14,19 +14,27 @@ spring:
       max-request-size: 10MB
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/kickr_db
-    username: kickr_user
-    password: kickr_password
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
 
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false  # Disable SQL logging in production
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
 
   flyway:
     enabled: true
@@ -34,10 +42,10 @@ spring:
     locations: classpath:db/migration
 
 jwt:
-  secret: ${JWT_SECRET:default_jwt_secret_must_be_changed_in_production_1234567890}
+  secret: ${JWT_SECRET}  # MUST be set in environment variables
 football:
   api:
-    key: ${FOOTBALL_API_KEY:none}
+    key: ${FOOTBALL_API_KEY}
 
 
 logging:
@@ -45,26 +53,29 @@ logging:
     root: INFO
     com.kickr_server: INFO
     org.hibernate.SQL: WARN
+    org.springframework.security: WARN
+  file:
+    name: /var/log/kickr/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
 springdoc:
   api-docs:
-    path: /v3/api-docs
+    enabled: false  # Disable Swagger in production for security
   swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
+    enabled: false
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics  # Limited endpoints in production
   endpoint:
     health:
-      show-details: when_authorized
+      show-details: when_authorized  # Only show details to authenticated users
     metrics:
       enabled: true
-
-
 
 resilience4j:
   ratelimiter:
@@ -89,7 +100,3 @@ resilience4j:
         limitForPeriod: 5
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
-
-
-
-

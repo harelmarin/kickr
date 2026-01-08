@@ -2,9 +2,6 @@ server:
   port: 8080
 
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
-  
   application:
     name: kickr-server
 
@@ -43,8 +40,14 @@ football:
 logging:
   level:
     root: INFO
-    com.kickr_server: INFO
-    org.hibernate.SQL: WARN
+    com.kickr_server: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.security: DEBUG
+    # Désactiver les logs verbeux de RMI/JMX
+    sun.rmi: WARN
+    javax.management: WARN
+    sun.rmi.transport: WARN
+    sun.rmi.loader: WARN
 
 springdoc:
   api-docs:
@@ -57,39 +60,33 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,env
   endpoint:
     health:
-      show-details: when_authorized
+      show-details: always
     metrics:
       enabled: true
-
-
 
 resilience4j:
   ratelimiter:
     instances:
       authRateLimiter:
-        limitForPeriod: 5
-        limitRefreshPeriod: 30s
+        limitForPeriod: 100
+        limitRefreshPeriod: 10s
         timeoutDuration: 1s
       feedRateLimiter:
-        limitForPeriod: 20
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 200ms
       userRateLimiter:
-        limitForPeriod: 10
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
       userMatchRateLimiter:
-        limitForPeriod: 10
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
       followRateLimiter:
-        limitForPeriod: 5
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
-
-
-
-

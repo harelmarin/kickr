@@ -5,4 +5,5 @@ export interface ReviewComment {
     userName: string;
     content: string;
     createdAt: string;
+    isModerated: boolean;
 }

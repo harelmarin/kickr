@@ -99,6 +99,13 @@ public class UserMatch {
     private LocalDateTime watchedAt;
 
     /**
+     * Indique si cette review a été modérée par un administrateur.
+     */
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean isModerated = false;
+
+    /**
      * Callback exécuté automatiquement avant l’insertion en base.
      * Définit {@code watchedAt} à la date et l’heure actuelles si elle est absente.
      */

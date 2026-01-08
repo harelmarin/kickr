@@ -40,6 +40,7 @@ public class UserMatchDto {
     public boolean isLiked;
     public int likesCount;
     public LocalDateTime watchedAt;
+    public boolean isModerated;
 
     /**
      * Crée un DTO à partir d'une entité {@link UserMatch}.
@@ -57,6 +58,7 @@ public class UserMatchDto {
                 .isLiked(entity.isLiked())
                 .likesCount(entity.getLikesCount())
                 .watchedAt(entity.getWatchedAt())
+                .isModerated(entity.isModerated())
                 .build();
     }
 }
