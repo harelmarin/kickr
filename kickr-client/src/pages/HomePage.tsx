@@ -8,6 +8,7 @@ import { ReviewCard } from '../components/Review/ReviewCard';
 import { ReviewCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { motion } from 'framer-motion';
 import { useTrendingMatches } from '../hooks/useNextMatchs';
+import { useCompetitions } from '../hooks/useCompetitions';
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ export default function HomePage() {
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
   const { data: communityScouts } = useUsers();
   const { data: trendingMatches, isLoading: isTrendingLoading } = useTrendingMatches(6);
+  const { data: competitions } = useCompetitions();
 
   const activeFeed = user ? followingReviews : (globalFeed || latestReviews);
   const isLoadingFeed = user ? isFollowingLoading : (isGlobalLoading || isLatestLoading);
@@ -36,66 +38,72 @@ export default function HomePage() {
       {/* Cinematic Hero */}
       <section className="relative h-[650px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-transparent to-[#14181c]/40"></div>
-          <div className="absolute inset-0 bg-[#000] opacity-40"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-transparent to-[#0a0b0d]/40"></div>
+          <div className="absolute inset-0 bg-[#000] opacity-30"></div>
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
             alt="Stadium"
-            className="w-full h-full object-cover grayscale opacity-50"
+            className="w-full h-full object-cover grayscale opacity-40 blur-[2px]"
           />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
-          <motion.h1
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font"
-          >
-            Track football. <br />
-            <span className="text-kickr">Rate matchdays.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl text-[#99aabb] mb-12 font-medium max-w-3xl mx-auto leading-relaxed"
-          >
-            {user
-              ? "The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life."
-              : "Discover tactical reviews from our global network, follow your friends, and log your favorite matchdays. Join the pitch."}
-          </motion.p>
-          <div className="flex items-center justify-center gap-6">
-            {!user ? (
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4"
-              >
+          {/* Hero Text Content */}
+          <div className="flex-1 text-center">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-kickr/10 border border-kickr/20 mb-6"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-kickr opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-kickr"></span>
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-kickr">The Tactical Network</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font"
+            >
+              Track football. <br />
+              <span className="text-kickr">Rate matchdays.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl text-[#99aabb] mb-12 font-medium max-w-2xl mx-auto leading-relaxed"
+            >
+              {user
+                ? "The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life."
+                : "Discover tactical reviews from our global network, follow your friends, and log your favorite matchdays. Join the pitch."}
+            </motion.p>
+
+            <div className="flex items-center justify-center gap-6">
+              {!user ? (
                 <Link to="/register" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all shadow-xl shadow-kickr/20 hover:scale-[1.02]">
                   Join the Pitch — It's Free
                 </Link>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="bg-black/40 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-2"
-              >
-                <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px]">
-                  Welcome back,
-                </span>
+              ) : (
                 <Link
                   to={`/user/${user.id}`}
-                  className="text-kickr font-black uppercase tracking-widest text-[11px] hover:text-white transition-colors underline decoration-kickr/30 underline-offset-4"
+                  className="bg-black/60 backdrop-blur-md px-8 py-4 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-3 group/welcome hover:border-kickr/40 transition-all"
                 >
-                  {user.name}
+                  <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px] group-hover:text-white transition-colors">
+                    Dashboard for <span className="text-kickr font-black">{user.name}</span>
+                  </span>
+                  <span className="text-kickr group-hover:translate-x-1 transition-transform">→</span>
                 </Link>
-              </motion.div>
-            )}
+              )}
+            </div>
           </div>
+
+          {/* Featured match removed */}
         </div>
       </section>
 
@@ -133,7 +141,7 @@ export default function HomePage() {
                   <p className="text-[#445566] text-xs font-bold uppercase tracking-widest mb-4">
                     {user ? "No reviews from your network yet" : "No reviews yet. Be the first to share your thoughts!"}
                   </p>
-                  <Link to="/matches" className="text-kickr text-[10px] font-black uppercase tracking-widest hover:underline">
+                  <Link to={user ? "/community" : "/matches"} className="text-kickr text-[10px] font-black uppercase tracking-widest hover:underline">
                     {user ? "Find users to follow" : "Log a match now"}
                   </Link>
                 </div>
@@ -329,11 +337,15 @@ export default function HomePage() {
             <section>
               <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Trending Leagues</h3>
               <div className="flex flex-col gap-5">
-                <LeagueItem name="Premier League" />
-                <LeagueItem name="La Liga" />
-                <LeagueItem name="Champions League" />
-                <LeagueItem name="Ligue 1" />
-                <LeagueItem name="Serie A" />
+                {competitions ? (
+                  competitions.slice(0, 6).map(c => (
+                    <LeagueItem key={c.id} name={c.name} id={c.id} />
+                  ))
+                ) : (
+                  [1, 2, 3, 4, 5].map(i => (
+                    <div key={i} className="h-8 bg-white/5 rounded-lg animate-pulse"></div>
+                  ))
+                )}
               </div>
             </section>
           </div>
@@ -343,8 +355,8 @@ export default function HomePage() {
   );
 }
 
-const LeagueItem = ({ name }: { name: string }) => (
-  <Link to="/competitions" className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2 hover:border-kickr/30 transition-all">
+const LeagueItem = ({ name, id }: { name: string, id?: string }) => (
+  <Link to={id ? `/competitions/${id}` : "/competitions"} className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2 hover:border-kickr/30 transition-all">
     <span className="text-xs font-bold text-[#99aabb] group-hover:text-kickr transition-colors">{name}</span>
     <span className="text-[#445566] transition-transform group-hover:translate-x-1 group-hover:text-kickr">→</span>
   </Link>

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { useTeam } from '../hooks/useTeams';
 import { useMatchesByTeam } from '../hooks/useNextMatchs';
-import { MatchPoster } from '../components/Matchs/MatchPoster';
+import { MatchCard } from '../components/Matchs/MatchCard';
 
 export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -196,7 +196,7 @@ export const TeamDetailPage = () => {
                   </div>
                 ) : (
                   filteredAndSortedMatches.map(match => (
-                    <MatchPoster key={match.id} match={match} />
+                    <MatchCard key={match.id} match={match} variant="poster" />
                   ))
                 )}
               </div>
@@ -253,7 +253,7 @@ export const TeamDetailPage = () => {
                   <span className="text-xl font-black text-white italic">{stats.cleanSheets}</span>
                 </div>
                 <p className="text-[11px] text-[#5c6470] italic leading-relaxed">
-                  Basé sur {matches?.filter(m => m.homeScore !== null).length || 0} matchs réels en base de données.
+                  Based on {matches?.filter(m => m.homeScore !== null).length || 0} real matches in the database.
                 </p>
               </div>
             </section>

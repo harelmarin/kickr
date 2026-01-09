@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   },
 });
 
-// Variable pour éviter les boucles infinies lors du refresh
+// Variable to avoid infinite loops during token refresh
 let isRefreshing = false;
 let failedQueue: Array<{
   resolve: (value?: unknown) => void;
@@ -29,7 +29,7 @@ const processQueue = (error: Error | null = null) => {
   failedQueue = [];
 };
 
-// Intercepteur de requête - Ajoute automatiquement le token JWT
+// Request interceptor - Automatically adds JWT token
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('accessToken');
@@ -45,7 +45,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Intercepteur de réponse - Gère le refresh automatique du token
+// Response interceptor - Handles automatic token refresh
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;

@@ -9,7 +9,7 @@ interface SuccessModalProps {
 }
 
 /**
- * Modal de succès pour afficher les confirmations importantes
+ * Success modal to display important confirmations
  */
 export const SuccessModal: FC<SuccessModalProps> = ({
     isOpen,
@@ -29,7 +29,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({
                 className="bg-primary p-8 rounded-2xl shadow-2xl w-96 relative border border-green-500/30 animate-scale-in"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Icon de succès */}
+                {/* Success Icon */}
                 <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-500">
                     <span className="text-3xl text-green-500">{icon}</span>
                 </div>
@@ -52,7 +52,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({
                     Compris !
                 </button>
 
-                {/* Bouton X en haut à droite */}
+                {/* Close Button */}
                 <button
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     onClick={onClose}

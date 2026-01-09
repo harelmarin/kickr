@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 /**
- * Composant pour protéger les routes qui nécessitent une authentification
+ * Component to protect routes that require authentication
  */
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
     const { isAuthenticated, checkAuth } = useAuth();

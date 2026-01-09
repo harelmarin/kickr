@@ -14,9 +14,9 @@ export const fetchPreviewFeed = async (
       },
     );
 
-    // Ton backend renvoie déjà un tableau
+    // Backend already returns an array
     if (!Array.isArray(response.data)) {
-      console.error('Réponse inattendue du backend :', response.data);
+      console.error('Unexpected response from backend:', response.data);
       return [];
     }
 

@@ -45,7 +45,7 @@ export const matchService = {
     const content = response.data?.content;
 
     if (!content || !Array.isArray(content)) {
-      console.error('API ne renvoie pas de content valide', response.data);
+      console.error('API did not return valid content', response.data);
       return {
         content: [],
         totalPages: 0,
@@ -97,19 +97,19 @@ export const matchService = {
   getTrendingMatches: async (limit = 6): Promise<Match[]> => {
     try {
       const response = await axiosInstance.get('/matchs/trending', {
-        params: { limit: limit * 2 }, // Demander plus pour filtrer
+        params: { limit: limit * 2 }, // Request more to allow filtering
       });
       const content = response.data?.content;
       if (!content || !Array.isArray(content)) {
         return [];
       }
-      // Filtrer uniquement les matchs avec au moins une note et limiter
+      // Filter only matches with at least one rating and limit
       return content
         .map(mapApiResponseToMatch)
         .filter(match => match.reviewsCount && match.reviewsCount > 0)
         .slice(0, limit);
     } catch (err) {
-      console.error('Erreur lors de la récupération des matchs trending:', err);
+      console.error('Error fetching trending matches:', err);
       return [];
     }
   },
@@ -122,7 +122,7 @@ export const matchService = {
       }
       return response.data.map(mapApiResponseToMatch);
     } catch (err) {
-      console.error(`Erreur lors de la récupération des matchs de l'équipe ${teamId} :`, err);
+      console.error(`Error fetching matches for team ${teamId}:`, err);
       return [];
     }
   },
@@ -135,7 +135,7 @@ export const matchService = {
       if (!m) return null;
       return mapApiResponseToMatch(m);
     } catch (err) {
-      console.error(`Erreur lors de la récupération du match ${id} :`, err);
+      console.error(`Error fetching match ${id}:`, err);
       return null;
     }
   },
@@ -145,7 +145,7 @@ export const matchService = {
       const response = await axiosInstance.get(`/matchs/rounds/${competitionId}`);
       return response.data || [];
     } catch (err) {
-      console.error(`Erreur lors de la récupération des rounds :`, err);
+      console.error(`Error fetching rounds:`, err);
       return [];
     }
   },

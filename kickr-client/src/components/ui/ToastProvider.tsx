@@ -7,7 +7,7 @@ interface ToastProviderProps {
 
 /**
  * Provider pour les notifications toast
- * À placer au niveau racine de l'application
+ * Place at the root level of the application
  */
 export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
     return (

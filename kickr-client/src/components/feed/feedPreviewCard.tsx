@@ -1,6 +1,5 @@
 import React from 'react';
-import { usePreviewFeed } from '@/hooks/usePreviewFeed';
-import { UserMatch } from '@/types/UserMatch';
+import { usePreviewFeed } from '../../hooks/usePreviewFeed';
 
 interface FeedPreviewCardProps {
   userId: string;
@@ -11,13 +10,13 @@ interface FeedPreviewCardProps {
 export const FeedPreviewCard: React.FC<FeedPreviewCardProps> = ({ userId, page = 0, limit = 9 }) => {
   const { data: matches, status, error } = usePreviewFeed(userId, page, limit);
 
-  if (status === 'pending') return <div>Chargement...</div>;
-  if (status === 'error') return <div>Erreur : {error?.message}</div>;
+  if (status === 'pending') return <div>Loading...</div>;
+  if (status === 'error') return <div>Error: {error?.message}</div>;
 
   return (
     <div className="feed-preview">
       {matches && matches.length > 0 ? (
-        matches.map((m: UserMatch) => (
+        matches.map((m: any) => (
           <div key={m.id} className="match-card">
             <div className="teams">
               <img src={m.match.homeLogo} alt={m.match.homeTeam} width={50} />
@@ -30,16 +29,16 @@ export const FeedPreviewCard: React.FC<FeedPreviewCardProps> = ({ userId, page =
               {m.match.homeScore} - {m.match.awayScore}
             </div>
             <div className="note-comment">
-              <p>Note : {m.note}</p>
-              <p>Commentaire : {m.comment}</p>
+              <p>Rating: {m.note}</p>
+              <p>Comment: {m.comment}</p>
             </div>
             <div className="date">
-              Vu le : {new Date(m.watchedAt).toLocaleString()}
+              Watched on: {new Date(m.watchedAt).toLocaleString('en-US')}
             </div>
           </div>
         ))
       ) : (
-        <div>Aucun match à afficher</div>
+        <div>No matches to display</div>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNextMatchs } from '../../hooks/useNextMatchs';
-import { MatchPoster } from './MatchPoster';
+import { MatchCard } from './MatchCard';
 
 export function NextMatchesHomePage() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,7 +29,7 @@ export function NextMatchesHomePage() {
       {/* High-density Horizontal Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
         {matches.map((match) => (
-          <MatchPoster key={match.id} match={match} />
+          <MatchCard key={match.id} match={match} variant="poster" />
         ))}
       </div>
 

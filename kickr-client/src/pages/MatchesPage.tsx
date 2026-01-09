@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSearchMatches } from '../hooks/useNextMatchs';
 import { useCompetitions } from '../hooks/useCompetitions';
-import { MatchPoster } from '../components/Matchs/MatchPoster';
-import { MatchPosterSkeleton } from '../components/ui/LoadingSkeletons';
+import { MatchCard } from '../components/Matchs/MatchCard';
+import { MatchCardPosterSkeleton } from '../components/ui/LoadingSkeletons';
 import { motion, AnimatePresence } from 'framer-motion';
+import { EmptyState } from '../components/ui/EmptyState';
 
 export const MatchesPage = () => {
   const [page, setPage] = useState(0);
@@ -150,7 +151,7 @@ export const MatchesPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
           {isLoading ? (
             Array.from({ length: 9 }).map((_, i) => (
-              <MatchPosterSkeleton key={i} />
+              <MatchCardPosterSkeleton key={i} />
             ))
           ) : (
             <AnimatePresence mode="popLayout">
@@ -162,7 +163,7 @@ export const MatchesPage = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3, delay: index * 0.03 }}
                 >
-                  <MatchPoster match={match} />
+                  <MatchCard match={match} variant="poster" />
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -171,20 +172,13 @@ export const MatchesPage = () => {
 
         {/* Empty State */}
         {!isLoading && data?.content.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="py-32 text-center"
-          >
-            <div className="text-4xl mb-6 opacity-20">🏟️</div>
-            <p className="text-[#445566] uppercase tracking-[0.3em] text-[10px] font-black">No tactical data found for these filters.</p>
-            <button
-              onClick={() => { setSearchQuery(''); setCompetitionId(undefined); setStatus('all'); }}
-              className="mt-6 text-kickr text-[9px] font-black uppercase tracking-widest hover:underline"
-            >
-              Reset Filters
-            </button>
-          </motion.div>
+          <EmptyState
+            icon="🏟️"
+            title="No tactical data found"
+            description="The stadium feed is clear for these filters. Try adjusting your parameters to find other fixtures."
+            actionLabel="Reset Filters"
+            onAction={() => { setSearchQuery(''); setCompetitionId(undefined); setStatus('all'); }}
+          />
         )}
 
         {/* Pagination Controls */}

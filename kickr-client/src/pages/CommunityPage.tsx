@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserCardSkeleton } from '../components/ui/LoadingSkeletons';
+import { EmptyState } from '../components/ui/EmptyState';
 
 export const CommunityPage = () => {
     const { data: users, isLoading } = useUsers();
@@ -47,9 +48,22 @@ export const CommunityPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="min-h-screen bg-[#0a0b0d] py-20"
+            className="min-h-screen bg-[#0a0b0d] text-[#99aabb]"
         >
-            <div className="max-w-7xl mx-auto px-6">
+            {/* Cinematic Backdrop */}
+            <div className="relative h-[500px] w-full overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/70 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-[#14181c] opacity-50">
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
+                </div>
+                {/* Network Glow Effect */}
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-kickr/20 blur-[120px] rounded-full animate-pulse"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-kickr/10 blur-[100px] rounded-full delay-1000 animate-pulse"></div>
+                </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 -mt-[400px] relative z-20 pb-20">
 
                 <header className="mb-16">
                     <motion.div
@@ -154,20 +168,13 @@ export const CommunityPage = () => {
                     </div>
 
                     {!isLoading && filteredUsers.length === 0 && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="py-32 text-center"
-                        >
-                            <div className="text-4xl mb-6 opacity-20">👤</div>
-                            <p className="text-[#445566] uppercase tracking-[0.3em] text-[10px] font-black">No tactician matches this signature.</p>
-                            <button
-                                onClick={() => setSearchQuery('')}
-                                className="mt-6 text-kickr text-[9px] font-black uppercase tracking-widest hover:underline"
-                            >
-                                Reset Surveillance
-                            </button>
-                        </motion.div>
+                        <EmptyState
+                            icon="👤"
+                            title="No tacticians identified"
+                            description="No records match this signature. Try resetting your surveillance parameters."
+                            actionLabel="Reset Surveillance"
+                            onAction={() => setSearchQuery('')}
+                        />
                     )}
                 </section>
             </div>

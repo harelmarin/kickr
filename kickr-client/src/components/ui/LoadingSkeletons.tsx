@@ -1,7 +1,7 @@
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export const MatchPosterSkeleton = () => (
+export const MatchCardPosterSkeleton = () => (
     <div className="flex flex-col gap-3">
         <div className="aspect-[2.5/1] rounded-xl overflow-hidden shadow-2xl">
             <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
@@ -9,6 +9,31 @@ export const MatchPosterSkeleton = () => (
         <div className="flex justify-between items-center px-1 mt-1">
             <Skeleton width={80} height={10} baseColor="#1b2228" highlightColor="#252a31" />
             <Skeleton width={40} height={10} baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+    </div>
+);
+
+export const MatchCardSkeleton = () => (
+    <div className="flex items-center gap-4 p-4 bg-[#14181c] border border-white/5 rounded-xl">
+        <div className="flex flex-col gap-1 w-[65px]">
+            <Skeleton width={40} height={12} baseColor="#1b2228" highlightColor="#252a31" />
+            <Skeleton width={30} height={8} baseColor="#1b2228" highlightColor="#252a31" />
+        </div>
+        <div className="flex-1 flex items-center justify-center gap-4">
+            <div className="flex items-center gap-2 flex-1 justify-end">
+                <Skeleton width={60} height={10} baseColor="#1b2228" highlightColor="#252a31" className="hidden md:block" />
+                <Skeleton circle width={32} height={32} baseColor="#1b2228" highlightColor="#252a31" />
+            </div>
+            <div className="w-[60px] flex justify-center">
+                <Skeleton width={40} height={20} baseColor="#1b2228" highlightColor="#252a31" />
+            </div>
+            <div className="flex items-center gap-2 flex-1">
+                <Skeleton circle width={32} height={32} baseColor="#1b2228" highlightColor="#252a31" />
+                <Skeleton width={60} height={10} baseColor="#1b2228" highlightColor="#252a31" className="hidden md:block" />
+            </div>
+        </div>
+        <div className="w-[90px] flex justify-end">
+            <Skeleton width={50} height={10} baseColor="#1b2228" highlightColor="#252a31" />
         </div>
     </div>
 );

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { useUser } from '../hooks/useUser';
-import { MatchPoster } from '../components/Matchs/MatchPoster';
+import { MatchCard } from '../components/Matchs/MatchCard';
 
 export const UserMatchesPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -123,7 +123,7 @@ export const UserMatchesPage = () => {
                     ) : (
                         filteredReviews.map((review) => (
                             <div key={review.id} className="flex flex-col gap-3 group/item">
-                                <MatchPoster match={review.match as any} />
+                                <MatchCard match={review.match as any} variant="poster" />
 
                                 <div className="px-1 flex flex-col gap-3">
                                     <div className="flex items-center justify-between">
@@ -165,8 +165,8 @@ const ErrorState = () => (
     <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#0a0b0d]">
         <div className="max-w-md">
             <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Scouting Report Error</h2>
-            <p className="text-[#667788] text-sm mb-8 leading-relaxed">Impossible de charger le journal des matchs pour le moment.</p>
-            <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Réessayer</button>
+            <p className="text-[#667788] text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
+            <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Try Again</button>
         </div>
     </div>
 );

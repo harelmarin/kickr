@@ -55,7 +55,7 @@ export const teamService = {
         totalElements: response.data.totalElements || 0,
       };
     } catch (err) {
-      console.error('Erreur lors de la recherche d\'équipes :', err);
+      console.error('Error searching for teams:', err);
       return { content: [], totalPages: 0, totalElements: 0 };
     }
   },

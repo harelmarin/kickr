@@ -98,7 +98,7 @@ export const useAuth = create<AuthState>((set) => ({
                 id: toastId,
             });
         } catch (error) {
-            // Même en cas d'erreur, on déconnecte l'utilisateur côté client
+            // Even in case of error, disconnect the user on the client side
             set({
                 user: null,
                 isAuthenticated: false,

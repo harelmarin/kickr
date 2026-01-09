@@ -1,4 +1,4 @@
-import { MatchPoster } from './MatchPoster';
+import { MatchCard } from './MatchCard';
 import { useNextMatchs } from '../../hooks/useNextMatchs';
 
 export const NextMatchesHomePage = () => {
@@ -17,7 +17,7 @@ export const NextMatchesHomePage = () => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
       {data?.content.map((match) => (
-        <MatchPoster key={match.id} match={match} />
+        <MatchCard key={match.id} match={match} variant="poster" />
       ))}
     </div>
   );
