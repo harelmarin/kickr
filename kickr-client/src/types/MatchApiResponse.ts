@@ -22,5 +22,6 @@ export interface MatchApiResponse {
   lineups?: any;
   stats?: any;
   events?: any;
+  round?: string;
 }
 

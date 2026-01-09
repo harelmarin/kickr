@@ -1,8 +1,6 @@
 package com.kickr_server.team;
 
 import com.kickr_server.dto.team.TeamDto;
-import com.kickr_server.team.Team;
-import com.kickr_server.team.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +26,13 @@ public class TeamService {
     }
 
     public List<Team> getTeamsByCompetitionId(UUID competitionId) {
-        return teamRepository.findByCompetitionId(competitionId);
+        return teamRepository.findTeamsByCompetitionId(competitionId);
+    }
+
+    public Page<TeamDto> getTeamsByCompetitionIdPaginated(UUID competitionId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return teamRepository.findTeamsByCompetitionId(competitionId, pageable)
+                .map(TeamDto::fromEntity);
     }
 
     /**
@@ -36,7 +40,7 @@ public class TeamService {
      */
     public Page<TeamDto> searchTeams(String search, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        
+
         if (search != null && !search.trim().isEmpty()) {
             return teamRepository.findByNameContainingIgnoreCase(search.trim(), pageable)
                     .map(TeamDto::fromEntity);

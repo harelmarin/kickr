@@ -1,4 +1,4 @@
-export interface Match {
+export type Match = {
   id: string;
   homeTeam: string;
   homeTeamId: string;
@@ -21,4 +21,5 @@ export interface Match {
   lineups?: any;
   stats?: any;
   events?: any;
+  round?: string;
 }

@@ -22,15 +22,28 @@ public class MatchController {
 
         private final MatchService matchService;
 
-        @Operation(summary = "Récupérer et sauvegarder les prochains matchs depuis la source externe", description = "🔒 **ADMIN ONLY** - Déclenche la synchronisation complète.", security = @SecurityRequirement(name = "bearerAuth"), tags = {
+        @Operation(summary = "Synchroniser les matchs", description = "🔒 **ADMIN ONLY** - Par défaut : fenêtre +/- 7 jours. Si fullTournaments=true : synchronise toute la saison des coupes d'europe.", security = @SecurityRequirement(name = "bearerAuth"), tags = {
                         "Admin Actions" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Matchs récupérés et sauvegardés"),
-                        @ApiResponse(responseCode = "500", description = "Erreur lors de la récupération ou sauvegarde")
+                        @ApiResponse(responseCode = "200", description = "Synchronisation effectuée"),
+                        @ApiResponse(responseCode = "500", description = "Erreur lors de la synchronisation")
         })
         @GetMapping("/save")
-        public void getNextMatches() throws Exception {
-                matchService.fetchAndSaveNextMatches();
+        public void syncMatches(
+                        @Parameter(description = "Synchroniser toute la saison des tournois (UCL, UEL, UECL)") @RequestParam(defaultValue = "false") boolean fullTournaments,
+                        @Parameter(description = "Synchroniser le classement pour toutes les ligues majeures") @RequestParam(defaultValue = "false") boolean allStandings,
+                        @Parameter(description = "Synchroniser le classement pour une ligue spécifique") @RequestParam(required = false) Integer leagueId,
+                        @Parameter(description = "Saison pour le classement") @RequestParam(defaultValue = "2025") Integer season)
+                        throws Exception {
+                if (fullTournaments) {
+                        matchService.syncFullSeasonTournaments();
+                } else if (allStandings) {
+                        matchService.syncAllMajorStandings(season);
+                } else if (leagueId != null) {
+                        matchService.syncStandings(leagueId, season);
+                } else {
+                        matchService.fetchAndSaveNextMatches();
+                }
         }
 
         @Operation(summary = "Récupère les prochains matchs avec pagination", tags = { "Public Match Data" })
@@ -85,10 +98,17 @@ public class MatchController {
                         @Parameter(description = "ID de la compétition") @RequestParam(required = false) UUID competitionId,
                         @Parameter(description = "Match terminé (true/false)") @RequestParam(required = false) Boolean finished,
                         @Parameter(description = "Recherche textuelle (équipe)") @RequestParam(required = false) String query,
+                        @Parameter(description = "Tour (Round)") @RequestParam(required = false) String round,
                         @Parameter(description = "Tri (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
                         @Parameter(description = "Page") @RequestParam(defaultValue = "0") int page,
                         @Parameter(description = "Limite") @RequestParam(defaultValue = "18") int limit) {
-                return matchService.findMatchesWithFilters(competitionId, finished, query, sort, page, limit);
+                return matchService.findMatchesWithFilters(competitionId, finished, query, round, sort, page, limit);
+        }
+
+        @Operation(summary = "Récupère les tours (rounds) d'une compétition", tags = { "Public Match Data" })
+        @GetMapping("/rounds/{competitionId}")
+        public List<String> getRounds(@PathVariable UUID competitionId) {
+                return matchService.getRoundsByCompetitionId(competitionId);
         }
 
         @Operation(summary = "Récupère les matchs les mieux notés (trending)", tags = { "Public Match Data" })
@@ -98,8 +118,25 @@ public class MatchController {
         @GetMapping("/trending")
         public Page<MatchDto> getTrendingMatches(
                         @Parameter(description = "Nombre de matchs à retourner") @RequestParam(defaultValue = "6") int limit) {
-                // Récupérer plus de matchs pour compenser ceux sans notes
-                return matchService.findMatchesWithFilters(null, true, "", "rating", 0, limit * 2);
+                return matchService.getTrendingMatches(limit);
+        }
+
+        @Operation(summary = "Backfill historical matches", description = "🔒 **ADMIN ONLY** - Backfill all matches from season start to present with lineups enrichment", security = @SecurityRequirement(name = "bearerAuth"), tags = {
+                        "Admin Actions" })
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Backfill completed successfully"),
+                        @ApiResponse(responseCode = "500", description = "Backfill failed")
+        })
+        @GetMapping("/backfill")
+        public void backfillMatches(
+                        @Parameter(description = "Start date (YYYY-MM-DD)", example = "2025-08-01") @RequestParam(defaultValue = "2025-08-01") String fromDate,
+
+                        @Parameter(description = "End date (YYYY-MM-DD), defaults to today") @RequestParam(required = false) String toDate)
+                        throws Exception {
+                if (toDate == null) {
+                        toDate = java.time.LocalDate.now().toString();
+                }
+                matchService.backfillHistoricalMatches(fromDate, toDate);
         }
 
 }

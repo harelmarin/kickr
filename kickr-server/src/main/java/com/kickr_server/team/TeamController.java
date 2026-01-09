@@ -47,11 +47,11 @@ public class TeamController {
     }
 
     @GetMapping("/competition/{competitionId}")
-    @Operation(summary = "Récupérer toutes les équipes d'une compétition")
-    public List<TeamDto> getTeamsByCompetition(@PathVariable UUID competitionId) {
-        return teamService.getTeamsByCompetitionId(competitionId)
-                .stream()
-                .map(TeamDto::fromEntity)
-                .collect(Collectors.toList());
+    @Operation(summary = "Récupérer les équipes d'une compétition avec pagination")
+    public Page<TeamDto> getTeamsByCompetition(
+            @PathVariable UUID competitionId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+        return teamService.getTeamsByCompetitionIdPaginated(competitionId, page, size);
     }
 }

@@ -470,7 +470,7 @@ const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLike
 };
 
 const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
-  if (!lineups || lineups.length === 0) return <p className="text-[#445566] text-sm italic">Compositions non disponibles pour ce match.</p>;
+  if (!lineups || lineups.length === 0) return <p className="text-[#445566] text-sm italic">Lineups not available for this match.</p>;
 
   return (
     <div className="space-y-8">
@@ -659,7 +659,7 @@ const renderTacticalPlayers = (players: any[]) => {
 };
 
 const StatsSection = ({ stats }: any) => {
-  if (!stats || stats.length === 0) return <p className="text-[#445566] text-sm italic">Statistiques non disponibles.</p>;
+  if (!stats || stats.length === 0) return <p className="text-[#445566] text-sm italic">Statistics not available.</p>;
 
   // Priorité des statistiques pour l'affichage
   const prioritizedStats = [
@@ -733,7 +733,7 @@ const StatsSection = ({ stats }: any) => {
 };
 
 const EventsSection = ({ events, homeTeamId, homeTeamName }: any) => {
-  if (!events || events.length === 0) return <p className="text-[#445566] text-sm italic">Événements de match non disponibles.</p>;
+  if (!events || events.length === 0) return <p className="text-[#445566] text-sm italic">Match events not available.</p>;
 
   return (
     <div className="relative py-10 max-w-3xl mx-auto">

@@ -29,5 +29,10 @@ public class Competition {
     private String logoUrl;
 
     private String country;
-}
 
+    @Column(length = 20)
+    private String type;
+
+    @Column(columnDefinition = "TEXT")
+    private String standingsJson;
+}

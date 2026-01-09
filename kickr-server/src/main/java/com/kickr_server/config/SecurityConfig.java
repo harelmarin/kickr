@@ -68,8 +68,9 @@ public class SecurityConfig {
                                                                 "/api/matchs/next",
                                                                 "/api/matchs/search",
                                                                 "/api/matchs/trending",
-                                                                "/api/matchs/{id:[0-9]+}",
-                                                                "/api/matchs/team/**")
+                                                                "/api/matchs/{id}",
+                                                                "/api/matchs/team/**",
+                                                                "/api/matchs/rounds/**")
                                                 .permitAll()
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/teams/**")
@@ -100,7 +101,9 @@ public class SecurityConfig {
                                                                 "/api/follows/followers/**")
                                                 .permitAll()
                                                 // Admin endpoints - require ADMIN role
-                                                .requestMatchers("/api/admin/**", "/api/matchs/save").hasRole("ADMIN")
+                                                .requestMatchers("/api/admin/**", "/api/matchs/save",
+                                                                "/api/matchs/sync-tournaments")
+                                                .hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                 .exceptionHandling(exceptions -> exceptions
                                                 .authenticationEntryPoint(

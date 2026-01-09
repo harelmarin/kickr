@@ -19,10 +19,10 @@ export const useTeam = (id: string) => {
   });
 };
 
-export const useTeamsByCompetition = (competitionId: string) => {
-  return useQuery<Team[], Error>({
-    queryKey: ['teams', 'competition', competitionId],
-    queryFn: () => teamService.getByCompetitionId(competitionId),
+export const useTeamsByCompetition = (competitionId: string, page: number = 0, size: number = 50) => {
+  return useQuery({
+    queryKey: ['teams', 'competition', competitionId, page, size],
+    queryFn: () => teamService.getByCompetitionId(competitionId, page, size),
     staleTime: 60 * 1000,
     enabled: !!competitionId,
   });

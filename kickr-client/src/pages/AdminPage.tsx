@@ -2,9 +2,68 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { adminService } from '../services/adminService';
 import { authService } from '../services/authService';
+import axiosInstance from '../services/axios';
 import type { User } from '../types/User';
 import { NotFoundPage } from './NotFoundPage';
 import toast from 'react-hot-toast';
+
+interface DataSyncCardProps {
+    title: string;
+    description: string;
+    endpoint: string;
+    params: Record<string, any>;
+    buttonLabel: string;
+    estimatedTime: string;
+    warning?: boolean;
+}
+
+const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estimatedTime, warning }: DataSyncCardProps) => {
+    const [syncing, setSyncing] = useState(false);
+
+    const handleSync = async () => {
+        if (warning && !window.confirm(`This will take ${estimatedTime}. Continue?`)) {
+            return;
+        }
+
+        setSyncing(true);
+        const toastId = toast.loading(`${title} in progress...`);
+
+        try {
+            await axiosInstance.get(endpoint, { params });
+            toast.success(`${title} completed!`, { id: toastId });
+        } catch (error: any) {
+            toast.error(error.response?.data?.message || `${title} failed`, { id: toastId });
+        } finally {
+            setSyncing(false);
+        }
+    };
+
+    return (
+        <div className="bg-black/20 border border-white/5 rounded-lg p-5 hover:border-white/10 transition-all">
+            <div className="flex items-start justify-between mb-3">
+                <div>
+                    <h3 className="text-[13px] font-black text-white uppercase tracking-tight mb-1">{title}</h3>
+                    <p className="text-[11px] text-[#667788] font-medium">{description}</p>
+                </div>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+                <span className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">
+                    {estimatedTime}
+                </span>
+                <button
+                    onClick={handleSync}
+                    disabled={syncing}
+                    className={`py-2 px-4 rounded text-[10px] font-black uppercase tracking-widest transition-all disabled:opacity-50 ${warning
+                        ? 'bg-orange-500/10 border border-orange-500/20 text-orange-500 hover:bg-orange-500/20'
+                        : 'bg-kickr/10 border border-kickr/20 text-kickr hover:bg-kickr/20'
+                        }`}
+                >
+                    {syncing ? 'Running...' : buttonLabel}
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export default function AdminPage() {
     const [users, setUsers] = useState<User[]>([]);
@@ -183,6 +242,33 @@ export default function AdminPage() {
                     </div>
                 </div>
             </header>
+
+            {/* Data Management Section */}
+            <section className="mb-10 bg-[#14181c] border border-white/5 rounded-lg p-6">
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-6">Data Management</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Quick Sync */}
+                    <DataSyncCard
+                        title="Quick Sync"
+                        description="Sync recent matches (±7 days) and standings"
+                        endpoint="/matchs/save"
+                        params={{ allStandings: true }}
+                        buttonLabel="Sync Now"
+                        estimatedTime="~30 seconds"
+                    />
+
+                    {/* Full Backfill */}
+                    <DataSyncCard
+                        title="Historical Backfill"
+                        description="Fetch all matches from season start with lineups"
+                        endpoint="/matchs/backfill"
+                        params={{}}
+                        buttonLabel="Run Backfill"
+                        estimatedTime="~4 minutes"
+                        warning
+                    />
+                </div>
+            </section>
 
             {/* Table Container */}
             <div className="bg-[#14181c] border border-white/5 rounded-lg overflow-hidden shadow-2xl">

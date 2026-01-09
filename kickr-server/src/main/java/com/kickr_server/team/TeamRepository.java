@@ -15,7 +15,19 @@ public interface TeamRepository extends JpaRepository<Team, UUID> {
 
     Optional<Team> findByExternalId(Integer externalId);
 
-    List<Team> findByCompetitionId(UUID competitionId);
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT t FROM Team t " +
+            "WHERE t.competition.id = :competitionId " +
+            "OR t.id IN (SELECT m.homeTeam.id FROM Match m WHERE m.competition.id = :competitionId) " +
+            "OR t.id IN (SELECT m.awayTeam.id FROM Match m WHERE m.competition.id = :competitionId) " +
+            "ORDER BY t.name ASC")
+    Page<Team> findTeamsByCompetitionId(UUID competitionId, Pageable pageable);
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT t FROM Team t " +
+            "WHERE t.competition.id = :competitionId " +
+            "OR t.id IN (SELECT m.homeTeam.id FROM Match m WHERE m.competition.id = :competitionId) " +
+            "OR t.id IN (SELECT m.awayTeam.id FROM Match m WHERE m.competition.id = :competitionId) " +
+            "ORDER BY t.name ASC")
+    List<Team> findTeamsByCompetitionId(UUID competitionId);
 
     // Pagination avec recherche
     Page<Team> findByNameContainingIgnoreCase(String name, Pageable pageable);

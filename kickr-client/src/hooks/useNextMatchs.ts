@@ -24,6 +24,7 @@ export const useSearchMatches = (params: {
   competitionId?: string;
   finished?: boolean;
   query?: string;
+  round?: string;
   sort?: string;
   page?: number;
   limit?: number;
@@ -41,6 +42,15 @@ export const useTrendingMatches = (limit = 6) => {
     queryKey: ['matches', 'trending', limit],
     queryFn: () => matchService.getTrendingMatches(limit),
     staleTime: 60 * 1000,
-    retry: false, // Éviter les boucles infinies en cas d'erreur
+    retry: false,
+  });
+};
+
+export const useRoundsByCompetition = (competitionId?: string) => {
+  return useQuery<String[], Error>({
+    queryKey: ['matches', 'rounds', competitionId],
+    queryFn: () => matchService.fetchRounds(competitionId!),
+    staleTime: 60 * 60 * 1000,
+    enabled: !!competitionId,
   });
 };

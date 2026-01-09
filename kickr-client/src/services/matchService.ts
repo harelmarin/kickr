@@ -33,6 +33,7 @@ const mapApiResponseToMatch = (m: MatchApiResponse): Match => ({
   lineups: m.lineups,
   stats: m.stats,
   events: m.events,
+  round: m.round || (m as any).round,
 });
 
 export const matchService = {
@@ -65,6 +66,7 @@ export const matchService = {
     competitionId?: string;
     finished?: boolean;
     query?: string;
+    round?: string;
     sort?: string;
     page?: number;
     limit?: number;
@@ -135,6 +137,16 @@ export const matchService = {
     } catch (err) {
       console.error(`Erreur lors de la récupération du match ${id} :`, err);
       return null;
+    }
+  },
+
+  fetchRounds: async (competitionId: string): Promise<String[]> => {
+    try {
+      const response = await axiosInstance.get(`/matchs/rounds/${competitionId}`);
+      return response.data || [];
+    } catch (err) {
+      console.error(`Erreur lors de la récupération des rounds :`, err);
+      return [];
     }
   },
 };

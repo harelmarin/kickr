@@ -35,6 +35,7 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
         @Query("SELECT m FROM Match m " +
                         "LEFT JOIN UserMatch um ON um.match = m " +
                         "WHERE (:competitionId IS NULL OR m.competition.id = :competitionId) " +
+                        "AND (:round IS NULL OR m.round = :round) " +
                         "AND (:isFinished IS NULL OR (:isFinished = true AND m.homeScore IS NOT NULL) OR (:isFinished = false AND m.homeScore IS NULL)) "
                         +
                         "AND (:query IS NULL OR :query = '' OR LOWER(CAST(m.homeTeam.name AS string)) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(CAST(m.awayTeam.name AS string)) LIKE LOWER(CONCAT('%', :query, '%'))) "
@@ -49,6 +50,7 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         @org.springframework.data.repository.query.Param("competitionId") UUID competitionId,
                         @org.springframework.data.repository.query.Param("isFinished") Boolean isFinished,
                         @org.springframework.data.repository.query.Param("query") String query,
+                        @org.springframework.data.repository.query.Param("round") String round,
                         @org.springframework.data.repository.query.Param("sort") String sort,
                         Pageable pageable);
 
@@ -61,4 +63,8 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
         List<Match> findMatchesNeedingDetailEnrichment(
                         @org.springframework.data.repository.query.Param("nearStartTime") LocalDateTime nearStartTime,
                         Pageable pageable);
+
+        @Query("SELECT DISTINCT m.round FROM Match m WHERE m.competition.id = :competitionId AND m.round IS NOT NULL ORDER BY m.round ASC")
+        List<String> findDistinctRoundsByCompetitionId(
+                        @org.springframework.data.repository.query.Param("competitionId") UUID competitionId);
 }

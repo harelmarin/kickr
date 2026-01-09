@@ -31,6 +31,11 @@ public class CompetitionDto {
     @Schema(description = "Pays de la compétition", example = "France")
     private String country;
 
+    @Schema(description = "Type de compétition (LEAGUE/CUP)", example = "CUP")
+    private String type;
+
+    @Schema(description = "Classement en format JSON (pour les ligues)")
+    private String standingsJson;
 
     public static CompetitionDto fromEntity(Competition competition) {
         return CompetitionDto.builder()
@@ -39,6 +44,8 @@ public class CompetitionDto {
                 .externalId(competition.getExternalId())
                 .logoUrl(competition.getLogoUrl())
                 .country(competition.getCountry())
+                .type(competition.getType())
+                .standingsJson(competition.getStandingsJson())
                 .build();
     }
 }

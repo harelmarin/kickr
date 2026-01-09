@@ -3,4 +3,7 @@ export interface Competition {
   name: string;
   logoUrl?: string;
   country?: string;
+  externalId?: number;
+  type?: 'LEAGUE' | 'CUP';
+  standingsJson?: string;
 }

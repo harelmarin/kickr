@@ -88,6 +88,9 @@ public class MatchDto {
     @JsonProperty("events")
     private Object events;
 
+    @JsonProperty("round")
+    private String round;
+
     /**
      * Convertit une entité Match en DTO.
      */
@@ -117,7 +120,8 @@ public class MatchDto {
                 0L,
                 match.getMatchDetail() != null ? match.getMatchDetail().getLineups() : null,
                 match.getMatchDetail() != null ? match.getMatchDetail().getStats() : null,
-                match.getMatchDetail() != null ? match.getMatchDetail().getEvents() : null);
+                match.getMatchDetail() != null ? match.getMatchDetail().getEvents() : null,
+                match.getRound());
     }
 
     public static MatchDto fromEntityWithStats(Match match, Double avgRating, Long reviewsCount) {
