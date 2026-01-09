@@ -1,5 +1,6 @@
 package com.kickr_server.user;
 
+import com.kickr_server.config.CloudinaryService;
 import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.usermatch.UserMatchRepository;
 import com.kickr_server.exception.user.UserAlreadyExistException;
@@ -8,8 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -36,6 +40,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMatchRepository userMatchRepository;
     private final com.kickr_server.follow.FollowRepository followRepository;
+    private final CloudinaryService cloudinaryService;
 
     public UserDto getUserDtoWithStats(UUID id) {
         User user = getUserById(id);
@@ -134,6 +139,25 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateProfile(UUID userId, String newName, String newEmail) {
+        User user = getUserById(userId);
+
+        // Check if name is taken by another user
+        if (!user.getName().equals(newName) && userRepository.existsByName(newName)) {
+            throw new UserAlreadyExistException("Name already in use by another tactician");
+        }
+
+        // Check if email is taken by another user
+        if (!user.getEmail().equals(newEmail) && userRepository.existsByEmail(newEmail)) {
+            throw new UserAlreadyExistException("Email already in use");
+        }
+
+        user.setName(newName);
+        user.setEmail(newEmail);
+
+        return userRepository.save(user);
+    }
+
     /**
      * Supprime un utilisateur par son UUID.
      * <p>
@@ -143,7 +167,46 @@ public class UserService {
      * @throws UserNotFoundException si l'utilisateur n'existe pas.
      */
     public void deleteById(UUID id) {
-        getUserById(id);
+        User user = getUserById(id);
+        if (user.getAvatarPublicId() != null) {
+            try {
+                cloudinaryService.delete(user.getAvatarPublicId());
+            } catch (IOException e) {
+                log.error("Failed to delete avatar from Cloudinary for user {}: {}", id, e.getMessage());
+            }
+        }
         userRepository.deleteById(id);
+    }
+
+    public User updateAvatar(UUID userId, MultipartFile file) throws IOException {
+        User user = getUserById(userId);
+
+        // Upload new avatar
+        Map<String, Object> uploadResult = cloudinaryService.upload(file);
+        String newUrl = (String) uploadResult.get("secure_url");
+        String newPublicId = (String) uploadResult.get("public_id");
+
+        // Delete old avatar if it exists
+        if (user.getAvatarPublicId() != null) {
+            cloudinaryService.delete(user.getAvatarPublicId());
+        }
+
+        user.setAvatarUrl(newUrl);
+        user.setAvatarPublicId(newPublicId);
+
+        return userRepository.save(user);
+    }
+
+    public User deleteAvatar(UUID userId) throws IOException {
+        User user = getUserById(userId);
+
+        if (user.getAvatarPublicId() != null) {
+            cloudinaryService.delete(user.getAvatarPublicId());
+        }
+
+        user.setAvatarUrl(null);
+        user.setAvatarPublicId(null);
+
+        return userRepository.save(user);
     }
 }

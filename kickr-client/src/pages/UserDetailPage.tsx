@@ -43,9 +43,42 @@ export const UserDetailPage = () => {
                     <div className="flex items-start justify-between mb-8">
                         <div className="flex items-center gap-10">
                             {/* Avatar */}
-                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
-                                {user.name[0].toUpperCase()}
-                            </div>
+                            {isOwnProfile ? (
+                                <Link
+                                    to="/settings"
+                                    className="relative group/avatar w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shadow-2xl transition-transform hover:scale-105"
+                                    title="Change Profile Picture"
+                                >
+                                    <div className="w-full h-full bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
+                                        {user.avatarUrl ? (
+                                            <img
+                                                key={user.avatarUrl}
+                                                src={user.avatarUrl}
+                                                alt={user.name}
+                                                className="w-full h-full object-cover group-hover/avatar:opacity-40 transition-opacity"
+                                            />
+                                        ) : (
+                                            user.name[0].toUpperCase()
+                                        )}
+                                    </div>
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/40">
+                                        <span className="text-[10px] font-black text-white uppercase tracking-widest">Edit</span>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
+                                    {user.avatarUrl ? (
+                                        <img
+                                            key={user.avatarUrl}
+                                            src={user.avatarUrl}
+                                            alt={user.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        user.name[0].toUpperCase()
+                                    )}
+                                </div>
+                            )}
 
                             {/* Name & Info */}
                             <div>
@@ -66,9 +99,13 @@ export const UserDetailPage = () => {
                         {/* Action Button */}
                         <div>
                             {isOwnProfile ? (
-                                <button className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg border border-white/10 transition-all">
-                                    Edit Profile
-                                </button>
+                                <Link
+                                    to="/settings"
+                                    className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg border border-white/10 transition-all flex items-center gap-2"
+                                >
+                                    <span>✎</span>
+                                    Edit Settings
+                                </Link>
                             ) : (
                                 <button
                                     onClick={handleFollowToggle}
@@ -185,8 +222,12 @@ export const UserDetailPage = () => {
                                                     className="group relative"
                                                     title={f.name}
                                                 >
-                                                    <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 group-hover:scale-110 transition-all shadow-lg">
-                                                        {f.name[0]}
+                                                    <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 group-hover:scale-110 transition-all shadow-lg overflow-hidden">
+                                                        {f.avatarUrl ? (
+                                                            <img src={f.avatarUrl} alt={f.name} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            f.name[0]
+                                                        )}
                                                     </div>
                                                 </Link>
                                             ))}

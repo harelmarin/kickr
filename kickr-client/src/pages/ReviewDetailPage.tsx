@@ -114,8 +114,12 @@ export const ReviewDetailPage: FC = () => {
                         <header className="border-b border-white/10 pb-6 mb-8">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
-                                    <Link to={`/user/${review.user.id}`} className="w-8 h-8 rounded-full bg-gradient-to-br from-kickr to-kickr/50 flex items-center justify-center text-xs font-black text-black">
-                                        {review.user.name[0].toUpperCase()}
+                                    <Link to={`/user/${review.user.id}`} className="w-8 h-8 rounded-full bg-gradient-to-br from-kickr to-kickr/50 flex items-center justify-center text-xs font-black text-black overflow-hidden shadow-lg border border-white/10">
+                                        {review.user.avatarUrl ? (
+                                            <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            review.user.name[0].toUpperCase()
+                                        )}
                                     </Link>
                                     <p className="text-[#99aabb] text-xs font-medium uppercase tracking-widest">
                                         Review by <Link to={`/user/${review.user.id}`} className="text-white font-black hover:text-kickr transition-colors">{review.user.name}</Link>
@@ -222,9 +226,13 @@ export const ReviewDetailPage: FC = () => {
                                         <div key={comment.id} className={`flex gap-4 group ${comment.isModerated ? 'opacity-50' : ''}`}>
                                             <Link
                                                 to={`/user/${comment.userId}`}
-                                                className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase hover:border-kickr/50 hover:scale-110 transition-all shadow-lg flex-shrink-0"
+                                                className="w-8 h-8 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[10px] font-black text-kickr uppercase hover:border-kickr/50 hover:scale-110 transition-all shadow-lg flex-shrink-0 overflow-hidden"
                                             >
-                                                {comment.userName[0].toUpperCase()}
+                                                {comment.userAvatarUrl ? (
+                                                    <img src={comment.userAvatarUrl} alt={comment.userName} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    comment.userName[0].toUpperCase()
+                                                )}
                                             </Link>
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-center justify-between mb-1">

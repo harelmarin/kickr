@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { useUser } from '../hooks/useUser';
+import { useAuth } from '../hooks/useAuth';
 import { MatchCard } from '../components/Matchs/MatchCard';
 
 export const UserMatchesPage = () => {
     const { id } = useParams<{ id: string }>();
     const [searchParams] = useSearchParams();
     const { data: user } = useUser(id);
+    const { user: currentUser } = useAuth();
     const { data: reviews, isLoading, isError } = useUserMatchesByUser(id || '');
 
+    const isOwnProfile = currentUser?.id === id;
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
     const [minRating, setMinRating] = useState<number>(0);
@@ -51,9 +54,32 @@ export const UserMatchesPage = () => {
 
                 <header className="mb-20">
                     <div className="flex items-center gap-4 mb-4">
-                        <Link to={`/user/${id}`} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black hover:bg-white/10 transition-all">
-                            {user?.name[0].toUpperCase()}
-                        </Link>
+                        {isOwnProfile ? (
+                            <Link
+                                to="/settings"
+                                className="relative group/avatar w-10 h-10 rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-110"
+                                title="Change Profile Picture"
+                            >
+                                <div className="w-full h-full bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black">
+                                    {user?.avatarUrl ? (
+                                        <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover group-hover/avatar:opacity-40 transition-opacity" />
+                                    ) : (
+                                        user?.name[0].toUpperCase()
+                                    )}
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/40">
+                                    <span className="text-[8px] font-black text-white uppercase tracking-widest">Edit</span>
+                                </div>
+                            </Link>
+                        ) : (
+                            <Link to={`/user/${id}`} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black hover:bg-white/10 transition-all overflow-hidden shadow-lg">
+                                {user?.avatarUrl ? (
+                                    <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    user?.name[0].toUpperCase()
+                                )}
+                            </Link>
+                        )}
                         <div>
                             <h1 className="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase display-font">
                                 {user?.name}'s Matches
@@ -150,14 +176,16 @@ export const UserMatchesPage = () => {
                     )}
                 </div>
 
-                {!isLoading && filteredReviews.length === 0 && (
-                    <div className="py-20 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
-                        <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No matching diary entries found.</p>
-                    </div>
-                )}
+                {
+                    !isLoading && filteredReviews.length === 0 && (
+                        <div className="py-20 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
+                            <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No matching diary entries found.</p>
+                        </div>
+                    )
+                }
 
-            </div>
-        </main>
+            </div >
+        </main >
     );
 };
 

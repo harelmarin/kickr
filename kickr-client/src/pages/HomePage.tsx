@@ -314,8 +314,12 @@ export default function HomePage() {
                         to={`/user/${scout.id}`}
                         className="flex items-center gap-4 group/scout"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-white/10 flex items-center justify-center text-xs font-black text-kickr uppercase group-hover:border-kickr/40 group-hover:scale-110 transition-all">
-                          {scout.name[0]}
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-white/10 flex items-center justify-center text-xs font-black text-kickr uppercase group-hover:border-kickr/40 group-hover:scale-110 transition-all overflow-hidden">
+                          {scout.avatarUrl ? (
+                            <img src={scout.avatarUrl} alt={scout.name} className="w-full h-full object-cover" />
+                          ) : (
+                            scout.name[0]
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-black italic truncate group-hover:text-kickr transition-colors tracking-tight">{scout.name}</p>

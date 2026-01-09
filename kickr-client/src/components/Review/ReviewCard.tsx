@@ -110,8 +110,12 @@ export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) =>
                 )}
 
                 <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center text-[8px] text-white font-bold border border-white/5 uppercase">
-                        {review.user ? review.user.name[0] : '?'}
+                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white font-black border border-white/5 uppercase overflow-hidden shadow-sm">
+                        {review.user?.avatarUrl ? (
+                            <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
+                        ) : (
+                            <span>{review.user ? review.user.name[0] : '?'}</span>
+                        )}
                     </div>
                     <Link to={`/user/${review.user?.id}`} className="text-[#445566] text-[10px] font-black uppercase tracking-widest group-hover/review:text-white transition-colors">
                         {review.user?.name}

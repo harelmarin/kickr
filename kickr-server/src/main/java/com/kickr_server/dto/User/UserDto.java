@@ -18,7 +18,8 @@ public record UserDto(
         LocalDateTime updatedAt,
         long followersCount,
         long followingCount,
-        long matchesCount) {
+        long matchesCount,
+        String avatarUrl) {
     /**
      * Convertit un User en UserDto.
      *
@@ -33,7 +34,8 @@ public record UserDto(
                 user.getRole(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
-                0L, 0L, 0L);
+                0L, 0L, 0L,
+                user.getAvatarUrl());
     }
 
     public static UserDto fromEntityWithStats(User user, long followers, long following, long matches) {
@@ -46,6 +48,7 @@ public record UserDto(
                 user.getUpdatedAt(),
                 followers,
                 following,
-                matches);
+                matches,
+                user.getAvatarUrl());
     }
 }

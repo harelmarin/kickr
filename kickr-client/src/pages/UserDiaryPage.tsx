@@ -3,13 +3,16 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { useUser } from '../hooks/useUser';
+import { useAuth } from '../hooks/useAuth';
 import { EmptyState } from '../components/ui/EmptyState';
 
 export const UserDiaryPage = () => {
     const { id } = useParams<{ id: string }>();
     const { data: user } = useUser(id);
+    const { user: currentUser } = useAuth();
     const { data: reviews, isLoading, isError } = useUserMatchesByUser(id || '');
 
+    const isOwnProfile = currentUser?.id === id;
     const [search, setSearch] = useState('');
 
     if (isError) return <ErrorState />;
@@ -58,14 +61,41 @@ export const UserDiaryPage = () => {
 
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
                         <div className="flex items-center gap-8">
-                            <motion.div
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
-                            >
-                                {user?.name[0].toUpperCase()}
-                                <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            </motion.div>
+                            {isOwnProfile ? (
+                                <motion.div
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    className="relative group/avatar"
+                                >
+                                    <Link
+                                        to="/settings"
+                                        className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group/link block"
+                                        title="Change Profile Picture"
+                                    >
+                                        {user?.avatarUrl ? (
+                                            <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover group-hover/link:opacity-40 transition-opacity" />
+                                        ) : (
+                                            user?.name[0].toUpperCase()
+                                        )}
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/link:opacity-100 transition-opacity bg-black/40">
+                                            <span className="text-[10px] font-black text-white uppercase tracking-widest">Edit</span>
+                                        </div>
+                                    </Link>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
+                                >
+                                    {user?.avatarUrl ? (
+                                        <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                                    ) : (
+                                        user?.name[0].toUpperCase()
+                                    )}
+                                    <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                </motion.div>
+                            )}
                             <div>
                                 <motion.h1
                                     initial={{ y: 20, opacity: 0 }}

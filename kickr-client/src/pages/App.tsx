@@ -21,6 +21,7 @@ const UserMatchesPage = lazy(() => import('./UserMatchesPage').then(module => ({
 const UserDiaryPage = lazy(() => import('./UserDiaryPage').then(module => ({ default: module.UserDiaryPage })));
 const ReviewDetailPage = lazy(() => import('./ReviewDetailPage').then(module => ({ default: module.ReviewDetailPage })));
 const AdminPage = lazy(() => import('./AdminPage'));
+const SettingsPage = lazy(() => import('./SettingsPage').then(module => ({ default: module.SettingsPage })));
 const NotFoundPage = lazy(() => import('./NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 const PageLoader = () => (
@@ -65,6 +66,7 @@ function App() {
                   path="/profile"
                   element={user ? <Navigate to={`/user/${user.id}`} replace /> : <Navigate to="/" replace />}
                 />
+                <Route path="/settings" element={<SettingsPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>

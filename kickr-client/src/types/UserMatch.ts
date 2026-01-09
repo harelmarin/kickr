@@ -6,6 +6,7 @@ export interface UserMatch {
     email: string;
     createdAt: string;
     updatedAt: string;
+    avatarUrl?: string;
   };
   match: {
     homeTeam: string;

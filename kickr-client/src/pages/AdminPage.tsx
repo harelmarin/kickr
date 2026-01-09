@@ -301,8 +301,12 @@ export default function AdminPage() {
                                     >
                                         <td className="py-3.5 px-5">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-7 h-7 rounded bg-kickr/15 border border-kickr/20 text-kickr flex items-center justify-center font-black text-[11px] flex-shrink-0">
-                                                    {user.name.charAt(0).toUpperCase()}
+                                                <div className="w-7 h-7 rounded bg-kickr/15 border border-kickr/20 text-kickr flex items-center justify-center font-black text-[11px] flex-shrink-0 overflow-hidden">
+                                                    {user.avatarUrl ? (
+                                                        <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        user.name.charAt(0).toUpperCase()
+                                                    )}
                                                 </div>
                                                 <Link to={`/user/${user.id}`} className="flex items-center gap-6 flex-1 font-bold text-[13px] text-white hover:text-kickr transition-colors">
                                                     {user.name}

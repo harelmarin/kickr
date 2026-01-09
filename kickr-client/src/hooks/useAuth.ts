@@ -15,6 +15,7 @@ interface AuthState {
     register: (data: RegisterRequest) => Promise<void>;
     logout: () => Promise<void>;
     checkAuth: () => void;
+    updateUser: (user: User) => void;
     clearError: () => void;
 }
 
@@ -116,6 +117,11 @@ export const useAuth = create<AuthState>((set) => ({
         const user = authService.getUser();
         const isAuthenticated = authService.isAuthenticated();
         set({ user, isAuthenticated });
+    },
+
+    updateUser: (user: User) => {
+        authService.setUser(user);
+        set({ user: { ...user } });
     },
 
     clearError: () => {

@@ -17,8 +17,12 @@ export const UserMenu: FC = () => {
         <div className="relative group">
             {/* Minimalist Profile Trigger - No bulky background */}
             <button className="flex items-center gap-3 py-1 transition-opacity hover:opacity-75">
-                <div className="w-6 h-6 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center font-black text-[9px] text-[var(--color-primary)] uppercase">
-                    {user.name.charAt(0)}
+                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-black text-[10px] text-kickr uppercase overflow-hidden shadow-sm">
+                    {user.avatarUrl ? (
+                        <img key={user.avatarUrl} src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                    ) : (
+                        <span>{user.name.charAt(0)}</span>
+                    )}
                 </div>
                 <span className="hidden sm:block text-[10px] font-black text-white uppercase tracking-[0.2em]">{user.name}</span>
             </button>

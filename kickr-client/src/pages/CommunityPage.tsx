@@ -201,7 +201,11 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 
                 <div className="relative mb-8 self-center">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-4xl font-black text-white group-hover:text-kickr group-hover:scale-105 group-hover:border-kickr/30 transition-all duration-500 shadow-2xl relative z-10 overflow-hidden">
-                        {user.name[0]}
+                        {user.avatarUrl ? (
+                            <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        ) : (
+                            user.name[0]
+                        )}
                         <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div className="absolute inset-x-[-10px] inset-y-[-10px] bg-kickr/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>

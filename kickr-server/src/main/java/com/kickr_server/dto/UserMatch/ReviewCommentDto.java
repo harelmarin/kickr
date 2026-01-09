@@ -11,7 +11,8 @@ public record ReviewCommentDto(
         String userName,
         String content,
         LocalDateTime createdAt,
-        boolean isModerated) {
+        boolean isModerated,
+        String userAvatarUrl) {
     public static ReviewCommentDto fromEntity(ReviewComment entity) {
         return new ReviewCommentDto(
                 entity.getId(),
@@ -20,6 +21,7 @@ public record ReviewCommentDto(
                 entity.getUser().getName(),
                 entity.getContent(),
                 entity.getCreatedAt(),
-                entity.isModerated());
+                entity.isModerated(),
+                entity.getUser().getAvatarUrl());
     }
 }

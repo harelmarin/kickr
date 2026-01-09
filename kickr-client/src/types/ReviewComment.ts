@@ -6,4 +6,5 @@ export interface ReviewComment {
     content: string;
     createdAt: string;
     isModerated: boolean;
+    userAvatarUrl?: string;
 }

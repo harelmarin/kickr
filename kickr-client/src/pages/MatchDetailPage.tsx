@@ -340,6 +340,7 @@ export const MatchDetailPage = () => {
                       reviewId={userMatch.id}
                       userId={userMatch.user.id}
                       user={userMatch.user.name}
+                      avatarUrl={userMatch.user.avatarUrl}
                       rating={userMatch.note}
                       content={userMatch.comment}
                       watchedAt={userMatch.watchedAt}
@@ -470,7 +471,7 @@ export const MatchDetailPage = () => {
   );
 };
 
-const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLiked, likesCount }: { reviewId: string; userId: string; user: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean; likesCount?: number }) => {
+const ReviewItem = ({ reviewId, userId, user, avatarUrl, rating, content, watchedAt, isLiked, likesCount }: { reviewId: string; userId: string; user: string; avatarUrl?: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean; likesCount?: number }) => {
   const { user: currentUser } = useAuth();
   const navigate = useNavigate();
   const { data: isLikedByMe } = useReviewLikeStatus(reviewId, currentUser?.id);
@@ -497,8 +498,12 @@ const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLike
 
   return (
     <div className="flex gap-4 border-b border-white/5 pb-8">
-      <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase">
-        {user[0]}
+      <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase overflow-hidden border border-white/5">
+        {avatarUrl ? (
+          <img src={avatarUrl} alt={user} className="w-full h-full object-cover" />
+        ) : (
+          user[0]
+        )}
       </div>
       <div className="flex-1">
         <div className="flex items-center gap-2 mb-2">

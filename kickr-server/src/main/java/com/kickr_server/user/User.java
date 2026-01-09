@@ -94,6 +94,18 @@ public class User {
     @Column(nullable = false)
     private Role role = Role.USER;
 
+    /**
+     * URL de la photo de profil (Avatar).
+     */
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
+    /**
+     * ID public de l'image sur Cloudinary (utile pour la suppression/mise à jour).
+     */
+    @Column(name = "avatar_public_id")
+    private String avatarPublicId;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private java.util.List<com.kickr_server.usermatch.UserMatch> userMatches;
 
