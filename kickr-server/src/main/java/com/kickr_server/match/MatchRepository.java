@@ -23,6 +23,8 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
 
         Page<Match> findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime dateTime, Pageable pageable);
 
+        List<Match> findByMatchDateBetween(LocalDateTime start, LocalDateTime end);
+
         Optional<Match> findByExternalFixtureId(Integer externalFixtureId);
 
         // Tous les matchs d'une équipe (à domicile ou à l'extérieur) triés par date
@@ -48,5 +50,15 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         @org.springframework.data.repository.query.Param("isFinished") Boolean isFinished,
                         @org.springframework.data.repository.query.Param("query") String query,
                         @org.springframework.data.repository.query.Param("sort") String sort,
+                        Pageable pageable);
+
+        @Query("SELECT m FROM Match m " +
+                        "LEFT JOIN m.matchDetail md " +
+                        "WHERE (md IS NULL OR md.lineups IS NULL) " +
+                        "AND ((m.homeScore IS NOT NULL AND m.awayScore IS NOT NULL) " +
+                        "     OR (m.matchDate < :nearStartTime)) " +
+                        "ORDER BY m.matchDate DESC")
+        List<Match> findMatchesNeedingDetailEnrichment(
+                        @org.springframework.data.repository.query.Param("nearStartTime") LocalDateTime nearStartTime,
                         Pageable pageable);
 }

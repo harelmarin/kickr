@@ -12,7 +12,7 @@ export const CommunityPage = () => {
     const [debouncedQuery, setDebouncedQuery] = useState('');
     const [sortBy, setSortBy] = useState<'recent' | 'logs' | 'network'>('logs');
 
-    // Debounce search query
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedQuery(searchQuery);
@@ -58,7 +58,7 @@ export const CommunityPage = () => {
                         transition={{ duration: 0.5 }}
                     >
                         <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">
-                            The Global <span className="text-kickr">Tactician</span> Guild
+                            The Global <span className="text-kickr">Tactician</span>
                         </h1>
                         <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
                             Analyze. Track. Connect. The elite football network.

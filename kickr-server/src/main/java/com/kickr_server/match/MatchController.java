@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,8 @@ public class MatchController {
 
         private final MatchService matchService;
 
-        @Operation(summary = "Récupérer et sauvegarder les prochains matchs depuis la source externe")
+        @Operation(summary = "Récupérer et sauvegarder les prochains matchs depuis la source externe", description = "🔒 **ADMIN ONLY** - Déclenche la synchronisation complète.", security = @SecurityRequirement(name = "bearerAuth"), tags = {
+                        "Admin Actions" })
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Matchs récupérés et sauvegardés"),
                         @ApiResponse(responseCode = "500", description = "Erreur lors de la récupération ou sauvegarde")
@@ -31,7 +33,7 @@ public class MatchController {
                 matchService.fetchAndSaveNextMatches();
         }
 
-        @Operation(summary = "Récupère les prochains matchs avec pagination")
+        @Operation(summary = "Récupère les prochains matchs avec pagination", tags = { "Public Match Data" })
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Page de prochains matchs")
         })
@@ -42,7 +44,7 @@ public class MatchController {
                 return matchService.getNextMatchesByDate(page, limit);
         }
 
-        @Operation(summary = "Récupère tous les matchs disponibles")
+        @Operation(summary = "Récupère tous les matchs disponibles", tags = { "Public Match Data" })
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Liste de tous les matchs")
         })
@@ -53,7 +55,7 @@ public class MatchController {
                                 .toList();
         }
 
-        @Operation(summary = "Récupère tous les matchs d'une équipe (passés et futurs)")
+        @Operation(summary = "Récupère tous les matchs d'une équipe (passés et futurs)", tags = { "Public Match Data" })
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Liste de tous les matchs de l'équipe")
         })
@@ -63,7 +65,8 @@ public class MatchController {
                 return matchService.getAllMatchesByTeamId(teamId);
         }
 
-        @Operation(summary = "Récupère un match spécifique par son ID externe (fixture ID)")
+        @Operation(summary = "Récupère un match spécifique par son ID externe (fixture ID)", tags = {
+                        "Public Match Data" })
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Détails du match"),
                         @ApiResponse(responseCode = "404", description = "Match non trouvé")
@@ -76,7 +79,7 @@ public class MatchController {
                                                 org.springframework.http.HttpStatus.NOT_FOUND, "Match non trouvé"));
         }
 
-        @Operation(summary = "Recherche des matchs avec filtres (ligue, statut, tri)")
+        @Operation(summary = "Recherche des matchs avec filtres (ligue, statut, tri)", tags = { "Public Match Data" })
         @GetMapping("/search")
         public Page<MatchDto> searchMatches(
                         @Parameter(description = "ID de la compétition") @RequestParam(required = false) UUID competitionId,
@@ -88,7 +91,7 @@ public class MatchController {
                 return matchService.findMatchesWithFilters(competitionId, finished, query, sort, page, limit);
         }
 
-        @Operation(summary = "Récupère les matchs les mieux notés (trending)")
+        @Operation(summary = "Récupère les matchs les mieux notés (trending)", tags = { "Public Match Data" })
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Liste des matchs trending")
         })

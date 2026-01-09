@@ -25,25 +25,7 @@ public class UserMatchFullDto {
     private LocalDateTime watchedAt;
 
     public static UserMatchFullDto fromEntity(UserMatch entity) {
-        MatchDto matchDto = new MatchDto(
-                entity.getMatch().getHomeTeam().getName(),
-                entity.getMatch().getHomeTeam().getId(),
-                entity.getMatch().getHomeTeam().getLogoUrl(),
-                entity.getMatch().getAwayTeam().getName(),
-                entity.getMatch().getAwayTeam().getId(),
-                entity.getMatch().getAwayTeam().getLogoUrl(),
-                entity.getMatch().getMatchDate(),
-                entity.getMatch().getCompetition().getId(),
-                entity.getMatch().getCompetition().getExternalId(),
-                entity.getMatch().getCompetition().getName(),
-                entity.getMatch().getCompetition().getLogoUrl(),
-                entity.getMatch().getLocation(),
-                entity.getMatch().getHomeScore(),
-                entity.getMatch().getAwayScore(),
-                entity.getMatch().getId(), // matchUuid
-                entity.getMatch().getExternalFixtureId(),
-                0.0,
-                0L);
+        MatchDto matchDto = MatchDto.fromEntity(entity.getMatch());
 
         return new UserMatchFullDto(
                 entity.getId(),

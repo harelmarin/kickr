@@ -6,6 +6,8 @@ export interface MatchApiResponse {
   away_team_id: string;
   home_logo: string;
   away_logo: string;
+  home_team_external_id: number;
+  away_team_external_id: number;
   match_date: string;
   competition: string;
   location: string;
@@ -17,5 +19,8 @@ export interface MatchApiResponse {
   competition_logo?: string;
   average_rating?: number;
   reviews_count?: number;
+  lineups?: any;
+  stats?: any;
+  events?: any;
 }
 

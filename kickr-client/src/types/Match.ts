@@ -8,6 +8,8 @@ export interface Match {
   awayLogo: string;
   homeScore?: number | null;
   awayScore?: number | null;
+  homeTeamExternalId?: number;
+  awayTeamExternalId?: number;
   matchDate: string;
   competition: string;
   competitionId?: string;
@@ -16,4 +18,7 @@ export interface Match {
   matchUuid?: string;
   averageRating?: number;
   reviewsCount?: number;
+  lineups?: any;
+  stats?: any;
+  events?: any;
 }

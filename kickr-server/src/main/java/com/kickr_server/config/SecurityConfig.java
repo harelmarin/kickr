@@ -100,7 +100,7 @@ public class SecurityConfig {
                                                                 "/api/follows/followers/**")
                                                 .permitAll()
                                                 // Admin endpoints - require ADMIN role
-                                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                                .requestMatchers("/api/admin/**", "/api/matchs/save").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                 .exceptionHandling(exceptions -> exceptions
                                                 .authenticationEntryPoint(

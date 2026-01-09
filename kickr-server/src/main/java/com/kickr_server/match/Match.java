@@ -49,4 +49,7 @@ public class Match {
 
     @Column(unique = true, nullable = false)
     private Integer externalFixtureId;
+
+    @OneToOne(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private MatchDetail matchDetail;
 }

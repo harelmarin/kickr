@@ -37,6 +37,12 @@ public class MatchDto {
     @JsonProperty("away_logo")
     private String awayTeamLogo;
 
+    @JsonProperty("home_team_external_id")
+    private Integer homeTeamExternalId;
+
+    @JsonProperty("away_team_external_id")
+    private Integer awayTeamExternalId;
+
     @JsonProperty("match_date")
     private LocalDateTime matchDate;
 
@@ -73,6 +79,15 @@ public class MatchDto {
     @JsonProperty("reviews_count")
     private Long reviewsCount;
 
+    @JsonProperty("lineups")
+    private Object lineups;
+
+    @JsonProperty("stats")
+    private Object stats;
+
+    @JsonProperty("events")
+    private Object events;
+
     /**
      * Convertit une entité Match en DTO.
      */
@@ -86,6 +101,8 @@ public class MatchDto {
                 match.getAwayTeam().getName(),
                 match.getAwayTeam().getId(),
                 match.getAwayTeam().getLogoUrl(),
+                match.getHomeTeam().getExternalId(),
+                match.getAwayTeam().getExternalId(),
                 match.getMatchDate(),
                 match.getCompetition().getId(),
                 match.getCompetition().getExternalId(),
@@ -97,7 +114,10 @@ public class MatchDto {
                 match.getId(), // matchUuid
                 match.getExternalFixtureId(),
                 0.0,
-                0L);
+                0L,
+                match.getMatchDetail() != null ? match.getMatchDetail().getLineups() : null,
+                match.getMatchDetail() != null ? match.getMatchDetail().getStats() : null,
+                match.getMatchDetail() != null ? match.getMatchDetail().getEvents() : null);
     }
 
     public static MatchDto fromEntityWithStats(Match match, Double avgRating, Long reviewsCount) {

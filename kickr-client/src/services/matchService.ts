@@ -17,8 +17,10 @@ const mapApiResponseToMatch = (m: MatchApiResponse): Match => ({
   awayTeamId: m.away_team_id,
   homeLogo: m.home_logo,
   awayLogo: m.away_logo,
+  homeTeamExternalId: m.home_team_external_id,
+  awayTeamExternalId: m.away_team_external_id,
   matchDate: m.match_date,
-  competition: m.competition,
+  competition: m.competition_name || m.competition || '',
   location: m.location,
   homeScore: m.home_score,
   awayScore: m.away_score,
@@ -28,6 +30,9 @@ const mapApiResponseToMatch = (m: MatchApiResponse): Match => ({
   competitionLogo: m.competition_logo,
   averageRating: m.average_rating,
   reviewsCount: m.reviews_count,
+  lineups: m.lineups,
+  stats: m.stats,
+  events: m.events,
 });
 
 export const matchService = {
