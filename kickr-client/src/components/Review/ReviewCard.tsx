@@ -7,9 +7,10 @@ import toast from 'react-hot-toast';
 interface ReviewCardProps {
     review: UserMatch;
     onModerate?: () => void;
+    onDelete?: () => void;
 }
 
-export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
+export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) => {
     const user = authService.getUser();
     const isAdmin = user?.role === 'ADMIN';
 
@@ -28,6 +29,15 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
             },
             error: 'Failed to moderate review'
         });
+    };
+
+    const handleDelete = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!window.confirm('Are you sure you want to remove this log entry?')) return;
+
+        if (onDelete) onDelete();
     };
 
     return (
@@ -60,6 +70,14 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                                 className="text-[10px] font-bold text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
                             >
                                 Moderate
+                            </button>
+                        )}
+                        {!isAdmin && user?.id === review.user?.id && (
+                            <button
+                                onClick={handleDelete}
+                                className="text-[10px] font-bold text-[#445566] hover:text-red-500 opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest"
+                            >
+                                Delete Log
                             </button>
                         )}
                         {review.isModerated && (

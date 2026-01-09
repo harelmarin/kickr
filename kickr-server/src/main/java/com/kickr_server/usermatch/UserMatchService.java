@@ -106,7 +106,7 @@ public class UserMatchService {
      * @return le {@link UserMatch} correspondant, ou null si aucune évaluation
      *         n'existe
      */
-    public UserMatch getByUserIdAndMatchId(UUID userId, UUID matchId) {
+    public List<UserMatch> getByUserIdAndMatchId(UUID userId, UUID matchId) {
         return userMatchRepository.findByUserIdAndMatchId(userId, matchId);
     }
 
@@ -135,42 +135,29 @@ public class UserMatchService {
             throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 characters");
         }
 
-        // Check if an evaluation already exists for this user and match
-        UserMatch userMatch = userMatchRepository.findByUserIdAndMatchId(dto.userId, dto.matchId);
-        boolean isNewReview = (userMatch == null);
-
-        if (!isNewReview) {
-            // Update existing entry
-            userMatch.setNote(dto.note);
-            userMatch.setComment(dto.comment);
-            userMatch.setLiked(dto.isLiked);
-            // We can also update the watchedAt date to the current time if preferred
-            // userMatch.setWatchedAt(LocalDateTime.now());
-        } else {
-            // Create new entry
-            userMatch = UserMatch.builder()
-                    .user(user)
-                    .match(match)
-                    .comment(dto.comment)
-                    .isLiked(dto.isLiked)
-                    .build();
-            userMatch.setNote(dto.note);
-        }
+        // In "Immutable Multi-Log" approach, we ALWAYS create a new entry.
+        // This prevents moderated content from being bypassed and allows tactical
+        // history.
+        UserMatch userMatch = UserMatch.builder()
+                .user(user)
+                .match(match)
+                .comment(dto.comment)
+                .isLiked(dto.isLiked)
+                .build();
+        userMatch.setNote(dto.note);
 
         UserMatch savedMatch = userMatchRepository.save(userMatch);
 
-        if (isNewReview) {
-            // Notify followers
-            List<User> followers = followService.getFollowers(user.getId());
-            for (User follower : followers) {
-                notificationService.createNotification(
-                        follower,
-                        user,
-                        NotificationType.NEW_REVIEW,
-                        user.getName() + " reviewed a new match: " + match.getHomeTeam().getName() + " vs "
-                                + match.getAwayTeam().getName(),
-                        savedMatch.getId().toString());
-            }
+        // Notify followers of the new tactical log
+        List<User> followers = followService.getFollowers(user.getId());
+        for (User follower : followers) {
+            notificationService.createNotification(
+                    follower,
+                    user,
+                    NotificationType.NEW_REVIEW,
+                    user.getName() + " logged a match: " + match.getHomeTeam().getName() + " vs "
+                            + match.getAwayTeam().getName(),
+                    savedMatch.getId().toString());
         }
 
         return savedMatch;
@@ -192,17 +179,7 @@ public class UserMatchService {
      *                                       caractères
      */
     public UserMatch update(UUID id, double note, String comment) {
-        UserMatch existing = userMatchRepository.findById(id)
-                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation not found"));
-
-        if (comment.length() > 1000) {
-            throw new IllegalCommentLengthException(comment.length() + " > 1000 characters");
-        }
-
-        existing.setNote(note);
-        existing.setComment(comment);
-
-        return userMatchRepository.save(existing);
+        throw new UnsupportedOperationException("Reviews are immutable. Please delete and re-log if needed.");
     }
 
     /**

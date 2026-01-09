@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -29,30 +29,12 @@ export const MatchDetailPage = () => {
 
   const { data: userMatches } = useUserMatchesByMatch(match?.matchUuid || '', sortBy, sortDirection);
   const createUserMatch = useCreateUserMatch();
-  const deleteUserMatch = useDeleteUserMatch();
-  const myMatchEntry = userMatches?.find(m => m.user.id === user?.id);
 
-  const previousEntryId = useRef<string | null>(null);
+  // In the new approach, we look for ALL entries from the current user
+  const myMatchEntries = userMatches?.filter(m => m.user.id === user?.id) || [];
+  const hasAlreadyLogged = myMatchEntries.length > 0;
 
-  // Pre-fill form if entry exists
-  useEffect(() => {
-    const currentEntryId = myMatchEntry?.id || null;
-
-    // Only update if we're loading a different entry or initializing for the first time
-    if (currentEntryId !== previousEntryId.current) {
-      if (myMatchEntry) {
-        setRating(myMatchEntry.note);
-        setReview(myMatchEntry.comment);
-        setIsLiked(myMatchEntry.isLiked || false);
-      } else {
-        setRating(0);
-        setReview('');
-        setIsLiked(false);
-      }
-      previousEntryId.current = currentEntryId;
-    }
-  }, [myMatchEntry]);
-
+  // We keep the form empty by default for fresh logs
   const handleSaveRating = async () => {
     if (!user) {
       navigate('/register');
@@ -79,24 +61,21 @@ export const MatchDetailPage = () => {
         isLiked: isLiked,
       });
 
-      toast.success(myMatchEntry ? 'Rating updated successfully!' : 'Rating saved successfully!');
+      toast.success(hasAlreadyLogged ? 'Additional log recorded!' : 'Match logged successfully!');
+
+      // Clear form after successful log
+      setRating(0);
+      setReview('');
+      setIsLiked(false);
     } catch (error: any) {
       console.error('Error saving rating:', error);
-      toast.error(error.response?.data?.message || 'Failed to save rating');
+      toast.error(error.response?.data?.message || 'Failed to record log');
     }
   };
 
-  const handleDeleteEntry = async () => {
-    if (!myMatchEntry) return;
-
-    try {
-      await deleteUserMatch.mutateAsync(myMatchEntry.id);
-      toast.success('Rating removed');
-    } catch (error) {
-      console.error('Error deleting entry:', error);
-      toast.error('Failed to remove rating');
-    }
-  };
+  // Delete logic remains for individual entries, but here we might need to handle which one to delete
+  // For simplicity, we'll keep the delete logic generic or target a specific one if needed.
+  // In the UI, each ReviewCard will have its own delete button, so we don't need a global one here anymore.
 
   if (isLoading) return <LoadingState />;
   if (isError || !match) return <ErrorState />;
@@ -382,18 +361,18 @@ export const MatchDetailPage = () => {
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold text-[#8899aa] uppercase tracking-widest leading-none">
-                      {myMatchEntry ? 'Watched' : 'Log'}
+                      {hasAlreadyLogged ? 'Tactical History' : 'Log Match'}
                     </span>
-                    {myMatchEntry ? (
+                    {hasAlreadyLogged ? (
                       <div className="flex items-center gap-2">
-                        <span className="text-[#4466ff] text-[10px]">●</span>
+                        <span className="text-kickr text-[10px]">●</span>
                         <span className="text-white font-bold text-xs uppercase tracking-tight">
-                          {new Date(myMatchEntry.watchedAt).toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' })}
+                          {myMatchEntries.length} Tactical Log(s) recorded
                         </span>
                       </div>
                     ) : (
                       <span className="text-white font-bold text-xs uppercase tracking-tight">
-                        {matchDate.toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {matchDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </span>
                     )}
                   </div>
@@ -413,7 +392,7 @@ export const MatchDetailPage = () => {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-4xl transition-all duration-200 ${star <= (hoveredRating || rating) ? (myMatchEntry ? 'text-[#4466ff]' : 'text-kickr') : 'text-[#445566]'
+                        className={`text-4xl transition-all duration-200 ${star <= (hoveredRating || rating) ? 'text-kickr' : 'text-[#445566]'
                           }`}
                         onMouseEnter={() => setHoveredRating(star)}
                         onMouseLeave={() => setHoveredRating(0)}
@@ -424,7 +403,7 @@ export const MatchDetailPage = () => {
                     ))}
                   </div>
                   <div className="text-center text-[10px] font-bold text-[#667788] uppercase tracking-widest">
-                    {myMatchEntry ? 'Your rating' : 'Rate this match'}
+                    {hasAlreadyLogged ? 'Log a new tactical session' : 'Rate this match'}
                   </div>
                 </div>
 
@@ -441,20 +420,45 @@ export const MatchDetailPage = () => {
                 <button
                   onClick={handleSaveRating}
                   disabled={rating === 0 || createUserMatch.isPending}
-                  className={`w-full py-3 rounded text-[11px] font-bold hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all ${myMatchEntry ? 'bg-[#4466ff] text-white' : 'btn-primary-kickr'
-                    }`}
+                  className="w-full py-3 rounded text-[11px] font-bold hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all btn-primary-kickr"
                 >
-                  {createUserMatch.isPending ? 'SAVING...' : myMatchEntry ? 'UPDATE ENTRY' : 'SAVE ENTRY'}
+                  {createUserMatch.isPending ? 'LOGGING...' : hasAlreadyLogged ? 'LOG AGAIN' : 'SAVE LOG'}
                 </button>
 
-                {myMatchEntry && (
-                  <button
-                    onClick={handleDeleteEntry}
-                    disabled={deleteUserMatch.isPending}
-                    className="w-full text-[10px] font-bold text-[#445566] hover:text-red-500 transition-colors uppercase tracking-widest pt-2"
-                  >
-                    {deleteUserMatch.isPending ? 'REMOVING...' : 'Remove rating'}
-                  </button>
+                {/* Tactical History Section */}
+                {hasAlreadyLogged && (
+                  <div className="pt-4 border-t border-white/5 space-y-4">
+                    <div className="flex items-center justify-between px-1">
+                      <span className="text-[9px] font-black text-[#667788] uppercase tracking-[0.2em]">Historical Records</span>
+                      <span className="text-[10px] font-bold text-kickr italic">{myMatchEntries.length} Session(s)</span>
+                    </div>
+                    <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 no-scrollbar">
+                      {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
+                        <div key={entry.id} className="p-3 bg-white/[0.02] border border-white/5 rounded-lg group/entry hover:border-kickr/20 transition-all">
+                          <div className="flex items-center justify-between mb-1.5">
+                            <div className="flex text-kickr text-[8px]">
+                              {'★'.repeat(Math.round(entry.note))}
+                              <span className="text-white/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
+                            </div>
+                            <span className="text-[8px] font-black text-[#445566] uppercase tracking-tighter">
+                              {new Date(entry.watchedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            </span>
+                          </div>
+                          {entry.comment && (
+                            <p className="text-[#8899aa] text-[11px] italic leading-tight line-clamp-2 mb-1.5 opacity-60 group-hover/entry:opacity-100 transition-opacity">
+                              "{entry.comment}"
+                            </p>
+                          )}
+                          <div className="flex items-center justify-between">
+                            {entry.isLiked && <span className="text-[#ff8000] text-[10px]">❤</span>}
+                            <Link to={`/reviews/${entry.id}`} className="text-[8px] font-black text-white/20 hover:text-kickr transition-colors tracking-widest uppercase ml-auto">
+                              Full Intel →
+                            </Link>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -471,6 +475,7 @@ const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLike
   const navigate = useNavigate();
   const { data: isLikedByMe } = useReviewLikeStatus(reviewId, currentUser?.id);
   const toggleLike = useToggleReviewLike();
+  const deleteUserMatch = useDeleteUserMatch();
 
   const handleLike = () => {
     if (!currentUser) {
@@ -478,6 +483,16 @@ const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLike
       return;
     }
     toggleLike.mutate({ reviewId, userId: currentUser.id });
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm('Remove this tactical log? This action is permanent.')) return;
+    try {
+      await deleteUserMatch.mutateAsync(reviewId);
+      toast.success('Log removed');
+    } catch (error) {
+      toast.error('Failed to remove log');
+    }
   };
 
   return (
@@ -521,6 +536,16 @@ const ReviewItem = ({ reviewId, userId, user, rating, content, watchedAt, isLike
               <span className="font-bold">{likesCount}</span>
             )}
           </button>
+
+          {currentUser?.id === userId && (
+            <button
+              onClick={handleDelete}
+              disabled={deleteUserMatch.isPending}
+              className="ml-auto text-[10px] font-bold text-[#445566] hover:text-red-500 transition-colors uppercase tracking-widest"
+            >
+              {deleteUserMatch.isPending ? 'Removing...' : 'Delete Log'}
+            </button>
+          )}
         </div>
       </div>
     </div>

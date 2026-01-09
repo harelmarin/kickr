@@ -21,7 +21,7 @@ public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
 
     List<UserMatch> findByMatchId(UUID matchId, Pageable pageable);
 
-    UserMatch findByUserIdAndMatchId(UUID userId, UUID matchId);
+    List<UserMatch> findByUserIdAndMatchId(UUID userId, UUID matchId);
 
     List<UserMatch> findByUserIn(List<User> users);
 
