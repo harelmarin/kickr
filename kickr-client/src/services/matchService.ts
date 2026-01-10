@@ -131,11 +131,9 @@ export const matchService = {
     try {
       const response = await axiosInstance.get(`/matchs/${id}`);
       const m = response.data;
-      console.log('Raw match data from API:', m);
       if (!m) return null;
       return mapApiResponseToMatch(m);
     } catch (err) {
-      console.error(`Error fetching match ${id}:`, err);
       return null;
     }
   },

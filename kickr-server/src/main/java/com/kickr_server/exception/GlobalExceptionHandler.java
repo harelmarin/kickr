@@ -165,6 +165,18 @@ public class GlobalExceptionHandler {
 
     // ---------------------- VALIDATION EXCEPTIONS ----------------------
 
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponseDto<Void>> handleHttpMessageNotReadable(
+            org.springframework.http.converter.HttpMessageNotReadableException ex) {
+        return buildError(HttpStatus.BAD_REQUEST, "Malformed JSON request or missing body");
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<ApiResponseDto<Void>> handleAccessDenied(
+            org.springframework.security.access.AccessDeniedException ex) {
+        return buildError(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleValidationException(MethodArgumentNotValidException ex) {
         StringBuilder sb = new StringBuilder();

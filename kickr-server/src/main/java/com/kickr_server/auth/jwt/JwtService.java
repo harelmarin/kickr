@@ -22,12 +22,15 @@ import java.util.Date;
 public class JwtService {
 
     private final Key secretKey;
+    private final long expirationTime;
 
-    public JwtService(@Value("${jwt.secret}") String secret) {
+    public JwtService(@Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration:900}") long expiration) {
         if (secret == null || secret.isEmpty()) {
             throw new IllegalStateException("La variable d'environnement JWT_SECRET n'est pas définie !");
         }
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        this.expirationTime = expiration * 1000; // convert to milliseconds
     }
 
     /**
@@ -40,7 +43,7 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 minutes
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }

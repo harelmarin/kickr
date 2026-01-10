@@ -8,14 +8,9 @@ class AdminService {
      */
     async getAllUsers(): Promise<User[]> {
         try {
-            console.log('[AdminService] Fetching all users...');
             const response = await axiosInstance.get<User[]>('/admin/users');
-            console.log('[AdminService] Users fetched successfully:', response.data);
             return response.data;
         } catch (error: any) {
-            console.error('[AdminService] Error fetching users:', error);
-            console.error('[AdminService] Error response:', error.response?.data);
-            console.error('[AdminService] Error status:', error.response?.status);
             throw error;
         }
     }

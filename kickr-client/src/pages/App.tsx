@@ -5,6 +5,7 @@ import { ReactQueryProvider } from '../services/queryProvider';
 import { ScrollToTop } from '../components/ScrollToTop';
 import { useAuth } from '../hooks/useAuth';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
+import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 
 // Lazy loading components
 const HomePage = lazy(() => import('./HomePage'));
@@ -61,12 +62,26 @@ function App() {
                 <Route path="/user/:id/matches" element={<UserMatchesPage />} />
                 <Route path="/user/:id/diary" element={<UserDiaryPage />} />
                 <Route path="/reviews/:id" element={<ReviewDetailPage />} />
-                <Route path="/admin" element={<AdminPage />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute requiredRole="ADMIN">
+                      <AdminPage />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/profile"
                   element={user ? <Navigate to={`/user/${user.id}`} replace /> : <Navigate to="/" replace />}
                 />
-                <Route path="/settings" element={<SettingsPage />} />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute>
+                      <SettingsPage />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>

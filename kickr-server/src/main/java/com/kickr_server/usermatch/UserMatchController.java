@@ -97,7 +97,10 @@ public class UserMatchController {
         @RateLimiter(name = "userMatchRateLimiter")
         @PostMapping
         public ApiResponseDto<UserMatchFullDto> saveUserMatch(
-                        @Parameter(description = "DTO de l'évaluation à créer", required = true) @Valid @RequestBody UserMatchDto dto) {
+                        @Parameter(description = "DTO de l'évaluation à créer", required = true) @Valid @RequestBody UserMatchDto dto,
+                        @org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+                var user = userMatchService.getUserEntityByEmail(userDetails.getUsername());
+                dto.userId = user.getId();
                 var entity = userMatchService.save(dto);
                 return ApiResponseDto.success("Évaluation créée", UserMatchFullDto.fromEntity(entity));
         }
@@ -125,8 +128,10 @@ public class UserMatchController {
         @RateLimiter(name = "userMatchRateLimiter")
         @DeleteMapping("/{id}")
         public ApiResponseDto<Void> deleteUserMatch(
-                        @Parameter(description = "UUID de l'évaluation à supprimer", required = true) @PathVariable UUID id) {
-                userMatchService.delete(id);
+                        @Parameter(description = "UUID de l'évaluation à supprimer", required = true) @PathVariable UUID id,
+                        @org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+                var user = userMatchService.getUserEntityByEmail(userDetails.getUsername());
+                userMatchService.delete(id, user);
                 return ApiResponseDto.success("Évaluation supprimée", null);
         }
 

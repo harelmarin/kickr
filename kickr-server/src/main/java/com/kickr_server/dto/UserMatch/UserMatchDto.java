@@ -31,7 +31,7 @@ public class UserMatchDto {
     public UUID matchId;
 
     @Min(value = 0, message = "Note must be at least 0")
-    @Max(value = 10, message = "Note must be at most 10")
+    @Max(value = 5, message = "Note must be at most 5")
     public double note;
 
     @Size(max = 1000, message = "Comment must not exceed 1000 characters")

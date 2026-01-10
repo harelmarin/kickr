@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const registerSchema = z.object({
-    name: z.string().min(3, "Name must be at least 3 characters").max(20, "Name must be less than 20 characters"),
+    name: z.string().min(3, "Name must be at least 3 characters").max(10, "Name must be less than 10 characters"),
     email: z.string().email("Please enter a valid tactical email"),
     password: z.string()
         .min(8, "Password must be at least 8 characters")

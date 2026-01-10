@@ -26,7 +26,6 @@ export function isAdminFromToken(): boolean {
     if (!token) return false;
 
     const payload = decodeJWT(token);
-    console.log('[JWT Debug] Token payload:', payload);
 
     // Check for role in different possible formats
     const hasAdminRole =
@@ -34,6 +33,5 @@ export function isAdminFromToken(): boolean {
         payload?.authorities?.includes('ROLE_ADMIN') ||
         payload?.roles?.includes('ADMIN');
 
-    console.log('[JWT Debug] Has ADMIN role:', hasAdminRole);
     return hasAdminRole;
 }

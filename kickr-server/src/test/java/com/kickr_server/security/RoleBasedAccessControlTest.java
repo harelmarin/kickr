@@ -37,6 +37,9 @@ public class RoleBasedAccessControlTest {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
     private String userToken;
     private String adminToken;
 
@@ -46,7 +49,7 @@ public class RoleBasedAccessControlTest {
         User user = new User();
         user.setName("testuser");
         user.setEmail("user@test.com");
-        user.setPassword("Password123");
+        user.setPassword(passwordEncoder.encode("Password123"));
         user.setRole(Role.USER);
         userService.save(user);
 
@@ -54,13 +57,13 @@ public class RoleBasedAccessControlTest {
         User admin = new User();
         admin.setName("testadmin");
         admin.setEmail("admin@test.com");
-        admin.setPassword("AdminPass123");
+        admin.setPassword(passwordEncoder.encode("AdminPass123"));
         admin.setRole(Role.ADMIN);
         userService.save(admin);
 
         // Obtenir les tokens JWT
-        AuthResponse userAuth = authService.authenticate(new AuthRequest("user@test.com", "Password123"));
-        AuthResponse adminAuth = authService.authenticate(new AuthRequest("admin@test.com", "AdminPass123"));
+        AuthResponse userAuth = authService.authenticate(new AuthRequest("testuser", "Password123"));
+        AuthResponse adminAuth = authService.authenticate(new AuthRequest("testadmin", "AdminPass123"));
 
         userToken = userAuth.token();
         adminToken = adminAuth.token();

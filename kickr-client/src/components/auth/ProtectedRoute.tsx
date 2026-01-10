@@ -4,19 +4,24 @@ import { useAuth } from '../../hooks/useAuth';
 
 interface ProtectedRouteProps {
     children: ReactNode;
+    requiredRole?: 'USER' | 'ADMIN';
 }
 
 /**
- * Component to protect routes that require authentication
+ * Component to protect routes that require authentication and optional role-based access
  */
-export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
-    const { isAuthenticated, checkAuth } = useAuth();
+export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
+    const { isAuthenticated, user, checkAuth } = useAuth();
 
     useEffect(() => {
         checkAuth();
     }, [checkAuth]);
 
     if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
+
+    if (requiredRole && user?.role !== requiredRole) {
         return <Navigate to="/" replace />;
     }
 

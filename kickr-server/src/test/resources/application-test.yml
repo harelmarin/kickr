@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: test
   
   datasource:
     url: jdbc:h2:mem:testdb
@@ -20,7 +18,12 @@ spring:
     enabled: false
 
 jwt:
-  secret: test_jwt_secret_key_for_testing_purposes_only_1234567890
+  secret: test_jwt_secret_key_for_testing_purposes_only_1234567890_long_enough_to_be_secure_64_chars_plus
+  expiration: 900
+
+CLOUDINARY_CLOUD_NAME: test_cloud
+CLOUDINARY_API_KEY: test_key
+CLOUDINARY_API_SECRET: test_secret
 
 logging:
   level:

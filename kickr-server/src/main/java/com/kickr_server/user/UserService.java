@@ -126,10 +126,10 @@ public class UserService {
         log.info("Saving user: {} (id: {})", user.getEmail(), user.getId());
         if (user.getId() == null) {
             if (userRepository.existsByEmail(user.getEmail())) {
-                throw new UserAlreadyExistException("Email déjà utilisé");
+                throw new UserAlreadyExistException("Email address already in use");
             }
             if (userRepository.existsByName(user.getName())) {
-                throw new UserAlreadyExistException("Nom déjà utilisé");
+                throw new UserAlreadyExistException("Callsign already taken by another tactician");
             }
         }
         return userRepository.save(user);

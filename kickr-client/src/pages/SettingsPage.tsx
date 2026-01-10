@@ -5,6 +5,16 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../hooks/useAuth';
 import { userService } from '../services/userService';
 import { EmptyState } from '../components/ui/EmptyState';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const profileSchema = z.object({
+    name: z.string().min(3, "Callsign must be at least 3 characters").max(10, "Callsign must be less than 10 characters"),
+    email: z.string().email("Please enter a valid tactical email").max(100, "Email is too long"),
+});
+
+type ProfileFormData = z.infer<typeof profileSchema>;
 
 export const SettingsPage = () => {
     const { user, updateUser } = useAuth();
@@ -13,20 +23,27 @@ export const SettingsPage = () => {
     const [isSaving, setIsSaving] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Profile state
-    const [formData, setFormData] = useState({
-        name: '',
-        email: ''
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isDirty }
+    } = useForm<ProfileFormData>({
+        resolver: zodResolver(profileSchema),
+        defaultValues: {
+            name: user?.name || '',
+            email: user?.email || '',
+        }
     });
 
     useEffect(() => {
         if (user) {
-            setFormData({
+            reset({
                 name: user.name || '',
                 email: user.email || ''
             });
         }
-    }, [user]);
+    }, [user, reset]);
 
     if (!user) {
         return (
@@ -50,10 +67,8 @@ export const SettingsPage = () => {
         queryClient.invalidateQueries({ queryKey: ['followers'] });
     };
 
-    const handleProfileUpdate = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (formData.name === user.name && formData.email === user.email) {
+    const onSubmit = async (data: ProfileFormData) => {
+        if (data.name === user.name && data.email === user.email) {
             toast('No changes detected', { icon: 'ℹ️' });
             return;
         }
@@ -62,7 +77,7 @@ export const SettingsPage = () => {
         const saveToast = toast.loading('Syncing tactical data...');
 
         try {
-            const updatedUser = await userService.updateProfile(formData);
+            const updatedUser = await userService.updateProfile(data);
             updateUser(updatedUser);
             refreshTacticalData();
             toast.success('Profile identification updated', { id: saveToast });
@@ -226,38 +241,42 @@ export const SettingsPage = () => {
 
                 {/* 2. Credentials Form */}
                 <section className="bg-[#14181c] border border-white/5 rounded-xl shadow-lg">
-                    <form onSubmit={handleProfileUpdate} className="p-8 space-y-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6">
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label className="text-[9px] font-black text-[#445566] uppercase tracking-widest px-1">Tactician Callsign</label>
                                 <input
                                     type="text"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full bg-[#0a0b0d] border border-white/5 rounded-lg px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all"
-                                    required
+                                    {...register("name")}
+                                    className={`w-full bg-[#0a0b0d] border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-lg px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
                                 />
+                                {errors.name && (
+                                    <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
+                                )}
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[9px] font-black text-[#445566] uppercase tracking-widest px-1">Encrypted Email</label>
                                 <input
                                     type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full bg-[#0a0b0d] border border-white/5 rounded-lg px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all"
-                                    required
+                                    {...register("email")}
+                                    className={`w-full bg-[#0a0b0d] border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
                                 />
+                                {errors.email && (
+                                    <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
+                                )}
                             </div>
                         </div>
 
                         <div className="flex items-center justify-between pt-4">
                             <div className="flex items-center gap-2">
-                                <div className={`w-1 h-1 rounded-full ${isSaving ? 'bg-kickr animate-pulse' : 'bg-white/10'}`}></div>
-                                <span className="text-[8px] font-black text-[#334455] uppercase tracking-widest">Ready for sync</span>
+                                <div className={`w-1 h-1 rounded-full ${isSaving ? 'bg-kickr animate-pulse' : (isDirty ? 'bg-kickr/40' : 'bg-white/10')}`}></div>
+                                <span className="text-[8px] font-black text-[#334455] uppercase tracking-widest">
+                                    {isDirty ? 'Changes ready' : 'Synced'}
+                                </span>
                             </div>
                             <button
                                 type="submit"
-                                disabled={isSaving || isUploading}
+                                disabled={isSaving || isUploading || !isDirty}
                                 className="bg-white text-[#0a1b28] text-[9px] font-black uppercase tracking-widest px-8 py-3 rounded-lg hover:bg-kickr hover:text-white transition-all disabled:opacity-20"
                             >
                                 {isSaving ? 'Syncing...' : 'Save Changes'}

@@ -239,7 +239,7 @@ export const MatchDetailPage = () => {
                         {/* Rating Distribution Histogram */}
                         <div className="flex flex-col gap-1.5 flex-1 min-w-[200px]">
                           {[5, 4, 3, 2, 1].map(star => {
-                            const count = userMatches?.filter(m => Math.round(m.note / 2) === star || (star === 5 && m.note >= 9)).length || 0;
+                            const count = userMatches?.filter(m => Math.round(m.note) === star).length || 0;
                             const total = userMatches?.length || 1;
                             const percentage = (count / total) * 100;
                             return (

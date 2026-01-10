@@ -45,6 +45,11 @@ public class UserMatchService {
     private final FollowService followService;
     private final NotificationService notificationService;
 
+    public User getUserEntityByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+    }
+
     /**
      * Récupère les dernières évaluations globales.
      */
@@ -128,8 +133,10 @@ public class UserMatchService {
         Match match = matchRepository.findById(dto.matchId)
                 .orElseThrow(() -> new IllegalArgumentException("Match not found"));
 
-        User user = userRepository.findById(dto.userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = (dto.userId != null)
+                ? userRepository.findById(dto.userId)
+                        .orElseThrow(() -> new UserNotFoundException("User not found"))
+                : null; // Fallback or logic to get from context if needed
 
         if (dto.comment != null && dto.comment.length() > 1000) {
             throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 characters");
@@ -207,15 +214,33 @@ public class UserMatchService {
 
     /**
      * Supprime une évaluation.
+     * <p>
+     * Seul l'auteur de l'évaluation ou un administrateur peut la supprimer.
      *
-     * @param id l'UUID de l'évaluation à supprimer
-     * @throws UserMatchNotFoundException si l'évaluation n'existe pas
+     * @param id          l'UUID de l'évaluation à supprimer
+     * @param currentUser l'utilisateur effectuant la demande de suppression
+     * @throws UserMatchNotFoundException                                si
+     *                                                                   l'évaluation
+     *                                                                   n'existe
+     *                                                                   pas
+     * @throws org.springframework.security.access.AccessDeniedException si
+     *                                                                   l'utilisateur
+     *                                                                   n'a pas le
+     *                                                                   droit
      */
-    public void delete(UUID id) {
-        if (!userMatchRepository.existsById(id)) {
-            throw new UserMatchNotFoundException("Evaluation not found");
+    public void delete(UUID id, User currentUser) {
+        UserMatch existing = userMatchRepository.findById(id)
+                .orElseThrow(() -> new UserMatchNotFoundException("Evaluation not found"));
+
+        boolean isOwner = existing.getUser().getId().equals(currentUser.getId());
+        boolean isAdmin = currentUser.getRole() == com.kickr_server.user.Role.ADMIN;
+
+        if (!isOwner && !isAdmin) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "You do not have permission to delete this review");
         }
-        userMatchRepository.deleteById(id);
+
+        userMatchRepository.delete(existing);
     }
 
     /**

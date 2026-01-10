@@ -61,7 +61,6 @@ public class SecurityConfig {
                                                                 "/swagger-ui.html",
                                                                 "/swagger-ui/index.html")
                                                 .permitAll()
-                                                .requestMatchers("/actuator/**").permitAll()
                                                 .requestMatchers("/", "/favicon.ico", "/error").permitAll()
                                                 // Public Read access to data
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
@@ -102,9 +101,20 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 // Admin endpoints - require ADMIN role
                                                 .requestMatchers("/api/admin/**", "/api/matchs/save",
-                                                                "/api/matchs/sync-tournaments")
+                                                                "/api/matchs/sync-tournaments",
+                                                                "/actuator/**")
                                                 .hasRole("ADMIN")
                                                 .anyRequest().authenticated())
+                                .headers(headers -> headers
+                                                .xssProtection(xss -> xss.headerValue(
+                                                                org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.DISABLED))
+                                                .contentSecurityPolicy(csp -> csp
+                                                                .policyDirectives(
+                                                                                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com;"))
+                                                .frameOptions(frame -> frame.deny())
+                                                .httpStrictTransportSecurity(hsts -> hsts
+                                                                .includeSubDomains(true)
+                                                                .maxAgeInSeconds(31536000))) // 1 year
                                 .exceptionHandling(exceptions -> exceptions
                                                 .authenticationEntryPoint(
                                                                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

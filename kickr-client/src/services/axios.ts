@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 // Configuration de base pour Axios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         // Attempt to refresh the token
-        const response = await axios.post('http://localhost:8080/api/auth/refresh', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8080/api'}/auth/refresh`, {
           refreshToken
         });
 
@@ -122,6 +122,9 @@ axiosInstance.interceptors.response.use(
 
     // Global error handling for other errors
     if (error.response) {
+      if (error.response.status === 403) {
+        toast.error('Access denied. You do not have the necessary permissions.');
+      }
       console.error('Server error:', error.response.status, error.response.data);
     } else if (error.request) {
       console.error('No server response:', error.request);
