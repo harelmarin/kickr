@@ -8,13 +8,16 @@ import java.time.LocalDateTime;
  * @param <T> type du payload (données)
  */
 public record ApiResponseDto<T>(
-        String status,         // SUCCESS, ERROR, etc.
-        String message,        // message descriptif
-        T data,                // payload (par ex. AuthResponse)
-        LocalDateTime timestamp
-) {
+        String status, // SUCCESS, ERROR, etc.
+        String message, // message descriptif
+        T data, // payload (par ex. AuthResponse)
+        LocalDateTime timestamp) {
     public static <T> ApiResponseDto<T> success(String message, T data) {
         return new ApiResponseDto<>("SUCCESS", message, data, LocalDateTime.now());
+    }
+
+    public static <T> ApiResponseDto<T> error(String message) {
+        return new ApiResponseDto<>("ERROR", message, null, LocalDateTime.now());
     }
 
     public static <T> ApiResponseDto<T> error(String message, T data) {

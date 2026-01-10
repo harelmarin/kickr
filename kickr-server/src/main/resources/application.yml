@@ -1,5 +1,14 @@
 server:
   port: 8080
+  cors:
+    allowed-origins: http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000
+
+kickr:
+  mail:
+    from: ${FROM_EMAIL:noreply@kickr.com}
+  
+  application:
+    name: kickr-server
 
 spring:
   profiles:

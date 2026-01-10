@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
@@ -30,6 +31,9 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public class SecurityConfig {
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+        @Value("${kickr.cors.allowed-origins:http://localhost:5173}")
+        private String allowedOrigins;
 
         /**
          * Définit la chaîne de filtres de sécurité de Spring Security.
@@ -126,14 +130,16 @@ public class SecurityConfig {
         @Bean
         public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
                 org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-                configuration.setAllowedOrigins(java.util.List.of("http://localhost:5173", "http://localhost:3000",
-                                "http://127.0.0.1:5173", "http://127.0.0.1:3000")); // Vite
-                // and
-                // React
-                // defaults
+
+                // Load origins from environment variable/property
+                java.util.List<String> origins = java.util.Arrays.asList(allowedOrigins.split(","));
+                configuration.setAllowedOrigins(origins);
+
                 configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-                configuration.setAllowedHeaders(java.util.List.of("*"));
+                configuration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "Cache-Control"));
                 configuration.setAllowCredentials(true);
+                configuration.setMaxAge(3600L); // 1 hour
+
                 org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
                 source.registerCorsConfiguration("/**", configuration);
                 return source;

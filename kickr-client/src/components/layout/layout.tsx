@@ -9,7 +9,7 @@ type RootLayoutProps = {
 
 export const Layout = ({ children }: RootLayoutProps) => {
   const location = useLocation();
-  const hideFooterRoutes = ['/register'];
+  const hideFooterRoutes = ['/register', '/reset-password'];
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (

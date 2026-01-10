@@ -106,6 +106,18 @@ public class User {
     @Column(name = "avatar_public_id")
     private String avatarPublicId;
 
+    /**
+     * Token pour la réinitialisation du mot de passe.
+     */
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    /**
+     * Date d'expiration du token de réinitialisation.
+     */
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private java.util.List<com.kickr_server.usermatch.UserMatch> userMatches;
 

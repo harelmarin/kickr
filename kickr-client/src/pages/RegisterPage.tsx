@@ -10,10 +10,14 @@ const registerSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters").max(10, "Name must be less than 10 characters"),
     email: z.string().email("Please enter a valid tactical email"),
     password: z.string()
-        .min(8, "Password must be at least 8 characters")
-        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(/[0-9]/, "Password must contain at least one number"),
+        .min(8, "Min 8 chars")
+        .regex(/[A-Z]/, "One uppercase")
+        .regex(/[a-z]/, "One lowercase")
+        .regex(/[0-9]/, "One number"),
+    confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
 });
 
 type RegisterFormData = z.infer<typeof registerSchema>;
@@ -99,7 +103,6 @@ export const RegisterPage = () => {
                 <div className="w-full max-w-md animate-fade-in-up">
                     <div className="lg:hidden text-center mb-10">
                         <Link to="/" className="inline-flex items-center gap-2 mb-4">
-                            <span className="text-3xl">⚽</span>
                             <span className="text-2xl font-black font-display tracking-tighter text-white">KICKR</span>
                         </Link>
                     </div>
@@ -151,13 +154,26 @@ export const RegisterPage = () => {
                                     )}
                                 </div>
 
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Confirm Identity</label>
+                                    <input
+                                        type="password"
+                                        placeholder="••••••••"
+                                        {...register("confirmPassword")}
+                                        className={`w-full bg-[#1b2228]/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] outline-none`}
+                                    />
+                                    {errors.confirmPassword && (
+                                        <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.confirmPassword.message}</p>
+                                    )}
+                                </div>
+
                                 {/* Password Checker with labels */}
                                 <div className="space-y-3">
                                     <div className="grid grid-cols-4 gap-2">
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasMinLength ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasUppercase ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasLowercase ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasNumber ? 'bg-kickr shadow-[0_0_8px_rgba(68,102,255,0.5)]' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasMinLength ? 'bg-kickr' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasUppercase ? 'bg-kickr' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasLowercase ? 'bg-kickr' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasNumber ? 'bg-kickr' : 'bg-white/5'}`}></div>
                                     </div>
                                     <div className="flex justify-between px-1">
                                         <span className={`text-[8px] font-bold uppercase tracking-tighter ${hasMinLength ? 'text-kickr' : 'text-[#445566]'}`}>8+ Chars</span>

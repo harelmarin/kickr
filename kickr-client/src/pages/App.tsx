@@ -23,6 +23,7 @@ const UserDiaryPage = lazy(() => import('./UserDiaryPage').then(module => ({ def
 const ReviewDetailPage = lazy(() => import('./ReviewDetailPage').then(module => ({ default: module.ReviewDetailPage })));
 const AdminPage = lazy(() => import('./AdminPage'));
 const SettingsPage = lazy(() => import('./SettingsPage').then(module => ({ default: module.SettingsPage })));
+const ResetPasswordPage = lazy(() => import('./ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })));
 const NotFoundPage = lazy(() => import('./NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 const PageLoader = () => (
@@ -51,6 +52,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/community" element={<CommunityPage />} />
                 <Route path="/competitions" element={<CompetitionsPage />} />
                 <Route path="/competitions/:id" element={<CompetitionDetailPage />} />

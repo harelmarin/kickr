@@ -76,14 +76,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseDto<Void>> handleGeneralException(Exception ex) {
-        // Logger l'exception complète pour le debugging (avec stack trace)
+        // Log the full exception for internal debugging
         org.slf4j.LoggerFactory.getLogger(GlobalExceptionHandler.class)
-                .error("Unexpected error occurred", ex);
+                .error("Unexpected error occurred: {}", ex.getMessage(), ex);
 
-        // Retourner un message générique à l'utilisateur (ne pas exposer les détails
-        // techniques)
+        // Always return a generic message to the client for unhandled exceptions
         return buildError(HttpStatus.INTERNAL_SERVER_ERROR,
-                "An unexpected error occurred. Please try again later.");
+                "An unexpected internal error occurred. Our team has been notified.");
     }
 
     @ExceptionHandler(UserAlreadyExistException.class)

@@ -6,6 +6,8 @@ import com.kickr_server.dto.Auth.AuthResponse;
 import com.kickr_server.dto.Auth.RefreshTokenRequest;
 import com.kickr_server.dto.Auth.RefreshTokenResponse;
 import com.kickr_server.dto.Auth.RegisterRequest;
+import com.kickr_server.dto.Auth.ForgotPasswordRequest;
+import com.kickr_server.dto.Auth.ResetPasswordRequest;
 import com.kickr_server.dto.generic.ApiResponseDto;
 import com.kickr_server.user.User;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -77,4 +79,31 @@ public class AuthController {
         return ApiResponseDto.success("Logout successful", null);
     }
 
+    @Operation(summary = "Initiate password reset process")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "If email exists, reset link has been sent")
+    })
+    @RateLimiter(name = "authRateLimiter")
+    @PostMapping("/forgot-password")
+    public ApiResponseDto<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.initiatePasswordReset(request.email());
+        return ApiResponseDto.success("If an account exists for this email, you will receive a reset link shortly",
+                null);
+    }
+
+    @Operation(summary = "Reset password using token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Password reset successful"),
+            @ApiResponse(responseCode = "400", description = "Invalid or expired token")
+    })
+    @RateLimiter(name = "authRateLimiter")
+    @PostMapping("/reset-password")
+    public ApiResponseDto<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        try {
+            authService.resetPassword(request.token(), request.newPassword());
+            return ApiResponseDto.success("Your password has been reset successfully", null);
+        } catch (RuntimeException e) {
+            return ApiResponseDto.error(e.getMessage());
+        }
+    }
 }

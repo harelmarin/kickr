@@ -2,11 +2,34 @@ server:
   port: ${PORT:8080}
   # Force HTTPS in production
   ssl:
-    enabled: false  # Set to true when you have SSL certificates
+    enabled: false
+  
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+
+kickr:
+  mail:
+    from: ${FROM_EMAIL:noreply@kickr.com}
+
+app:
+  frontend:
+    url: ${FRONTEND_URL:http://localhost:5173}
 
 spring:
   application:
     name: kickr-server
+
+  mail:
+    host: smtp.resend.com
+    port: 587
+    username: resend
+    password: ${RESEND_API_KEY}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   servlet:
     multipart:
