@@ -24,22 +24,22 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Operation(summary = "Authentifier un utilisateur et récupérer JWT + DTO")
+    @Operation(summary = "Authenticate a user and retrieve JWT + DTO")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Authentification réussie"),
-            @ApiResponse(responseCode = "401", description = "Email ou mot de passe invalide")
+            @ApiResponse(responseCode = "200", description = "Authentication successful"),
+            @ApiResponse(responseCode = "401", description = "Invalid email or password")
     })
     @RateLimiter(name = "authRateLimiter")
     @PostMapping("/login")
     public ApiResponseDto<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
         AuthResponse authResponse = authService.authenticate(request);
-        return ApiResponseDto.success("Connexion réussi", authResponse);
+        return ApiResponseDto.success("Authentication successful", authResponse);
     }
 
-    @Operation(summary = "Créer un nouvel utilisateur")
+    @Operation(summary = "Create a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Utilisateur créé"),
-            @ApiResponse(responseCode = "400", description = "Données invalides")
+            @ApiResponse(responseCode = "201", description = "User created"),
+            @ApiResponse(responseCode = "400", description = "Invalid data")
     })
     @RateLimiter(name = "authRateLimiter")
     @PostMapping("/register")
@@ -53,10 +53,10 @@ public class AuthController {
         return ApiResponseDto.success("Registration successful", userDto);
     }
 
-    @Operation(summary = "Régénérer un access token à partir d’un refresh token")
+    @Operation(summary = "Regenerate an access token from a refresh token")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Nouveau access token généré"),
-            @ApiResponse(responseCode = "401", description = "Refresh token invalide ou expiré")
+            @ApiResponse(responseCode = "200", description = "New access token generated"),
+            @ApiResponse(responseCode = "401", description = "Invalid or expired refresh token")
     })
     @RateLimiter(name = "authRateLimiter")
     @PostMapping("/refresh")
@@ -64,10 +64,10 @@ public class AuthController {
         return authService.refreshAccessToken(request.refreshToken());
     }
 
-    @Operation(summary = "Déconnexion d'un utilisateur, révoque le refresh token")
+    @Operation(summary = "Logout user, revoke refresh token")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Refresh token révoqué"),
-            @ApiResponse(responseCode = "404", description = "Refresh token non trouvé")
+            @ApiResponse(responseCode = "204", description = "Refresh token revoked"),
+            @ApiResponse(responseCode = "404", description = "Refresh token not found")
     })
     @RateLimiter(name = "authRateLimiter")
     @PostMapping("/logout")

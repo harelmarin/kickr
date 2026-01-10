@@ -40,11 +40,8 @@ import java.util.stream.Collectors;
 public class MatchService {
 
         private static final int[] LEAGUE_IDS = {
-                        // Championnats
                         39, 140, 135, 78, 61,
-                        // Coupes nationales
                         45, 143, 137, 81, 66,
-                        // Compétitions européennes
                         2, 3, 848
         };
 
@@ -102,7 +99,6 @@ public class MatchService {
 
                         for (JsonNode fixtureNode : responseArray) {
                                 processFixture(fixtureNode, new ArrayList<>());
-                                // This method is now legacy/unused, but I keep it for structure
                         }
                 }
                 return matches;
@@ -167,7 +163,6 @@ public class MatchService {
                                 }
                         }
 
-                        // Enrichissement batch
                         List<Match> toEnrich = matchRepository.findMatchesNeedingDetailEnrichment(
                                         LocalDateTime.now().plusHours(2),
                                         PageRequest.of(0, 20));
@@ -228,18 +223,16 @@ public class MatchService {
                                                 + e.getMessage());
                         }
 
-                        // Respect rate limit
                         Thread.sleep(6500);
                 }
         }
 
         public void syncAllMajorStandings(Integer season) throws Exception {
-                // IDs: Ligue 1, PL, La Liga, BuLi, Serie A, UCL, UEL, UECL
                 int[] leagueIds = { 61, 39, 140, 78, 135, 2, 3, 848 };
                 for (int id : leagueIds) {
                         try {
                                 syncStandings(id, season);
-                                Thread.sleep(6500); // Rate limit
+                                Thread.sleep(6500);
                         } catch (Exception e) {
                                 System.err.println("❌ Erreur synchro standings " + id + " : " + e.getMessage());
                         }
@@ -658,7 +651,6 @@ public class MatchService {
                                                                 + " matches processed for league " + leagueId);
                                         }
 
-                                        // Rate limiting: 6.5s between requests
                                         Thread.sleep(6500);
 
                                 } catch (Exception e) {
@@ -670,7 +662,6 @@ public class MatchService {
                         System.out.println("📊 Total fixtures processed: " + totalProcessed);
 
                         // Enrich finished matches with lineups (batch by 20)
-                        // OPTIMIZATION: Only fetch lineups for matches that don't have them yet
                         List<Match> finishedMatches = allMatches.stream()
                                         .filter(m -> m.getHomeScore() != null && m.getAwayScore() != null)
                                         .toList();
@@ -704,7 +695,7 @@ public class MatchService {
                                         enriched += batch.size();
                                         System.out.println("   ✓ Enriched " + enriched + "/"
                                                         + matchesNeedingLineups.size() + " matches");
-                                        Thread.sleep(6500); // Rate limit
+                                        Thread.sleep(6500);
                                 }
                         }
 

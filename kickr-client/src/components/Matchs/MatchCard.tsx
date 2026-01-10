@@ -6,7 +6,7 @@ import type { Match } from '../../types/Match';
 interface MatchCardProps {
     match: Match;
     variant?: 'default' | 'compact' | 'poster';
-    className?: string; // Allow passing extra classes
+    className?: string;
 }
 
 export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default', className = '' }) => {
@@ -28,7 +28,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
         month: 'short'
     });
 
-    // Poster Variant Rendering
     if (isPoster) {
         return (
             <div className={`flex flex-col gap-3 group/card ${className}`}>
@@ -39,13 +38,11 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
 
                     <div className="absolute inset-0 flex items-center justify-between px-6 py-4">
-                        {/* Home Team */}
                         <div className="flex flex-col items-center gap-2 flex-1">
                             <img src={match.homeLogo} alt="" className="w-10 h-10 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
                             <span className="text-[8px] sm:text-[9px] font-black text-[#5c6470] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-white transition-colors">{match.homeTeam}</span>
                         </div>
 
-                        {/* Score / VS Center Area */}
                         <div className="flex items-center gap-4 sm:gap-6 px-4">
                             {isFinished ? (
                                 <div className="flex items-center gap-3">
@@ -60,14 +57,12 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                             )}
                         </div>
 
-                        {/* Away Team */}
                         <div className="flex flex-col items-center gap-2 flex-1">
                             <img src={match.awayLogo} alt="" className="w-10 h-10 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
                             <span className="text-[8px] sm:text-[9px] font-black text-[#5c6470] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-white transition-colors">{match.awayTeam}</span>
                         </div>
                     </div>
 
-                    {/* Date / Time Overlay for upcoming matches - Bottom Edge */}
                     {!isFinished && (
                         <div className="absolute bottom-0 inset-x-0 h-[3px] bg-white/5">
                             <div className="h-full bg-kickr/50 w-full animate-pulse shadow-[0_0_10px_rgba(68,102,255,0.5)]"></div>
@@ -75,7 +70,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     )}
                 </Link>
 
-                {/* Bottom Meta Info */}
                 <div className="flex items-center justify-between px-1">
                     <div className="flex items-center gap-2">
                         <span className="text-[#5c6470] text-[9px] font-bold uppercase tracking-[0.2em]">
@@ -95,7 +89,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
         );
     }
 
-    // Default & Compact Rendering
     return (
         <Link to={`/matches/${match.id}`} className={`group block ${className}`}>
             <motion.div
@@ -103,7 +96,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                 className={`bg-[#14181c] border border-white/5 rounded-xl transition-all hover:bg-white/[0.03] hover:border-white/10 flex items-center ${isCompact ? 'p-2 py-3' : 'p-4'
                     }`}
             >
-                {/* 1. Date/Time Section - Fixed Width */}
                 <div className={`flex flex-col items-start flex-shrink-0 ${isCompact ? 'w-[45px]' : 'w-[65px]'}`}>
                     <span className={`${isCompact ? 'text-[9px]' : 'text-[10px]'} font-black text-kickr uppercase tracking-tighter truncate w-full`}>
                         {isFinished ? 'FT' : timeStr}
@@ -113,10 +105,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     </span>
                 </div>
 
-                {/* 2. Main Teams Content Wrapper */}
                 <div className={`flex-1 flex items-center min-w-0 ${isCompact ? 'gap-1' : 'gap-4 px-2'}`}>
-
-                    {/* Home Team Container - flex-1 min-w-0 for truncation */}
                     <div className="flex items-center justify-end gap-2 flex-1 min-w-0">
                         <span className={`text-[10px] font-black text-white uppercase tracking-tight text-right truncate ${isCompact ? 'hidden xl:block' : 'hidden md:block'
                             }`}>
@@ -127,7 +116,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                         </div>
                     </div>
 
-                    {/* Score/VS Center - Fixed Width */}
                     <div className={`${isCompact ? 'w-[35px]' : 'w-[60px]'} flex flex-col items-center flex-shrink-0`}>
                         {isFinished ? (
                             <div className="flex items-center gap-1">
@@ -144,7 +132,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                         )}
                     </div>
 
-                    {/* Away Team Container - flex-1 min-w-0 for truncation */}
                     <div className="flex items-center justify-start gap-2 flex-1 min-w-0">
                         <div className={`${isCompact ? 'w-6 h-6' : 'w-8 h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
                             <img src={match.awayLogo} alt="" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform" />
@@ -156,7 +143,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     </div>
                 </div>
 
-                {/* 3. Meta Stats Section - Fixed Width (Hidden in compact) */}
                 {!isCompact && (
                     <div className="flex items-center gap-4 w-[90px] flex-shrink-0 justify-end">
                         {match.averageRating && (

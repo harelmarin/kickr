@@ -27,13 +27,13 @@ public class UserController {
         private final UserService userService;
 
         /**
-         * Récupère la liste de tous les utilisateurs.
+         * Get list of all users.
          *
-         * @return liste des utilisateurs sous forme de DTO (sans mot de passe)
+         * @return list of users as DTOs (without passwords)
          */
-        @Operation(summary = "Récupérer tous les utilisateurs")
+        @Operation(summary = "Get all users")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Liste récupérée avec succès")
+                        @ApiResponse(responseCode = "200", description = "List retrieved successfully")
         })
         @RateLimiter(name = "userRateLimiter")
         @GetMapping
@@ -42,15 +42,15 @@ public class UserController {
         }
 
         /**
-         * Récupère un utilisateur par son identifiant.
+         * Get a user by their identifier.
          *
-         * @param id UUID de l'utilisateur
-         * @return l'utilisateur sous forme de DTO
+         * @param id User UUID
+         * @return user as DTO
          */
-        @Operation(summary = "Récupérer un utilisateur par son ID")
+        @Operation(summary = "Get a user by ID")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Utilisateur trouvé"),
-                        @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+                        @ApiResponse(responseCode = "200", description = "User found"),
+                        @ApiResponse(responseCode = "404", description = "User not found")
         })
         @RateLimiter(name = "userRateLimiter")
         @GetMapping("/{id}")
@@ -59,14 +59,14 @@ public class UserController {
         }
 
         /**
-         * Supprime un utilisateur par son identifiant.
+         * Delete a user by their identifier.
          *
-         * @param id UUID de l'utilisateur
+         * @param id User UUID
          */
-        @Operation(summary = "Supprimer un utilisateur par son ID")
+        @Operation(summary = "Delete a user by ID")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "204", description = "Utilisateur supprimé"),
-                        @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+                        @ApiResponse(responseCode = "204", description = "User deleted"),
+                        @ApiResponse(responseCode = "404", description = "User not found")
         })
         @RateLimiter(name = "userRateLimiter")
         @DeleteMapping("/{id}")
@@ -76,11 +76,11 @@ public class UserController {
                 return new ApiResponseDto<>("SUCCESS", "User deleted successfully", null, null);
         }
 
-        @Operation(summary = "Mettre à jour mes informations de profil")
+        @Operation(summary = "Update my profile information")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Profil mis à jour"),
-                        @ApiResponse(responseCode = "400", description = "Données invalides / Nom déjà pris"),
-                        @ApiResponse(responseCode = "401", description = "Non authentifié")
+                        @ApiResponse(responseCode = "200", description = "Profile updated"),
+                        @ApiResponse(responseCode = "400", description = "Invalid data / Name already taken"),
+                        @ApiResponse(responseCode = "401", description = "Not authenticated")
         })
         @RateLimiter(name = "userRateLimiter")
         @PutMapping("/me")
@@ -90,14 +90,14 @@ public class UserController {
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                 com.kickr_server.user.User user = userService.getUserByEmail(userDetails.getUsername());
                 var updatedUser = userService.updateProfile(user.getId(), updateDto.name(), updateDto.email());
-                return ApiResponseDto.success("Tactical records synchronized",
+                return ApiResponseDto.success("Profile updated successfully",
                                 userService.getUserDtoWithStats(updatedUser.getId()));
         }
 
-        @Operation(summary = "Mettre à jour ma photo de profil")
+        @Operation(summary = "Update my profile picture")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Photo mise à jour"),
-                        @ApiResponse(responseCode = "401", description = "Non authentifié")
+                        @ApiResponse(responseCode = "200", description = "Picture updated"),
+                        @ApiResponse(responseCode = "401", description = "Not authenticated")
         })
         @RateLimiter(name = "userRateLimiter")
         @PostMapping("/me/avatar")
@@ -111,10 +111,10 @@ public class UserController {
                                 userService.getUserDtoWithStats(updatedUser.getId()));
         }
 
-        @Operation(summary = "Supprimer ma photo de profil")
+        @Operation(summary = "Delete my profile picture")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Photo supprimée"),
-                        @ApiResponse(responseCode = "401", description = "Non authentifié")
+                        @ApiResponse(responseCode = "200", description = "Picture deleted"),
+                        @ApiResponse(responseCode = "401", description = "Not authenticated")
         })
         @RateLimiter(name = "userRateLimiter")
         @DeleteMapping("/me/avatar")

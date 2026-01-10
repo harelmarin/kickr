@@ -121,6 +121,12 @@ public class UserMatchService {
      * <p>
      * La note peut être un entier ou un demi (0.5, 1.0, 1.5, ...).
      * La validation de la note est effectuée via {@link UserMatch#setNote(double)}.
+     * </p>
+     * <p>
+     * Note: In "Immutable Multi-Log" approach, we ALWAYS create a new entry.
+     * This prevents moderated content from being bypassed and allows tactical
+     * history.
+     * </p>
      *
      * @param dto DTO contenant les informations de l'évaluation
      * @return l'entité {@link UserMatch} enregistrée en base
@@ -136,15 +142,12 @@ public class UserMatchService {
         User user = (dto.userId != null)
                 ? userRepository.findById(dto.userId)
                         .orElseThrow(() -> new UserNotFoundException("User not found"))
-                : null; // Fallback or logic to get from context if needed
+                : null;
 
         if (dto.comment != null && dto.comment.length() > 1000) {
             throw new IllegalCommentLengthException(dto.comment.length() + " > 1000 characters");
         }
 
-        // In "Immutable Multi-Log" approach, we ALWAYS create a new entry.
-        // This prevents moderated content from being bypassed and allows tactical
-        // history.
         UserMatch userMatch = UserMatch.builder()
                 .user(user)
                 .match(match)
@@ -155,7 +158,6 @@ public class UserMatchService {
 
         UserMatch savedMatch = userMatchRepository.save(userMatch);
 
-        // Notify followers of the new tactical log
         List<User> followers = followService.getFollowers(user.getId());
         for (User follower : followers) {
             notificationService.createNotification(

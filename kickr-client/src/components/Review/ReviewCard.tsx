@@ -42,7 +42,6 @@ export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) =>
 
     return (
         <div className={`flex gap-3 sm:gap-5 group/review ${review.isModerated ? 'opacity-60' : ''}`}>
-            {/* Mini Ticket Look */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
                 className="relative w-24 h-16 sm:w-32 sm:h-20 bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-3 poster-hover-effect"

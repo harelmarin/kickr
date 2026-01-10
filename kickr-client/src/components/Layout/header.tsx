@@ -13,12 +13,12 @@ export const Header = () => {
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Fermer le modal lors d'un changement de route
+  // Close modal on route change
   useEffect(() => {
     closeAuthModal();
   }, [location.pathname, closeAuthModal]);
 
-  // Fermer le dropdown lors d'un clic en dehors
+  // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (authModalMode === 'login' && dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -35,13 +35,11 @@ export const Header = () => {
   return (
     <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
       <div className="max-w-7xl mx-auto flex items-center h-full px-6">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group mr-2 md:mr-10">
           <span className="text-2xl">⚽</span>
           <span className="hidden sm:block text-xl font-black font-display tracking-tighter text-white">KICKR</span>
         </Link>
 
-        {/* Navigation */}
         <nav className="hidden md:flex flex-1 items-center gap-6">
           <NavSlot to="/matches" label="Matches" />
           <NavSlot to="/competitions" label="Leagues" />
@@ -49,9 +47,7 @@ export const Header = () => {
           <NavSlot to="/community" label="Community" />
         </nav>
 
-        {/* Right Section: Search & Profile */}
         <div className="flex items-center gap-2 md:gap-5">
-          {/* Search Bar */}
           <SearchBar />
 
           {isAuthenticated ? (
@@ -74,7 +70,6 @@ export const Header = () => {
                 Sign Up
               </Link>
 
-              {/* Dropdown sous le bouton */}
               {authModalMode === 'login' && (
                 <div className="absolute top-full right-0 mt-3 z-50 w-80 animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-xl overflow-hidden">
                   <LoginDropdown onSuccess={() => closeAuthModal()} />

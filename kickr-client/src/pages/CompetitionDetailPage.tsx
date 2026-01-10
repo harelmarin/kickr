@@ -21,7 +21,6 @@ export const CompetitionDetailPage = () => {
   const { data: competition, isLoading: isLoadingComp } = useCompetition(id!);
   const { data: teamsData } = useTeamsByCompetition(id!, 0, 1);
 
-  // Fetch matches for the timeline (paginated)
   const { data: timelineData, isLoading: isLoadingMatches } = useSearchMatches({
     competitionId: id,
     limit: MATCHES_PER_PAGE,
@@ -86,7 +85,6 @@ export const CompetitionDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#0a0b0d]">
-      {/* Hero Section */}
       <div className="bg-[#14181c] border-b border-white/5 py-24 relative overflow-hidden">
         <div className="absolute right-0 top-0 w-1/3 h-full opacity-5 pointer-events-none">
           <img src={competition.logoUrl} className="w-full h-full object-contain grayscale scale-150 rotate-12" alt="" />
@@ -134,11 +132,9 @@ export const CompetitionDetailPage = () => {
         </div>
       </div>
 
-      {/* Content Area - Side by Side Layout */}
       <div className="max-w-[1400px] mx-auto px-6 py-16">
         <div className={`grid grid-cols-1 ${!isTournament ? 'lg:grid-cols-12 gap-12' : 'max-w-4xl mx-auto'}`}>
 
-          {/* Left Column: Standings (Hidden if Tournament) */}
           {!isTournament && (
             <div className="lg:col-span-8 space-y-8">
               <header className="flex items-center justify-between border-b border-white/5 pb-4">
@@ -151,7 +147,6 @@ export const CompetitionDetailPage = () => {
             </div>
           )}
 
-          {/* Right Column: Upcoming Matches */}
           <div className={`${!isTournament ? 'lg:col-span-4' : 'w-full'} space-y-8`}>
             <header className="flex items-center justify-between border-b border-white/5 pb-4">
               <div>

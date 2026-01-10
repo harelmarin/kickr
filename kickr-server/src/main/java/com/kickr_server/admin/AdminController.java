@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Contrôleur pour les opérations d'administration.
- * Tous les endpoints nécessitent le rôle ADMIN.
+ * Controller for administrative operations.
+ * All endpoints require the ADMIN role.
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -41,10 +41,10 @@ public class AdminController {
     private final UserMatchService userMatchService;
     private final ReviewCommentService reviewCommentService;
 
-    @Operation(summary = "Récupérer tous les utilisateurs (ADMIN uniquement)")
+    @Operation(summary = "Get all users (ADMIN only)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Liste des utilisateurs"),
-            @ApiResponse(responseCode = "403", description = "Accès refusé - rôle ADMIN requis")
+            @ApiResponse(responseCode = "200", description = "List of users"),
+            @ApiResponse(responseCode = "403", description = "Access denied - ADMIN role required")
     })
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
@@ -54,11 +54,11 @@ public class AdminController {
                 .toList();
     }
 
-    @Operation(summary = "Promouvoir un utilisateur en ADMIN")
+    @Operation(summary = "Promote a user to ADMIN")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Utilisateur promu"),
-            @ApiResponse(responseCode = "403", description = "Accès refusé - rôle ADMIN requis"),
-            @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+            @ApiResponse(responseCode = "200", description = "User promoted"),
+            @ApiResponse(responseCode = "403", description = "Access denied - ADMIN role required"),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/users/{id}/promote")
@@ -69,11 +69,11 @@ public class AdminController {
         return ApiResponseDto.success("User promoted to ADMIN", UserDto.fromEntity(user));
     }
 
-    @Operation(summary = "Rétrograder un ADMIN en USER")
+    @Operation(summary = "Demote an ADMIN to USER")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Utilisateur rétrogradé"),
-            @ApiResponse(responseCode = "403", description = "Accès refusé - rôle ADMIN requis"),
-            @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+            @ApiResponse(responseCode = "200", description = "User demoted"),
+            @ApiResponse(responseCode = "403", description = "Access denied - ADMIN role required"),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/users/{id}/demote")
@@ -84,11 +84,11 @@ public class AdminController {
         return ApiResponseDto.success("User demoted to USER", UserDto.fromEntity(user));
     }
 
-    @Operation(summary = "Supprimer un utilisateur (ADMIN uniquement)")
+    @Operation(summary = "Delete a user (ADMIN only)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Utilisateur supprimé"),
-            @ApiResponse(responseCode = "403", description = "Accès refusé - rôle ADMIN requis"),
-            @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+            @ApiResponse(responseCode = "204", description = "User deleted"),
+            @ApiResponse(responseCode = "403", description = "Access denied - ADMIN role required"),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}")
@@ -98,11 +98,11 @@ public class AdminController {
         return ApiResponseDto.success("User deleted successfully", null);
     }
 
-    @Operation(summary = "Modérer une review (ADMIN uniquement)")
+    @Operation(summary = "Moderate a review (ADMIN only)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Review modérée"),
-            @ApiResponse(responseCode = "403", description = "Accès refusé - rôle ADMIN requis"),
-            @ApiResponse(responseCode = "404", description = "Review non trouvée")
+            @ApiResponse(responseCode = "200", description = "Review moderated"),
+            @ApiResponse(responseCode = "403", description = "Access denied - ADMIN role required"),
+            @ApiResponse(responseCode = "404", description = "Review not found")
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/reviews/{id}/moderate")
@@ -111,11 +111,11 @@ public class AdminController {
         return ApiResponseDto.success("Review moderated successfully", UserMatchDto.fromEntity(moderated));
     }
 
-    @Operation(summary = "Modérer un commentaire (ADMIN uniquement)")
+    @Operation(summary = "Moderate a comment (ADMIN only)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Commentaire modéré"),
-            @ApiResponse(responseCode = "403", description = "Accès refusé - rôle ADMIN requis"),
-            @ApiResponse(responseCode = "404", description = "Commentaire non trouvé")
+            @ApiResponse(responseCode = "200", description = "Comment moderated"),
+            @ApiResponse(responseCode = "403", description = "Access denied - ADMIN role required"),
+            @ApiResponse(responseCode = "404", description = "Comment not found")
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/comments/{id}/moderate")

@@ -45,48 +45,39 @@ const mapApiResponseToUserMatch = (um: any): UserMatch => ({
 });
 
 export const userMatchService = {
-    // Get all user matches for a specific user
     getByUserId: async (userId: string): Promise<UserMatch[]> => {
         const response = await api.get<any[]>(`/user_match/user/${userId}`);
         return response.data.map(mapApiResponseToUserMatch);
     },
 
-    // Get all user matches for a specific match
     getByMatchId: async (matchId: string, sortBy = 'watchedAt', direction = 'desc'): Promise<UserMatch[]> => {
         const response = await api.get<any[]>(`/user_match/match/${matchId}?sortBy=${sortBy}&direction=${direction}`);
         return response.data.map(mapApiResponseToUserMatch);
     },
 
-    // Get a specific user match by ID
     getById: async (id: string): Promise<UserMatch> => {
         const response = await api.get<any>(`/user_match/${id}`);
-        // Handle ApiResponse wrapper if present, else use raw data
         const data = response.data.data ? response.data.data : response.data;
         return mapApiResponseToUserMatch(data);
     },
 
-    // Create a new user match rating
     create: async (dto: CreateUserMatchDto): Promise<UserMatch> => {
         const response = await api.post<ApiResponse<any>>('/user_match', dto);
         return mapApiResponseToUserMatch(response.data.data);
     },
 
-    // Get latest reviews globally
     getLatest: async (limit = 10): Promise<UserMatch[]> => {
         const response = await api.get<any[]>(`/user_match/latest?limit=${limit}`);
         return response.data.map(mapApiResponseToUserMatch);
     },
 
-    // Get latest reviews from followed users
     getFollowingReviews: async (userId: string, limit = 20): Promise<UserMatch[]> => {
         const response = await api.get<any[]>(`/user_match/following/${userId}?limit=${limit}`);
         return response.data.map(mapApiResponseToUserMatch);
     },
 
-    // Get popular reviews (sorted by likes)
     getPopular: async (limit = 10): Promise<UserMatch[]> => {
         const response = await api.get<any[]>(`/user_match/latest?limit=${limit}`);
-        // Sort by likesCount on client side since backend returns latest
         const reviews = response.data.map(mapApiResponseToUserMatch);
         return reviews.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
     },
@@ -96,12 +87,10 @@ export const userMatchService = {
         return mapApiResponseToUserMatch(response.data.data);
     },
 
-    // Delete a user match rating
     delete: async (id: string): Promise<void> => {
         await api.delete(`/user_match/${id}`);
     },
 
-    // DEV ONLY: Reset all test data
     resetTestData: async (): Promise<any> => {
         const response = await api.delete('/dev/reset-data');
         return response.data;

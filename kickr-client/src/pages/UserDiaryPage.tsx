@@ -35,13 +35,11 @@ export const UserDiaryPage = () => {
 
     return (
         <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
-            {/* Cinematic Backdrop */}
             <div className="relative h-[400px] w-full overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/80 to-transparent z-10"></div>
                 <div className="absolute inset-0 bg-[#14181c] opacity-50">
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
                 </div>
-                {/* Abstract Tactical Pattern */}
                 <div className="absolute inset-x-0 top-0 h-full opacity-10 flex items-center justify-center">
                     <div className="w-[800px] h-[800px] border border-kickr/20 rounded-full blur-3xl animate-pulse"></div>
                 </div>
@@ -49,7 +47,6 @@ export const UserDiaryPage = () => {
 
             <div className="max-w-5xl mx-auto px-6 -mt-[300px] relative z-20 pb-20">
                 <header className="mb-16">
-                    {/* Breadcrumbs */}
                     <div className="flex items-center gap-4 mb-8">
                         <Link to={`/user/${id}`} className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-kickr transition-colors flex items-center gap-2 group">
                             <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
@@ -124,7 +121,6 @@ export const UserDiaryPage = () => {
                         </div>
                     </div>
 
-                    {/* Search Bar - Cinematic Style */}
                     <div className="flex items-center bg-[#14181c]/60 backdrop-blur-xl border border-white/5 p-5 rounded-2xl gap-4 shadow-xl">
                         <span className="text-lg opacity-40">🔍</span>
                         <div className="flex flex-col gap-1 flex-1">
@@ -163,7 +159,6 @@ export const UserDiaryPage = () => {
                                     {monthReviews.map((review) => (
                                         <div key={review.id} className="group relative">
                                             <div className="flex gap-6 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-kickr/20 transition-all duration-300 items-center">
-                                                {/* Date Info */}
                                                 <div className="w-12 text-center border-r border-white/10 pr-6 flex-shrink-0">
                                                     <div className="text-xl font-black text-white italic leading-none">{new Date(review.watchedAt).getDate()}</div>
                                                     <div className="text-[8px] font-black uppercase tracking-widest text-[#445566] mt-1">
@@ -171,7 +166,6 @@ export const UserDiaryPage = () => {
                                                     </div>
                                                 </div>
 
-                                                {/* Result Poster */}
                                                 <Link to={`/matches/${review.match.id}`} className="w-32 h-16 bg-[#1b2228] rounded-xl border border-white/10 overflow-hidden flex-shrink-0 flex items-center justify-center gap-3 relative group/poster shadow-xl">
                                                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/poster:opacity-100 transition-opacity"></div>
                                                     <img src={review.match.homeLogo} className="w-7 h-7 object-contain drop-shadow-lg z-10" alt="" />
@@ -183,7 +177,6 @@ export const UserDiaryPage = () => {
                                                     <img src={review.match.awayLogo} className="w-7 h-7 object-contain drop-shadow-lg z-10" alt="" />
                                                 </Link>
 
-                                                {/* Meta Info */}
                                                 <div className="flex-1 min-w-0">
                                                     <div className="flex items-center gap-3 mb-1.5">
                                                         <Link to={`/matches/${review.match.id}`} className="text-white text-base font-black uppercase italic tracking-tighter hover:text-kickr transition-colors leading-none">
@@ -200,7 +193,6 @@ export const UserDiaryPage = () => {
                                                     )}
                                                 </div>
 
-                                                {/* Rating & Action */}
                                                 <div className="flex items-center gap-6 pr-2">
                                                     {review.isLiked && (
                                                         <div className="w-8 h-8 rounded-full bg-[#ff8000]/10 flex items-center justify-center border border-[#ff8000]/20 animate-fade-in">

@@ -63,14 +63,12 @@ export const ReviewDetailPage: FC = () => {
     return (
         <main className="min-h-screen bg-[#0a0b0d] pt-20 pb-20">
             <div className="max-w-5xl mx-auto px-6">
-                {/* Horizontal Match Header / Ticket */}
                 <header className="mb-8">
                     <Link to={`/matches/${review.match.id}`} className="block group">
                         <div className="aspect-[3/1] sm:aspect-[4.5/1] bg-[#1b2228] rounded-2xl overflow-hidden shadow-2xl relative border border-white/5 transition-all duration-500 poster-hover-effect">
                             <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
 
                             <div className="absolute inset-0 flex items-center justify-between px-8 sm:px-16 py-4">
-                                {/* Home Team */}
                                 <div className="flex items-center gap-6 flex-1">
                                     <img src={review.match.homeLogo} alt="" className="w-12 h-12 sm:w-16 sm:h-16 object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500" />
                                     <div className="hidden md:flex flex-col">
@@ -79,14 +77,12 @@ export const ReviewDetailPage: FC = () => {
                                     </div>
                                 </div>
 
-                                {/* Score Cluster */}
                                 <div className="flex items-center gap-8 sm:gap-12">
                                     <span className="text-4xl sm:text-6xl font-black text-white italic leading-none">{review.match.homeScore}</span>
                                     <div className="w-[2px] h-12 bg-kickr/60 rounded-full"></div>
                                     <span className="text-4xl sm:text-6xl font-black text-white italic leading-none">{review.match.awayScore}</span>
                                 </div>
 
-                                {/* Away Team */}
                                 <div className="flex items-center gap-6 flex-1 justify-end">
                                     <div className="hidden md:flex flex-col items-end text-right">
                                         <span className="text-white font-black uppercase italic tracking-tighter text-2xl leading-none">{review.match.awayTeam}</span>
@@ -98,7 +94,6 @@ export const ReviewDetailPage: FC = () => {
                         </div>
                     </Link>
 
-                    {/* Sub-header info */}
                     <Link to={`/matches/${review.match.id}`} className="mt-6 px-2 flex items-center justify-between hover:opacity-70 transition-opacity">
                         <div className="flex items-center gap-4">
                             <span className="text-[#667788] text-[10px] font-black uppercase tracking-[0.3em]">{review.match.competition}</span>
@@ -108,7 +103,6 @@ export const ReviewDetailPage: FC = () => {
                         <div className="text-[10px] font-black text-kickr/40 uppercase tracking-[0.2em] group-hover:text-kickr transition-colors">Match Details →</div>
                     </Link>
                 </header>
-
                 <div className="max-w-3xl mx-auto">
                     <div className="space-y-12">
                         <header className="border-b border-white/10 pb-6 mb-8">
@@ -204,15 +198,12 @@ export const ReviewDetailPage: FC = () => {
                                 "{review.comment || "No comment provided."}"
                             </div>
 
-                            {/* Like Button at the end */}
                             <div className="flex justify-end mb-12">
                                 <LikeButton reviewId={review.id} likesCount={review.likesCount} />
                             </div>
                         </header>
 
 
-
-                        {/* Comments Section */}
                         <section>
                             <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788] mb-8 border-b border-white/5 pb-4">
                                 {comments?.length || 0} Comments

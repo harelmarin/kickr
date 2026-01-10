@@ -38,11 +38,9 @@ export const UserDetailPage = () => {
         <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
             <div className="max-w-6xl mx-auto px-6">
 
-                {/* Profile Header */}
                 <header className="mb-16">
                     <div className="flex items-start justify-between mb-8">
                         <div className="flex items-center gap-10">
-                            {/* Avatar */}
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
@@ -80,7 +78,6 @@ export const UserDetailPage = () => {
                                 </div>
                             )}
 
-                            {/* Name & Info */}
                             <div>
                                 <div className="flex items-center gap-3 mb-2">
                                     <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{user.name}</h1>
@@ -96,7 +93,6 @@ export const UserDetailPage = () => {
                             </div>
                         </div>
 
-                        {/* Action Button */}
                         <div>
                             {isOwnProfile ? (
                                 <Link

@@ -22,18 +22,18 @@ public class MatchController {
 
         private final MatchService matchService;
 
-        @Operation(summary = "Synchroniser les matchs", description = "🔒 **ADMIN ONLY** - Par défaut : fenêtre +/- 7 jours. Si fullTournaments=true : synchronise toute la saison des coupes d'europe.", security = @SecurityRequirement(name = "bearerAuth"), tags = {
+        @Operation(summary = "Synchronize matches", description = "🔒 **ADMIN ONLY** - Default: window +/- 7 days. If fullTournaments=true: synchronizes the entire season of European cups.", security = @SecurityRequirement(name = "bearerAuth"), tags = {
                         "Admin Actions" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Synchronisation effectuée"),
-                        @ApiResponse(responseCode = "500", description = "Erreur lors de la synchronisation")
+                        @ApiResponse(responseCode = "200", description = "Synchronization successful"),
+                        @ApiResponse(responseCode = "500", description = "Error during synchronization")
         })
         @GetMapping("/save")
         public void syncMatches(
-                        @Parameter(description = "Synchroniser toute la saison des tournois (UCL, UEL, UECL)") @RequestParam(defaultValue = "false") boolean fullTournaments,
-                        @Parameter(description = "Synchroniser le classement pour toutes les ligues majeures") @RequestParam(defaultValue = "false") boolean allStandings,
-                        @Parameter(description = "Synchroniser le classement pour une ligue spécifique") @RequestParam(required = false) Integer leagueId,
-                        @Parameter(description = "Saison pour le classement") @RequestParam(defaultValue = "2025") Integer season)
+                        @Parameter(description = "Synchronize the entire season of tournaments (UCL, UEL, UECL)") @RequestParam(defaultValue = "false") boolean fullTournaments,
+                        @Parameter(description = "Synchronize standings for all major leagues") @RequestParam(defaultValue = "false") boolean allStandings,
+                        @Parameter(description = "Synchronize standings for a specific league") @RequestParam(required = false) Integer leagueId,
+                        @Parameter(description = "Season for standings") @RequestParam(defaultValue = "2025") Integer season)
                         throws Exception {
                 if (fullTournaments) {
                         matchService.syncFullSeasonTournaments();
@@ -46,20 +46,20 @@ public class MatchController {
                 }
         }
 
-        @Operation(summary = "Récupère les prochains matchs avec pagination", tags = { "Public Match Data" })
+        @Operation(summary = "Retrieve upcoming matches with pagination", tags = { "Public Match Data" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Page de prochains matchs")
+                        @ApiResponse(responseCode = "200", description = "Page of upcoming matches")
         })
         @GetMapping("/next")
         public Page<MatchDto> getNextMatches(
-                        @Parameter(description = "Numéro de page (0-based)", example = "0") @RequestParam(defaultValue = "0") int page,
-                        @Parameter(description = "Nombre d'éléments par page", example = "10") @RequestParam(defaultValue = "10") int limit) {
+                        @Parameter(description = "Page number (0-based)", example = "0") @RequestParam(defaultValue = "0") int page,
+                        @Parameter(description = "Number of elements per page", example = "10") @RequestParam(defaultValue = "10") int limit) {
                 return matchService.getNextMatchesByDate(page, limit);
         }
 
-        @Operation(summary = "Récupère tous les matchs disponibles", tags = { "Public Match Data" })
+        @Operation(summary = "Retrieve all available matches", tags = { "Public Match Data" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Liste de tous les matchs")
+                        @ApiResponse(responseCode = "200", description = "List of all matches")
         })
         @GetMapping
         public List<MatchDto> getAllMatches() {
@@ -68,56 +68,56 @@ public class MatchController {
                                 .toList();
         }
 
-        @Operation(summary = "Récupère tous les matchs d'une équipe (passés et futurs)", tags = { "Public Match Data" })
+        @Operation(summary = "Retrieve all matches for a team (past and upcoming)", tags = { "Public Match Data" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Liste de tous les matchs de l'équipe")
+                        @ApiResponse(responseCode = "200", description = "List of all match for the team")
         })
         @GetMapping("/team/{teamId}")
         public List<MatchDto> getAllMatchesByTeam(
-                        @Parameter(description = "ID de l'équipe") @PathVariable UUID teamId) {
+                        @Parameter(description = "Team ID") @PathVariable UUID teamId) {
                 return matchService.getAllMatchesByTeamId(teamId);
         }
 
-        @Operation(summary = "Récupère un match spécifique par son ID externe (fixture ID)", tags = {
+        @Operation(summary = "Retrieve a specific match by its external ID (fixture ID)", tags = {
                         "Public Match Data" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Détails du match"),
-                        @ApiResponse(responseCode = "404", description = "Match non trouvé")
+                        @ApiResponse(responseCode = "200", description = "Match details"),
+                        @ApiResponse(responseCode = "404", description = "Match not found")
         })
         @GetMapping("/{id}")
         public MatchDto getMatchById(
-                        @Parameter(description = "ID externe du match (fixture ID)") @PathVariable Integer id) {
+                        @Parameter(description = "External match ID (fixture ID)") @PathVariable Integer id) {
                 return matchService.getMatchById(id)
                                 .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
-                                                org.springframework.http.HttpStatus.NOT_FOUND, "Match non trouvé"));
+                                                org.springframework.http.HttpStatus.NOT_FOUND, "Match not found"));
         }
 
-        @Operation(summary = "Recherche des matchs avec filtres (ligue, statut, tri)", tags = { "Public Match Data" })
+        @Operation(summary = "Search matches with filters (league, status, sort)", tags = { "Public Match Data" })
         @GetMapping("/search")
         public Page<MatchDto> searchMatches(
-                        @Parameter(description = "ID de la compétition") @RequestParam(required = false) UUID competitionId,
-                        @Parameter(description = "Match terminé (true/false)") @RequestParam(required = false) Boolean finished,
-                        @Parameter(description = "Recherche textuelle (équipe)") @RequestParam(required = false) String query,
-                        @Parameter(description = "Tour (Round)") @RequestParam(required = false) String round,
-                        @Parameter(description = "Tri (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
+                        @Parameter(description = "Competition ID") @RequestParam(required = false) UUID competitionId,
+                        @Parameter(description = "Match finished (true/false)") @RequestParam(required = false) Boolean finished,
+                        @Parameter(description = "Text search (team)") @RequestParam(required = false) String query,
+                        @Parameter(description = "Round") @RequestParam(required = false) String round,
+                        @Parameter(description = "Sort (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
                         @Parameter(description = "Page") @RequestParam(defaultValue = "0") int page,
-                        @Parameter(description = "Limite") @RequestParam(defaultValue = "18") int limit) {
+                        @Parameter(description = "Limit") @RequestParam(defaultValue = "18") int limit) {
                 return matchService.findMatchesWithFilters(competitionId, finished, query, round, sort, page, limit);
         }
 
-        @Operation(summary = "Récupère les tours (rounds) d'une compétition", tags = { "Public Match Data" })
+        @Operation(summary = "Retrieve rounds for a competition", tags = { "Public Match Data" })
         @GetMapping("/rounds/{competitionId}")
         public List<String> getRounds(@PathVariable UUID competitionId) {
                 return matchService.getRoundsByCompetitionId(competitionId);
         }
 
-        @Operation(summary = "Récupère les matchs les mieux notés (trending)", tags = { "Public Match Data" })
+        @Operation(summary = "Retrieve best rated matches (trending)", tags = { "Public Match Data" })
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Liste des matchs trending")
+                        @ApiResponse(responseCode = "200", description = "List of trending matches")
         })
         @GetMapping("/trending")
         public Page<MatchDto> getTrendingMatches(
-                        @Parameter(description = "Nombre de matchs à retourner") @RequestParam(defaultValue = "6") int limit) {
+                        @Parameter(description = "Number of matches to return") @RequestParam(defaultValue = "6") int limit) {
                 return matchService.getTrendingMatches(limit);
         }
 

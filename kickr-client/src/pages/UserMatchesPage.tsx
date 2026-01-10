@@ -28,18 +28,15 @@ export const UserMatchesPage = () => {
     if (isError) return <ErrorState />;
 
     const filteredReviews = (reviews || []).filter(review => {
-        // Search filter
         const matchesSearch = search === '' ||
             review.match.homeTeam.toLowerCase().includes(search.toLowerCase()) ||
             review.match.awayTeam.toLowerCase().includes(search.toLowerCase());
 
-        // Status filter
         const isPast = review.match.homeScore !== null;
         const matchesStatus = status === 'all' ||
             (status === 'finished' && isPast) ||
             (status === 'upcoming' && !isPast);
 
-        // Rating filter - exact match if from URL, otherwise minimum
         const ratingParam = searchParams.get('rating');
         const matchesRating = ratingParam
             ? Math.round(review.note) === Number(ratingParam)
@@ -90,11 +87,8 @@ export const UserMatchesPage = () => {
                         </div>
                     </div>
 
-                    {/* Cinematic Filter Bar */}
                     <div className="mt-12 flex flex-col md:flex-row items-start md:items-center justify-between border-y border-kickr/20 py-4 gap-8 section-contrast rounded-xl px-6">
                         <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
-
-                            {/* Search Filter */}
                             <div className="flex flex-col gap-1">
                                 <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Team</span>
                                 <input
@@ -106,7 +100,6 @@ export const UserMatchesPage = () => {
                                 />
                             </div>
 
-                            {/* Status Filter */}
                             <div className="flex flex-col gap-1">
                                 <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
                                 <select
@@ -120,7 +113,6 @@ export const UserMatchesPage = () => {
                                 </select>
                             </div>
 
-                            {/* Rating Filter */}
                             <div className="flex flex-col gap-1">
                                 <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Min Rating</span>
                                 <select
@@ -136,7 +128,6 @@ export const UserMatchesPage = () => {
                                     <option value="5" className="bg-[#14181c]">5 Stars Only</option>
                                 </select>
                             </div>
-
                         </div>
                     </div>
                 </header>

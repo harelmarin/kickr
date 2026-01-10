@@ -12,20 +12,17 @@ export const TeamDetailPage = () => {
   const { data: team, isLoading: isLoadingTeam } = useTeam(id!);
   const { data: matches, isLoading: isLoadingMatches } = useMatchesByTeam(id!);
 
-  // Filter and sort matches
   const filteredAndSortedMatches = useMemo(() => {
     if (!matches) return [];
 
     let filtered = [...matches];
 
-    // Filter by status
     if (status === 'finished') {
       filtered = filtered.filter(m => m.homeScore !== null);
     } else if (status === 'upcoming') {
       filtered = filtered.filter(m => m.homeScore === null);
     }
 
-    // Sort
     filtered.sort((a, b) => {
       switch (sort) {
         case 'date':
@@ -112,9 +109,7 @@ export const TeamDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#0a0b0d]">
-      {/* Team Profile Header - Cinematic Identity */}
       <div className="bg-[#14181c] border-b border-white/5 pt-20 pb-20 relative overflow-hidden">
-        {/* Subtle Crest Backdrop */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.03] pointer-events-none">
           <img src={team.logoUrl} className="w-full h-full object-contain grayscale" alt="" />
         </div>
@@ -139,17 +134,13 @@ export const TeamDetailPage = () => {
         </div>
       </div>
 
-      {/* Team Content: The "Matchography" */}
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
-
-          {/* Main List of Matches */}
           <div className="lg:col-span-3 space-y-16">
             <section>
               <div className="flex flex-col gap-6 mb-10 border-b border-white/5 pb-6">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">MATCHOGRAPHY</span>
 
-                {/* Filters */}
                 <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
                   {/* Status Filter */}
                   <div className="flex flex-col gap-1">
@@ -203,7 +194,6 @@ export const TeamDetailPage = () => {
             </section>
           </div>
 
-          {/* Sidebar: Tactical Overview */}
           <div className="space-y-12">
             <section className="bg-[#1b2228] rounded-2xl border border-white/5 p-8 shadow-xl">
               <h3 className="text-[10px] font-black text-[#667788] uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">CLUB PERFORMANCE</h3>

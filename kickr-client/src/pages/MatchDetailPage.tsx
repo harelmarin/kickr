@@ -30,11 +30,9 @@ export const MatchDetailPage = () => {
   const { data: userMatches } = useUserMatchesByMatch(match?.matchUuid || '', sortBy, sortDirection);
   const createUserMatch = useCreateUserMatch();
 
-  // In the new approach, we look for ALL entries from the current user
   const myMatchEntries = userMatches?.filter(m => m.user.id === user?.id) || [];
   const hasAlreadyLogged = myMatchEntries.length > 0;
 
-  // We keep the form empty by default for fresh logs
   const handleSaveRating = async () => {
     if (!user) {
       navigate('/register');
@@ -63,7 +61,6 @@ export const MatchDetailPage = () => {
 
       toast.success(hasAlreadyLogged ? 'Additional log recorded!' : 'Match logged successfully!');
 
-      // Clear form after successful log
       setRating(0);
       setReview('');
       setIsLiked(false);
@@ -73,9 +70,6 @@ export const MatchDetailPage = () => {
     }
   };
 
-  // Delete logic remains for individual entries, but here we might need to handle which one to delete
-  // For simplicity, we'll keep the delete logic generic or target a specific one if needed.
-  // In the UI, each ReviewCard will have its own delete button, so we don't need a global one here anymore.
 
   if (isLoading) return <LoadingState />;
   if (isError || !match) return <ErrorState />;
@@ -85,9 +79,7 @@ export const MatchDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
-      {/* Premium Cinematic Backdrop */}
       <div className="relative h-[600px] w-full overflow-hidden">
-        {/* Background Blurred Logos for Atmosphere */}
         <div className="absolute inset-0 z-0 flex">
           <div className="flex-1 relative overflow-hidden">
             <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 blur-[120px] opacity-30 grayscale" alt="" />
@@ -97,14 +89,11 @@ export const MatchDetailPage = () => {
           </div>
         </div>
 
-        {/* Global Dark Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/70 to-[#0a0b0d]/40"></div>
-        {/* Subtle Pitch texture fallback */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-[500px] relative z-10 pb-20">
-        {/* Top Navigation */}
         <div className="flex items-center gap-6 mb-8">
           <Link to="/" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-kickr transition-colors flex items-center gap-2 group">
             <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
@@ -118,13 +107,11 @@ export const MatchDetailPage = () => {
           </div>
         </div>
 
-        {/* Massive Horizontal Match Header */}
         <header className="mb-20">
           <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#14181c]/60 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/5 relative shadow-glow">
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent"></div>
 
             <div className="absolute inset-0 grid grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8 md:px-16 py-6 gap-4 sm:gap-8 md:gap-12">
-              {/* Home Team */}
               <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 justify-self-start w-full overflow-hidden">
                 <Link to={`/teams/${match.homeTeamId}`} className="transition-all active:scale-95 duration-500 flex-shrink-0 group/logo">
                   <div className="p-4 rounded-full bg-white/[0.02] border border-white/5 group-hover/logo:border-kickr/40 transition-all shadow-2xl">
@@ -144,7 +131,6 @@ export const MatchDetailPage = () => {
                 </div>
               </div>
 
-              {/* Central Score / VS Cluster */}
               <div className="flex flex-col items-center justify-center">
                 {isPast ? (
                   <div className="flex flex-col items-center gap-4">
@@ -165,7 +151,6 @@ export const MatchDetailPage = () => {
                 )}
               </div>
 
-              {/* Away Team */}
               <div className="flex flex-col md:flex-row-reverse items-center gap-2 md:gap-6 justify-self-end w-full overflow-hidden">
                 <Link to={`/teams/${match.awayTeamId}`} className="transition-all active:scale-95 duration-500 flex-shrink-0 group/logo">
                   <div className="p-4 rounded-full bg-white/[0.02] border border-white/5 group-hover/logo:border-kickr/40 transition-all shadow-2xl">
@@ -187,7 +172,6 @@ export const MatchDetailPage = () => {
             </div>
           </div>
 
-          {/* Quick Match Bar Info */}
           <div className="mt-8 flex items-center justify-between px-4 border-b border-white/5 pb-8">
             <div className="flex items-center gap-8 md:gap-12 overflow-x-auto overflow-y-hidden no-scrollbar">
               <div className="flex flex-col flex-shrink-0">
