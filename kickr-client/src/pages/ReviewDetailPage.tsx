@@ -7,17 +7,23 @@ import { useAuth } from '../hooks/useAuth';
 import { useUpdateUserMatch } from '../hooks/useUserMatch';
 import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
 import { adminService } from '../services/adminService';
+import { ShareReviewButton } from '../components/Review/ShareReviewButton';
+import { useDeleteUserMatch } from '../hooks/useUserMatch';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export const ReviewDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const { user: currentUser } = useAuth();
     const { data: review, isLoading: isReviewLoading } = useUserMatch(id!);
     const { data: comments, isLoading: isCommentsLoading } = useReviewComments(id!);
     const addCommentMutation = useAddReviewComment();
     const updateReviewMutation = useUpdateUserMatch();
+    const deleteReviewMutation = useDeleteUserMatch();
 
     const [commentText, setCommentText] = useState('');
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
     const handleAddComment = (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,6 +46,20 @@ export const ReviewDetailPage: FC = () => {
                 note: review.note,
                 comment: review.comment,
                 isLiked: !review.isLiked
+            }
+        });
+    };
+
+    const handleDeleteReview = () => {
+        if (!review || !currentUser) return;
+        deleteReviewMutation.mutate(review.id, {
+            onSuccess: () => {
+                toast.success('Log entry removed');
+                navigate(`/matches/${review.match.id}`);
+            },
+            onError: () => {
+                toast.error('Failed to remove log entry');
+                setShowConfirmDelete(false);
             }
         });
     };
@@ -192,13 +212,47 @@ export const ReviewDetailPage: FC = () => {
                                         )}
                                     </div>
                                 )}
+
+                                {currentUser?.id === review.user.id && (
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Actions</span>
+                                        <div className="relative">
+                                            {!showConfirmDelete ? (
+                                                <button
+                                                    onClick={() => setShowConfirmDelete(true)}
+                                                    className="text-[10px] font-black text-[#667788] hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
+                                                >
+                                                    Delete Log Entry
+                                                </button>
+                                            ) : (
+                                                <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-2 duration-300">
+                                                    <button
+                                                        onClick={handleDeleteReview}
+                                                        disabled={deleteReviewMutation.isPending}
+                                                        className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:underline"
+                                                    >
+                                                        {deleteReviewMutation.isPending ? 'Removing...' : 'Confirm'}
+                                                    </button>
+                                                    <span className="text-[#445566] text-[10px]">/</span>
+                                                    <button
+                                                        onClick={() => setShowConfirmDelete(false)}
+                                                        className="text-[10px] font-black text-[#667788] hover:text-white uppercase tracking-widest"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
-                            <div className={`${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'} text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 pl-8 py-2 mb-8 bg-white/[0.02] rounded-r-xl`}>
+                            <div className={`${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'} text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 pl-8 py-2 mb-12 bg-white/[0.02] rounded-r-xl`}>
                                 "{review.comment || "No comment provided."}"
                             </div>
 
-                            <div className="flex justify-end mb-12">
+                            <div className="flex items-center justify-between mb-12 pt-6 border-t border-white/5">
+                                <ShareReviewButton review={review} variant="full" />
                                 <LikeButton reviewId={review.id} likesCount={review.likesCount} />
                             </div>
                         </header>

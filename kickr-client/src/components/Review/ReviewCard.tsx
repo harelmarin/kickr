@@ -2,15 +2,15 @@ import { Link } from 'react-router-dom';
 import type { UserMatch } from '../../types/UserMatch';
 import { authService } from '../../services/authService';
 import { adminService } from '../../services/adminService';
+import { ShareReviewButton } from './ShareReviewButton';
 import toast from 'react-hot-toast';
 
 interface ReviewCardProps {
     review: UserMatch;
     onModerate?: () => void;
-    onDelete?: () => void;
 }
 
-export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) => {
+export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
     const user = authService.getUser();
     const isAdmin = user?.role === 'ADMIN';
 
@@ -31,14 +31,6 @@ export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) =>
         });
     };
 
-    const handleDelete = async (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (!window.confirm('Are you sure you want to remove this log entry?')) return;
-
-        if (onDelete) onDelete();
-    };
 
     return (
         <div className={`flex gap-3 sm:gap-5 group/review ${review.isModerated ? 'opacity-60' : ''}`}>
@@ -63,27 +55,21 @@ export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) =>
                             {review.match.homeTeam} v {review.match.awayTeam}
                         </Link>
 
-                        {isAdmin && !review.isModerated && (
-                            <button
-                                onClick={handleModerate}
-                                className="text-[10px] font-bold text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
-                            >
-                                Moderate
-                            </button>
-                        )}
-                        {!isAdmin && user?.id === review.user?.id && (
-                            <button
-                                onClick={handleDelete}
-                                className="text-[10px] font-bold text-[#445566] hover:text-red-500 opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest"
-                            >
-                                Delete Log
-                            </button>
-                        )}
-                        {review.isModerated && (
-                            <span className="text-[8px] font-black bg-[#ff4444]/10 text-[#ff4444] px-2 py-0.5 rounded border border-[#ff4444]/20 uppercase tracking-widest">
-                                Moderated
-                            </span>
-                        )}
+                        <div className="flex items-center gap-3">
+                            {isAdmin && !review.isModerated && (
+                                <button
+                                    onClick={handleModerate}
+                                    className="text-[10px] font-bold text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
+                                >
+                                    Moderate
+                                </button>
+                            )}
+                            {review.isModerated && (
+                                <span className="text-[8px] font-black bg-[#ff4444]/10 text-[#ff4444] px-2 py-0.5 rounded border border-[#ff4444]/20 uppercase tracking-widest">
+                                    Moderated
+                                </span>
+                            )}
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -108,17 +94,23 @@ export const ReviewCard = ({ review, onModerate, onDelete }: ReviewCardProps) =>
                     </Link>
                 )}
 
-                <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white font-black border border-white/5 uppercase overflow-hidden shadow-sm">
-                        {review.user?.avatarUrl ? (
-                            <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
-                        ) : (
-                            <span>{review.user ? review.user.name[0] : '?'}</span>
-                        )}
+                <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white font-black border border-white/5 uppercase overflow-hidden shadow-sm">
+                            {review.user?.avatarUrl ? (
+                                <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
+                            ) : (
+                                <span>{review.user ? review.user.name[0] : '?'}</span>
+                            )}
+                        </div>
+                        <Link to={`/user/${review.user?.id}`} className="text-[#445566] text-[10px] font-black uppercase tracking-widest group-hover/review:text-white transition-colors">
+                            {review.user?.name}
+                        </Link>
                     </div>
-                    <Link to={`/user/${review.user?.id}`} className="text-[#445566] text-[10px] font-black uppercase tracking-widest group-hover/review:text-white transition-colors">
-                        {review.user?.name}
-                    </Link>
+
+                    <div className="opacity-0 group-hover/review:opacity-100 transition-opacity">
+                        <ShareReviewButton review={review} />
+                    </div>
                 </div>
             </div>
         </div>

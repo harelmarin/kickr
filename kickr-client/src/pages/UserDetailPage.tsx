@@ -4,6 +4,7 @@ import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { ReviewCard } from '../components/Review/ReviewCard';
 import { useAuth } from '../hooks/useAuth';
 import { useFollowStatus, useFollowAction, useFollowers, useFollowing } from '../hooks/useFollow';
+import type { UserMatch } from '../types/UserMatch';
 
 export const UserDetailPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -361,21 +362,26 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
     );
 };
 
-const MostWatchedTeams = ({ reviews }: { reviews: any[] }) => {
-    // Calculate team statistics from reviews
+const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
+    // Calculate team statistics from reviews (ID as key, storing name and count)
     const teamStats = reviews.reduce((acc, review) => {
-        const homeTeam = review.match.homeTeam;
-        const awayTeam = review.match.awayTeam;
+        const home = { id: review.match.homeTeamId, name: review.match.homeTeam };
+        const away = { id: review.match.awayTeamId, name: review.match.awayTeam };
 
-        acc[homeTeam] = (acc[homeTeam] || 0) + 1;
-        acc[awayTeam] = (acc[awayTeam] || 0) + 1;
+        [home, away].forEach(team => {
+            if (!acc[team.id]) {
+                acc[team.id] = { name: team.name, count: 0 };
+            }
+            acc[team.id].count += 1;
+        });
 
         return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, { name: string, count: number }>);
 
     // Sort teams by count and get top 5
     const topTeams = Object.entries(teamStats)
-        .sort(([, a], [, b]) => (b as number) - (a as number))
+        .map(([id, data]) => ({ id, name: data.name, count: data.count }))
+        .sort((a, b) => b.count - a.count)
         .slice(0, 5);
 
     if (topTeams.length === 0) {
@@ -388,16 +394,20 @@ const MostWatchedTeams = ({ reviews }: { reviews: any[] }) => {
 
     return (
         <div className="space-y-4">
-            {topTeams.map(([team, count], index) => (
-                <div key={team} className="flex justify-between items-center group">
+            {topTeams.map((team, index) => (
+                <Link
+                    key={team.id}
+                    to={`/teams/${team.id}`}
+                    className="flex justify-between items-center group cursor-pointer hover:translate-x-1 transition-transform"
+                >
                     <div className="flex items-center gap-3 flex-1">
                         <span className="text-[10px] font-black text-kickr/50 w-4">#{index + 1}</span>
                         <span className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors truncate">
-                            {team}
+                            {team.name}
                         </span>
                     </div>
-                    <span className="text-sm font-black text-white">{count as number}</span>
-                </div>
+                    <span className="text-sm font-black text-white">{team.count}</span>
+                </Link>
             ))}
         </div>
     );

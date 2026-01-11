@@ -65,7 +65,10 @@ public class SecurityConfig {
                                                                 "/swagger-ui.html",
                                                                 "/swagger-ui/index.html")
                                                 .permitAll()
-                                                .requestMatchers("/", "/favicon.ico", "/error").permitAll()
+                                                .requestMatchers("/", "/favicon.ico", "/error")
+                                                .permitAll()
+                                                .requestMatchers("/api/proxy/**")
+                                                .permitAll()
                                                 // Public Read access to data
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/matchs/next",

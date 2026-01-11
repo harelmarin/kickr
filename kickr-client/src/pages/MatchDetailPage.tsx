@@ -7,6 +7,9 @@ import { matchService } from '../services/matchService';
 import { useAuth } from '../hooks/useAuth';
 import { useCreateUserMatch, useUserMatchesByMatch, useDeleteUserMatch } from '../hooks/useUserMatch';
 import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
+import { ShareReviewButton } from '../components/Review/ShareReviewButton';
+import type { UserMatch } from '../types/UserMatch';
+import { AnimatePresence } from 'framer-motion';
 
 export const MatchDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +23,7 @@ export const MatchDetailPage = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [activeTab, setActiveTab] = useState<'lineups' | 'stats' | 'events'>('lineups');
   const [lineupView, setLineupView] = useState<'visual' | 'list'>('visual');
+  const [justLoggedReview, setJustLoggedReview] = useState<UserMatch | null>(null);
 
   const { data: match, isLoading, isError } = useQuery({
     queryKey: ['match', id],
@@ -51,7 +55,7 @@ export const MatchDetailPage = () => {
     }
 
     try {
-      await createUserMatch.mutateAsync({
+      const newLog = await createUserMatch.mutateAsync({
         userId: user.id,
         matchId: match.matchUuid,
         note: rating,
@@ -59,6 +63,7 @@ export const MatchDetailPage = () => {
         isLiked: isLiked,
       });
 
+      setJustLoggedReview(newLog);
       toast.success(hasAlreadyLogged ? 'Additional log recorded!' : 'Match logged successfully!');
 
       setRating(0);
@@ -250,6 +255,33 @@ export const MatchDetailPage = () => {
                     </div>
                   )}
                 </div>
+
+                {/* User's Tactical History - if logged */}
+                {hasAlreadyLogged && (
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-4">Your Tactical History</span>
+                    <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2 no-scrollbar">
+                      {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
+                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-3 bg-white/[0.02] border border-white/5 rounded-lg hover:border-kickr/20 transition-all group/entry">
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex text-kickr text-[8px]">
+                              {'★'.repeat(Math.round(entry.note))}
+                              <span className="text-white/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
+                            </div>
+                            <span className="text-[8px] font-black text-[#445566] uppercase tracking-tighter">
+                              {new Date(entry.watchedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
+                            </span>
+                          </div>
+                          {entry.comment && (
+                            <p className="text-[#8899aa] text-[10px] italic leading-tight line-clamp-1 opacity-60 group-hover/entry:opacity-100 transition-opacity">
+                              "{entry.comment}"
+                            </p>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </header>
 
@@ -321,15 +353,7 @@ export const MatchDetailPage = () => {
                   {userMatches.map((userMatch) => (
                     <ReviewItem
                       key={userMatch.id}
-                      reviewId={userMatch.id}
-                      userId={userMatch.user.id}
-                      user={userMatch.user.name}
-                      avatarUrl={userMatch.user.avatarUrl}
-                      rating={userMatch.note}
-                      content={userMatch.comment}
-                      watchedAt={userMatch.watchedAt}
-                      isLiked={userMatch.isLiked}
-                      likesCount={userMatch.likesCount}
+                      review={userMatch}
                     />
                   ))}
                 </div>
@@ -410,55 +434,68 @@ export const MatchDetailPage = () => {
                   {createUserMatch.isPending ? 'LOGGING...' : hasAlreadyLogged ? 'LOG AGAIN' : 'SAVE LOG'}
                 </button>
 
-                {/* Tactical History Section */}
-                {hasAlreadyLogged && (
-                  <div className="pt-4 border-t border-white/5 space-y-4">
-                    <div className="flex items-center justify-between px-1">
-                      <span className="text-[9px] font-black text-[#667788] uppercase tracking-[0.2em]">Historical Records</span>
-                      <span className="text-[10px] font-bold text-kickr italic">{myMatchEntries.length} Session(s)</span>
-                    </div>
-                    <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 no-scrollbar">
-                      {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
-                        <div key={entry.id} className="p-3 bg-white/[0.02] border border-white/5 rounded-lg group/entry hover:border-kickr/20 transition-all">
-                          <div className="flex items-center justify-between mb-1.5">
-                            <div className="flex text-kickr text-[8px]">
-                              {'★'.repeat(Math.round(entry.note))}
-                              <span className="text-white/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
-                            </div>
-                            <span className="text-[8px] font-black text-[#445566] uppercase tracking-tighter">
-                              {new Date(entry.watchedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
-                            </span>
-                          </div>
-                          {entry.comment && (
-                            <p className="text-[#8899aa] text-[11px] italic leading-tight line-clamp-2 mb-1.5 opacity-60 group-hover/entry:opacity-100 transition-opacity">
-                              "{entry.comment}"
-                            </p>
-                          )}
-                          <div className="flex items-center justify-between">
-                            {entry.isLiked && <span className="text-[#ff8000] text-[10px]">❤</span>}
-                            <Link to={`/reviews/${entry.id}`} className="text-[8px] font-black text-white/20 hover:text-kickr transition-colors tracking-widest uppercase ml-auto">
-                              Full Intel →
-                            </Link>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
 
         </div>
       </div>
+
+      <AnimatePresence>
+        {justLoggedReview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-[#1b2228] border border-white/10 rounded-3xl p-10 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-kickr shadow-[0_0_15px_rgba(0,225,120,0.5)]"></div>
+              <button
+                onClick={() => setJustLoggedReview(null)}
+                className="absolute top-6 right-6 text-[#445566] hover:text-white transition-colors text-xl font-bold"
+              >
+                ✕
+              </button>
+
+              <div className="flex flex-col items-center text-center">
+                <div className="w-20 h-20 bg-kickr/10 rounded-full flex items-center justify-center mb-8 border border-kickr/30 shadow-[0_0_30px_rgba(0,225,120,0.1)]">
+                  <span className="text-4xl">⚽</span>
+                </div>
+                <h3 className="text-3xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">Intelligence Logged</h3>
+                <p className="text-[#99aabb] text-[13px] mb-10 leading-relaxed font-medium">
+                  Your tactical report is now part of the Kickr network. Generate your card to share your session on social media!
+                </p>
+
+                <div className="w-full space-y-4">
+                  <div className="flex justify-center">
+                    <ShareReviewButton review={justLoggedReview} variant="full" />
+                  </div>
+                  <button
+                    onClick={() => setJustLoggedReview(null)}
+                    className="w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#445566] hover:text-white transition-all bg-white/[0.02] rounded-xl hover:bg-white/[0.05]"
+                  >
+                    Return to Match
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 };
 
-const ReviewItem = ({ reviewId, userId, user, avatarUrl, rating, content, watchedAt, isLiked, likesCount }: { reviewId: string; userId: string; user: string; avatarUrl?: string; rating: number; content: string; watchedAt?: string; isLiked?: boolean; likesCount?: number }) => {
+const ReviewItem = ({ review }: { review: UserMatch }) => {
   const { user: currentUser } = useAuth();
   const navigate = useNavigate();
-  const { data: isLikedByMe } = useReviewLikeStatus(reviewId, currentUser?.id);
+  const { data: isLikedByMe } = useReviewLikeStatus(review.id, currentUser?.id);
   const toggleLike = useToggleReviewLike();
   const deleteUserMatch = useDeleteUserMatch();
 
@@ -467,13 +504,13 @@ const ReviewItem = ({ reviewId, userId, user, avatarUrl, rating, content, watche
       navigate('/register');
       return;
     }
-    toggleLike.mutate({ reviewId, userId: currentUser.id });
+    toggleLike.mutate({ reviewId: review.id, userId: currentUser.id });
   };
 
   const handleDelete = async () => {
     if (!window.confirm('Remove this tactical log? This action is permanent.')) return;
     try {
-      await deleteUserMatch.mutateAsync(reviewId);
+      await deleteUserMatch.mutateAsync(review.id);
       toast.success('Log removed');
     } catch (error) {
       toast.error('Failed to remove log');
@@ -481,56 +518,62 @@ const ReviewItem = ({ reviewId, userId, user, avatarUrl, rating, content, watche
   };
 
   return (
-    <div className="flex gap-4 border-b border-white/5 pb-8">
+    <div className="flex gap-4 border-b border-white/5 pb-8 group/review">
       <div className="w-10 h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[10px] text-white font-black uppercase overflow-hidden border border-white/5">
-        {avatarUrl ? (
-          <img src={avatarUrl} alt={user} className="w-full h-full object-cover" />
+        {review.user.avatarUrl ? (
+          <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
         ) : (
-          user[0]
+          review.user.name[0]
         )}
       </div>
       <div className="flex-1">
         <div className="flex items-center gap-2 mb-2">
-          <Link to={`/user/${userId}`} className="text-white font-bold hover:text-kickr transition-colors">{user}</Link>
+          <Link to={`/user/${review.user.id}`} className="text-white font-bold hover:text-kickr transition-colors">{review.user.name}</Link>
           <span className="text-kickr font-bold text-xs pl-2 border-l border-white/10 ml-2">
-            {'★'.repeat(Math.round(rating))}
-            <span className="text-white/5">{'★'.repeat(5 - Math.round(rating))}</span>
+            {'★'.repeat(Math.round(review.note))}
+            <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
           </span>
-          {isLiked === true && (
+          {review.isLiked === true && (
             <span className="text-[#ff8000] text-sm ml-1" title="Liked">❤</span>
           )}
-          {watchedAt && (
-            <Link to={`/reviews/${reviewId}`} className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto hover:text-kickr transition-colors">
-              {new Date(watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+          {review.watchedAt && (
+            <Link to={`/reviews/${review.id}`} className="text-[#667788] text-[9px] font-black uppercase tracking-widest ml-auto hover:text-kickr transition-colors">
+              {new Date(review.watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
             </Link>
           )}
         </div>
-        {content && content.trim() !== "" && (
-          <Link to={`/reviews/${reviewId}`} className="block group/comment">
-            <p className="text-sm leading-relaxed text-[#99aabb] italic group-hover/comment:text-white transition-colors">"{content}"</p>
+        {review.comment && review.comment.trim() !== "" && (
+          <Link to={`/reviews/${review.id}`} className="block group/comment">
+            <p className="text-sm leading-relaxed text-[#99aabb] italic group-hover/comment:text-white transition-colors">"{review.comment}"</p>
             <span className="text-[10px] font-black text-kickr/40 uppercase tracking-widest mt-2 block group-hover/comment:text-kickr transition-colors">Detailed Log View →</span>
           </Link>
         )}
-        <div className="flex items-center gap-2 mt-3">
-          <button
-            onClick={handleLike}
-            className={`flex items-center gap-1.5 text-xs transition-all ${isLikedByMe
-              ? 'text-kickr'
-              : 'text-[#667788] hover:text-kickr'
-              }`}
-            title={isLikedByMe ? 'Unlike' : 'Like this review'}
-          >
-            <span className="text-base">{isLikedByMe ? '👍' : '👍'}</span>
-            {likesCount && likesCount > 0 && (
-              <span className="font-bold">{likesCount}</span>
-            )}
-          </button>
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleLike}
+              className={`flex items-center gap-1.5 text-xs transition-all ${isLikedByMe
+                ? 'text-kickr'
+                : 'text-[#667788] hover:text-kickr'
+                }`}
+              title={isLikedByMe ? 'Unlike' : 'Like this review'}
+            >
+              <span className="text-base">{isLikedByMe ? '👍' : '👍'}</span>
+              {review.likesCount && review.likesCount > 0 && (
+                <span className="font-bold">{review.likesCount}</span>
+              )}
+            </button>
 
-          {currentUser?.id === userId && (
+            <div className="opacity-0 group-hover/review:opacity-100 transition-opacity">
+              <ShareReviewButton review={review} />
+            </div>
+          </div>
+
+          {currentUser?.id === review.user.id && (
             <button
               onClick={handleDelete}
               disabled={deleteUserMatch.isPending}
-              className="ml-auto text-[10px] font-bold text-[#445566] hover:text-red-500 transition-colors uppercase tracking-widest"
+              className="text-[10px] font-bold text-[#445566] hover:text-red-500 transition-colors uppercase tracking-widest"
             >
               {deleteUserMatch.isPending ? 'Removing...' : 'Delete Log'}
             </button>

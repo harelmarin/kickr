@@ -116,9 +116,3 @@ export const ResetPasswordPage = () => {
     );
 };
 
-const ValidationItem = ({ active, label }: { active: boolean; label: string }) => (
-    <div className="flex items-center gap-1.5">
-        <span className={`text-[10px] ${active ? 'text-kickr' : 'text-[#445566]'}`}>{active ? '✓' : '○'}</span>
-        <span className={`text-[9px] font-bold uppercase tracking-widest ${active ? 'text-[#99aabb]' : 'text-[#445566]'}`}>{label}</span>
-    </div>
-);

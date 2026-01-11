@@ -10,8 +10,10 @@ export interface UserMatch {
   };
   match: {
     homeTeam: string;
+    homeTeamId: string;
     homeLogo: string;
     awayTeam: string;
+    awayTeamId: string;
     awayLogo: string;
     matchDate: string;
     competition: string;
