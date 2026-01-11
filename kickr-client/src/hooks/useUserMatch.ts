@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userMatchService, type CreateUserMatchDto, type UpdateUserMatchDto } from '../services/userMatchService';
 import type { UserMatch } from '../types/UserMatch';
+import type { PageResponse } from '../types/Common';
 import { useAuth } from './useAuth';
 import toast from 'react-hot-toast';
 
@@ -24,10 +25,10 @@ export const useUserMatch = (id: string) => {
 };
 
 // Hook to get user matches for a specific user
-export const useUserMatchesByUser = (userId?: string) => {
-    return useQuery<UserMatch[], Error>({
-        queryKey: ['userMatches', 'user', userId],
-        queryFn: () => userId ? userMatchService.getByUserId(userId) : Promise.resolve([]),
+export const useUserMatchesByUser = (userId?: string, page: number = 0, size: number = 20) => {
+    return useQuery<PageResponse<UserMatch>, Error>({
+        queryKey: ['userMatches', 'user', userId, page, size],
+        queryFn: () => userId ? userMatchService.getByUserId(userId, page, size) : Promise.reject('No user ID'),
         enabled: !!userId,
         staleTime: 30 * 1000,
     });
@@ -60,10 +61,10 @@ export const usePopularReviews = (limit = 10) => {
 };
 
 // Hook to get reviews from followed users
-export const useFollowingReviews = (userId?: string, limit = 20) => {
-    return useQuery<UserMatch[], Error>({
-        queryKey: ['userMatches', 'following', userId, limit],
-        queryFn: () => userId ? userMatchService.getFollowingReviews(userId, limit) : Promise.resolve([]),
+export const useFollowingReviews = (userId?: string, page: number = 0, size: number = 20) => {
+    return useQuery<PageResponse<UserMatch>, Error>({
+        queryKey: ['userMatches', 'following', userId, page, size],
+        queryFn: () => userId ? userMatchService.getFollowingReviews(userId, page, size) : Promise.reject('No user ID'),
         enabled: !!userId,
         staleTime: 30 * 1000,
     });
@@ -79,6 +80,7 @@ export const useCreateUserMatch = () => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['userMatches', 'match', data.match.matchUuid] });
             queryClient.invalidateQueries({ queryKey: ['userMatches', 'user', data.user.id] });
+            queryClient.invalidateQueries({ queryKey: ['user', data.user.id] });
             queryClient.invalidateQueries({ queryKey: ['matches'] }); // Refresh match stats
         },
     });

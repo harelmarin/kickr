@@ -1,6 +1,7 @@
 package com.kickr_server.usermatch;
 
 import com.kickr_server.user.User;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +14,11 @@ import java.util.UUID;
 
 @Repository
 public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
+    boolean existsByUserAndMatch(User user, com.kickr_server.match.Match match);
+
     List<UserMatch> findByUserId(UUID userId);
+
+    Page<UserMatch> findByUserId(UUID userId, Pageable pageable);
 
     long countByUserId(UUID userId);
 
@@ -24,6 +29,8 @@ public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
     List<UserMatch> findByUserIdAndMatchId(UUID userId, UUID matchId);
 
     List<UserMatch> findByUserIn(List<User> users);
+
+    Page<UserMatch> findByUserIn(List<User> users, Pageable pageable);
 
     UserMatch findTopByUserOrderByWatchedAtDesc(User user);
 

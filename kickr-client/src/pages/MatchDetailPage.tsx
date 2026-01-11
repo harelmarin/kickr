@@ -145,7 +145,7 @@ export const MatchDetailPage = () => {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-2">
-                    <div className="text-kickr font-black italic tracking-tighter text-4xl sm:text-7xl animate-pulse drop-shadow-[0_0_20px_rgba(0,225,120,0.4)]">VS</div>
+                    <div className="text-kickr font-black italic tracking-tighter text-4xl sm:text-7xl">VS</div>
                     <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] mt-4">Upcoming</span>
                   </div>
                 )}

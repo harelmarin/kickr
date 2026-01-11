@@ -65,23 +65,26 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     );
 };
 
+import type { PageResponse } from '../types/Common';
+
 export default function AdminPage() {
-    const [users, setUsers] = useState<User[]>([]);
+    const [pageData, setPageData] = useState<PageResponse<User> | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [dateFilter, setDateFilter] = useState<'all' | 'today' | 'week' | 'month'>('all');
+    const [currentPage, setCurrentPage] = useState(0);
     const currentUser = authService.getUser();
 
     useEffect(() => {
-        loadUsers();
-    }, []);
+        loadUsers(currentPage);
+    }, [currentPage]);
 
-    const loadUsers = async () => {
+    const loadUsers = async (page: number) => {
         try {
             setLoading(true);
-            const data = await adminService.getAllUsers();
-            setUsers(data);
+            const data = await adminService.getAllUsers(page, 20);
+            setPageData(data);
             setError(null);
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to load users');
@@ -94,7 +97,7 @@ export default function AdminPage() {
         if (!window.confirm('Promote this user to ADMIN?')) return;
 
         toast.promise(
-            adminService.promoteUser(userId).then(() => loadUsers()),
+            adminService.promoteUser(userId).then(() => loadUsers(currentPage)),
             {
                 loading: 'Promoting user...',
                 success: 'User promoted to ADMIN',
@@ -107,7 +110,7 @@ export default function AdminPage() {
         if (!window.confirm('Demote this user to USER?')) return;
 
         toast.promise(
-            adminService.demoteUser(userId).then(() => loadUsers()),
+            adminService.demoteUser(userId).then(() => loadUsers(currentPage)),
             {
                 loading: 'Demoting user...',
                 success: 'User demoted to USER',
@@ -120,7 +123,7 @@ export default function AdminPage() {
         if (!window.confirm('DELETE this user? This cannot be undone!')) return;
 
         toast.promise(
-            adminService.deleteUser(userId).then(() => loadUsers()),
+            adminService.deleteUser(userId).then(() => loadUsers(currentPage)),
             {
                 loading: 'Deleting user...',
                 success: 'User deleted successfully',
@@ -130,7 +133,7 @@ export default function AdminPage() {
     };
 
     const filteredUsers = useMemo(() => {
-        let result = users;
+        let result = pageData?.content || [];
 
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
@@ -165,7 +168,7 @@ export default function AdminPage() {
         }
 
         return result;
-    }, [users, searchQuery, dateFilter]);
+    }, [pageData, searchQuery, dateFilter]);
 
     if (!currentUser || currentUser.role !== 'ADMIN') {
         return <NotFoundPage />;
@@ -190,8 +193,8 @@ export default function AdminPage() {
     }
 
     const stats = {
-        total: users.length,
-        admins: users.filter(u => u.role === 'ADMIN').length,
+        total: pageData?.totalElements || 0,
+        admins: pageData?.content.filter((u: User) => u.role === 'ADMIN').length || 0,
     };
 
     return (
@@ -369,6 +372,57 @@ export default function AdminPage() {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Pagination Controls */}
+                {pageData && pageData.totalPages > 1 && (
+                    <div className="bg-black/20 border-t border-white/5 p-4 flex items-center justify-between">
+                        <div className="text-[10px] text-[#667788] font-bold uppercase tracking-widest">
+                            Page {pageData.number + 1} of {pageData.totalPages} · {pageData.totalElements} Users
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
+                                disabled={pageData.first}
+                                className="p-2 border border-white/5 rounded bg-white/[0.02] text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            >
+                                Previous
+                            </button>
+                            <div className="flex items-center gap-1">
+                                {[...Array(Math.min(5, pageData.totalPages))].map((_, i) => {
+                                    let pageNum = i;
+                                    if (pageData.totalPages > 5) {
+                                        if (currentPage > 2) {
+                                            pageNum = currentPage - 2 + i;
+                                            if (pageNum >= pageData.totalPages) pageNum = pageData.totalPages - 5 + i;
+                                        }
+                                    }
+
+                                    if (pageNum >= pageData.totalPages) return null;
+
+                                    return (
+                                        <button
+                                            key={pageNum}
+                                            onClick={() => setCurrentPage(pageNum)}
+                                            className={`w-8 h-8 rounded text-[10px] font-bold flex items-center justify-center transition-all cursor-pointer ${currentPage === pageNum
+                                                    ? 'bg-kickr text-black'
+                                                    : 'bg-white/[0.02] border border-white/5 text-[#667788] hover:text-white'
+                                                }`}
+                                        >
+                                            {pageNum + 1}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
+                                disabled={pageData.last}
+                                className="p-2 border border-white/5 rounded bg-white/[0.02] text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

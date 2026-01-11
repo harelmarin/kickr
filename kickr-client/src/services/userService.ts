@@ -1,5 +1,6 @@
 import api from './axios';
 import type { User } from '../types/User';
+import type { PageResponse } from '../types/Common';
 
 export interface ApiResponse<T> {
     status: string;
@@ -13,8 +14,10 @@ export const userService = {
         return response.data;
     },
 
-    getAll: async (): Promise<User[]> => {
-        const response = await api.get<User[]>('/users');
+    getAll: async (page: number = 0, size: number = 20): Promise<PageResponse<User>> => {
+        const response = await api.get<PageResponse<User>>('/users', {
+            params: { page, size }
+        });
         return response.data;
     },
 

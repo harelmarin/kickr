@@ -72,6 +72,10 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
 
                 <div className="flex items-center justify-between px-1">
                     <div className="flex items-center gap-2">
+                        <span className="text-kickr/70 text-[9px] font-black uppercase tracking-widest mr-1">
+                            {match.competition}
+                        </span>
+                        <span className="text-white/10 text-[8px]">●</span>
                         <span className="text-[#5c6470] text-[9px] font-bold uppercase tracking-[0.2em]">
                             {dateStr}
                         </span>

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { followService } from '../services/followService';
+import type { PageResponse, User } from '../types/User';
 import toast from 'react-hot-toast';
 
 export const useFollowStatus = (followerId: string | undefined, followedId: string | undefined) => {
@@ -10,18 +11,18 @@ export const useFollowStatus = (followerId: string | undefined, followedId: stri
     });
 };
 
-export const useFollowing = (userId: string | undefined) => {
-    return useQuery({
-        queryKey: ['following', userId],
-        queryFn: () => followService.getFollowing(userId!),
+export const useFollowing = (userId: string | undefined, page: number = 0, size: number = 20) => {
+    return useQuery<PageResponse<User>, Error>({
+        queryKey: ['following', userId, page, size],
+        queryFn: () => followService.getFollowing(userId!, page, size),
         enabled: !!userId,
     });
 };
 
-export const useFollowers = (userId: string | undefined) => {
-    return useQuery({
-        queryKey: ['followers', userId],
-        queryFn: () => followService.getFollowers(userId!),
+export const useFollowers = (userId: string | undefined, page: number = 0, size: number = 20) => {
+    return useQuery<PageResponse<User>, Error>({
+        queryKey: ['followers', userId, page, size],
+        queryFn: () => followService.getFollowers(userId!, page, size),
         enabled: !!userId,
     });
 };

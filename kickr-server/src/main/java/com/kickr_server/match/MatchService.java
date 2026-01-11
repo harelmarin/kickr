@@ -40,9 +40,10 @@ import java.util.stream.Collectors;
 public class MatchService {
 
         private static final int[] LEAGUE_IDS = {
-                        39, 140, 135, 78, 61,
-                        45, 143, 137, 81, 66,
-                        2, 3, 848
+                        39, 140, 135, 78, 61, // Major 5
+                        45, 143, 137, 81, 66, // Cups & Portugal
+                        2, 3, 848, // European Cups
+                        6, 42, 62, 88, 203, 307, 253 // CAN, L2s, Eredivisie, Turkey, Saudi, MLS
         };
 
         private final RestTemplate restTemplate;

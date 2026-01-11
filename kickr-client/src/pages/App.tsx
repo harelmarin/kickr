@@ -24,6 +24,7 @@ const ReviewDetailPage = lazy(() => import('./ReviewDetailPage').then(module => 
 const AdminPage = lazy(() => import('./AdminPage'));
 const SettingsPage = lazy(() => import('./SettingsPage').then(module => ({ default: module.SettingsPage })));
 const ResetPasswordPage = lazy(() => import('./ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })));
+const UserNetworkPage = lazy(() => import('./UserNetworkPage').then(module => ({ default: module.UserNetworkPage })));
 const NotFoundPage = lazy(() => import('./NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 const PageLoader = () => (
@@ -63,6 +64,8 @@ function App() {
                 <Route path="/user/:id" element={<UserDetailPage />} />
                 <Route path="/user/:id/matches" element={<UserMatchesPage />} />
                 <Route path="/user/:id/diary" element={<UserDiaryPage />} />
+                <Route path="/user/:id/followers" element={<UserNetworkPage type="followers" />} />
+                <Route path="/user/:id/following" element={<UserNetworkPage type="following" />} />
                 <Route path="/reviews/:id" element={<ReviewDetailPage />} />
                 <Route
                   path="/admin"

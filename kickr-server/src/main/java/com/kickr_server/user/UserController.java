@@ -12,11 +12,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,8 +40,9 @@ public class UserController {
         })
         @RateLimiter(name = "userRateLimiter")
         @GetMapping
-        public List<UserDto> getAllUsers() {
-                return userService.findAllWithStats();
+        public Page<UserDto> getAllUsers(
+                        @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                return userService.findAllWithStats(pageable);
         }
 
         /**

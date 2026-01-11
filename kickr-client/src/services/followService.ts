@@ -1,5 +1,5 @@
 import api from './axios';
-import type { User } from '../types/User';
+import type { User, PageResponse } from '../types/User';
 
 export interface FollowResponse {
     followerId: string;
@@ -18,13 +18,17 @@ export const followService = {
         return response.data;
     },
 
-    getFollowing: async (userId: string): Promise<User[]> => {
-        const response = await api.get<User[]>(`/follows/following/${userId}`);
+    getFollowing: async (userId: string, page: number = 0, size: number = 20): Promise<PageResponse<User>> => {
+        const response = await api.get<PageResponse<User>>(`/follows/following/${userId}`, {
+            params: { page, size }
+        });
         return response.data;
     },
 
-    getFollowers: async (userId: string): Promise<User[]> => {
-        const response = await api.get<User[]>(`/follows/followers/${userId}`);
+    getFollowers: async (userId: string, page: number = 0, size: number = 20): Promise<PageResponse<User>> => {
+        const response = await api.get<PageResponse<User>>(`/follows/followers/${userId}`, {
+            params: { page, size }
+        });
         return response.data;
     },
 

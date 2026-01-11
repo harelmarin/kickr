@@ -1,14 +1,17 @@
 import axiosInstance from './axios';
 import type { User } from '../types/User';
+import type { PageResponse } from '../types/Common';
 import type { ApiResponse } from '../types/Auth';
 
 class AdminService {
     /**
      * Get all users (admin only)
      */
-    async getAllUsers(): Promise<User[]> {
+    async getAllUsers(page: number = 0, size: number = 20): Promise<PageResponse<User>> {
         try {
-            const response = await axiosInstance.get<User[]>('/admin/users');
+            const response = await axiosInstance.get<PageResponse<User>>('/admin/users', {
+                params: { page, size }
+            });
             return response.data;
         } catch (error: any) {
             throw error;

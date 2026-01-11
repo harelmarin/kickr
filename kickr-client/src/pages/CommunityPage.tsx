@@ -7,12 +7,12 @@ import { UserCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { EmptyState } from '../components/ui/EmptyState';
 
 export const CommunityPage = () => {
-    const { data: users, isLoading } = useUsers();
+    const [currentPage, setCurrentPage] = useState(0);
+    const { data: pageData, isLoading } = useUsers(currentPage, 12);
     const { user: currentUser } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState('');
     const [sortBy, setSortBy] = useState<'recent' | 'logs' | 'network'>('logs');
-
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -20,6 +20,13 @@ export const CommunityPage = () => {
         }, 400);
         return () => clearTimeout(timer);
     }, [searchQuery]);
+
+    // Reset current page when query changes
+    useEffect(() => {
+        setCurrentPage(0);
+    }, [debouncedQuery]);
+
+    const users = pageData?.content || [];
 
     const filteredUsers = useMemo(() => {
         if (!users) return [];
@@ -40,8 +47,10 @@ export const CommunityPage = () => {
             });
     }, [users, debouncedQuery, sortBy]);
 
-    const totalMatches = users?.reduce((acc, u) => acc + (u.matchesCount || 0), 0) || 0;
-    const totalNetwork = users?.reduce((acc, u) => acc + (u.followersCount || 0), 0) || 0;
+    // Stats calculations
+    const statsTotalMinds = pageData?.totalElements || 0;
+    const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc, u) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
+    const statsTotalNetwork = pageData?.totalElements ? Math.round((pageData.content.reduce((acc, u) => acc + (u.followersCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
         <motion.main
@@ -56,7 +65,6 @@ export const CommunityPage = () => {
                 <div className="absolute inset-0 bg-[#14181c] opacity-50">
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
                 </div>
-                {/* Network Glow Effect */}
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-kickr/20 blur-[120px] rounded-full animate-pulse"></div>
                     <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-kickr/10 blur-[100px] rounded-full delay-1000 animate-pulse"></div>
@@ -79,7 +87,6 @@ export const CommunityPage = () => {
                         </p>
                     </motion.div>
 
-                    {/* Advanced Filter Bar - Aligned with MatchesPage */}
                     <motion.div
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -89,7 +96,6 @@ export const CommunityPage = () => {
                         <div className="flex flex-col lg:flex-row lg:items-center justify-between border border-white/5 p-6 section-contrast rounded-2xl gap-8 relative overflow-hidden">
 
                             <div className="flex flex-wrap items-center gap-x-10 gap-y-6 relative z-10">
-                                {/* Search Input */}
                                 <div className="flex flex-col gap-2 w-full sm:w-64">
                                     <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Identify Tactician</span>
                                     <div className="relative">
@@ -104,7 +110,6 @@ export const CommunityPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Sorting Filter */}
                                 <div className="flex flex-col gap-2">
                                     <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Sort by Rank</span>
                                     <div className="flex bg-black/20 p-1 rounded-xl border border-white/5">
@@ -124,19 +129,19 @@ export const CommunityPage = () => {
                             <div className="flex gap-10 relative z-10 lg:border-l lg:border-white/5 lg:pl-10">
                                 <div className="flex flex-col items-end">
                                     <span className="text-[20px] font-black text-white italic leading-none tracking-tighter">
-                                        {isLoading ? '...' : (users?.length || 0)}
+                                        {isLoading ? '...' : statsTotalMinds}
                                     </span>
                                     <span className="text-[8px] uppercase tracking-widest text-[#445566] font-bold mt-1">Active Minds</span>
                                 </div>
                                 <div className="flex flex-col items-end">
                                     <span className="text-[20px] font-black text-white italic leading-none tracking-tighter">
-                                        {isLoading ? '...' : (totalMatches >= 1000 ? `${(totalMatches / 1000).toFixed(1)}k` : totalMatches)}
+                                        {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
                                     </span>
                                     <span className="text-[8px] uppercase tracking-widest text-[#445566] font-bold mt-1">Global Logs</span>
                                 </div>
                                 <div className="flex flex-col items-end">
                                     <span className="text-[20px] font-black text-kickr italic leading-none tracking-tighter">
-                                        {isLoading ? '...' : (totalNetwork >= 1000 ? `${(totalNetwork / 1000).toFixed(1)}k` : totalNetwork)}
+                                        {isLoading ? '...' : (statsTotalNetwork >= 1000 ? `${(statsTotalNetwork / 1000).toFixed(1)}k` : statsTotalNetwork)}
                                     </span>
                                     <span className="text-[8px] uppercase tracking-widest text-[#445566] font-bold mt-1">Network Size</span>
                                 </div>
@@ -145,7 +150,6 @@ export const CommunityPage = () => {
                     </motion.div>
                 </header>
 
-                {/* Community Grid */}
                 <section className="pb-32">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {isLoading ? (
@@ -166,6 +170,59 @@ export const CommunityPage = () => {
                             </AnimatePresence>
                         )}
                     </div>
+
+                    {!isLoading && pageData && pageData.totalPages > 1 && (
+                        <div className="mt-16 flex items-center justify-center gap-4">
+                            <button
+                                onClick={() => {
+                                    setCurrentPage(prev => Math.max(0, prev - 1));
+                                    window.scrollTo({ top: 300, behavior: 'smooth' });
+                                }}
+                                disabled={pageData.first}
+                                className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            >
+                                Previous
+                            </button>
+
+                            <div className="flex items-center gap-2">
+                                {[...Array(pageData.totalPages)].map((_, i) => {
+                                    if (pageData.totalPages > 5) {
+                                        if (i < currentPage - 2 && i !== 0) return null;
+                                        if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
+                                        if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-[#334455]">...</span>;
+                                        if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-[#334455]">...</span>;
+                                    }
+
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => {
+                                                setCurrentPage(i);
+                                                window.scrollTo({ top: 300, behavior: 'smooth' });
+                                            }}
+                                            className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                                    ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                                                    : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
+                                                }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1));
+                                    window.scrollTo({ top: 300, behavior: 'smooth' });
+                                }}
+                                disabled={pageData.last}
+                                className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
 
                     {!isLoading && filteredUsers.length === 0 && (
                         <EmptyState

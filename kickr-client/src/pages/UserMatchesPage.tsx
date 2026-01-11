@@ -10,7 +10,10 @@ export const UserMatchesPage = () => {
     const [searchParams] = useSearchParams();
     const { data: user } = useUser(id);
     const { user: currentUser } = useAuth();
-    const { data: reviews, isLoading, isError } = useUserMatchesByUser(id || '');
+    const [currentPage, setCurrentPage] = useState(0);
+    const { data: pageData, isLoading, isError } = useUserMatchesByUser(id || '', currentPage, 12);
+
+    const reviews = pageData?.content || [];
 
     const isOwnProfile = currentUser?.id === id;
     const [search, setSearch] = useState('');
@@ -82,7 +85,7 @@ export const UserMatchesPage = () => {
                                 {user?.name}'s Matches
                             </h1>
                             <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold mt-1">
-                                {filteredReviews.length} Matches Logged by {user?.name}
+                                {pageData?.totalElements || 0} Matches Logged by {user?.name}
                             </p>
                         </div>
                     </div>
@@ -166,6 +169,60 @@ export const UserMatchesPage = () => {
                         ))
                     )}
                 </div>
+
+                {/* Pagination Controls */}
+                {!isLoading && pageData && pageData.totalPages > 1 && (
+                    <div className="mt-16 flex items-center justify-center gap-4">
+                        <button
+                            onClick={() => {
+                                setCurrentPage(prev => Math.max(0, prev - 1));
+                                window.scrollTo({ top: 300, behavior: 'smooth' });
+                            }}
+                            disabled={pageData.first}
+                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                        >
+                            Previous
+                        </button>
+
+                        <div className="flex items-center gap-2">
+                            {[...Array(pageData.totalPages)].map((_, i) => {
+                                if (pageData.totalPages > 5) {
+                                    if (i < currentPage - 2 && i !== 0) return null;
+                                    if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
+                                    if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-[#334455]">...</span>;
+                                    if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-[#334455]">...</span>;
+                                }
+
+                                return (
+                                    <button
+                                        key={i}
+                                        onClick={() => {
+                                            setCurrentPage(i);
+                                            window.scrollTo({ top: 300, behavior: 'smooth' });
+                                        }}
+                                        className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                            ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                                            : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
+                                            }`}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        <button
+                            onClick={() => {
+                                setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1));
+                                window.scrollTo({ top: 300, behavior: 'smooth' });
+                            }}
+                            disabled={pageData.last}
+                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
 
                 {
                     !isLoading && filteredReviews.length === 0 && (

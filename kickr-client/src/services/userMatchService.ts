@@ -1,5 +1,6 @@
 import api from './axios';
 import type { UserMatch } from '../types/UserMatch';
+import type { PageResponse } from '../types/Common';
 
 export interface CreateUserMatchDto {
     userId: string;
@@ -45,9 +46,14 @@ const mapApiResponseToUserMatch = (um: any): UserMatch => ({
 });
 
 export const userMatchService = {
-    getByUserId: async (userId: string): Promise<UserMatch[]> => {
-        const response = await api.get<any[]>(`/user_match/user/${userId}`);
-        return response.data.map(mapApiResponseToUserMatch);
+    getByUserId: async (userId: string, page: number = 0, size: number = 20): Promise<PageResponse<UserMatch>> => {
+        const response = await api.get<PageResponse<any>>(`/user_match/user/${userId}`, {
+            params: { page, size }
+        });
+        return {
+            ...response.data,
+            content: response.data.content.map(mapApiResponseToUserMatch)
+        };
     },
 
     getByMatchId: async (matchId: string, sortBy = 'watchedAt', direction = 'desc'): Promise<UserMatch[]> => {
@@ -71,9 +77,14 @@ export const userMatchService = {
         return response.data.map(mapApiResponseToUserMatch);
     },
 
-    getFollowingReviews: async (userId: string, limit = 20): Promise<UserMatch[]> => {
-        const response = await api.get<any[]>(`/user_match/following/${userId}?limit=${limit}`);
-        return response.data.map(mapApiResponseToUserMatch);
+    getFollowingReviews: async (userId: string, page: number = 0, size: number = 20): Promise<PageResponse<UserMatch>> => {
+        const response = await api.get<PageResponse<any>>(`/user_match/following/${userId}`, {
+            params: { page, size }
+        });
+        return {
+            ...response.data,
+            content: response.data.content.map(mapApiResponseToUserMatch)
+        };
     },
 
     getPopular: async (limit = 10): Promise<UserMatch[]> => {

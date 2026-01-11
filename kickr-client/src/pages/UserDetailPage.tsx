@@ -8,7 +8,7 @@ import { useFollowStatus, useFollowAction, useFollowers, useFollowing } from '..
 export const UserDetailPage = () => {
     const { id } = useParams<{ id: string }>();
     const { data: user, isLoading: isUserLoading } = useUser(id);
-    const { data: reviews, isLoading: isReviewsLoading } = useUserMatchesByUser(id || '');
+    const { data: pageData, isLoading: isReviewsLoading } = useUserMatchesByUser(id || '', 0, 50);
     const { user: currentUser } = useAuth();
     const navigate = useNavigate();
 
@@ -139,28 +139,14 @@ export const UserDetailPage = () => {
                         <div className="w-px h-8 bg-white/10" />
                         <StatHorizontal
                             label="Following"
-                            value={following?.length.toString() || user.followingCount.toString()}
-                            onClick={() => {
-                                const element = document.getElementById('network-section');
-                                if (element) {
-                                    const offset = 100;
-                                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-                                    window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
-                                }
-                            }}
+                            value={user.followingCount.toString()}
+                            onClick={() => navigate(`/user/${id}/following`)}
                         />
                         <div className="w-px h-8 bg-white/10" />
                         <StatHorizontal
                             label="Fans"
-                            value={followers?.length.toString() || user.followersCount.toString()}
-                            onClick={() => {
-                                const element = document.getElementById('network-section');
-                                if (element) {
-                                    const offset = 100;
-                                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-                                    window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
-                                }
-                            }}
+                            value={user.followersCount.toString()}
+                            onClick={() => navigate(`/user/${id}/followers`)}
                         />
                     </div>
                 </header>
@@ -172,16 +158,16 @@ export const UserDetailPage = () => {
                         <section id="diary-entries" className="space-y-12 section-contrast p-8 rounded-2xl">
                             <div className="flex items-center justify-between border-b border-kickr/20 pb-6">
                                 <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em]">Recent Diary Entries →</Link>
-                                <span className="text-[10px] font-bold text-kickr uppercase tracking-widest">{reviews?.length || 0} Total</span>
+                                <span className="text-[10px] font-bold text-kickr uppercase tracking-widest">{pageData?.totalElements || 0} Total</span>
                             </div>
 
                             {isReviewsLoading ? (
                                 <div className="space-y-12 animate-pulse">
                                     {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl"></div>)}
                                 </div>
-                            ) : reviews && reviews.length > 0 ? (
+                            ) : pageData?.content && pageData.content.length > 0 ? (
                                 <div className="grid grid-cols-1 gap-12">
-                                    {([...reviews]
+                                    {([...pageData.content]
                                         .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
                                         .slice(0, 3)
                                     ).map(review => (
@@ -203,15 +189,13 @@ export const UserDetailPage = () => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h2 className="text-xs font-bold text-white uppercase tracking-widest">Following</h2>
-                                            <span className="text-[9px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{following?.length || user.followingCount}</span>
+                                            <span className="text-[9px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{following?.totalElements ?? user.followingCount}</span>
                                         </div>
-                                        {following && following.length > 12 && (
-                                            <Link to={`/user/${id}/following`} className="text-[9px] font-bold text-kickr hover:text-white transition-colors uppercase tracking-widest">View All →</Link>
-                                        )}
+                                        <Link to={`/user/${id}/following`} className="text-[9px] font-bold text-kickr hover:text-white transition-colors uppercase tracking-widest">View All →</Link>
                                     </div>
-                                    {following && following.length > 0 ? (
+                                    {following?.content && following.content.length > 0 ? (
                                         <div className="grid grid-cols-12 gap-3">
-                                            {following.slice(0, 24).map((f) => (
+                                            {following.content.slice(0, 24).map((f) => (
                                                 <Link
                                                     key={f.id}
                                                     to={`/user/${f.id}`}
@@ -238,23 +222,25 @@ export const UserDetailPage = () => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h2 className="text-xs font-bold text-white uppercase tracking-widest">Followers</h2>
-                                            <span className="text-[9px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{followers?.length || user.followersCount}</span>
+                                            <span className="text-[9px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{followers?.totalElements ?? user.followersCount}</span>
                                         </div>
-                                        {followers && followers.length > 12 && (
-                                            <Link to={`/user/${id}/followers`} className="text-[9px] font-bold text-kickr hover:text-white transition-colors uppercase tracking-widest">View All →</Link>
-                                        )}
+                                        <Link to={`/user/${id}/followers`} className="text-[9px] font-bold text-kickr hover:text-white transition-colors uppercase tracking-widest">View All →</Link>
                                     </div>
-                                    {followers && followers.length > 0 ? (
+                                    {followers?.content && followers.content.length > 0 ? (
                                         <div className="grid grid-cols-12 gap-3">
-                                            {followers.slice(0, 24).map((f) => (
+                                            {followers.content.slice(0, 24).map((f) => (
                                                 <Link
                                                     key={f.id}
                                                     to={`/user/${f.id}`}
                                                     className="group relative"
                                                     title={f.name}
                                                 >
-                                                    <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 group-hover:scale-110 transition-all shadow-lg">
-                                                        {f.name[0]}
+                                                    <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 group-hover:scale-110 transition-all shadow-lg overflow-hidden">
+                                                        {f.avatarUrl ? (
+                                                            <img src={f.avatarUrl} alt={f.name} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            f.name[0]
+                                                        )}
                                                     </div>
                                                 </Link>
                                             ))}
@@ -271,18 +257,18 @@ export const UserDetailPage = () => {
                     <div className="space-y-12">
                         <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
                             <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Ratings Distribution</h3>
-                            <RatingsChart reviews={reviews || []} />
+                            <RatingsChart reviews={pageData?.content || []} />
 
                             <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
                                 <div className="flex flex-col">
                                     <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Total Logs</span>
-                                    <span className="text-xl font-black text-white italic">{reviews?.length || 0}</span>
+                                    <span className="text-xl font-black text-white italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
                                     <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Average</span>
                                     <span className="text-xl font-black text-kickr italic">
-                                        {reviews && reviews.length > 0
-                                            ? (reviews.reduce((acc, r) => acc + r.note, 0) / reviews.length).toFixed(1)
+                                        {pageData && pageData.content.length > 0
+                                            ? (pageData.content.reduce((acc, r) => acc + r.note, 0) / pageData.content.length).toFixed(1)
                                             : '0.0'}
                                     </span>
                                 </div>
@@ -291,7 +277,7 @@ export const UserDetailPage = () => {
 
                         <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
                             <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Most Watched Teams</h3>
-                            <MostWatchedTeams reviews={reviews || []} />
+                            <MostWatchedTeams reviews={pageData?.content || []} />
                         </section>
 
                         <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
@@ -299,20 +285,20 @@ export const UserDetailPage = () => {
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center">
                                     <span className="text-[11px] font-bold text-[#99aabb]">Total Logs</span>
-                                    <span className="text-sm font-black text-white">{reviews?.length || 0}</span>
+                                    <span className="text-sm font-black text-white">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-[11px] font-bold text-[#99aabb]">Avg Rating</span>
                                     <span className="text-sm font-black text-kickr">
-                                        {reviews && reviews.length > 0
-                                            ? (reviews.reduce((acc, r) => acc + r.note, 0) / reviews.length).toFixed(1)
+                                        {pageData && pageData.content.length > 0
+                                            ? (pageData.content.reduce((acc, r) => acc + r.note, 0) / pageData.content.length).toFixed(1)
                                             : '0.0'} ★
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-[11px] font-bold text-[#99aabb]">Liked Matches</span>
                                     <span className="text-sm font-black text-orange-500">
-                                        {reviews?.filter(r => r.isLiked).length || 0}
+                                        {pageData?.content.filter(r => r.isLiked).length || 0}
                                     </span>
                                 </div>
                             </div>

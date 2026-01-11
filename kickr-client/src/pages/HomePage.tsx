@@ -21,12 +21,15 @@ export default function HomePage() {
   const { data: trendingMatches, isLoading: isTrendingLoading } = useTrendingMatches(6);
   const { data: competitions } = useCompetitions();
 
-  const activeFeed = user ? followingReviews : (globalFeed || latestReviews);
+  const activeFeedContent = user
+    ? (followingReviews?.content || [])
+    : (globalFeed || latestReviews || []);
+
   const isLoadingFeed = user ? isFollowingLoading : (isGlobalLoading || isLatestLoading);
 
-  const sortedUserReviews = userReviews
-    ? [...userReviews].sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).slice(0, 3)
-    : [];
+  const sortedUserReviews = (userReviews?.content || [])
+    .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
+    .slice(0, 3);
 
   return (
     <motion.main
@@ -130,9 +133,9 @@ export default function HomePage() {
                   <ReviewCardSkeleton />
                   <ReviewCardSkeleton />
                 </div>
-              ) : activeFeed && activeFeed.length > 0 ? (
+              ) : activeFeedContent && activeFeedContent.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  {activeFeed.map((review) => (
+                  {activeFeedContent.map((review) => (
                     <ReviewCard key={review.id} review={review} />
                   ))}
                 </div>
@@ -304,8 +307,8 @@ export default function HomePage() {
             <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
               <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">Rising Tacticians</h3>
               <div className="space-y-6">
-                {communityScouts && communityScouts.length > 0 ? (
-                  communityScouts
+                {communityScouts?.content && communityScouts.content.length > 0 ? (
+                  communityScouts.content
                     .filter(s => s.id !== user?.id)
                     .slice(0, 4)
                     .map((scout) => (

@@ -1,5 +1,6 @@
 package com.kickr_server.follow;
 
+import com.kickr_server.dto.User.UserDto;
 import com.kickr_server.exception.follow.FollowedNotFoundException;
 import com.kickr_server.exception.follow.FollowerNotFoundException;
 import com.kickr_server.exception.user.UserNotFoundException;
@@ -7,7 +8,10 @@ import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
 import com.kickr_server.notification.NotificationService;
 import com.kickr_server.notification.NotificationType;
+import com.kickr_server.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +36,7 @@ public class FollowService {
 
         private final FollowRepository followRepository;
         private final UserRepository userRepository;
+        private final UserService userService;
         private final NotificationService notificationService;
 
         /**
@@ -98,6 +103,19 @@ public class FollowService {
                                 .toList();
         }
 
+        public List<UserDto> getFollowingDtos(UUID userId) {
+                return getFollowing(userId).stream()
+                                .map(user -> userService.getUserDtoWithStats(user.getId()))
+                                .toList();
+        }
+
+        public Page<UserDto> getFollowingDtos(UUID userId, Pageable pageable) {
+                User user = userRepository.findById(userId)
+                                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                return followRepository.findByFollower(user, pageable)
+                                .map(follow -> userService.getUserDtoWithStats(follow.getFollowed().getId()));
+        }
+
         /**
          * Récupère la liste des utilisateurs qui suivent un utilisateur donné.
          *
@@ -112,6 +130,19 @@ public class FollowService {
                                 .stream()
                                 .map(Follow::getFollower)
                                 .toList();
+        }
+
+        public List<UserDto> getFollowersDtos(UUID userId) {
+                return getFollowers(userId).stream()
+                                .map(user -> userService.getUserDtoWithStats(user.getId()))
+                                .toList();
+        }
+
+        public Page<UserDto> getFollowersDtos(UUID userId, Pageable pageable) {
+                User user = userRepository.findById(userId)
+                                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                return followRepository.findByFollowed(user, pageable)
+                                .map(follow -> userService.getUserDtoWithStats(follow.getFollower().getId()));
         }
 
         /**

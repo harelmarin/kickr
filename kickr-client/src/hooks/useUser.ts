@@ -10,10 +10,10 @@ export const useUser = (id?: string) => {
     });
 };
 
-export const useUsers = () => {
+export const useUsers = (page: number = 0, size: number = 20) => {
     return useQuery({
-        queryKey: ['users'],
-        queryFn: userService.getAll,
+        queryKey: ['users', page, size],
+        queryFn: () => userService.getAll(page, size),
         staleTime: 5 * 60 * 1000,
         retry: false,
     });

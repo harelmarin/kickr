@@ -11,6 +11,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,10 +33,10 @@ public class UserMatchController {
         })
         @RateLimiter(name = "userMatchRateLimiter")
         @GetMapping
-        public List<UserMatchFullDto> getAllUserMatch() {
-                return userMatchService.findAll().stream()
-                                .map(UserMatchFullDto::fromEntity)
-                                .toList();
+        public Page<UserMatchFullDto> getAllUserMatch(
+                        @PageableDefault(size = 20, sort = "watchedAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                return userMatchService.findAll(pageable)
+                                .map(UserMatchFullDto::fromEntity);
         }
 
         @Operation(summary = "Récupère une évaluation par son ID")
@@ -66,11 +70,11 @@ public class UserMatchController {
         })
         @RateLimiter(name = "userMatchRateLimiter")
         @GetMapping("/user/{id}")
-        public List<UserMatchFullDto> getUserMatchByUser(
-                        @Parameter(description = "UUID de l'utilisateur", required = true) @PathVariable UUID id) {
-                return userMatchService.getByUserId(id).stream()
-                                .map(UserMatchFullDto::fromEntity)
-                                .toList();
+        public Page<UserMatchFullDto> getUserMatchByUser(
+                        @Parameter(description = "UUID de l'utilisateur", required = true) @PathVariable UUID id,
+                        @PageableDefault(size = 20, sort = "watchedAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                return userMatchService.getByUserId(id, pageable)
+                                .map(UserMatchFullDto::fromEntity);
         }
 
         @Operation(summary = "Récupère toutes les évaluations d’un match donné")
@@ -142,11 +146,10 @@ public class UserMatchController {
         })
         @RateLimiter(name = "userMatchRateLimiter")
         @GetMapping("/following/{userId}")
-        public List<UserMatchFullDto> getFollowingReviews(
+        public Page<UserMatchFullDto> getFollowingReviews(
                         @Parameter(description = "UUID de l'utilisateur", required = true) @PathVariable UUID userId,
-                        @Parameter(description = "Nombre maximum d'évaluations", example = "20") @RequestParam(defaultValue = "20") int limit) {
-                return userMatchService.getFollowingReviews(userId, limit).stream()
-                                .map(UserMatchFullDto::fromEntity)
-                                .toList();
+                        @PageableDefault(size = 20, sort = "watchedAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                return userMatchService.getFollowingReviews(userId, pageable)
+                                .map(UserMatchFullDto::fromEntity);
         }
 }

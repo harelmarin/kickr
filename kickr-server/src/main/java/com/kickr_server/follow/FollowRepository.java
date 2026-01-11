@@ -1,6 +1,8 @@
 package com.kickr_server.follow;
 
 import com.kickr_server.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +15,11 @@ public interface FollowRepository extends JpaRepository<Follow, UUID> {
 
     List<Follow> findByFollower(User follower); // liste de gens que je suis
 
+    Page<Follow> findByFollower(User follower, Pageable pageable);
+
     List<Follow> findByFollowed(User followed); // liste de mes followers
+
+    Page<Follow> findByFollowed(User followed, Pageable pageable);
 
     long countByFollowerId(UUID followerId);
 

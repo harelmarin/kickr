@@ -14,6 +14,7 @@ import com.kickr_server.notification.NotificationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -67,6 +68,10 @@ public class UserMatchService {
         return userMatchRepository.findAll();
     }
 
+    public Page<UserMatch> findAll(Pageable pageable) {
+        return userMatchRepository.findAll(pageable);
+    }
+
     /**
      * Récupère toutes les évaluations effectuées par un utilisateur spécifique.
      *
@@ -75,6 +80,10 @@ public class UserMatchService {
      */
     public List<UserMatch> getByUserId(UUID id) {
         return userMatchRepository.findByUserId(id);
+    }
+
+    public Page<UserMatch> getByUserId(UUID id, Pageable pageable) {
+        return userMatchRepository.findByUserId(id, pageable);
     }
 
     public UserMatch findById(UUID id) {
@@ -212,6 +221,14 @@ public class UserMatchService {
             return List.of();
         }
         return userMatchRepository.findLatestMatchesOfUsers(followedUsers, PageRequest.of(0, limit));
+    }
+
+    public Page<UserMatch> getFollowingReviews(UUID userId, Pageable pageable) {
+        List<User> followedUsers = followService.getFollowing(userId);
+        if (followedUsers.isEmpty()) {
+            return Page.empty();
+        }
+        return userMatchRepository.findByUserIn(followedUsers, pageable);
     }
 
     /**

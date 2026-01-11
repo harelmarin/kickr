@@ -10,8 +10,5 @@ FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
-# Port exposé par Spring Boot
-EXPOSE 8080
-
-# Commande pour lancer le serveur
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Optimisation JVM pour VPS 4Go : On alloue 1Go de Heap
+ENTRYPOINT ["java", "-Xmx1024m", "-Xms512m", "-jar", "app.jar"]

@@ -10,9 +10,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -53,9 +55,10 @@ public class FollowController {
         })
         @RateLimiter(name = "followRateLimiter")
         @GetMapping("/following/{userId}")
-        public List<UserDto> getFollowing(
-                        @Parameter(description = "UUID de l'utilisateur dont on veut la liste des suivis", required = true) @PathVariable UUID userId) {
-                return followService.getFollowing(userId).stream().map(UserDto::fromEntity).toList();
+        public Page<UserDto> getFollowing(
+                        @Parameter(description = "UUID de l'utilisateur dont on veut la liste des suivis", required = true) @PathVariable UUID userId,
+                        @PageableDefault(size = 20) Pageable pageable) {
+                return followService.getFollowingDtos(userId, pageable);
         }
 
         @Operation(summary = "Liste des utilisateurs qui suivent un utilisateur")
@@ -65,9 +68,10 @@ public class FollowController {
         })
         @RateLimiter(name = "followRateLimiter")
         @GetMapping("/followers/{userId}")
-        public List<UserDto> getFollowers(
-                        @Parameter(description = "UUID de l'utilisateur dont on veut la liste des followers", required = true) @PathVariable UUID userId) {
-                return followService.getFollowers(userId).stream().map(UserDto::fromEntity).toList();
+        public Page<UserDto> getFollowers(
+                        @Parameter(description = "UUID de l'utilisateur dont on veut la liste des followers", required = true) @PathVariable UUID userId,
+                        @PageableDefault(size = 20) Pageable pageable) {
+                return followService.getFollowersDtos(userId, pageable);
         }
 
         @Operation(summary = "Vérifier si un utilisateur suit un autre")

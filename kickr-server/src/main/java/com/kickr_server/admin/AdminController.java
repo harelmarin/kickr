@@ -21,8 +21,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -48,10 +51,9 @@ public class AdminController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
-    public List<UserDto> getAllUsers() {
-        return userService.findAll().stream()
-                .map(UserDto::fromEntity)
-                .toList();
+    public Page<UserDto> getAllUsers(
+            @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return userService.findAll(pageable).map(UserDto::fromEntity);
     }
 
     @Operation(summary = "Promote a user to ADMIN")

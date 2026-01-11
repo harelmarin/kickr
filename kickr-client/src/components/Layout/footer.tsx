@@ -1,70 +1,62 @@
+import { Link } from 'react-router-dom';
+
 export const Footer = () => {
   return (
-    <footer className="bg-[#1b2228] border-t border-white/5 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
-          {/* Brand */}
-          <div className="max-w-sm">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl">⚽</span>
-              <span className="text-2xl font-black font-display tracking-tighter text-white">KICKR</span>
-            </div>
-            <p className="text-[#99aabb] text-xs font-bold uppercase tracking-[0.2em] mb-4">
-              Social network for football fans.
-            </p>
-            <p className="text-[#667788] text-sm leading-relaxed">
-              Track matches you've watched. Save those you want to see. Tell your friends what's good.
+    <footer className="bg-[#0a0b0d] border-t border-white/[0.03] py-16 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+
+          {/* Brand & Mission (Minimal) */}
+          <div className="flex flex-col items-center md:items-start">
+            <Link to="/" className="flex items-center gap-2 mb-4 group">
+              <span className="text-xl group-hover:scale-110 transition-transform duration-300">⚽</span>
+              <span className="text-xl font-black italic tracking-tighter text-white display-font group-hover:text-kickr transition-colors">KICKR</span>
+            </Link>
+            <p className="text-[#445566] text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed text-center md:text-left">
+              The Sound of Modern Football Culture
             </p>
           </div>
 
-          {/* Links Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
-            <FooterCol title="Platform" links={[
-              { label: 'Matches', to: '/matches' },
-              { label: 'Leagues', to: '/competitions' },
-              { label: 'Clubs', to: '/teams' },
-            ]} />
-            <FooterCol title="Support" links={[
-              { label: 'Help', to: '/help' },
-              { label: 'Terms', to: '/terms' },
-              { label: 'Privacy', to: '/privacy' },
-            ]} />
-            <FooterCol title="Socials" links={[
-              { label: 'Twitter', to: '#' },
-              { label: 'Instagram', to: '#' },
-              { label: 'Github', to: '#' },
-            ]} />
+          {/* Navigation Links (Minimalist Grid) */}
+          <nav className="flex flex-wrap justify-center gap-x-10 gap-y-4">
+            <FooterLink label="Matches" to="/matches" />
+            <FooterLink label="Leagues" to="/competitions" />
+            <FooterLink label="Tacticians" to="/community" />
+            <FooterLink label="About" to="#" />
+            <FooterLink label="Terms" to="#" />
+          </nav>
 
-            {/* Dev Tools (Only in semi-hidden way or just for now) */}
-            <div className="hidden sm:block">
-              <h4 className="text-[#ef4444] text-[11px] font-black uppercase tracking-[0.3em] mb-6">Dev Utils</h4>
-              <button
-                onClick={async () => {
-                  if (window.confirm("FATAL ACTION: This will delete ALL users, reviews, and follows. Core matches and competitions will stay. Continue?")) {
-                    try {
-                      const { userMatchService } = await import('../../services/userMatchService');
-                      await userMatchService.resetTestData();
-                      window.location.href = '/';
-                      setTimeout(() => window.location.reload(), 100);
-                    } catch (e) {
-                      alert("Reset failed: " + e);
-                    }
-                  }
-                }}
-                className="text-[#667788] hover:text-red-500 transition-colors text-[10px] font-bold uppercase tracking-widest text-left"
-              >
-                Reset all test data
-              </button>
+          {/* Dev / Admin Access (Ultra Discreet) */}
+          <div className="flex items-center gap-6">
+            <button
+              onClick={async () => {
+                if (window.confirm("FATAL ACTION: Reset all test data?")) {
+                  try {
+                    const { userMatchService } = await import('../../services/userMatchService');
+                    await userMatchService.resetTestData();
+                    window.location.href = '/';
+                  } catch (e) { console.error(e); }
+                }
+              }}
+              className="w-1.5 h-1.5 rounded-full bg-white/5 hover:bg-red-500/50 transition-colors cursor-pointer"
+              title="Reset Database"
+            />
+            <div className="text-[10px] font-black text-[#223344] uppercase tracking-widest cursor-default select-none">
+              v0.1.0-KICK
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[#445566] text-[10px] font-bold uppercase tracking-widest">
-            © {new Date().getFullYear()} Kickr. Performance data provided by Football API.
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t border-white/[0.02] flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[#445566] text-[9px] font-bold uppercase tracking-[0.2em]">
+            © {new Date().getFullYear()} Kickr. Performance data by Football API.
           </p>
-          <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-[#445566]">
-            Made with <span className="text-[var(--color-primary)] px-1">⚽</span> in the digital stadium
+
+          <div className="flex items-center gap-8">
+            <SocialIcon icon="𝕏" href="#" />
+            <SocialIcon icon="" href="#" />
+            <SocialIcon icon="" href="#" />
           </div>
         </div>
       </div>
@@ -72,17 +64,21 @@ export const Footer = () => {
   );
 };
 
-const FooterCol = ({ title, links }: { title: string; links: { label: string; to: string }[] }) => (
-  <div>
-    <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-6">{title}</h4>
-    <ul className="space-y-3">
-      {links.map(link => (
-        <li key={link.label}>
-          <a href={link.to} className="text-[#99aabb] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest">
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
+const FooterLink = ({ label, to }: { label: string; to: string }) => (
+  <Link
+    to={to}
+    className="text-[#667788] hover:text-white transition-all duration-300 text-[10px] font-black uppercase tracking-[0.2em] relative group"
+  >
+    {label}
+    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-kickr group-hover:w-full transition-all duration-300"></span>
+  </Link>
+);
+
+const SocialIcon = ({ icon, href }: { icon: string; href: string }) => (
+  <a
+    href={href}
+    className="text-[#334455] hover:text-white transition-colors duration-300 text-xs grayscale hover:grayscale-0"
+  >
+    {icon}
+  </a>
 );

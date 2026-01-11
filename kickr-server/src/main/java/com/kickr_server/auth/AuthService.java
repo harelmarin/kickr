@@ -63,7 +63,7 @@ public class AuthService {
         }
         String accessToken = jwtService.generateToken(user.getEmail());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
-        return new AuthResponse(accessToken, refreshToken.getToken(), UserDto.fromEntity(user));
+        return new AuthResponse(accessToken, refreshToken.getToken(), userService.getUserDtoWithStats(user.getId()));
     }
 
     /**
@@ -75,7 +75,7 @@ public class AuthService {
     public UserDto register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userService.save(user);
-        return UserDto.fromEntity(savedUser);
+        return userService.getUserDtoWithStats(savedUser.getId());
     }
 
     /**

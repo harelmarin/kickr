@@ -12,24 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Service métier pour la gestion des utilisateurs.
- * <p>
- * Fournit les méthodes principales pour :
- * <ul>
- * <li>Récupérer tous les utilisateurs</li>
- * <li>Récupérer un utilisateur par son UUID ou son email</li>
- * <li>Créer un nouvel utilisateur</li>
- * <li>Supprimer un utilisateur</li>
- * </ul>
- * <p>
- * Les exceptions personnalisées {@link UserNotFoundException} et
- * {@link UserAlreadyExistException}
- * sont levées en cas de problème métier.
  */
 @Service
 @RequiredArgsConstructor
@@ -51,6 +42,21 @@ public class UserService {
     }
 
     /**
+     * Récupère une page d'utilisateurs avec leurs statistiques.
+     *
+     * @param pageable informations de pagination.
+     * @return page d'utilisateurs sous forme de DTO avec stats.
+     */
+    public Page<UserDto> findAllWithStats(Pageable pageable) {
+        return userRepository.findAll(pageable).map(user -> {
+            long matchesCount = userMatchRepository.countByUserId(user.getId());
+            long followersCount = followRepository.countByFollowedId(user.getId());
+            long followingCount = followRepository.countByFollowerId(user.getId());
+            return UserDto.fromEntityWithStats(user, (int) followersCount, (int) followingCount, matchesCount);
+        });
+    }
+
+    /**
      * Récupère la liste de tous les utilisateurs avec leurs statistiques.
      *
      * @return liste des utilisateurs sous forme de DTO avec stats.
@@ -63,7 +69,11 @@ public class UserService {
                     long followingCount = followRepository.countByFollowerId(user.getId());
                     return UserDto.fromEntityWithStats(user, (int) followersCount, (int) followingCount, matchesCount);
                 })
-                .collect(java.util.stream.Collectors.toList());
+                .collect(Collectors.toList());
+    }
+
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     /**
@@ -85,7 +95,6 @@ public class UserService {
     public User getUserById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
-
     }
 
     /**
