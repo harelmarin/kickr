@@ -3,9 +3,9 @@ services:
     image: postgres:15-alpine
     container_name: kickr-postgres
     environment:
-      POSTGRES_DB: kickr_db
-      POSTGRES_USER: kickr_user
-      POSTGRES_PASSWORD: kickr_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -18,10 +18,29 @@ services:
     image: dpage/pgadmin4:latest
     container_name: kickr-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@kickr.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_MAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
       - "5050:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  backend:
+    build: .
+    container_name: kickr-server
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - FOOTBALL_API_KEY=${FOOTBALL_API_KEY}
     depends_on:
       - postgres
     restart: unless-stopped
