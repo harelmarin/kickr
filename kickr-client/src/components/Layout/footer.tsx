@@ -22,8 +22,8 @@ export const Footer = () => {
             <FooterLink label="Matches" to="/matches" />
             <FooterLink label="Leagues" to="/competitions" />
             <FooterLink label="Tacticians" to="/community" />
-            <FooterLink label="About" to="#" />
-            <FooterLink label="Terms" to="#" />
+            <FooterLink label="About" to="/about" />
+            <FooterLink label="Terms" to="/terms" />
           </nav>
 
           {/* Dev / Admin Access (Ultra Discreet) */}
