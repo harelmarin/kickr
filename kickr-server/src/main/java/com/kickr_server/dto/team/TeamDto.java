@@ -1,6 +1,5 @@
 package com.kickr_server.dto.team;
 
-import com.kickr_server.competitions.Competition;
 import com.kickr_server.dto.competition.CompetitionDto;
 import com.kickr_server.team.Team;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,7 +28,6 @@ public class TeamDto {
 
     @Schema(description = "Compétition à laquelle appartient l'équipe")
     private CompetitionDto competition;
-
 
     public static TeamDto fromEntity(Team team) {
         CompetitionDto compDto = CompetitionDto.builder()

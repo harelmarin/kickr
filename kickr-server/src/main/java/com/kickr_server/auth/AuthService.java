@@ -15,7 +15,6 @@ import com.kickr_server.exception.auth.InvalidCredentialsException;
 import com.kickr_server.user.UserRepository;
 import com.kickr_server.user.UserService;
 import com.kickr_server.notification.EmailService;
-import com.kickr_server.exception.user.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

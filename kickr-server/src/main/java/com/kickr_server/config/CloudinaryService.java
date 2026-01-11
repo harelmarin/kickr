@@ -32,6 +32,7 @@ public class CloudinaryService {
      * @return a map containing the upload results (including url and public_id)
      * @throws IOException if the upload fails
      */
+    @SuppressWarnings("unchecked")
     public Map<String, Object> upload(MultipartFile file) throws IOException {
         return (Map<String, Object>) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
                 "folder", "kickr/avatars",
@@ -45,6 +46,7 @@ public class CloudinaryService {
      * @return a map containing the deletion result
      * @throws IOException if the deletion fails
      */
+    @SuppressWarnings("unchecked")
     public Map<String, Object> delete(String publicId) throws IOException {
         return (Map<String, Object>) cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
     }
