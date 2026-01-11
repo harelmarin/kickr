@@ -110,6 +110,11 @@ public class MatchService {
          * sans gérer les stages.
          */
         public void fetchAndSaveNextMatches() throws Exception {
+                System.out.println("🚀 Starting fetchAndSaveNextMatches...");
+                if (footballApiKey == null || footballApiKey.equals("none")) {
+                        System.err.println("❌ ERROR: football.api.key is NOT set!");
+                        return;
+                }
                 try {
                         int season = 2025;
                         List<Integer> leagueIds = java.util.Arrays.stream(LEAGUE_IDS).boxed().toList();
@@ -617,6 +622,9 @@ public class MatchService {
                         int totalProcessed = 0;
 
                         System.out.println("🔄 Starting historical backfill: " + fromDate + " → " + toDate);
+                        System.out.println("🔑 Using API Key: " + (footballApiKey != null && footballApiKey.length() > 4
+                                        ? footballApiKey.substring(0, 4) + "..."
+                                        : "invalid/none"));
 
                         for (Integer leagueId : leagueIds) {
                                 try {

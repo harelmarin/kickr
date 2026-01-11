@@ -23,23 +23,32 @@ public class DataSeeder {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @org.springframework.beans.factory.annotation.Value("${admin.name:Marin}")
+    private String adminName;
+
+    @org.springframework.beans.factory.annotation.Value("${admin.email:admin@kickr.com}")
+    private String adminEmail;
+
+    @org.springframework.beans.factory.annotation.Value("${admin.password:Marin1812}")
+    private String adminPassword;
+
     @Bean
     public CommandLineRunner seedDatabase() {
         return args -> {
             log.info("🌱 Starting database seeding...");
 
             // Créer l'admin par défaut s'il n'existe pas
-            if (!userRepository.existsByEmail("admin@kickr.com")) {
+            if (!userRepository.existsByEmail(adminEmail)) {
                 User admin = new User();
-                admin.setName("admin");
-                admin.setEmail("admin@kickr.com");
-                admin.setPassword(passwordEncoder.encode("Marin1812"));
+                admin.setName(adminName);
+                admin.setEmail(adminEmail);
+                admin.setPassword(passwordEncoder.encode(adminPassword));
                 admin.setRole(Role.ADMIN);
 
                 userRepository.save(admin);
-                log.info("✅ Admin user created: admin@kickr.com");
+                log.info("✅ Admin user created: " + adminEmail);
             } else {
-                log.info("ℹ️  Admin user already exists");
+                log.info("ℹ️  Admin user already exists (" + adminEmail + ")");
             }
 
             // Tu peux ajouter d'autres données ici

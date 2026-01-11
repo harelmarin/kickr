@@ -18,9 +18,7 @@ spring:
     name: kickr-server
 
   data:
-    web:
-      pageable:
-        serialization-mode: via-dto
+# Pageable config removed
 
   servlet:
     multipart:
@@ -59,7 +57,8 @@ logging:
   level:
     root: INFO
     com.kickr_server: INFO
-    org.hibernate.SQL: WARN
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 springdoc:
   api-docs:
@@ -108,3 +107,8 @@ resilience4j:
 
 
 
+
+admin:
+  name: ${ADMIN_NAME:Marin}
+  email: ${ADMIN_EMAIL:admin@kickr.com}
+  password: ${ADMIN_PASSWORD:Marin1812}

@@ -32,7 +32,7 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         Team homeTeam,
                         Team awayTeam);
 
-        @Query("SELECT m FROM Match m " +
+        @Query(value = "SELECT m FROM Match m " +
                         "LEFT JOIN UserMatch um ON um.match = m " +
                         "WHERE (:competitionId IS NULL OR m.competition.id = :competitionId) " +
                         "AND (:round IS NULL OR m.round = :round) " +
@@ -44,8 +44,13 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         "ORDER BY " +
                         "CASE WHEN :sort = 'popularity' THEN COUNT(um.id) END DESC, " +
                         "CASE WHEN :sort = 'rating' THEN COALESCE(AVG(um.note), 0) END DESC, " +
-                        "CASE WHEN :sort = 'date' AND :isFinished = false THEN m.matchDate END ASC, " +
-                        "CASE WHEN (:sort = 'date' AND (:isFinished = true OR :isFinished IS NULL)) OR (:sort <> 'date') THEN m.matchDate END DESC")
+                        "CAST(m.matchDate AS date) DESC, m.matchDate ASC", countQuery = "SELECT COUNT(DISTINCT m) FROM Match m "
+                                        +
+                                        "WHERE (:competitionId IS NULL OR m.competition.id = :competitionId) " +
+                                        "AND (:round IS NULL OR m.round = :round) " +
+                                        "AND (:isFinished IS NULL OR (:isFinished = true AND m.homeScore IS NOT NULL) OR (:isFinished = false AND m.homeScore IS NULL)) "
+                                        +
+                                        "AND (:query IS NULL OR :query = '' OR LOWER(CAST(m.homeTeam.name AS string)) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(CAST(m.awayTeam.name AS string)) LIKE LOWER(CONCAT('%', :query, '%')))")
         Page<Match> findMatchesWithFilters(
                         @org.springframework.data.repository.query.Param("competitionId") UUID competitionId,
                         @org.springframework.data.repository.query.Param("isFinished") Boolean isFinished,

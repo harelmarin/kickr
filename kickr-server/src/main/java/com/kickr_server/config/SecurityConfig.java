@@ -105,7 +105,7 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 // Admin endpoints - require ADMIN role
                                                 .requestMatchers("/api/admin/**", "/api/matchs/save",
-                                                                "/api/matchs/sync-tournaments",
+                                                                "/api/matchs/backfill",
                                                                 "/actuator/**")
                                                 .hasRole("ADMIN")
                                                 .anyRequest().authenticated())

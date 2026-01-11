@@ -28,6 +28,7 @@ public class MatchController {
                         @ApiResponse(responseCode = "200", description = "Synchronization successful"),
                         @ApiResponse(responseCode = "500", description = "Error during synchronization")
         })
+        @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
         @GetMapping("/save")
         public void syncMatches(
                         @Parameter(description = "Synchronize the entire season of tournaments (UCL, UEL, UECL)") @RequestParam(defaultValue = "false") boolean fullTournaments,
@@ -127,6 +128,7 @@ public class MatchController {
                         @ApiResponse(responseCode = "200", description = "Backfill completed successfully"),
                         @ApiResponse(responseCode = "500", description = "Backfill failed")
         })
+        @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
         @GetMapping("/backfill")
         public void backfillMatches(
                         @Parameter(description = "Start date (YYYY-MM-DD)", example = "2025-08-01") @RequestParam(defaultValue = "2025-08-01") String fromDate,

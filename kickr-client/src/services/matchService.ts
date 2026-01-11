@@ -56,9 +56,9 @@ export const matchService = {
 
     return {
       content: content.map(mapApiResponseToMatch),
-      totalPages: response.data.totalPages || 0,
-      totalElements: response.data.totalElements || 0,
-      last: response.data.last || false,
+      totalPages: response.data.totalPages ?? response.data.page?.totalPages ?? 0,
+      totalElements: response.data.totalElements ?? response.data.page?.totalElements ?? 0,
+      last: response.data.last ?? (response.data.page ? response.data.page.number >= response.data.page.totalPages - 1 : false),
     };
   },
 
@@ -88,9 +88,9 @@ export const matchService = {
 
     return {
       content: content.map(mapApiResponseToMatch),
-      totalPages: response.data.totalPages || 0,
-      totalElements: response.data.totalElements || 0,
-      last: response.data.last || false,
+      totalPages: response.data.totalPages ?? response.data.page?.totalPages ?? 0,
+      totalElements: response.data.totalElements ?? response.data.page?.totalElements ?? 0,
+      last: response.data.last ?? (response.data.page ? response.data.page.number >= response.data.page.totalPages - 1 : false),
     };
   },
 
