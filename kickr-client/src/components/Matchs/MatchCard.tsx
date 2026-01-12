@@ -64,8 +64,8 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     </div>
 
                     {!isFinished && (
-                        <div className="absolute bottom-0 inset-x-0 h-[3px] bg-white/5">
-                            <div className="h-full bg-kickr/50 w-full animate-pulse shadow-[0_0_10px_rgba(68,102,255,0.5)]"></div>
+                        <div className="absolute bottom-0 inset-x-0 h-[2px] bg-white/5">
+                            <div className="h-full bg-kickr/40 w-full"></div>
                         </div>
                     )}
                 </Link>
@@ -153,7 +153,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                             <div className="flex flex-col items-end">
                                 <div className="flex items-center gap-1">
                                     <span className="text-xs font-black text-kickr italic">{match.averageRating.toFixed(1)}</span>
-                                    <div className="w-1.5 h-1.5 rounded-full bg-kickr shadow-[0_0_8px_rgba(0,170,255,0.8)]"></div>
+                                    <div className="w-1 h-1 rounded-full bg-kickr"></div>
                                 </div>
                                 <span className="text-[8px] font-bold text-[#445566] uppercase tracking-widest">{match.reviewsCount} REVIEWS</span>
                             </div>

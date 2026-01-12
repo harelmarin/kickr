@@ -43,8 +43,8 @@ export const UserDiaryPage = () => {
                 <div className="absolute inset-0 bg-[#14181c] opacity-50">
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
                 </div>
-                <div className="absolute inset-x-0 top-0 h-full opacity-10 flex items-center justify-center">
-                    <div className="w-[800px] h-[800px] border border-kickr/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute inset-x-0 top-0 h-full opacity-5 flex items-center justify-center">
+                    <div className="w-[800px] h-[800px] border border-white/5 rounded-full"></div>
                 </div>
             </div>
 
@@ -248,7 +248,7 @@ export const UserDiaryPage = () => {
                                                     window.scrollTo({ top: 300, behavior: 'smooth' });
                                                 }}
                                                 className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                                    ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                                                    ? 'bg-kickr text-black'
                                                     : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
                                                     }`}
                                             >

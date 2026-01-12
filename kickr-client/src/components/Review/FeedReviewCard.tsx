@@ -7,7 +7,7 @@ interface FeedReviewCardProps {
 
 export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
     return (
-        <div className="group/card bg-[#14181c] border border-white/5 rounded-2xl overflow-hidden hover:border-kickr/40 transition-all duration-500 hover:shadow-2xl hover:shadow-kickr/5 flex flex-col h-full">
+        <div className="group/card bg-[#14181c] border border-white/5 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full">
             {/* Match Header (Small Poster Style) */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}

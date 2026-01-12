@@ -65,9 +65,8 @@ export const CommunityPage = () => {
                 <div className="absolute inset-0 bg-[#14181c] opacity-50">
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
                 </div>
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-kickr/20 blur-[120px] rounded-full animate-pulse"></div>
-                    <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-kickr/10 blur-[100px] rounded-full delay-1000 animate-pulse"></div>
+                <div className="absolute inset-x-0 h-full opacity-5 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-kickr/10 to-transparent"></div>
                 </div>
             </div>
 
@@ -117,7 +116,7 @@ export const CommunityPage = () => {
                                             <button
                                                 key={s}
                                                 onClick={() => setSortBy(s)}
-                                                className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === s ? 'bg-kickr text-white shadow-lg shadow-kickr/20' : 'text-[#445566] hover:text-[#99aabb]'}`}
+                                                className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === s ? 'bg-kickr text-white' : 'text-[#445566] hover:text-[#99aabb]'}`}
                                             >
                                                 {s}
                                             </button>
@@ -201,8 +200,8 @@ export const CommunityPage = () => {
                                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                                             }}
                                             className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                                    ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
-                                                    : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
+                                                ? 'bg-kickr text-black'
+                                                : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
                                                 }`}
                                         >
                                             {i + 1}
@@ -250,7 +249,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
             <div className="p-8 relative z-10 flex flex-col h-full">
                 {isMe && (
                     <div className="absolute top-4 right-4 animate-fade-in">
-                        <span className="bg-kickr text-black text-[8px] font-black uppercase tracking-tight px-2 py-0.5 rounded-[3px] shadow-[0_0_15px_rgba(68,102,255,0.4)]">
+                        <span className="bg-kickr text-black text-[8px] font-black uppercase tracking-tight px-2 py-0.5 rounded-[3px]">
                             You
                         </span>
                     </div>
@@ -265,7 +264,6 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                         )}
                         <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
-                    <div className="absolute inset-x-[-10px] inset-y-[-10px] bg-kickr/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
 
                 <div className="text-center mb-8 flex-1">

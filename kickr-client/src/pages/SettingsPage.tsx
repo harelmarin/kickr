@@ -170,7 +170,7 @@ export const SettingsPage = () => {
 
             <div className="space-y-6">
                 {/* 1. Identity & Avatar Section */}
-                <section className="bg-[#14181c] border border-white/5 rounded-xl p-8 shadow-lg">
+                <section className="bg-[#14181c] border border-white/5 rounded-xl p-8">
                     <div className="flex flex-col md:flex-row items-center gap-10">
                         <div className="relative">
                             <div className="w-28 h-28 rounded-xl overflow-hidden border border-white/10 p-1 bg-[#0a0b0d]">
@@ -197,7 +197,7 @@ export const SettingsPage = () => {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="absolute -bottom-2 -right-2 bg-kickr text-[#0a1b28] w-8 h-8 rounded-lg shadow-xl flex items-center justify-center hover:bg-[#00aaff] transition-colors disabled:opacity-50 border-4 border-[#14181c]"
+                                className="absolute -bottom-2 -right-2 bg-kickr text-[#0a1b28] w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#00aaff] transition-colors disabled:opacity-50 border-4 border-[#14181c]"
                             >
                                 <span className="text-xs">📸</span>
                             </button>
@@ -240,7 +240,7 @@ export const SettingsPage = () => {
                 </section>
 
                 {/* 2. Credentials Form */}
-                <section className="bg-[#14181c] border border-white/5 rounded-xl shadow-lg">
+                <section className="bg-[#14181c] border border-white/5 rounded-xl">
                     <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6">
                         <div className="space-y-4">
                             <div className="space-y-2">

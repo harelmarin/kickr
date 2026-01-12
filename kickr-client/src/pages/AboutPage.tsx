@@ -6,8 +6,9 @@ export const AboutPage: FC = () => {
         <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20 overflow-hidden">
             <div className="max-w-4xl mx-auto px-6 relative">
                 {/* Decorative background gradients */}
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-kickr/10 rounded-full blur-[120px] pointer-events-none" />
-                <div className="absolute top-1/2 -right-24 w-64 h-64 bg-kickr/5 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute inset-x-0 h-full opacity-5 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-kickr/10 to-transparent"></div>
+                </div>
 
                 <header className="mb-20 relative">
                     <div className="flex items-center gap-4 mb-6 animate-in slide-in-from-bottom-4 duration-500">
@@ -66,7 +67,7 @@ export const AboutPage: FC = () => {
                                         'Build your global tactician rating'
                                     ].map((feature, i) => (
                                         <li key={i} className="flex items-center gap-3 text-[11px] font-bold text-white/60 uppercase tracking-wide">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-kickr shadow-[0_0_8px_rgba(20,255,100,0.5)]" />
+                                            <div className="w-1.5 h-1.5 rounded-full bg-kickr" />
                                             {feature}
                                         </li>
                                     ))}
@@ -93,7 +94,6 @@ export const AboutPage: FC = () => {
                                         </div>
                                     </div>
                                     {/* Decorative pulse effect */}
-                                    <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity blur-2xl -z-10" />
                                 </div>
                             </div>
                         </div>

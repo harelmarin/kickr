@@ -342,7 +342,7 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                                 className="w-full bg-gradient-to-t from-kickr/40 to-kickr group-hover:brightness-125 transition-all duration-300 ease-out relative rounded-t-sm"
                                 style={{ height: `${heightPercentage}%`, minHeight: count > 0 ? '2px' : '0' }}
                             >
-                                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-kickr shadow-[0_0_15px_rgba(68,102,255,0.8)]"></div>
+                                <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/20"></div>
                             </div>
 
                             <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none text-center">

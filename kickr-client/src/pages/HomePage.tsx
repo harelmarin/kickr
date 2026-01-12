@@ -89,13 +89,13 @@ export default function HomePage() {
 
             <div className="flex items-center justify-center gap-6">
               {!user ? (
-                <Link to="/register" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all shadow-xl shadow-kickr/20 hover:scale-[1.02]">
+                <Link to="/register" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all hover:-translate-y-0.5">
                   Join the Pitch — It's Free
                 </Link>
               ) : (
                 <Link
                   to={`/user/${user.id}`}
-                  className="bg-black/60 backdrop-blur-md px-8 py-4 rounded-xl border border-white/10 shadow-2xl inline-flex items-center gap-3 group/welcome hover:border-kickr/40 transition-all"
+                  className="bg-black/60 backdrop-blur-md px-8 py-4 rounded-xl border border-white/10 inline-flex items-center gap-3 group/welcome hover:border-kickr/40 transition-all"
                 >
                   <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px] group-hover:text-white transition-colors">
                     Dashboard for <span className="text-kickr font-black">{user.name}</span>
@@ -255,7 +255,7 @@ export default function HomePage() {
           {/* Right Sidebar */}
           <div className="hidden lg:block space-y-16">
             {user && (
-              <section className="bg-[#1b2228] border border-white/5 rounded p-8 shadow-xl">
+              <section className="bg-[#1b2228] border border-white/5 rounded p-8">
                 <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-6">Your Recent Activity</h3>
                 <div className="space-y-6">
                   {sortedUserReviews && sortedUserReviews.length > 0 ? (
@@ -304,7 +304,7 @@ export default function HomePage() {
             )}
 
             {/* Discover Tacticians Section */}
-            <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
+            <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8">
               <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">Rising Tacticians</h3>
               <div className="space-y-6">
                 {communityScouts?.content && communityScouts.content.length > 0 ? (

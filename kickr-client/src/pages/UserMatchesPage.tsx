@@ -220,7 +220,7 @@ export const UserMatchesPage = () => {
                                             window.scrollTo({ top: 300, behavior: 'smooth' });
                                         }}
                                         className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                            ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                                            ? 'bg-kickr text-black'
                                             : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
                                             }`}
                                     >

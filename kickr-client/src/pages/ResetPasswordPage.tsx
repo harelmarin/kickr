@@ -53,7 +53,7 @@ export const ResetPasswordPage = () => {
             <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="w-full max-w-[400px] bg-[#0d0f12] border border-white/5 rounded-3xl p-10 shadow-2xl relative overflow-hidden"
+                className="w-full max-w-[400px] bg-[#0d0f12] border border-white/5 rounded-3xl p-10 relative overflow-hidden"
             >
                 <div className="mb-10 text-center">
                     <h3 className="text-[10px] font-bold text-kickr uppercase tracking-[0.4em] mb-1">Security Update</h3>

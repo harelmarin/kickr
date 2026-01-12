@@ -87,10 +87,10 @@ export const MatchDetailPage = () => {
       <div className="relative h-[600px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex">
           <div className="flex-1 relative overflow-hidden">
-            <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 blur-[120px] opacity-30 grayscale" alt="" />
+            <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 opacity-20 grayscale" alt="" />
           </div>
           <div className="flex-1 relative overflow-hidden">
-            <img src={match.awayLogo} className="absolute inset-0 w-full h-full object-cover scale-150 blur-[120px] opacity-30 grayscale" alt="" />
+            <img src={match.awayLogo} className="absolute inset-0 w-full h-full object-cover scale-150 opacity-20 grayscale" alt="" />
           </div>
         </div>
 
@@ -113,7 +113,7 @@ export const MatchDetailPage = () => {
         </div>
 
         <header className="mb-20">
-          <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#14181c]/60 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/5 relative shadow-glow">
+          <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#14181c]/60 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/5 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent"></div>
 
             <div className="absolute inset-0 grid grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8 md:px-16 py-6 gap-4 sm:gap-8 md:gap-12">
@@ -298,7 +298,7 @@ export const MatchDetailPage = () => {
                   >
                     {tab}
                     {activeTab === tab && (
-                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-kickr shadow-[0_0_10px_rgba(0,225,120,0.5)]"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-kickr"></div>
                     )}
                   </button>
                 ))}
@@ -455,7 +455,7 @@ export const MatchDetailPage = () => {
               exit={{ scale: 0.9, y: 20 }}
               className="bg-[#1b2228] border border-white/10 rounded-3xl p-10 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-kickr shadow-[0_0_15px_rgba(0,225,120,0.5)]"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-kickr"></div>
               <button
                 onClick={() => setJustLoggedReview(null)}
                 className="absolute top-6 right-6 text-[#445566] hover:text-white transition-colors text-xl font-bold"
@@ -464,7 +464,7 @@ export const MatchDetailPage = () => {
               </button>
 
               <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 bg-kickr/10 rounded-full flex items-center justify-center mb-8 border border-kickr/30 shadow-[0_0_30px_rgba(0,225,120,0.1)]">
+                <div className="w-20 h-20 bg-kickr/10 rounded-full flex items-center justify-center mb-8 border border-kickr/30">
                   <span className="text-4xl">⚽</span>
                 </div>
                 <h3 className="text-3xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">Intelligence Logged</h3>

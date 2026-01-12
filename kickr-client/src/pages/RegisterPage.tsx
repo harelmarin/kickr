@@ -66,7 +66,9 @@ export const RegisterPage = () => {
                         className="absolute inset-0 bg-cover bg-center grayscale opacity-30"
                         style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000")' }}
                     ></div>
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(68,102,255,0.1),transparent_70%)]"></div>
+                    <div className="absolute inset-x-0 h-full opacity-5 flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-kickr/10 to-transparent"></div>
+                    </div>
                 </div>
 
                 {/* Content */}
@@ -182,7 +184,7 @@ export const RegisterPage = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full btn-primary-kickr py-4 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] shadow-lg shadow-kickr/10 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
+                            className="w-full btn-primary-kickr py-4 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
                         >
                             {isLoading ? 'Processing...' : 'Access the Field'}
                         </button>

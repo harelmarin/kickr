@@ -111,7 +111,7 @@ export const MatchesPage = () => {
                       <button
                         key={s}
                         onClick={() => { setStatus(s as any); setPage(0); }}
-                        className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white shadow-lg shadow-kickr/20' : 'text-[#445566] hover:text-[#99aabb]'}`}
+                        className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white' : 'text-[#445566] hover:text-[#99aabb]'}`}
                       >
                         {s}
                       </button>
@@ -241,7 +241,7 @@ const ErrorState = () => (
       <div className="text-5xl mb-8">📡</div>
       <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Signal Interrupted</h2>
       <p className="text-[#667788] text-sm mb-8 leading-relaxed font-medium">The stadium feed is temporarily down. Our tactical analysts are working on restoring the connection.</p>
-      <button onClick={() => window.location.reload()} className="btn-primary-kickr px-10 py-4 rounded text-[10px] shadow-xl shadow-kickr/20 hover:scale-[1.05]">
+      <button onClick={() => window.location.reload()} className="btn-primary-kickr px-10 py-4 rounded text-[10px] hover:-translate-y-0.5 transition-all">
         Reconnect Session
       </button>
     </motion.div>

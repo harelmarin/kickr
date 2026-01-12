@@ -284,7 +284,7 @@ export default function AdminPage() {
             </section>
 
             {/* Table Container */}
-            <div className="bg-[#14181c] border border-white/5 rounded-lg overflow-hidden shadow-2xl">
+            <div className="bg-[#14181c] border border-white/5 rounded-lg overflow-hidden">
                 <div className="overflow-x-auto no-scrollbar">
                     <table className="w-full border-collapse min-w-[700px]">
                         <thead className="bg-black/20 border-b border-white/5">

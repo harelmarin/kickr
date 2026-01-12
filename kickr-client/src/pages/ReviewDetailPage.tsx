@@ -85,7 +85,7 @@ export const ReviewDetailPage: FC = () => {
             <div className="max-w-5xl mx-auto px-6">
                 <header className="mb-8">
                     <Link to={`/matches/${review.match.id}`} className="block group">
-                        <div className="aspect-[3/1] sm:aspect-[4.5/1] bg-[#1b2228] rounded-2xl overflow-hidden shadow-2xl relative border border-white/5 transition-all duration-500 poster-hover-effect">
+                        <div className="aspect-[3/1] sm:aspect-[4.5/1] bg-[#1b2228] rounded-2xl overflow-hidden relative border border-white/5 transition-all duration-500 poster-hover-effect">
                             <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
 
                             <div className="absolute inset-0 flex items-center justify-between px-8 sm:px-16 py-4">
@@ -128,7 +128,7 @@ export const ReviewDetailPage: FC = () => {
                         <header className="border-b border-white/10 pb-6 mb-8">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
-                                    <Link to={`/user/${review.user.id}`} className="w-8 h-8 rounded-full bg-gradient-to-br from-kickr to-kickr/50 flex items-center justify-center text-xs font-black text-black overflow-hidden shadow-lg border border-white/10">
+                                    <Link to={`/user/${review.user.id}`} className="w-8 h-8 rounded-full bg-gradient-to-br from-kickr to-kickr/50 flex items-center justify-center text-xs font-black text-black overflow-hidden border border-white/10">
                                         {review.user.avatarUrl ? (
                                             <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
                                         ) : (
@@ -271,7 +271,7 @@ export const ReviewDetailPage: FC = () => {
                                         <div key={comment.id} className={`flex gap-4 group ${comment.isModerated ? 'opacity-50' : ''}`}>
                                             <Link
                                                 to={`/user/${comment.userId}`}
-                                                className="w-8 h-8 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[10px] font-black text-kickr uppercase hover:border-kickr/50 hover:scale-110 transition-all shadow-lg flex-shrink-0 overflow-hidden"
+                                                className="w-8 h-8 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[10px] font-black text-kickr uppercase hover:border-kickr/50 hover:scale-110 transition-all flex-shrink-0 overflow-hidden"
                                             >
                                                 {comment.userAvatarUrl ? (
                                                     <img src={comment.userAvatarUrl} alt={comment.userName} className="w-full h-full object-cover" />

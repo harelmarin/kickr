@@ -28,7 +28,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                 {/* Header Context */}
                 <div className="flex items-start gap-6 mb-16 border-b border-white/5 pb-10">
                     <Link to={`/user/${profileUser.id}`} className="group relative">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl font-black text-kickr overflow-hidden shadow-2xl transition-transform group-hover:scale-105">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl font-black text-kickr overflow-hidden transition-transform group-hover:scale-105">
                             {profileUser.avatarUrl ? (
                                 <img src={profileUser.avatarUrl} alt={profileUser.name} className="w-full h-full object-cover" />
                             ) : (
@@ -151,7 +151,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                                             }}
                                             className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                                ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                                                ? 'bg-kickr text-black'
                                                 : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
                                                 }`}
                                         >

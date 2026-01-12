@@ -188,13 +188,13 @@ export const CompetitionDetailPage = () => {
               <div className="flex gap-2 p-1 bg-black/20 rounded-lg w-fit">
                 <button
                   onClick={() => handleFilterChange(false)}
-                  className={`px-4 py-1.5 rounded text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black shadow-lg shadow-kickr/20' : 'text-[#667788] hover:text-[#99aabb]'}`}
+                  className={`px-4 py-1.5 rounded text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black' : 'text-[#667788] hover:text-[#99aabb]'}`}
                 >
                   Upcoming
                 </button>
                 <button
                   onClick={() => handleFilterChange(true)}
-                  className={`px-4 py-1.5 rounded text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black shadow-lg shadow-kickr/20' : 'text-[#667788] hover:text-[#99aabb]'}`}
+                  className={`px-4 py-1.5 rounded text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black' : 'text-[#667788] hover:text-[#99aabb]'}`}
                 >
                   Finished
                 </button>
