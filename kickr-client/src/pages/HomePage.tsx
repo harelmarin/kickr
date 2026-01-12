@@ -14,7 +14,7 @@ export default function HomePage() {
   const { user } = useAuth();
   const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(3);
   const { data: popularReviews, isLoading: isPopularLoading } = usePopularReviews(6);
-  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 3);
+  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 3);
   const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(3);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
   const { data: communityScouts } = useUsers();

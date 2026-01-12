@@ -21,15 +21,21 @@ export const CompetitionDetailPage = () => {
   const { data: competition, isLoading: isLoadingComp } = useCompetition(id!);
   const { data: teamsData } = useTeamsByCompetition(id!, 0, 1);
 
+  const [showFinished, setShowFinished] = useState(false);
   const { data: timelineData, isLoading: isLoadingMatches } = useSearchMatches({
     competitionId: id,
     limit: MATCHES_PER_PAGE,
     page: matchPage,
-    sort: 'date',
-    finished: false
+    sort: showFinished ? 'date,desc' : 'date',
+    finished: showFinished
   });
 
   const totalMatchPages = timelineData?.totalPages || 0;
+
+  const handleFilterChange = (finished: boolean) => {
+    setShowFinished(finished);
+    setMatchPage(0);
+  };
 
   if (isLoadingComp) {
     return (
@@ -148,32 +154,50 @@ export const CompetitionDetailPage = () => {
           )}
 
           <div className={`${!isTournament ? 'lg:col-span-4' : 'w-full'} space-y-8`}>
-            <header className="flex items-center justify-between border-b border-white/5 pb-4">
-              <div>
-                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-[#667788]">Upcoming</h2>
-                <p className="text-[10px] text-[#445566] font-bold uppercase tracking-widest mt-1">Season Timeline</p>
+            <header className="flex flex-col gap-6 border-b border-white/5 pb-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-[#667788]">{showFinished ? 'Completed' : 'Upcoming'}</h2>
+                  <p className="text-[10px] text-[#445566] font-bold uppercase tracking-widest mt-1">Season Timeline</p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  {totalMatchPages > 1 && (
+                    <div className="flex items-center gap-3">
+                      <button
+                        disabled={matchPage === 0}
+                        onClick={() => setMatchPage(p => p - 1)}
+                        className="text-[10px] font-black uppercase text-[#445566] hover:text-white disabled:opacity-20 transition-all font-mono"
+                      >
+                        ←
+                      </button>
+                      <span className="text-[9px] font-mono text-kickr/40 font-black">{matchPage + 1}/{totalMatchPages}</span>
+                      <button
+                        disabled={matchPage >= totalMatchPages - 1}
+                        onClick={() => setMatchPage(p => p + 1)}
+                        className="text-[10px] font-black uppercase text-[#445566] hover:text-white disabled:opacity-20 transition-all font-mono"
+                      >
+                        →
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div className="flex items-center gap-4">
-                {totalMatchPages > 1 && (
-                  <div className="flex items-center gap-3">
-                    <button
-                      disabled={matchPage === 0}
-                      onClick={() => setMatchPage(p => p - 1)}
-                      className="text-[10px] font-black uppercase text-[#445566] hover:text-white disabled:opacity-20 transition-all font-mono"
-                    >
-                      ←
-                    </button>
-                    <span className="text-[9px] font-mono text-kickr/40 font-black">{matchPage + 1}/{totalMatchPages}</span>
-                    <button
-                      disabled={matchPage >= totalMatchPages - 1}
-                      onClick={() => setMatchPage(p => p + 1)}
-                      className="text-[10px] font-black uppercase text-[#445566] hover:text-white disabled:opacity-20 transition-all font-mono"
-                    >
-                      →
-                    </button>
-                  </div>
-                )}
+              {/* Filter Tabs */}
+              <div className="flex gap-2 p-1 bg-black/20 rounded-lg w-fit">
+                <button
+                  onClick={() => handleFilterChange(false)}
+                  className={`px-4 py-1.5 rounded text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black shadow-lg shadow-kickr/20' : 'text-[#667788] hover:text-[#99aabb]'}`}
+                >
+                  Upcoming
+                </button>
+                <button
+                  onClick={() => handleFilterChange(true)}
+                  className={`px-4 py-1.5 rounded text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black shadow-lg shadow-kickr/20' : 'text-[#667788] hover:text-[#99aabb]'}`}
+                >
+                  Finished
+                </button>
               </div>
             </header>
 
@@ -185,7 +209,9 @@ export const CompetitionDetailPage = () => {
               ) : timelineData?.content.length === 0 ? (
                 <div className="py-20 text-center border border-white/5 rounded-2xl bg-white/[0.02]">
                   <p className="text-[#445566] uppercase tracking-[0.3em] text-[10px] font-black">Segment Offline</p>
-                  <p className="text-[11px] text-[#667788] font-bold uppercase mt-2">No matches identified</p>
+                  <p className="text-[11px] text-[#667788] font-bold uppercase mt-2">
+                    No {showFinished ? 'finished' : 'upcoming'} matches found
+                  </p>
                 </div>
               ) : (
                 timelineData?.content.map((match) => (

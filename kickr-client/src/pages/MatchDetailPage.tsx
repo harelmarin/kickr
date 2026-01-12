@@ -474,7 +474,7 @@ export const MatchDetailPage = () => {
 
                 <div className="w-full space-y-4">
                   <div className="flex justify-center">
-                    <ShareReviewButton review={justLoggedReview} variant="full" />
+                    <ShareReviewButton review={justLoggedReview} variant="full" showXShare={true} />
                   </div>
                   <button
                     onClick={() => setJustLoggedReview(null)}
