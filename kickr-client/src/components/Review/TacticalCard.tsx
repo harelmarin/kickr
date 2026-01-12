@@ -20,7 +20,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
     return (
         <div
             ref={cardRef}
-            className="w-[1080px] h-[1080px] bg-[#0d1117] flex flex-col p-16 relative overflow-hidden"
+            className="w-[1080px] min-h-[1080px] bg-[#0d1117] flex flex-col p-16 relative"
             style={{ fontFamily: 'Inter, sans-serif' }}
         >
             {/* Subtle background gradient */}
@@ -76,15 +76,18 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                     )}
                 </div>
 
-                {/* Commentary - without quotes */}
+                {/* Commentary - adaptive height with safety limit */}
                 {review.comment && (
                     <div className="w-full max-w-[800px] text-center px-10">
-                        <p className="text-[#99aabb] text-[32px] leading-[1.5] font-medium line-clamp-4">
-                            {review.comment.length > 200 ? review.comment.substring(0, 200) : review.comment}
+                        <p className="text-[#99aabb] text-[32px] leading-[1.5] font-medium">
+                            {review.comment.length > 1000
+                                ? `${review.comment.substring(0, 1000)}...`
+                                : review.comment
+                            }
                         </p>
-                        {review.comment.length > 200 && (
-                            <p className="text-[#4466ff] text-[24px] font-bold uppercase tracking-wider mt-4">
-                                Read more on kickr.app
+                        {review.comment.length > 1000 && (
+                            <p className="text-[#4466ff] text-[24px] font-bold uppercase tracking-wider mt-8">
+                                Read full review on kickr.app
                             </p>
                         )}
                     </div>

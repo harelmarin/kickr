@@ -96,8 +96,7 @@ export const ShareReviewButton = ({ review, variant = 'icon' }: ShareReviewButto
                 style={{
                     left: '-2000px',
                     top: '-2000px',
-                    width: '1080px',
-                    height: '1080px'
+                    width: '1080px'
                 }}
             >
                 <div style={{ visibility: isGenerating ? 'visible' : 'hidden' }}>
