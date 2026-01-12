@@ -123,7 +123,7 @@ export default function HomePage() {
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr">
                   {user ? "Your Network Activity" : "Live from the community"}
                 </span>
-                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">
+                <Link to="/feed" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">
                   {user ? "Friend Feed →" : "All Reviews →"}
                 </Link>
               </div>

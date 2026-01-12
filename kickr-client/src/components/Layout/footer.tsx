@@ -8,8 +8,7 @@ export const Footer = () => {
 
           {/* Brand & Mission (Minimal) */}
           <div className="flex flex-col items-center md:items-start">
-            <Link to="/" className="flex items-center gap-2 mb-4 group">
-              <span className="text-xl group-hover:scale-110 transition-transform duration-300">⚽</span>
+            <Link to="/" className="flex items-center group mb-4">
               <span className="text-xl font-black italic tracking-tighter text-white display-font group-hover:text-kickr transition-colors">KICKR</span>
             </Link>
             <p className="text-[#445566] text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed text-center md:text-left">

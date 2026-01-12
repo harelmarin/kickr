@@ -64,11 +64,23 @@ export const useAuth = create<AuthState>((set) => ({
 
         try {
             await authService.register(data);
-            set({ isLoading: false, error: null });
 
-            toast.success('Account created successfully!\nYou can now log in.', {
+            // Automatic login after registration
+            const response = await authService.login({
+                username: data.name,
+                password: data.password
+            });
+
+            set({
+                user: response.user,
+                isAuthenticated: true,
+                isLoading: false,
+                error: null
+            });
+
+            toast.success(`Welcome to the field, ${response.user.name}!`, {
                 id: toastId,
-                duration: 5000,
+                duration: 4000,
             });
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || 'Registration failed';

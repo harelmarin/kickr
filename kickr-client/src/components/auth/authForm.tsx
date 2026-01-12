@@ -198,12 +198,7 @@ const registerSchema = z.object({
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
-interface RegisterDropdownProps {
-    onSuccess?: () => void;
-    onSwitchToLogin?: () => void;
-}
-
-export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitchToLogin }) => {
+export const RegisterDropdown: FC = () => {
     const { register: registerUser, isLoading } = useAuth();
 
     const {
@@ -227,10 +222,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     const onSubmit = async (data: RegisterFormData) => {
         try {
             await registerUser(data);
-            setTimeout(() => {
-                onSuccess?.();
-                onSwitchToLogin?.();
-            }, 2000);
+            // Auto-login and toast handled by useAuth
         } catch (err) { }
     };
 

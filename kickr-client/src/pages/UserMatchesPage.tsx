@@ -7,7 +7,7 @@ import { MatchCard } from '../components/Matchs/MatchCard';
 
 export const UserMatchesPage = () => {
     const { id } = useParams<{ id: string }>();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { data: user } = useUser(id);
     const { user: currentUser } = useAuth();
     const [currentPage, setCurrentPage] = useState(0);
@@ -16,17 +16,36 @@ export const UserMatchesPage = () => {
     const reviews = pageData?.content || [];
 
     const isOwnProfile = currentUser?.id === id;
-    const [search, setSearch] = useState('');
-    const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
-    const [minRating, setMinRating] = useState<number>(0);
+    const [search, setSearch] = useState(searchParams.get('q') || '');
+    const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>((searchParams.get('status') as any) || 'all');
+    const [minRating, setMinRating] = useState<number>(Number(searchParams.get('rating')) || 0);
 
-    // Read rating from URL parameter
+    // Sync URL -> State (for back/forward buttons)
     useEffect(() => {
-        const ratingParam = searchParams.get('rating');
-        if (ratingParam) {
-            setMinRating(Number(ratingParam));
-        }
+        const q = searchParams.get('q') || '';
+        const s = (searchParams.get('status') as any) || 'all';
+        const r = Number(searchParams.get('rating')) || 0;
+
+        if (q !== search) setSearch(q);
+        if (s !== status) setStatus(s);
+        if (r !== minRating) setMinRating(r);
     }, [searchParams]);
+
+    // Sync state -> URL params
+    useEffect(() => {
+        const params: any = {};
+        if (search) params.q = search;
+        if (status !== 'all') params.status = status;
+        if (minRating > 0) params.rating = minRating.toString();
+
+        const currentQ = searchParams.get('q') || '';
+        const currentStatus = searchParams.get('status') || 'all';
+        const currentRating = searchParams.get('rating') || '0';
+
+        if (search !== currentQ || status !== currentStatus || minRating.toString() !== currentRating) {
+            setSearchParams(params, { replace: true });
+        }
+    }, [search, status, minRating, setSearchParams]);
 
     if (isError) return <ErrorState />;
 
@@ -40,9 +59,9 @@ export const UserMatchesPage = () => {
             (status === 'finished' && isPast) ||
             (status === 'upcoming' && !isPast);
 
-        const ratingParam = searchParams.get('rating');
-        const matchesRating = ratingParam
-            ? Math.round(review.note) === Number(ratingParam)
+        // Filter is exact if 5, otherwise min rating
+        const matchesRating = minRating === 5
+            ? Math.round(review.note) === 5
             : review.note >= minRating;
 
         return matchesSearch && matchesStatus && matchesRating;

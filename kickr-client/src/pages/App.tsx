@@ -25,6 +25,7 @@ const AdminPage = lazy(() => import('./AdminPage'));
 const SettingsPage = lazy(() => import('./SettingsPage').then(module => ({ default: module.SettingsPage })));
 const ResetPasswordPage = lazy(() => import('./ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })));
 const UserNetworkPage = lazy(() => import('./UserNetworkPage').then(module => ({ default: module.UserNetworkPage })));
+const FriendsFeedPage = lazy(() => import('./FriendsFeedPage').then(module => ({ default: module.FriendsFeedPage })));
 const NotFoundPage = lazy(() => import('./NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 const AboutPage = lazy(() => import('./AboutPage').then(module => ({ default: module.AboutPage })));
 const TermsPage = lazy(() => import('./TermsPage').then(module => ({ default: module.TermsPage })));
@@ -57,6 +58,11 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/community" element={<CommunityPage />} />
+                <Route path="/feed" element={
+                  <ProtectedRoute>
+                    <FriendsFeedPage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/competitions" element={<CompetitionsPage />} />

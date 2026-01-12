@@ -6,10 +6,10 @@ export const MobileBottomNav = () => {
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#14181c]/95 backdrop-blur-lg border-t border-white/5 z-50 pb-[env(safe-area-inset-bottom)]">
             <div className="flex items-center justify-around h-16 px-2">
                 <NavItem to="/" icon={<HomeIcon />} label="Home" />
+                <NavItem to="/feed" icon={<FeedIcon />} label="Feed" />
                 <NavItem to="/matches" icon={<MatchesIcon />} label="Matches" />
                 <NavItem to="/competitions" icon={<TrophyIcon />} label="Leagues" />
                 <NavItem to="/community" icon={<CommunityIcon />} label="Community" />
-                <NavItem to="/teams" icon={<TeamsIcon />} label="Teams" />
             </div>
         </nav>
     );
@@ -67,12 +67,10 @@ const CommunityIcon = () => (
     </svg>
 );
 
-const TeamsIcon = () => (
+const FeedIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-        <path d="M8.5 8.5v.01" />
-        <path d="M16 15.5v.01" />
-        <path d="M12 12v.01" />
-        <path d="M11 17a2 2 0 0 1 2 2" />
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
     </svg>
 );

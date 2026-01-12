@@ -1,5 +1,4 @@
 import { useNavigate, Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
 import { useUIStore } from '../hooks/useUIStore';
 import { useForm } from 'react-hook-form';
@@ -48,13 +47,8 @@ export const RegisterPage = () => {
     const onSubmit = async (data: RegisterFormData) => {
         try {
             await registerUser(data);
-            toast.success('Account created! You can now log in.');
-            setTimeout(() => {
-                navigate('/');
-                setTimeout(() => {
-                    openAuthModal('login');
-                }, 500);
-            }, 1500);
+            // User is now logged in automatically by the hook
+            navigate('/');
         } catch (err) {
             // Error handled in useAuth hook
         }
