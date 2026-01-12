@@ -17,6 +17,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -40,10 +41,11 @@ import java.util.stream.Collectors;
 public class MatchService {
 
         private static final int[] LEAGUE_IDS = {
-                        39, 140, 135, 78, 61, // Major 5
-                        45, 143, 137, 81, 66, // Cups & Portugal
-                        2, 3, 848, // European Cups
-                        6, 42, 62, 88, 203, 307, 253 // CAN, L2s, Eredivisie, Turkey, Saudi, MLS
+                        39, 140, 135, 78, 61, // Major 5 (PL, La Liga, Serie A, Bundes, L1)
+                        45, 143, 137, 81, 94, // Cups & Portugal (94 = Pr. Liga, 143 = Taca de Port.)
+                        2, 3, 848, // European Cups (UCL, UEL, UECL)
+                        6, 40, 41, 42, 62, 88, 203, 307, 253 // CAN, Champ(40), L1(41), L2(42), Ligue 2(62), Eredivisie,
+                                                             // Turkey(203), Saudi, MLS
         };
 
         private final RestTemplate restTemplate;
@@ -613,6 +615,7 @@ public class MatchService {
          * @param fromDate Start date (e.g., "2025-08-01")
          * @param toDate   End date (e.g., today)
          */
+        @Async
         public void backfillHistoricalMatches(String fromDate, String toDate) throws Exception {
                 try {
                         int season = 2025;

@@ -130,15 +130,17 @@ public class MatchController {
         })
         @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
         @GetMapping("/backfill")
-        public void backfillMatches(
+        public org.springframework.http.ResponseEntity<String> backfillMatches(
                         @Parameter(description = "Start date (YYYY-MM-DD)", example = "2025-08-01") @RequestParam(defaultValue = "2025-08-01") String fromDate,
-
                         @Parameter(description = "End date (YYYY-MM-DD), defaults to today") @RequestParam(required = false) String toDate)
                         throws Exception {
                 if (toDate == null) {
                         toDate = java.time.LocalDate.now().toString();
                 }
                 matchService.backfillHistoricalMatches(fromDate, toDate);
+                return org.springframework.http.ResponseEntity.accepted()
+                                .body("Historical backfill started in background spanning " + fromDate + " to " + toDate
+                                                + ". Check server logs for progress.");
         }
 
 }
