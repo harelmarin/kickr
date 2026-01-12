@@ -236,14 +236,37 @@ public class MatchService {
         }
 
         public void syncAllMajorStandings(Integer season) throws Exception {
-                int[] leagueIds = { 61, 39, 140, 78, 135, 2, 3, 848 };
-                for (int id : leagueIds) {
+                // Focus on Big 5 + others from LEAGUE_IDS that are not cups
+                for (int id : LEAGUE_IDS) {
+                        if (isCup(id))
+                                continue;
                         try {
                                 syncStandings(id, season);
                                 Thread.sleep(6500);
                         } catch (Exception e) {
                                 System.err.println("❌ Erreur synchro standings " + id + " : " + e.getMessage());
                         }
+                }
+        }
+
+        @Async
+        public void syncAllStandingsAsync(Integer season) {
+                try {
+                        System.out.println("🔄 Starting background standings sync for all leagues...");
+                        syncAllMajorStandings(season);
+                        System.out.println("✅ Background standings sync complete.");
+                } catch (Exception e) {
+                        System.err.println("❌ Background standings sync failed: " + e.getMessage());
+                }
+        }
+
+        @Scheduled(cron = "0 0 4 * * *") // Every day at 4 AM
+        public void dailyStandingsSync() {
+                try {
+                        System.out.println("🕒 Daily Standings Sync Triggered...");
+                        syncAllMajorStandings(2025);
+                } catch (Exception e) {
+                        System.err.println("❌ Daily standings sync failed: " + e.getMessage());
                 }
         }
 

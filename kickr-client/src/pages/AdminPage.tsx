@@ -249,15 +249,25 @@ export default function AdminPage() {
             {/* Data Management Section */}
             <section className="mb-10 bg-[#14181c] border border-white/5 rounded-lg p-6">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-6">Data Management</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Quick Sync */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {/* Match Sync */}
                     <DataSyncCard
-                        title="Quick Sync"
-                        description="Sync recent matches (±7 days) and standings"
+                        title="Match Sync"
+                        description="Sync match scores and dates (±7 days window)"
+                        endpoint="/matchs/save"
+                        params={{}}
+                        buttonLabel="Sync Scores"
+                        estimatedTime="~30 seconds"
+                    />
+
+                    {/* Standings Sync */}
+                    <DataSyncCard
+                        title="Standings Refresh"
+                        description="Update points and rankings for all leagues (no cups)"
                         endpoint="/matchs/save"
                         params={{ allStandings: true }}
-                        buttonLabel="Sync Now"
-                        estimatedTime="~30 seconds"
+                        buttonLabel="Sync Rankings"
+                        estimatedTime="~2 minutes"
                     />
 
                     {/* Full Backfill */}
@@ -267,7 +277,7 @@ export default function AdminPage() {
                         endpoint="/matchs/backfill"
                         params={{}}
                         buttonLabel="Run Backfill"
-                        estimatedTime="~4 minutes"
+                        estimatedTime="~10 minutes"
                         warning
                     />
                 </div>
@@ -404,8 +414,8 @@ export default function AdminPage() {
                                             key={pageNum}
                                             onClick={() => setCurrentPage(pageNum)}
                                             className={`w-8 h-8 rounded text-[10px] font-bold flex items-center justify-center transition-all cursor-pointer ${currentPage === pageNum
-                                                    ? 'bg-kickr text-black'
-                                                    : 'bg-white/[0.02] border border-white/5 text-[#667788] hover:text-white'
+                                                ? 'bg-kickr text-black'
+                                                : 'bg-white/[0.02] border border-white/5 text-[#667788] hover:text-white'
                                                 }`}
                                         >
                                             {pageNum + 1}

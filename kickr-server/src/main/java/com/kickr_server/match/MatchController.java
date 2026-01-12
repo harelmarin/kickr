@@ -30,7 +30,7 @@ public class MatchController {
         })
         @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
         @GetMapping("/save")
-        public void syncMatches(
+        public org.springframework.http.ResponseEntity<String> syncMatches(
                         @Parameter(description = "Synchronize the entire season of tournaments (UCL, UEL, UECL)") @RequestParam(defaultValue = "false") boolean fullTournaments,
                         @Parameter(description = "Synchronize standings for all major leagues") @RequestParam(defaultValue = "false") boolean allStandings,
                         @Parameter(description = "Synchronize standings for a specific league") @RequestParam(required = false) Integer leagueId,
@@ -38,12 +38,19 @@ public class MatchController {
                         throws Exception {
                 if (fullTournaments) {
                         matchService.syncFullSeasonTournaments();
+                        return org.springframework.http.ResponseEntity.ok("Tournament sync completed.");
                 } else if (allStandings) {
-                        matchService.syncAllMajorStandings(season);
+                        matchService.syncAllStandingsAsync(season);
+                        return org.springframework.http.ResponseEntity.accepted()
+                                        .body("All league standings sync started in background for season " + season
+                                                        + ".");
                 } else if (leagueId != null) {
                         matchService.syncStandings(leagueId, season);
+                        return org.springframework.http.ResponseEntity
+                                        .ok("Standings for league " + leagueId + " synced.");
                 } else {
                         matchService.fetchAndSaveNextMatches();
+                        return org.springframework.http.ResponseEntity.ok("Daily matches synced.");
                 }
         }
 
