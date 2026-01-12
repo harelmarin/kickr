@@ -1,12 +1,416 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { adminService } from '../services/adminService';
 import { authService } from '../services/authService';
+import { reportService } from '../services/reportService';
+import type { Report } from '../services/reportService';
+import { adminDashboardService } from '../services/adminDashboardService';
+import type { DashboardStats } from '../services/adminDashboardService';
 import axiosInstance from '../services/axios';
-import type { User } from '../types/User';
 import { NotFoundPage } from './NotFoundPage';
 import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
+type Tab = 'dashboard' | 'users' | 'reports';
+
+export default function AdminPage() {
+    const [activeTab, setActiveTab] = useState<Tab>('dashboard');
+    const currentUser = authService.getUser();
+
+    if (!currentUser || currentUser.role !== 'ADMIN') {
+        return <NotFoundPage />;
+    }
+
+    return (
+        <div className="min-h-[calc(100vh-4rem)] bg-[#0a0b0d] pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
+            {/* Header */}
+            <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+                <div>
+                    <h1 className="display-font text-[28px] text-white mb-2 uppercase italic tracking-tighter">Admin Control Center</h1>
+                    <p className="text-[10px] text-kickr uppercase tracking-[0.2em] font-black">System Terminal · Authorization Level 4</p>
+                </div>
+
+                <div className="flex p-1 bg-white/5 rounded-lg">
+                    {(['dashboard', 'users', 'reports'] as Tab[]).map((tab) => (
+                        <button
+                            key={tab}
+                            onClick={() => setActiveTab(tab)}
+                            className={`px-6 py-2 rounded text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab
+                                ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                                : 'text-[#667788] hover:text-white'
+                                }`}
+                        >
+                            {tab}
+                        </button>
+                    ))}
+                </div>
+            </header>
+
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    {activeTab === 'dashboard' && <DashboardTab />}
+                    {activeTab === 'users' && <UsersTab />}
+                    {activeTab === 'reports' && <ReportsTab />}
+                </motion.div>
+            </AnimatePresence>
+        </div>
+    );
+}
+
+// --- SUB-COMPONENTS ---
+
+const DashboardTab = () => {
+    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        adminDashboardService.getStats().then(setStats).finally(() => setLoading(false));
+    }, []);
+
+    if (loading || !stats) return <LoadingSpinner />;
+
+    return (
+        <div className="space-y-10">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatCard label="Total Users" value={stats.totalUsers} trend="+12%" />
+                <StatCard label="Total Reviews" value={stats.totalReviews} trend="+5%" />
+                <StatCard label="Resolved Reports" value={stats.totalReports - stats.pendingReports} />
+                <StatCard label="Pending Reports" value={stats.pendingReports} warning={stats.pendingReports > 0} />
+            </div>
+
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <ChartSection
+                    title="User Acquisition"
+                    subtitle="New registrations last 30 days"
+                    data={stats.userGrowth}
+                    color="#4466ff"
+                />
+                <ChartSection
+                    title="Review Activity"
+                    subtitle="Match logs volume per day"
+                    data={stats.reviewVolume}
+                    color="#ff8000"
+                />
+            </div>
+
+            {/* Existing Data Management */}
+            <section className="bg-[#14181c] border border-white/5 rounded-2xl p-8">
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-8">System Sync Utilities</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <DataSyncCard
+                        title="Match Sync"
+                        description="Update scores and outcome (±7 days)"
+                        endpoint="/matchs/save"
+                        params={{}}
+                        buttonLabel="Sync"
+                        estimatedTime="30s"
+                    />
+                    <DataSyncCard
+                        title="Standings Refresh"
+                        description="Recalculate league points and ranking"
+                        endpoint="/matchs/save"
+                        params={{ allStandings: true }}
+                        buttonLabel="Refresh"
+                        estimatedTime="2m"
+                    />
+                    <DataSyncCard
+                        title="Historical Backfill"
+                        description="Deep sync from start of season"
+                        endpoint="/matchs/backfill"
+                        params={{}}
+                        buttonLabel="Run Backfill"
+                        estimatedTime="10m"
+                        warning
+                    />
+                </div>
+            </section>
+        </div>
+    );
+};
+
+const UsersTab = () => {
+    // Current UsersTab logic from AdminPage.tsx
+    // I'll re-implement the user list logic here
+    const [pageData, setPageData] = useState<any | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(0);
+
+    useEffect(() => {
+        loadUsers(currentPage);
+    }, [currentPage]);
+
+    const loadUsers = async (page: number) => {
+        setLoading(true);
+        try {
+            const data = await adminService.getAllUsers(page, 20);
+            setPageData(data);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) return <LoadingSpinner />;
+
+    const users = pageData?.content || [];
+    const filteredUsers = users.filter((u: any) =>
+        u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return (
+        <div className="bg-[#14181c] border border-white/5 rounded-2xl overflow-hidden shadow-xl">
+            <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr">User Directory</h2>
+                <input
+                    type="text"
+                    placeholder="Search systems..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-black/20 border border-white/5 rounded-lg px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64"
+                />
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                    <thead className="bg-black/10 text-[#445566] text-[10px] font-black uppercase tracking-[0.2em]">
+                        <tr>
+                            <th className="px-6 py-4">User</th>
+                            <th className="px-6 py-4">Status</th>
+                            <th className="px-6 py-4">Auth Level</th>
+                            <th className="px-6 py-4 text-right">Sequence</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/[0.03]">
+                        {filteredUsers.map((user: any) => (
+                            <tr key={user.id} className="hover:bg-white/[0.01] transition-colors">
+                                <td className="px-6 py-4">
+                                    <Link to={`/user/${user.id}`} className="flex items-center gap-3 group/user">
+                                        <div className="w-8 h-8 rounded bg-kickr/10 border border-kickr/20 flex items-center justify-center font-black text-xs text-kickr overflow-hidden group-hover/user:border-kickr/50 transition-colors">
+                                            {user.avatarUrl ? (
+                                                <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                                            ) : (
+                                                user.name[0].toUpperCase()
+                                            )}
+                                        </div>
+                                        <div>
+                                            <div className="text-sm font-black text-white group-hover/user:text-kickr transition-colors">{user.name}</div>
+                                            <div className="text-[10px] text-[#445566] font-medium">{user.email}</div>
+                                        </div>
+                                    </Link>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-tighter bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                        Active
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className={`text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-[#667788]'}`}>
+                                        {user.role}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <div className="flex justify-end gap-2">
+                                        {user.role === 'USER' ? (
+                                            <button onClick={() => adminService.promoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-kickr/10 rounded-lg text-kickr transition-all">↑</button>
+                                        ) : (
+                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-orange-500/10 rounded-lg text-orange-500 transition-all">↓</button>
+                                        )}
+                                        <button onClick={() => adminService.deleteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-red-500/10 rounded-lg text-red-500 transition-all">×</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Pagination */}
+            {pageData && pageData.totalPages > 1 && (
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-black/10">
+                    <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
+                        Page {pageData.number + 1} / {pageData.totalPages}
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
+                            disabled={pageData.first}
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                        >
+                            Previous
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
+                            disabled={pageData.last}
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const ReportsTab = () => {
+    const [reports, setReports] = useState<Report[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const loadReports = async () => {
+        setLoading(true);
+        try {
+            const data = await reportService.getAllReports();
+            setReports(data);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadReports();
+    }, []);
+
+    const handleAction = async (reportId: string, status: 'RESOLVED' | 'REJECTED') => {
+        await reportService.updateStatus(reportId, status);
+        toast.success(`Report marked as ${status}`);
+        loadReports();
+    };
+
+    if (loading) return <LoadingSpinner />;
+
+    return (
+        <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4">
+                {reports.length === 0 ? (
+                    <div className="bg-[#14181c] border border-white/5 rounded-2xl p-20 text-center">
+                        <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em]">All Clear</p>
+                        <p className="text-[#667788] text-xs font-bold uppercase mt-2">No active reports in queue</p>
+                    </div>
+                ) : (
+                    reports.map(report => (
+                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-2xl p-6 hover:border-white/10 transition-all">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-6">
+                                <div className="space-y-4 flex-1">
+                                    <div className="flex items-center gap-3">
+                                        <span className={`px-2 py-0.5 rounded-[4px] text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
+                                            report.status === 'RESOLVED' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
+                                                'bg-white/5 text-[#445566] border border-white/10'
+                                            }`}>
+                                            {report.status}
+                                        </span>
+                                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.2em]">{report.targetType}</span>
+                                        <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">{report.reason}</span>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-[10px] text-[#445566] uppercase tracking-widest font-black mb-2">Internal Note</p>
+                                        <p className="text-[13px] text-[#99aabb] leading-relaxed bg-black/20 p-4 rounded-lg italic">
+                                            "{report.description || 'No additional details provided'}"
+                                        </p>
+                                    </div>
+
+                                    <div className="flex items-center gap-4 text-[10px]">
+                                        <span className="text-[#667788] font-bold uppercase">Reported by: <span className="text-white">{report.reporter.name}</span></span>
+                                        <span className="text-[#445566]">●</span>
+                                        <span className="text-[#667788] font-bold uppercase">{new Date(report.createdAt).toLocaleString()}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
+                                    <button
+                                        onClick={() => handleAction(report.id, 'RESOLVED')}
+                                        className="flex-1 sm:w-32 py-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-emerald-500/20 transition-all"
+                                    >
+                                        Resolve
+                                    </button>
+                                    <button
+                                        onClick={() => handleAction(report.id, 'REJECTED')}
+                                        className="flex-1 sm:w-32 py-3 bg-white/5 border border-white/10 text-[#667788] text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-white/10 transition-all"
+                                    >
+                                        Reject
+                                    </button>
+                                    <button
+                                        onClick={() => reportService.deleteReport(report.id).then(loadReports)}
+                                        className="flex-1 sm:w-32 py-3 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-red-500/20 transition-all"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+        </div>
+    );
+};
+
+// --- UTILS ---
+
+const StatCard = ({ label, value, trend, warning }: any) => (
+    <div className={`bg-[#14181c] border rounded-2xl p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
+        <p className="text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-4">{label}</p>
+        <div className="flex items-end justify-between">
+            <h3 className={`text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
+            {trend && <span className="text-emerald-500 text-[10px] font-black mb-1">{trend}</span>}
+        </div>
+    </div>
+);
+
+const ChartSection = ({ title, subtitle, data, color }: any) => {
+    const maxVal = Math.max(...data.map((d: any) => d.count), 1);
+
+    return (
+        <div className="bg-[#14181c] border border-white/5 rounded-2xl p-8 shadow-xl">
+            <div className="mb-10">
+                <h3 className="text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
+                <p className="text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
+            </div>
+
+            <div className="h-60 flex items-end gap-2 px-2">
+                {data.map((d: any, i: number) => (
+                    <div key={i} className="flex-1 group relative">
+                        <motion.div
+                            initial={{ height: 0 }}
+                            animate={{ height: `${(d.count / maxVal) * 100}%` }}
+                            className="w-full rounded-t-sm transition-all duration-500 group-hover:opacity-80"
+                            style={{ backgroundColor: color, opacity: 0.3 + (d.count / maxVal) * 0.7 }}
+                        />
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white text-black text-[9px] font-black px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                            {d.count}
+                        </div>
+                    </div>
+                ))}
+            </div>
+            {data.length === 0 && (
+                <div className="h-60 flex items-center justify-center border border-dashed border-white/5 rounded-lg">
+                    <p className="text-[10px] text-[#445566] uppercase tracking-widest font-black">Data acquisition in progress...</p>
+                </div>
+            )}
+            <div className="mt-6 flex justify-between border-t border-white/5 pt-4">
+                <span className="text-[9px] font-black text-[#445566] uppercase tracking-widest">T-30 Days</span>
+                <span className="text-[9px] font-black text-[#445566] uppercase tracking-widest">Present</span>
+            </div>
+        </div>
+    );
+};
+
+const LoadingSpinner = () => (
+    <div className="py-20 flex flex-col items-center justify-center gap-4">
+        <div className="w-10 h-10 border-2 border-white/5 border-t-kickr rounded-full animate-spin" />
+        <p className="text-[10px] text-kickr/40 font-black uppercase tracking-[0.4em] animate-pulse">Syncing Admin Buffer</p>
+    </div>
+);
+
+// RE-USE existing components
 interface DataSyncCardProps {
     title: string;
     description: string;
@@ -21,41 +425,31 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     const [syncing, setSyncing] = useState(false);
 
     const handleSync = async () => {
-        if (warning && !window.confirm(`This will take ${estimatedTime}. Continue?`)) {
-            return;
-        }
-
+        if (warning && !window.confirm(`Action critical. Estimated duration: ${estimatedTime}. Confirm execution?`)) return;
         setSyncing(true);
-        const toastId = toast.loading(`${title} in progress...`);
-
+        const toastId = toast.loading(`${title} initializing...`);
         try {
             await axiosInstance.get(endpoint, { params });
-            toast.success(`${title} completed!`, { id: toastId });
+            toast.success(`${title} payload deployed!`, { id: toastId });
         } catch (error: any) {
-            toast.error(error.response?.data?.message || `${title} failed`, { id: toastId });
+            toast.error(error.response?.data?.message || `${title} failure`, { id: toastId });
         } finally {
             setSyncing(false);
         }
     };
 
     return (
-        <div className="bg-black/20 border border-white/5 rounded-lg p-5 hover:border-white/10 transition-all">
-            <div className="flex items-start justify-between mb-3">
-                <div>
-                    <h3 className="text-[13px] font-black text-white uppercase tracking-tight mb-1">{title}</h3>
-                    <p className="text-[11px] text-[#667788] font-medium">{description}</p>
-                </div>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-                <span className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">
-                    {estimatedTime}
-                </span>
+        <div className="bg-black/20 border border-white/5 rounded-xl p-6 hover:bg-white/[0.02] transition-all group">
+            <h3 className="text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
+            <p className="text-[11px] text-[#667788] font-medium mb-6 leading-relaxed">{description}</p>
+            <div className="flex items-center justify-between">
+                <span className="text-[9px] text-[#445566] font-black uppercase tracking-widest">{estimatedTime}</span>
                 <button
                     onClick={handleSync}
                     disabled={syncing}
-                    className={`py-2 px-4 rounded text-[10px] font-black uppercase tracking-widest transition-all disabled:opacity-50 ${warning
+                    className={`py-2 px-5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${warning
                         ? 'bg-orange-500/10 border border-orange-500/20 text-orange-500 hover:bg-orange-500/20'
-                        : 'bg-kickr/10 border border-kickr/20 text-kickr hover:bg-kickr/20'
+                        : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                         }`}
                 >
                     {syncing ? 'Running...' : buttonLabel}
@@ -64,376 +458,3 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
         </div>
     );
 };
-
-import type { PageResponse } from '../types/Common';
-
-export default function AdminPage() {
-    const [pageData, setPageData] = useState<PageResponse<User> | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [dateFilter, setDateFilter] = useState<'all' | 'today' | 'week' | 'month'>('all');
-    const [currentPage, setCurrentPage] = useState(0);
-    const currentUser = authService.getUser();
-
-    useEffect(() => {
-        loadUsers(currentPage);
-    }, [currentPage]);
-
-    const loadUsers = async (page: number) => {
-        try {
-            setLoading(true);
-            const data = await adminService.getAllUsers(page, 20);
-            setPageData(data);
-            setError(null);
-        } catch (err: any) {
-            setError(err.response?.data?.message || 'Failed to load users');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handlePromote = async (userId: string) => {
-        if (!window.confirm('Promote this user to ADMIN?')) return;
-
-        toast.promise(
-            adminService.promoteUser(userId).then(() => loadUsers(currentPage)),
-            {
-                loading: 'Promoting user...',
-                success: 'User promoted to ADMIN',
-                error: (err) => err.response?.data?.message || 'Failed to promote user'
-            }
-        );
-    };
-
-    const handleDemote = async (userId: string) => {
-        if (!window.confirm('Demote this user to USER?')) return;
-
-        toast.promise(
-            adminService.demoteUser(userId).then(() => loadUsers(currentPage)),
-            {
-                loading: 'Demoting user...',
-                success: 'User demoted to USER',
-                error: (err) => err.response?.data?.message || 'Failed to demote user'
-            }
-        );
-    };
-
-    const handleDelete = async (userId: string) => {
-        if (!window.confirm('DELETE this user? This cannot be undone!')) return;
-
-        toast.promise(
-            adminService.deleteUser(userId).then(() => loadUsers(currentPage)),
-            {
-                loading: 'Deleting user...',
-                success: 'User deleted successfully',
-                error: (err) => err.response?.data?.message || 'Failed to delete user'
-            }
-        );
-    };
-
-    const filteredUsers = useMemo(() => {
-        let result = pageData?.content || [];
-
-        if (searchQuery.trim()) {
-            const query = searchQuery.toLowerCase();
-            result = result.filter(user =>
-                user.name.toLowerCase().includes(query) ||
-                user.email.toLowerCase().includes(query)
-            );
-        }
-
-        if (dateFilter !== 'all') {
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-            result = result.filter(user => {
-                const userDate = new Date(user.createdAt);
-
-                switch (dateFilter) {
-                    case 'today':
-                        return userDate >= today;
-                    case 'week':
-                        const weekAgo = new Date(today);
-                        weekAgo.setDate(weekAgo.getDate() - 7);
-                        return userDate >= weekAgo;
-                    case 'month':
-                        const monthAgo = new Date(today);
-                        monthAgo.setMonth(monthAgo.getMonth() - 1);
-                        return userDate >= monthAgo;
-                    default:
-                        return true;
-                }
-            });
-        }
-
-        return result;
-    }, [pageData, searchQuery, dateFilter]);
-
-    if (!currentUser || currentUser.role !== 'ADMIN') {
-        return <NotFoundPage />;
-    }
-
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-[#0a0b0d] pt-12 px-8">
-                <div className="flex flex-col items-center justify-center pt-24 gap-6">
-                    <div className="w-8 h-8 border-2 border-white/5 border-t-kickr rounded-full animate-spin"></div>
-                </div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="min-h-screen bg-[#0a0b0d] pt-12 px-8">
-                <div className="text-center py-16 text-[#ef4444] text-[13px] font-semibold">{error}</div>
-            </div>
-        );
-    }
-
-    const stats = {
-        total: pageData?.totalElements || 0,
-        admins: pageData?.content.filter((u: User) => u.role === 'ADMIN').length || 0,
-    };
-
-    return (
-        <div className="min-h-[calc(100vh-4rem)] bg-[#0a0b0d] pt-12 px-8 pb-8 max-w-[1400px] mx-auto">
-            {/* Header */}
-            <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-                <div>
-                    <h1 className="display-font text-[28px] text-white mb-2 uppercase italic tracking-tighter">Administration</h1>
-                    <p className="text-[10px] text-[#667788] uppercase tracking-[0.2em] font-extrabold">
-                        {stats.total} users · {stats.admins} admins
-                    </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-center gap-6 w-full md:w-auto">
-                    {/* Date Filters */}
-                    <div className="flex gap-1.5 w-full sm:w-auto">
-                        {(['all', 'today', 'week', 'month'] as const).map((filter) => (
-                            <button
-                                key={filter}
-                                onClick={() => setDateFilter(filter)}
-                                className={`flex-1 sm:flex-none py-2 px-3.5 rounded border text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${dateFilter === filter
-                                    ? 'bg-kickr/15 border-kickr/30 text-kickr'
-                                    : 'bg-transparent border-white/5 text-[#667788] hover:border-white/10 hover:bg-white/[0.02] hover:text-[#99aabb]'
-                                    }`}
-                            >
-                                {filter}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Search */}
-                    <div className="relative w-full sm:w-[320px]">
-                        <input
-                            type="text"
-                            placeholder="Search users..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-[#14181c] border border-white/5 rounded-md py-3 pr-10 pl-4 text-white text-[13px] font-medium focus:outline-none focus:border-white/10 focus:bg-white/[0.02] transition-all placeholder:text-[#667788] placeholder:font-normal"
-                        />
-                        {searchQuery && (
-                            <button
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#667788] hover:text-white transition-colors text-sm w-6 h-6 flex items-center justify-center"
-                                onClick={() => setSearchQuery('')}
-                            >
-                                ✕
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </header>
-
-            {/* Data Management Section */}
-            <section className="mb-10 bg-[#14181c] border border-white/5 rounded-lg p-6">
-                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-6">Data Management</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {/* Match Sync */}
-                    <DataSyncCard
-                        title="Match Sync"
-                        description="Sync match scores and dates (±7 days window)"
-                        endpoint="/matchs/save"
-                        params={{}}
-                        buttonLabel="Sync Scores"
-                        estimatedTime="~30 seconds"
-                    />
-
-                    {/* Standings Sync */}
-                    <DataSyncCard
-                        title="Standings Refresh"
-                        description="Update points and rankings for all leagues (no cups)"
-                        endpoint="/matchs/save"
-                        params={{ allStandings: true }}
-                        buttonLabel="Sync Rankings"
-                        estimatedTime="~2 minutes"
-                    />
-
-                    {/* Full Backfill */}
-                    <DataSyncCard
-                        title="Historical Backfill"
-                        description="Fetch all matches from season start with lineups"
-                        endpoint="/matchs/backfill"
-                        params={{}}
-                        buttonLabel="Run Backfill"
-                        estimatedTime="~10 minutes"
-                        warning
-                    />
-                </div>
-            </section>
-
-            {/* Table Container */}
-            <div className="bg-[#14181c] border border-white/5 rounded-lg overflow-hidden">
-                <div className="overflow-x-auto no-scrollbar">
-                    <table className="w-full border-collapse min-w-[700px]">
-                        <thead className="bg-black/20 border-b border-white/5">
-                            <tr>
-                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">User</th>
-                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">Email</th>
-                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">Role</th>
-                                <th className="py-3.5 px-5 text-left text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]">Joined</th>
-                                <th className="py-3.5 px-5 text-right text-[10px] font-black uppercase tracking-[0.15em] text-[#667788]"></th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/[0.03]">
-                            {filteredUsers.length === 0 ? (
-                                <tr>
-                                    <td colSpan={5} className="text-center py-10 text-[#667788] text-[12px] font-semibold italic">
-                                        No users found
-                                    </td>
-                                </tr>
-                            ) : (
-                                filteredUsers.map(user => (
-                                    <tr
-                                        key={user.id}
-                                        className={`group transition-colors ${user.id === currentUser.id
-                                            ? 'bg-kickr/5 hover:bg-kickr/8'
-                                            : 'hover:bg-white/[0.02]'
-                                            }`}
-                                    >
-                                        <td className="py-3.5 px-5">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-7 h-7 rounded bg-kickr/15 border border-kickr/20 text-kickr flex items-center justify-center font-black text-[11px] flex-shrink-0 overflow-hidden">
-                                                    {user.avatarUrl ? (
-                                                        <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
-                                                    ) : (
-                                                        user.name.charAt(0).toUpperCase()
-                                                    )}
-                                                </div>
-                                                <Link to={`/user/${user.id}`} className="flex items-center gap-6 flex-1 font-bold text-[13px] text-white hover:text-kickr transition-colors">
-                                                    {user.name}
-                                                    {user.id === currentUser.id && (
-                                                        <span className="bg-kickr text-black py-0.5 px-1.5 rounded-[3px] text-[9px] font-black uppercase tracking-tight">You</span>
-                                                    )}
-                                                </Link>
-                                            </div>
-                                        </td>
-                                        <td className="py-3.5 px-5 text-[#99aabb] text-[12px] font-medium">{user.email}</td>
-                                        <td className="py-3.5 px-5 focus-within:ring-0">
-                                            <span className={`inline-flex px-2.5 py-1 rounded-[3px] text-[9px] font-black uppercase tracking-widest border ${user.role === 'ADMIN'
-                                                ? 'bg-kickr/15 text-kickr border-kickr/20'
-                                                : 'bg-white/[0.03] text-[#99aabb] border-white/5'
-                                                }`}>
-                                                {user.role}
-                                            </span>
-                                        </td>
-                                        <td className="py-3.5 px-5 text-[#667788] text-[12px] font-medium">
-                                            {new Date(user.createdAt).toLocaleDateString('en-US', {
-                                                month: 'short',
-                                                day: 'numeric',
-                                                year: 'numeric'
-                                            })}
-                                        </td>
-                                        <td className="py-3.5 px-5">
-                                            {user.id !== currentUser.id ? (
-                                                <div className="flex gap-2 justify-end">
-                                                    {user.role === 'USER' ? (
-                                                        <button
-                                                            className="py-1.5 px-3 border border-white/5 rounded-md text-[10px] font-black uppercase tracking-widest bg-white/[0.02] text-[#99aabb] hover:bg-white/[0.08] hover:border-white/15 hover:text-white hover:-translate-y-px transition-all cursor-pointer"
-                                                            onClick={() => handlePromote(user.id)}
-                                                        >
-                                                            Promote
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            className="py-1.5 px-3 border border-white/5 rounded-md text-[10px] font-black uppercase tracking-widest bg-white/[0.02] text-[#99aabb] hover:bg-white/[0.08] hover:border-white/15 hover:text-white hover:-translate-y-px transition-all cursor-pointer"
-                                                            onClick={() => handleDemote(user.id)}
-                                                        >
-                                                            Demote
-                                                        </button>
-                                                    )}
-                                                    <button
-                                                        className="py-1.5 px-3 border border-red-500/10 rounded-md text-[10px] font-black uppercase tracking-widest bg-white/[0.02] text-red-500/50 hover:bg-red-500/15 hover:border-red-500 hover:text-red-500 hover:-translate-y-px transition-all cursor-pointer"
-                                                        onClick={() => handleDelete(user.id)}
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <div className="text-right pr-4">
-                                                    <span className="text-[#667788] text-[12px]">——</span>
-                                                </div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* Pagination Controls */}
-                {pageData && pageData.totalPages > 1 && (
-                    <div className="bg-black/20 border-t border-white/5 p-4 flex items-center justify-between">
-                        <div className="text-[10px] text-[#667788] font-bold uppercase tracking-widest">
-                            Page {pageData.number + 1} of {pageData.totalPages} · {pageData.totalElements} Users
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <button
-                                onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
-                                disabled={pageData.first}
-                                className="p-2 border border-white/5 rounded bg-white/[0.02] text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                            >
-                                Previous
-                            </button>
-                            <div className="flex items-center gap-1">
-                                {[...Array(Math.min(5, pageData.totalPages))].map((_, i) => {
-                                    let pageNum = i;
-                                    if (pageData.totalPages > 5) {
-                                        if (currentPage > 2) {
-                                            pageNum = currentPage - 2 + i;
-                                            if (pageNum >= pageData.totalPages) pageNum = pageData.totalPages - 5 + i;
-                                        }
-                                    }
-
-                                    if (pageNum >= pageData.totalPages) return null;
-
-                                    return (
-                                        <button
-                                            key={pageNum}
-                                            onClick={() => setCurrentPage(pageNum)}
-                                            className={`w-8 h-8 rounded text-[10px] font-bold flex items-center justify-center transition-all cursor-pointer ${currentPage === pageNum
-                                                ? 'bg-kickr text-black'
-                                                : 'bg-white/[0.02] border border-white/5 text-[#667788] hover:text-white'
-                                                }`}
-                                        >
-                                            {pageNum + 1}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                            <button
-                                onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
-                                disabled={pageData.last}
-                                className="p-2 border border-white/5 rounded bg-white/[0.02] text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-}

@@ -44,4 +44,7 @@ public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
     @EntityGraph(attributePaths = { "user", "match" })
     @Query("SELECT um FROM UserMatch um ORDER BY um.watchedAt DESC")
     List<UserMatch> findLatestReviews(Pageable pageable);
+
+    @Query(value = "SELECT CAST(watched_at AS DATE) as date, COUNT(*) as count FROM user_matches WHERE watched_at >= :startDate GROUP BY CAST(watched_at AS DATE) ORDER BY date", nativeQuery = true)
+    List<Object[]> countReviewsByDay(@Param("startDate") java.time.LocalDateTime startDate);
 }

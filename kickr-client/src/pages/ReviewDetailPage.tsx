@@ -11,6 +11,7 @@ import { ShareReviewButton } from '../components/Review/ShareReviewButton';
 import { useDeleteUserMatch } from '../hooks/useUserMatch';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { ReportModal } from '../components/modals/ReportModal';
 
 export const ReviewDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -24,6 +25,7 @@ export const ReviewDetailPage: FC = () => {
 
     const [commentText, setCommentText] = useState('');
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+    const [reportConfig, setReportConfig] = useState<{ id: string, type: 'MATCH_REVIEW' | 'COMMENT' } | null>(null);
 
     const handleAddComment = (e: React.FormEvent) => {
         e.preventDefault();
@@ -245,6 +247,18 @@ export const ReviewDetailPage: FC = () => {
                                         </div>
                                     </div>
                                 )}
+
+                                {currentUser?.id !== review.user.id && (
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Feedback</span>
+                                        <button
+                                            onClick={() => setReportConfig({ id: review.id, type: 'MATCH_REVIEW' })}
+                                            className="text-[10px] font-black text-[#667788] hover:text-red-500 uppercase tracking-widest transition-colors text-left"
+                                        >
+                                            Report Review
+                                        </button>
+                                    </div>
+                                )}
                             </div>
 
                             <div className={`${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'} text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 pl-8 py-2 mb-12 bg-white/[0.02] rounded-r-xl`}>
@@ -350,6 +364,13 @@ export const ReviewDetailPage: FC = () => {
                     </div>
                 </div>
             </div>
+
+            <ReportModal
+                isOpen={!!reportConfig}
+                onClose={() => setReportConfig(null)}
+                targetType={reportConfig?.type || 'MATCH_REVIEW'}
+                targetId={reportConfig?.id || ''}
+            />
         </main>
     );
 };

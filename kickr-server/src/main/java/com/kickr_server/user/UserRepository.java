@@ -79,4 +79,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
         void deleteById(@NonNull UUID id);
 
         Page<User> findAll(Pageable pageable);
+
+        @org.springframework.data.jpa.repository.Query(value = "SELECT CAST(created_at AS DATE) as date, COUNT(*) as count FROM users WHERE created_at >= :startDate GROUP BY CAST(created_at AS DATE) ORDER BY date", nativeQuery = true)
+        List<Object[]> countUsersByDay(
+                        @org.springframework.data.repository.query.Param("startDate") java.time.LocalDateTime startDate);
 }
