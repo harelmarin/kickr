@@ -42,20 +42,20 @@ export const MatchesPage = () => {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-[#0a0b0d] py-20"
+      className="min-h-screen bg-[#0a0b0d] py-8 sm:py-20"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <header className="mb-16">
+        <header className="mb-8 sm:mb-16">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase display-font">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-2 sm:mb-4 italic tracking-tighter uppercase display-font">
               The Pitch <span className="text-kickr">Matches</span>
             </h1>
-            <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold">
+            <p className="text-[#667788] uppercase tracking-[0.25em] text-[10px] sm:text-[11px] font-bold">
               Explore {data?.totalElements || '...'} matchdays on Kickr
             </p>
           </motion.div>
@@ -65,13 +65,13 @@ export const MatchesPage = () => {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-12 flex flex-col gap-6"
+            className="mt-8 sm:mt-12 flex flex-col gap-4 sm:gap-6"
           >
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between border border-white/5 p-6 section-contrast rounded-2xl gap-8 relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between border border-white/5 p-4 sm:p-6 section-contrast rounded-2xl gap-6 sm:gap-8 relative overflow-hidden">
 
-              <div className="flex flex-wrap items-center gap-x-10 gap-y-6 relative z-10">
-                {/* Search Input */}
-                <div className="flex flex-col gap-2 w-full sm:w-64">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-3 sm:gap-x-10 sm:gap-y-6 relative z-10 w-full">
+                {/* Search Input - Full width on mobile */}
+                <div className="col-span-2 sm:col-span-1 flex flex-col gap-2 w-full sm:w-64">
                   <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Search Team</span>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs opacity-40">🔍</span>
@@ -88,56 +88,62 @@ export const MatchesPage = () => {
                 {/* League Filter */}
                 <div className="flex flex-col gap-2">
                   <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">League</span>
-                  <select
-                    value={competitionId || ''}
-                    onChange={(e) => {
-                      setCompetitionId(e.target.value || undefined);
-                      setPage(0);
-                    }}
-                    className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-[11px] font-bold text-[#8899aa] focus:text-white focus:border-kickr/40 outline-none cursor-pointer min-w-[160px]"
-                  >
-                    <option value="" className="bg-[#14181c]">All Competitions</option>
-                    {competitions?.map(c => (
-                      <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Status Filter */}
-                <div className="flex flex-col gap-2">
-                  <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Status</span>
-                  <div className="flex bg-black/20 p-1 rounded-xl border border-white/5">
-                    {['all', 'finished', 'upcoming'].map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => { setStatus(s as any); setPage(0); }}
-                        className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white' : 'text-[#445566] hover:text-[#99aabb]'}`}
-                      >
-                        {s}
-                      </button>
-                    ))}
+                  <div className="relative">
+                    <select
+                      value={competitionId || ''}
+                      onChange={(e) => {
+                        setCompetitionId(e.target.value || undefined);
+                        setPage(0);
+                      }}
+                      className="w-full bg-black/20 border border-white/5 rounded-xl pl-3 pr-8 py-2.5 text-[10px] sm:text-[11px] font-bold text-[#8899aa] focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none truncate"
+                    >
+                      <option value="" className="bg-[#14181c]">All Leagues</option>
+                      {competitions?.map(c => (
+                        <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
+                      ))}
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[8px] text-[#445566]">▼</div>
                   </div>
                 </div>
 
                 {/* Sort Filter */}
                 <div className="flex flex-col gap-2">
                   <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Rank by</span>
-                  <select
-                    value={sort}
-                    onChange={(e) => {
-                      setSort(e.target.value as any);
-                      setPage(0);
-                    }}
-                    className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-[11px] font-bold text-[#8899aa] focus:text-white focus:border-kickr/40 outline-none cursor-pointer"
-                  >
-                    <option value="date" className="bg-[#14181c]">Match Date</option>
-                    <option value="popularity" className="bg-[#14181c]">Crowd Hype</option>
-                    <option value="rating" className="bg-[#14181c]">Tactical Score</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={sort}
+                      onChange={(e) => {
+                        setSort(e.target.value as any);
+                        setPage(0);
+                      }}
+                      className="w-full bg-black/20 border border-white/5 rounded-xl pl-3 pr-8 py-2.5 text-[10px] sm:text-[11px] font-bold text-[#8899aa] focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none truncate"
+                    >
+                      <option value="date" className="bg-[#14181c]">Date</option>
+                      <option value="popularity" className="bg-[#14181c]">Hype</option>
+                      <option value="rating" className="bg-[#14181c]">Score</option>
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[8px] text-[#445566]">▼</div>
+                  </div>
+                </div>
+
+                {/* Status Filter - Full width on very small screens, or auto */}
+                <div className="col-span-2 sm:col-span-1 flex flex-col gap-2">
+                  <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em] pl-1">Status</span>
+                  <div className="flex bg-black/20 p-1 rounded-xl border border-white/5 w-full sm:w-auto">
+                    {['all', 'finished', 'upcoming'].map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => { setStatus(s as any); setPage(0); }}
+                        className={`flex-1 sm:flex-none px-2 sm:px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white' : 'text-[#445566] hover:text-[#99aabb]'}`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-1 relative z-10 lg:border-l lg:border-white/5 lg:pl-8">
+              <div className="hidden lg:flex flex-col items-end gap-1 relative z-10 lg:border-l lg:border-white/5 lg:pl-8">
                 <span className="text-[24px] font-black text-white italic leading-none tracking-tighter">
                   {isLoading ? '...' : (data?.totalElements || 0)}
                 </span>

@@ -91,29 +91,29 @@ export const CompetitionDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#0a0b0d]">
-      <div className="bg-[#14181c] border-b border-white/5 py-24 relative overflow-hidden">
+      <div className="bg-[#14181c] border-b border-white/5 py-8 sm:py-24 relative overflow-hidden">
         <div className="absolute right-0 top-0 w-1/3 h-full opacity-5 pointer-events-none">
           <img src={competition.logoUrl} className="w-full h-full object-contain grayscale scale-150 rotate-12" alt="" />
         </div>
 
-        <div className="max-w-[1400px] mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10 flex flex-col md:flex-row items-center gap-6 sm:gap-12">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-32 h-32 md:w-40 md:h-40 bg-[#1b2228] rounded-md p-6 shadow-2xl border border-white/5"
+            className="w-20 h-20 sm:w-40 sm:h-40 bg-[#1b2228] rounded-md p-3 sm:p-6 shadow-2xl border border-white/5"
           >
             <img src={competition.logoUrl} alt={competition.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </motion.div>
 
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font">{competition.name}</h1>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6">
-              <p className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[11px]">
+            <h1 className="text-2xl sm:text-5xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font">{competition.name}</h1>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-6">
+              <p className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[9px] sm:text-[11px]">
                 Official {competition.country || 'International'} {isTournament ? 'Tournament' : 'League'} Page
               </p>
             </div>
 
-            <div className="flex items-center justify-center md:justify-start gap-8 mt-4 md:mt-8">
+            <div className="flex items-center justify-center md:justify-start gap-4 sm:gap-8 mt-4 md:mt-8">
               <CompStat label="Teams" value={teamsData?.totalElements || 0} />
               <CompStat label="Format" value={competition.type || (isTournament ? 'CUP' : 'LEAGUE')} />
               <CompStat label="Season" value="2025/26" />
@@ -121,11 +121,11 @@ export const CompetitionDetailPage = () => {
           </div>
 
           {isAdmin && (
-            <div className="mt-8 md:mt-0">
+            <div className="mt-4 md:mt-0">
               <button
                 disabled={isSyncing}
                 onClick={handleSyncData}
-                className="py-3 px-6 bg-kickr/10 border border-kickr/20 rounded text-[10px] font-black text-kickr uppercase tracking-widest hover:bg-kickr/20 transition-all disabled:opacity-50"
+                className="py-2 sm:py-3 px-4 sm:px-6 bg-kickr/10 border border-kickr/20 rounded text-[9px] sm:text-[10px] font-black text-kickr uppercase tracking-widest hover:bg-kickr/20 transition-all disabled:opacity-50"
               >
                 {isSyncing ? 'Syncing...' : 'Force Data Sync'}
               </button>

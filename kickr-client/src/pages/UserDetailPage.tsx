@@ -43,16 +43,16 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
-            <div className="max-w-6xl mx-auto px-6">
+        <main className="min-h-screen bg-[#0a0b0d] pt-20 md:pt-32 pb-24 md:pb-20">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-                <header className="mb-12 md:mb-16">
-                    <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-8 mb-8">
-                        <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 text-center sm:text-left">
+                <header className="mb-8 md:mb-16">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 sm:gap-8 mb-6 sm:mb-8">
+                        <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-10 text-center sm:text-left">
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
-                                    className="relative group/avatar w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shadow-2xl transition-transform hover:scale-105"
+                                    className="relative group/avatar w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shadow-2xl transition-transform hover:scale-105"
                                     title="Change Profile Picture"
                                 >
                                     <div className="w-full h-full bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
@@ -72,7 +72,7 @@ export const UserDetailPage = () => {
                                     </div>
                                 </Link>
                             ) : (
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
+                                <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
                                     {user.avatarUrl ? (
                                         <img
                                             key={user.avatarUrl}
@@ -87,7 +87,7 @@ export const UserDetailPage = () => {
                             )}
 
                             <div>
-                                <div className="flex items-center gap-3 mb-2">
+                                <div className="flex items-center gap-3 mb-1 sm:mb-2 justify-center sm:justify-start">
                                     <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{user.name}</h1>
                                     {isOwnProfile && (
                                         <span className="bg-kickr/10 text-kickr text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-md border border-kickr/20">
@@ -95,17 +95,17 @@ export const UserDetailPage = () => {
                                         </span>
                                     )}
                                 </div>
-                                <p className="text-[#667788] text-xs uppercase tracking-widest">
+                                <p className="text-[#667788] text-[10px] sm:text-xs uppercase tracking-widest">
                                     Joined {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
                         </div>
 
-                        <div>
+                        <div className="w-full sm:w-auto flex justify-center">
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
-                                    className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg border border-white/10 transition-all flex items-center gap-2"
+                                    className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-6 py-2.5 sm:px-6 sm:py-2.5 rounded-lg border border-white/10 transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
                                 >
                                     <span>✎</span>
                                     Edit Settings
@@ -114,7 +114,7 @@ export const UserDetailPage = () => {
                                 <button
                                     onClick={handleFollowToggle}
                                     disabled={followAction.isPending}
-                                    className={`group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg transition-all ${isFollowing
+                                    className={`group flex items-center justify-center gap-2 px-6 py-2.5 sm:px-4 sm:py-2.5 rounded-lg transition-all w-full sm:w-auto ${isFollowing
                                         ? 'bg-white/5 border border-white/10 hover:border-red-500/50'
                                         : 'bg-kickr/10 border border-kickr/30 hover:bg-kickr/20'
                                         } disabled:opacity-50`}
@@ -138,7 +138,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 px-4 sm:px-6 py-4 bg-[#1b2228] border border-white/5 rounded-xl overflow-x-auto no-scrollbar">
+                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-[#1b2228] border border-white/5 rounded-xl overflow-x-auto no-scrollbar">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}
@@ -159,7 +159,7 @@ export const UserDetailPage = () => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-20">
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-24">
                         {/* Diary Section */}

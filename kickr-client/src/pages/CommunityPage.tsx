@@ -246,7 +246,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
         >
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-            <div className="p-8 relative z-10 flex flex-col h-full">
+            <div className="p-4 sm:p-8 relative z-10 flex flex-col h-full">
                 {isMe && (
                     <div className="absolute top-4 right-4 animate-fade-in">
                         <span className="bg-kickr text-black text-[8px] font-black uppercase tracking-tight px-2 py-0.5 rounded-[3px]">
@@ -255,8 +255,8 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
                 )}
 
-                <div className="relative mb-8 self-center">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-4xl font-black text-white group-hover:text-kickr group-hover:scale-105 group-hover:border-kickr/30 transition-all duration-500 shadow-2xl relative z-10 overflow-hidden">
+                <div className="relative mb-4 sm:mb-8 self-center">
+                    <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-2xl sm:text-4xl font-black text-white group-hover:text-kickr group-hover:scale-105 group-hover:border-kickr/30 transition-all duration-500 shadow-2xl relative z-10 overflow-hidden">
                         {user.avatarUrl ? (
                             <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (
@@ -266,8 +266,8 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
                 </div>
 
-                <div className="text-center mb-8 flex-1">
-                    <h3 className="text-xl font-black text-white uppercase italic tracking-tighter group-hover:text-kickr transition-colors duration-300 mb-1">
+                <div className="text-center mb-4 sm:mb-8 flex-1">
+                    <h3 className="text-lg sm:text-xl font-black text-white uppercase italic tracking-tighter group-hover:text-kickr transition-colors duration-300 mb-1">
                         {user.name}
                     </h3>
                     <p className="text-[9px] text-[#445566] font-extrabold uppercase tracking-[0.2em]">
@@ -275,15 +275,15 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/5 bg-black/10 -mx-8 px-8 mt-auto group-hover:bg-kickr/[0.03] transition-colors">
-                    <div className="flex flex-col items-center py-4">
-                        <span className="text-lg font-black text-white italic tracking-tighter leading-none mb-1">
+                <div className="grid grid-cols-2 gap-4 pt-4 sm:pt-6 border-t border-white/5 bg-black/10 -mx-4 sm:-mx-8 px-4 sm:px-8 mt-auto group-hover:bg-kickr/[0.03] transition-colors">
+                    <div className="flex flex-col items-center py-2 sm:py-4">
+                        <span className="text-base sm:text-lg font-black text-white italic tracking-tighter leading-none mb-1">
                             {user.matchesCount || 0}
                         </span>
                         <span className="text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] leading-none">Logs</span>
                     </div>
-                    <div className="flex flex-col items-center py-4 border-l border-white/5">
-                        <span className="text-lg font-black text-white italic tracking-tighter leading-none mb-1">
+                    <div className="flex flex-col items-center py-2 sm:py-4 border-l border-white/5">
+                        <span className="text-base sm:text-lg font-black text-white italic tracking-tighter leading-none mb-1">
                             {user.followersCount || 0}
                         </span>
                         <span className="text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] leading-none">Network</span>

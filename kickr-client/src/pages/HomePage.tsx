@@ -120,11 +120,11 @@ export default function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-20 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-16">
 
           {/* Main Column: Social & Discover */}
-          <div className="col-span-1 lg:col-span-3 space-y-16 md:space-y-24">
+          <div className="col-span-1 lg:col-span-3 space-y-8 md:space-y-24">
 
             {/* 1. Feed Section (Personalized or Discovery) */}
             <section className="section-contrast">

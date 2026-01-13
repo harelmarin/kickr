@@ -33,13 +33,17 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 Array.from(images).map(img => {
                     if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
                     return new Promise((resolve, reject) => {
-                        const timeout = setTimeout(() => reject(new Error('Image load timeout')), 5000);
+                        const timeout = setTimeout(() => {
+                            console.error('Image load timeout:', img.src);
+                            reject(new Error('Image load timeout'));
+                        }, 5000);
                         img.onload = () => {
                             clearTimeout(timeout);
                             resolve(null);
                         };
                         img.onerror = () => {
                             clearTimeout(timeout);
+                            console.error('Image load error:', img.src);
                             reject(new Error('Image load error'));
                         };
                         // Force reload if not loaded

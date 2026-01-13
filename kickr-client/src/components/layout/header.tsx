@@ -33,13 +33,13 @@ export const Header = () => {
   }, [authModalMode, closeAuthModal]);
 
   return (
-    <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
-      <div className="max-w-7xl mx-auto flex items-center h-full px-6">
-        <Link to="/" className="flex items-center gap-3 mr-2 md:mr-10">
-          <div className="w-10 h-10 flex items-center justify-center">
+    <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-[52px] md:h-16 transition-all">
+      <div className="max-w-7xl mx-auto flex items-center h-full px-4 md:px-6 justify-between md:justify-start">
+        <Link to="/" className="flex items-center gap-2 md:gap-3 mr-0 md:mr-10 flex-shrink-0">
+          <div className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center">
             <img src="/favicon.png" alt="Kickr Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="text-lg font-black italic tracking-tighter uppercase leading-none text-white">
+          <span className="text-sm md:text-lg font-black italic tracking-tighter uppercase leading-none text-white">
             KICKR
           </span>
         </Link>
@@ -51,26 +51,28 @@ export const Header = () => {
           <NavSlot to="/community" label="Community" />
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-5">
+        <div className="flex items-center gap-2 md:gap-5 flex-shrink-0 ml-auto">
           <SearchBar />
 
           {isAuthenticated ? (
-            <div className="flex items-center gap-6 border-l border-white/10 pl-5">
-              <NavSlot to="/feed" label="Feed" />
+            <div className="flex items-center gap-3 md:gap-6 border-l border-white/10 pl-3 md:pl-5">
+              <div className="hidden md:block">
+                <NavSlot to="/feed" label="Feed" />
+              </div>
               <NotificationBell />
               <UserMenu />
             </div>
           ) : (
-            <div className="flex items-center gap-5 border-l border-white/10 pl-5 relative" ref={dropdownRef}>
+            <div className="flex items-center gap-2 md:gap-5 border-l border-white/10 pl-3 md:pl-5 relative" ref={dropdownRef}>
               <button
-                className="text-[#99aabb] hover:text-white font-bold uppercase tracking-widest text-[10px] transition-colors"
+                className="text-[#99aabb] hover:text-white font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-colors"
                 onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
               >
                 Sign In
               </button>
               <Link
                 to="/register"
-                className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-3 sm:px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95"
+                className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-3 py-1 md:py-1.5 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 whitespace-nowrap"
               >
                 Sign Up
               </Link>

@@ -18,6 +18,8 @@ public class ImageProxyController {
     @GetMapping("/api/proxy/image")
     public ResponseEntity<byte[]> proxyImage(@RequestParam String url) {
         try {
+            System.out.println("Proxying image: " + url);
+
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
             headers.set("User-Agent",
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
@@ -42,10 +44,21 @@ public class ImageProxyController {
                 mediaType = response.getHeaders().getContentType();
             }
 
+            // Add CORS headers
+            org.springframework.http.HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
+            responseHeaders.setContentType(mediaType);
+            responseHeaders.set("Access-Control-Allow-Origin", "*");
+            responseHeaders.set("Access-Control-Allow-Methods", "GET");
+            responseHeaders.set("Access-Control-Allow-Headers", "*");
+            responseHeaders.set("Cache-Control", "public, max-age=86400");
+
+            System.out.println("Successfully proxied image: " + url);
             return ResponseEntity.ok()
-                    .contentType(mediaType)
+                    .headers(responseHeaders)
                     .body(imageBytes);
         } catch (Exception e) {
+            System.err.println("Error proxying image: " + url + " - " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
     }
