@@ -1,4 +1,4 @@
-export { LoginDropdown, RegisterDropdown } from './authForm';
-export { Modal } from './modalAuth';
-export { ProtectedRoute } from './ProtectedRoute';
-export { UserMenu } from './UserMenu';
+export { LoginDropdown, RegisterDropdown } from './authform';
+export { Modal } from './modalauth';
+export { ProtectedRoute } from './protectedroute';
+export { UserMenu } from './usermenu';

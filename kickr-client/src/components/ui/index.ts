@@ -1,2 +1,2 @@
-export { ToastProvider } from './ToastProvider';
-export { SuccessModal } from './SuccessModal';
+export { ToastProvider } from './toastprovider';
+export { SuccessModal } from './successmodal';
