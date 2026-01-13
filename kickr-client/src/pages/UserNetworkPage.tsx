@@ -36,7 +36,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                             )}
                         </div>
                     </Link>
-                    <div>
+                    <div className="flex-1">
                         <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase italic display-font mb-1">
                             {type === 'followers' ? 'Followers of' : 'Following by'} <span className="text-kickr break-all">{profileUser.name}</span>
                         </h1>
@@ -91,20 +91,20 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center gap-8 pr-4">
+                                        <div className="flex items-center gap-4 sm:gap-8 pr-2 sm:pr-4">
                                             <div className="flex flex-col items-center">
-                                                <span className="text-lg font-black text-white italic leading-none">{user.matchesCount}</span>
-                                                <span className="text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Logs</span>
+                                                <span className="text-sm sm:text-lg font-black text-white italic leading-none">{user.matchesCount}</span>
+                                                <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Logs</span>
                                             </div>
                                             <div className="flex flex-col items-center">
-                                                <span className="text-lg font-black text-white italic leading-none">{user.followersCount}</span>
-                                                <span className="text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Fans</span>
+                                                <span className="text-sm sm:text-lg font-black text-white italic leading-none">{user.followersCount}</span>
+                                                <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Fans</span>
                                             </div>
-                                            <div className="flex flex-col items-center">
-                                                <span className="text-lg font-black text-white italic leading-none">{user.followingCount}</span>
-                                                <span className="text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Following</span>
+                                            <div className="flex flex-col items-center hidden sm:flex">
+                                                <span className="text-sm sm:text-lg font-black text-white italic leading-none">{user.followingCount}</span>
+                                                <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Following</span>
                                             </div>
-                                            <div className="ml-4 text-kickr opacity-0 group-hover:opacity-100 transition-opacity translate-x-4 group-hover:translate-x-0 transition-transform">
+                                            <div className="ml-2 sm:ml-4 text-kickr opacity-0 lg:group-hover:opacity-100 transition-opacity translate-x-4 lg:group-hover:translate-x-0 transition-transform hidden sm:block">
                                                 →
                                             </div>
                                         </div>

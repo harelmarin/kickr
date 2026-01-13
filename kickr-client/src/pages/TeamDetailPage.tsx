@@ -114,17 +114,17 @@ export const TeamDetailPage = () => {
           <img src={team.logoUrl} className="w-full h-full object-contain grayscale" alt="" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-end gap-12 relative z-10">
-          <div className="w-32 h-32 sm:w-48 sm:h-48 bg-[#1b2228] rounded-md shadow-2xl p-8 border border-white/10 relative group flex-shrink-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 relative z-10 text-center md:text-left">
+          <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-[#1b2228] rounded-md shadow-2xl p-4 sm:p-8 border border-white/10 relative group flex-shrink-0">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
-          <div className="flex-1 text-left mb-2">
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
-            <div className="flex flex-wrap items-center gap-6">
-              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.competition?.country || 'France'}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2c3440]"></span>
-              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.competition?.name || 'Club International'}</span>
+          <div className="flex-1 text-center md:text-left mb-2">
+            <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-6 text-balance">
+              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[10px] sm:text-xs">{team.competition?.country || 'France'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2c3440] hidden sm:block"></span>
+              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[10px] sm:text-xs">{team.competition?.name || 'Club International'}</span>
             </div>
           </div>
 
@@ -134,9 +134,9 @@ export const TeamDetailPage = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
-          <div className="lg:col-span-3 space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-16">
+          <div className="lg:col-span-3 space-y-12 md:space-y-16">
             <section>
               <div className="flex flex-col gap-6 mb-10 border-b border-white/5 pb-6">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">MATCHOGRAPHY</span>

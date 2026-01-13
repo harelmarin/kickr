@@ -39,9 +39,9 @@ export const UserDetailPage = () => {
         <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
             <div className="max-w-6xl mx-auto px-6">
 
-                <header className="mb-16">
-                    <div className="flex items-start justify-between mb-8">
-                        <div className="flex items-center gap-10">
+                <header className="mb-12 md:mb-16">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-8 mb-8">
+                        <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 text-center sm:text-left">
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
@@ -131,7 +131,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 px-4 sm:px-6 py-3 sm:py-4 bg-[#1b2228] border border-white/5 rounded-xl">
+                    <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 px-4 sm:px-6 py-4 bg-[#1b2228] border border-white/5 rounded-xl overflow-x-auto no-scrollbar">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}

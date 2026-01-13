@@ -5,10 +5,9 @@ interface SearchResultsProps {
     results: SearchResult[];
     isLoading: boolean;
     query: string;
-    onClose: () => void;
 }
 
-export const SearchResults = ({ results, isLoading, query, onClose }: SearchResultsProps) => {
+export const SearchResults = ({ results, isLoading, query }: SearchResultsProps) => {
     if (!query.trim()) {
         return null;
     }
@@ -71,8 +70,7 @@ export const SearchResults = ({ results, isLoading, query, onClose }: SearchResu
                         <Link
                             key={`${result.type}-${result.id}`}
                             to={getResultLink(result)}
-                            onClick={onClose}
-                            className="flex items-center gap-3 px-3 py-2.5 hover:bg-white/5 transition-colors group"
+                            className="flex items-center gap-3 px-3 py-3 sm:py-2.5 hover:bg-white/5 transition-colors group"
                         >
                             {/* Image or Icon */}
                             <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">

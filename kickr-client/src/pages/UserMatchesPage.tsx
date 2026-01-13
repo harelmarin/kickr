@@ -109,16 +109,16 @@ export const UserMatchesPage = () => {
                         </div>
                     </div>
 
-                    <div className="mt-12 flex flex-col md:flex-row items-start md:items-center justify-between border-y border-kickr/20 py-4 gap-8 section-contrast rounded-xl px-6">
-                        <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
-                            <div className="flex flex-col gap-1">
+                    <div className="mt-8 md:mt-12 flex flex-col items-stretch md:items-center justify-between border-y border-kickr/20 py-4 gap-6 section-contrast rounded-xl px-4 md:px-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12 w-full">
+                            <div className="flex flex-col gap-1.5">
                                 <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Team</span>
                                 <input
                                     type="text"
                                     placeholder="Search teams..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    className="bg-transparent text-[11px] font-bold text-white placeholder-[#445566] outline-none w-32"
+                                    className="bg-transparent text-[12px] md:text-[11px] font-bold text-white placeholder-[#445566] outline-none w-full"
                                 />
                             </div>
 

@@ -100,24 +100,20 @@ export const CompetitionDetailPage = () => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-40 h-40 bg-[#1b2228] rounded-md p-6 shadow-2xl border border-white/5"
+            className="w-32 h-32 md:w-40 md:h-40 bg-[#1b2228] rounded-md p-6 shadow-2xl border border-white/5"
           >
             <img src={competition.logoUrl} alt={competition.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </motion.div>
 
-          <div className="text-center md:text-left flex-1 text-balance">
-            <motion.h1
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font"
-            >
-              {competition.name}
-            </motion.h1>
-            <p className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[11px] mb-8">
-              Official {competition.country || 'International'} {isTournament ? 'Tournament' : 'League'} Page
-            </p>
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font">{competition.name}</h1>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6">
+              <p className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[11px]">
+                Official {competition.country || 'International'} {isTournament ? 'Tournament' : 'League'} Page
+              </p>
+            </div>
 
-            <div className="flex items-center justify-center md:justify-start gap-8">
+            <div className="flex items-center justify-center md:justify-start gap-8 mt-4 md:mt-8">
               <CompStat label="Teams" value={teamsData?.totalElements || 0} />
               <CompStat label="Format" value={competition.type || (isTournament ? 'CUP' : 'LEAGUE')} />
               <CompStat label="Season" value="2025/26" />
@@ -138,8 +134,8 @@ export const CompetitionDetailPage = () => {
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 py-16">
-        <div className={`grid grid-cols-1 ${!isTournament ? 'lg:grid-cols-12 gap-12' : 'max-w-4xl mx-auto'}`}>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 md:py-20">
+        <div className={`grid grid-cols-1 ${!isTournament ? 'lg:grid-cols-12 gap-10 md:gap-20' : 'max-w-4xl mx-auto'}`}>
 
           {!isTournament && (
             <div className="lg:col-span-8 space-y-8">

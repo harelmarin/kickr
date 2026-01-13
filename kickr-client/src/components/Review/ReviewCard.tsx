@@ -39,22 +39,22 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
         <div className={`flex gap-3 sm:gap-5 group/review ${review.isModerated ? 'opacity-60' : ''}`}>
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                className="relative w-24 h-16 sm:w-32 sm:h-20 bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-3 poster-hover-effect"
+                className="relative w-20 h-14 sm:w-32 sm:h-20 bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-1 sm:gap-3 px-1.5 sm:px-3 poster-hover-effect"
             >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
-                <img src={review.match.homeLogo} className="w-6 h-6 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
+                <img src={review.match.homeLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
                 <div className="flex items-center gap-1 sm:gap-2 z-10">
-                    <span className="text-sm sm:text-[16px] font-black text-white italic leading-none">{review.match.homeScore}</span>
-                    <div className="w-[1px] h-3 sm:h-4 bg-kickr/40"></div>
-                    <span className="text-sm sm:text-[16px] font-black text-white italic leading-none">{review.match.awayScore}</span>
+                    <span className="text-xs sm:text-[16px] font-black text-white italic leading-none">{review.match.homeScore}</span>
+                    <div className="w-[1px] h-2.5 sm:h-4 bg-kickr/40"></div>
+                    <span className="text-xs sm:text-[16px] font-black text-white italic leading-none">{review.match.awayScore}</span>
                 </div>
-                <img src={review.match.awayLogo} className="w-6 h-6 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
+                <img src={review.match.awayLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
             </Link>
 
             <div className="flex flex-col flex-1">
                 <div className="flex flex-col gap-1.5 mb-2">
                     <div className="flex items-center justify-between">
-                        <Link to={`/matches/${review.match.id}`} className="text-white text-sm font-black tracking-tight hover:text-kickr transition-colors uppercase leading-tight">
+                        <Link to={`/matches/${review.match.id}`} className="text-white text-[11px] sm:text-sm font-black tracking-tight hover:text-kickr transition-colors uppercase leading-tight">
                             {review.match.homeTeam} v {review.match.awayTeam}
                         </Link>
 
@@ -91,7 +91,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
 
                 {review.comment && review.comment.trim() !== "" && (
                     <Link to={`/reviews/${review.id}`} className="block hover:opacity-80 transition-opacity">
-                        <p className={`text-[13px] leading-relaxed italic line-clamp-2 pl-3 border-l-2 mb-3 ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'}`}>
+                        <p className={`text-[11px] sm:text-[13px] leading-relaxed italic line-clamp-2 pl-3 border-l-2 mb-3 ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'}`}>
                             {review.comment}
                         </p>
                     </Link>
@@ -111,7 +111,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                         </Link>
                     </div>
 
-                    <div className="flex items-center gap-3 opacity-0 group-hover/review:opacity-100 transition-opacity">
+                    <div className="flex items-center gap-3 opacity-100 lg:opacity-0 group-hover/review:opacity-100 transition-opacity">
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
@@ -140,6 +140,6 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                 targetType="MATCH_REVIEW"
                 targetId={review.id}
             />
-        </div>
+        </div >
     );
 };

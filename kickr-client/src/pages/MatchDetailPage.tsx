@@ -112,65 +112,65 @@ export const MatchDetailPage = () => {
           </div>
         </div>
 
-        <header className="mb-20">
-          <div className="aspect-[3/1] sm:aspect-[4/1] bg-[#14181c]/60 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/5 relative">
+        <header className="mb-12 md:mb-20">
+          <div className="min-h-[300px] md:aspect-[4/1] bg-[#14181c]/60 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/5 relative flex items-center">
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent"></div>
 
-            <div className="absolute inset-0 grid grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-8 md:px-16 py-6 gap-4 sm:gap-8 md:gap-12">
+            <div className="w-full grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center px-6 sm:px-8 md:px-16 py-12 md:py-6 gap-8 md:gap-12 relative z-10">
               <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 justify-self-start w-full overflow-hidden">
                 <Link to={`/teams/${match.homeTeamId}`} className="transition-all active:scale-95 duration-500 flex-shrink-0 group/logo">
-                  <div className="p-4 rounded-full bg-white/[0.02] border border-white/5 group-hover/logo:border-kickr/40 transition-all shadow-2xl">
-                    <img src={match.homeLogo} alt={match.homeTeam} className="w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 object-contain group-hover/logo:scale-110 transition-transform duration-500" />
+                  <div className="p-3 md:p-4 rounded-full bg-white/[0.02] border border-white/5 group-hover/logo:border-kickr/40 transition-all shadow-2xl">
+                    <img src={match.homeLogo} alt={match.homeTeam} className="w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 object-contain group-hover/logo:scale-110 transition-transform duration-500" />
                   </div>
                 </Link>
-                <div className="flex flex-col items-center md:items-start flex-1 min-w-0 pt-2 md:pt-4">
+                <div className="flex flex-col items-center md:items-start flex-1 min-w-0">
                   <Link to={`/teams/${match.homeTeamId}`} className="group/home max-w-full">
-                    <span className="text-white font-black uppercase italic tracking-[0.1em] text-sm sm:text-xl md:text-3xl lg:text-4xl leading-tight group-hover/home:text-kickr transition-colors block shadow-text text-center md:text-left break-words">
+                    <span className="text-white font-black uppercase italic tracking-[0.1em] text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight group-hover/home:text-kickr transition-colors block text-center md:text-left break-words">
                       {match.homeTeam}
                     </span>
                   </Link>
-                  <div className="flex items-center gap-2 mt-4">
-                    <span className="text-kickr text-[10px] font-black uppercase tracking-[0.4em] italic">Host Team</span>
+                  <div className="flex items-center gap-2 mt-2 md:mt-4 w-full">
+                    <span className="text-kickr text-[9px] font-black uppercase tracking-[0.4em] italic whitespace-nowrap">Host Team</span>
                     <div className="h-px flex-1 bg-gradient-to-r from-kickr/40 to-transparent"></div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center order-first md:order-none">
                 {isPast ? (
-                  <div className="flex flex-col items-center gap-4">
+                  <div className="flex flex-col items-center gap-2 md:gap-4">
                     <div className="flex items-center gap-6 md:gap-10">
                       <span className="text-4xl sm:text-6xl md:text-8xl font-black text-white italic leading-none tabular-nums drop-shadow-2xl">{match.homeScore}</span>
-                      <div className="w-[1px] md:w-[2px] h-12 md:h-20 bg-white/10 rounded-full"></div>
+                      <div className="w-[2px] h-10 md:h-20 bg-white/10 rounded-full"></div>
                       <span className="text-4xl sm:text-6xl md:text-8xl font-black text-white italic leading-none tabular-nums drop-shadow-2xl">{match.awayScore}</span>
                     </div>
                     <div className="px-4 py-1.5 rounded-full bg-kickr/10 border border-kickr/30">
-                      <span className="text-kickr text-[10px] font-black uppercase tracking-[0.3em]">Final result</span>
+                      <span className="text-kickr text-[9px] font-black uppercase tracking-[0.3em]">Final result</span>
                     </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-2">
-                    <div className="text-kickr font-black italic tracking-tighter text-4xl sm:text-7xl">VS</div>
-                    <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] mt-4">Upcoming</span>
+                    <div className="text-kickr font-black italic tracking-tighter text-5xl md:text-7xl">VS</div>
+                    <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] mt-2 md:mt-4">Upcoming</span>
                   </div>
                 )}
               </div>
 
               <div className="flex flex-col md:flex-row-reverse items-center gap-2 md:gap-6 justify-self-end w-full overflow-hidden">
                 <Link to={`/teams/${match.awayTeamId}`} className="transition-all active:scale-95 duration-500 flex-shrink-0 group/logo">
-                  <div className="p-4 rounded-full bg-white/[0.02] border border-white/5 group-hover/logo:border-kickr/40 transition-all shadow-2xl">
-                    <img src={match.awayLogo} alt={match.awayTeam} className="w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 object-contain group-hover/logo:scale-110 transition-transform duration-500" />
+                  <div className="p-3 md:p-4 rounded-full bg-white/[0.02] border border-white/5 group-hover/logo:border-kickr/40 transition-all shadow-2xl">
+                    <img src={match.awayLogo} alt={match.awayTeam} className="w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 object-contain group-hover/logo:scale-110 transition-transform duration-500" />
                   </div>
                 </Link>
-                <div className="flex flex-col items-center md:items-end flex-1 min-w-0 pt-2 md:pt-4">
+                <div className="flex flex-col items-center md:items-end flex-1 min-w-0">
                   <Link to={`/teams/${match.awayTeamId}`} className="group/away max-w-full">
-                    <span className="text-white font-black uppercase italic tracking-[0.1em] text-sm sm:text-xl md:text-3xl lg:text-4xl leading-tight group-hover/away:text-kickr transition-colors block shadow-text text-center md:text-right break-words">
+                    <span className="text-white font-black uppercase italic tracking-[0.1em] text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight group-hover/away:text-kickr transition-colors block text-center md:text-right break-words">
                       {match.awayTeam}
                     </span>
                   </Link>
-                  <div className="flex items-center gap-2 mt-4 w-full justify-end">
+                  <div className="flex items-center gap-2 mt-2 md:mt-4 w-full justify-end">
                     <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent"></div>
-                    <span className="text-white/40 text-[10px] font-black uppercase tracking-[0.4em] italic">Visitor</span>
+                    <span className="text-white/40 text-[9px] font-black uppercase tracking-[0.4em] italic whitespace-nowrap">Visitor</span>
                   </div>
                 </div>
               </div>

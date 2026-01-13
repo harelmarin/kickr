@@ -1,12 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSearch } from '../../hooks/useSearch';
 import { SearchResults } from './SearchResults';
+import { useLocation } from 'react-router-dom';
 
 export const SearchBar = () => {
     const [query, setQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const { results, isLoading } = useSearch(query);
+    const location = useLocation();
+
+    // Close search when route changes
+    useEffect(() => {
+        setIsOpen(false);
+        setQuery('');
+    }, [location.pathname]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -15,8 +23,8 @@ export const SearchBar = () => {
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside, true);
+        return () => document.removeEventListener('mousedown', handleClickOutside, true);
     }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,10 +32,6 @@ export const SearchBar = () => {
         setIsOpen(true);
     };
 
-    const handleClose = () => {
-        setIsOpen(false);
-        setQuery('');
-    };
 
     return (
         <div className="relative group" ref={containerRef}>
@@ -48,7 +52,7 @@ export const SearchBar = () => {
                     value={query}
                     onChange={handleInputChange}
                     onFocus={() => setIsOpen(true)}
-                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-2 w-20 focus:w-32 md:w-24 md:focus:w-48 transition-all duration-300"
+                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-2 w-20 sm:w-24 focus:w-[140px] sm:focus:w-48 transition-all duration-300"
                 />
             </div>
 
@@ -57,7 +61,6 @@ export const SearchBar = () => {
                     results={results}
                     isLoading={isLoading}
                     query={query}
-                    onClose={handleClose}
                 />
             )}
         </div>

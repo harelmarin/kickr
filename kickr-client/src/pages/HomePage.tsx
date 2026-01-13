@@ -39,7 +39,7 @@ export default function HomePage() {
       className="flex flex-col min-h-screen bg-[#0a0b0d]"
     >
       {/* Cinematic Hero */}
-      <section className="relative h-[650px] flex items-center overflow-hidden">
+      <section className="relative h-[450px] md:h-[650px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-transparent to-[#0a0b0d]/40"></div>
           <div className="absolute inset-0 bg-[#000] opacity-30"></div>
@@ -70,17 +70,26 @@ export default function HomePage() {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tighter uppercase display-font"
+              className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-4 md:mb-6 leading-none tracking-tighter uppercase display-font px-2"
             >
               Track football. <br />
               <span className="text-kickr">Rate matchdays.</span>
             </motion.h1>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-[#667788] text-[10px] md:text-xs uppercase tracking-[0.3em] font-black mb-8 md:mb-12 max-w-lg mx-auto leading-relaxed"
+            >
+              The premier platform for tactical analysis <br className="hidden sm:block" />
+              and professional match grading.
+            </motion.p>
 
             <motion.p
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl text-[#99aabb] mb-12 font-medium max-w-2xl mx-auto leading-relaxed"
+              className="text-base md:text-xl text-[#99aabb] mb-8 md:mb-12 font-medium max-w-2xl mx-auto leading-relaxed"
             >
               {user
                 ? "The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life."
@@ -111,14 +120,14 @@ export default function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-16">
 
           {/* Main Column: Social & Discover */}
-          <div className="lg:col-span-3 space-y-24">
+          <div className="col-span-1 lg:col-span-3 space-y-16 md:space-y-24">
 
             {/* 1. Feed Section (Personalized or Discovery) */}
-            <section className="section-contrast p-8 rounded-2xl">
+            <section className="section-contrast p-6 md:p-8 rounded-2xl">
               <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr">
                   {user ? "Your Network Activity" : "Live from the community"}
@@ -162,7 +171,7 @@ export default function HomePage() {
             </section>
 
             {/* 3. Popular Reviews from the Community */}
-            <section className="section-contrast p-8 rounded-2xl">
+            <section className="section-contrast p-6 md:p-8 rounded-2xl">
               <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white">Popular Logs from the Community</span>
                 <Link to="/community" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">View All →</Link>
@@ -253,7 +262,7 @@ export default function HomePage() {
           </div>
 
           {/* Right Sidebar */}
-          <div className="hidden lg:block space-y-16">
+          <div className="col-span-1 space-y-12 md:space-y-16">
             {user && (
               <section className="bg-[#1b2228] border border-white/5 rounded p-8">
                 <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-6">Your Recent Activity</h3>
@@ -304,7 +313,7 @@ export default function HomePage() {
             )}
 
             {/* Discover Tacticians Section */}
-            <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8">
+            <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-6 md:p-8">
               <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">Rising Tacticians</h3>
               <div className="space-y-6">
                 {communityScouts?.content && communityScouts.content.length > 0 ? (

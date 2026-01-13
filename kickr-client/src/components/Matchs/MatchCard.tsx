@@ -46,9 +46,9 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                         <div className="flex items-center gap-4 sm:gap-6 px-4">
                             {isFinished ? (
                                 <div className="flex items-center gap-3">
-                                    <span className="text-2xl sm:text-3xl font-black text-white italic leading-none drop-shadow-lg">{match.homeScore}</span>
-                                    <div className="w-[2px] h-8 bg-kickr/60 rounded-full"></div>
-                                    <span className="text-2xl sm:text-3xl font-black text-white italic leading-none drop-shadow-lg">{match.awayScore}</span>
+                                    <span className="text-xl sm:text-3xl font-black text-white italic leading-none drop-shadow-lg">{match.homeScore}</span>
+                                    <div className="w-[1.5px] sm:w-[2px] h-6 sm:h-8 bg-kickr/40 rounded-full"></div>
+                                    <span className="text-xl sm:text-3xl font-black text-white italic leading-none drop-shadow-lg">{match.awayScore}</span>
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center">
@@ -97,25 +97,25 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
         <Link to={`/matches/${match.id}`} className={`group block ${className}`}>
             <motion.div
                 whileHover={{ x: 4 }}
-                className={`bg-[#14181c] border border-white/5 rounded-xl transition-all hover:bg-white/[0.03] hover:border-white/10 flex items-center ${isCompact ? 'p-2 py-3' : 'p-4'
+                className={`bg-[#14181c] border border-white/5 rounded-xl transition-all hover:bg-white/[0.03] hover:border-white/10 flex items-center ${isCompact ? 'p-2 py-3' : 'p-3 sm:p-4'
                     }`}
             >
-                <div className={`flex flex-col items-start flex-shrink-0 ${isCompact ? 'w-[45px]' : 'w-[65px]'}`}>
-                    <span className={`${isCompact ? 'text-[9px]' : 'text-[10px]'} font-black text-kickr uppercase tracking-tighter truncate w-full`}>
+                <div className={`flex flex-col items-start flex-shrink-0 ${isCompact ? 'w-[45px]' : 'w-[55px] sm:w-[65px]'}`}>
+                    <span className={`${isCompact ? 'text-[9px]' : 'text-[9px] sm:text-[10px]'} font-black text-kickr uppercase tracking-tighter truncate w-full`}>
                         {isFinished ? 'FT' : timeStr}
                     </span>
-                    <span className="text-[8px] font-bold text-[#445566] uppercase tracking-[0.1em] leading-none mt-1">
+                    <span className="text-[7.5px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.1em] leading-none mt-1">
                         {dateStr}
                     </span>
                 </div>
 
                 <div className={`flex-1 flex items-center min-w-0 ${isCompact ? 'gap-1' : 'gap-4 px-2'}`}>
                     <div className="flex items-center justify-end gap-2 flex-1 min-w-0">
-                        <span className={`text-[10px] font-black text-white uppercase tracking-tight text-right truncate ${isCompact ? 'hidden xl:block' : 'hidden md:block'
+                        <span className={`text-[8.5px] sm:text-[9.5px] font-black text-white uppercase tracking-tight text-right truncate ${isCompact ? 'hidden sm:block' : 'hidden xs:block sm:block'
                             }`}>
                             {match.homeTeam}
                         </span>
-                        <div className={`${isCompact ? 'w-6 h-6' : 'w-8 h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
+                        <div className={`${isCompact ? 'w-6 h-6' : 'w-7 h-7 sm:w-8 sm:h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
                             <img src={match.homeLogo} alt="" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform" />
                         </div>
                     </div>
@@ -137,10 +137,10 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     </div>
 
                     <div className="flex items-center justify-start gap-2 flex-1 min-w-0">
-                        <div className={`${isCompact ? 'w-6 h-6' : 'w-8 h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
+                        <div className={`${isCompact ? 'w-6 h-6' : 'w-7 h-7 sm:w-8 sm:h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
                             <img src={match.awayLogo} alt="" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform" />
                         </div>
-                        <span className={`text-[10px] font-black text-white uppercase tracking-tight text-left truncate ${isCompact ? 'hidden xl:block' : 'hidden md:block'
+                        <span className={`text-[8.5px] sm:text-[9.5px] font-black text-white uppercase tracking-tight text-left truncate ${isCompact ? 'hidden sm:block' : 'hidden xs:block sm:block'
                             }`}>
                             {match.awayTeam}
                         </span>

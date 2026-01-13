@@ -69,12 +69,12 @@ export const LeagueStandings: React.FC<LeagueStandingsProps> = ({ standingsJson 
                     <tr className="bg-white/5">
                         <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em]">Rank</th>
                         <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em]">Squad</th>
-                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center">P</th>
-                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center">W</th>
-                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center">D</th>
-                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center">L</th>
-                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center">GD</th>
-                        <th className="py-4 px-6 text-[10px] font-black text-white uppercase tracking-[0.2em] text-center bg-kickr/20 border-x border-white/5">PTS</th>
+                        <th className="py-4 px-4 md:px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center">P</th>
+                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center hidden sm:table-cell">W</th>
+                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center hidden sm:table-cell">D</th>
+                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center hidden sm:table-cell">L</th>
+                        <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center hidden sm:table-cell">GD</th>
+                        <th className="py-4 px-4 md:px-6 text-[10px] font-black text-white uppercase tracking-[0.2em] text-center bg-kickr/20 border-x border-white/5">PTS</th>
                         <th className="py-4 px-6 text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] text-center hidden md:table-cell">Form</th>
                     </tr>
                 </thead>
@@ -98,12 +98,12 @@ export const LeagueStandings: React.FC<LeagueStandingsProps> = ({ standingsJson 
                                     <span className="text-[11px] font-bold text-white uppercase tracking-tight">{entry.team.name}</span>
                                 </Link>
                             </td>
-                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa]">{entry.all.played}</td>
-                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa]">{entry.all.win}</td>
-                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa]">{entry.all.draw}</td>
-                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa]">{entry.all.lose}</td>
-                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa]">{entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}</td>
-                            <td className="py-4 px-6 text-center text-sm font-black text-white italic bg-kickr/5 border-x border-white/5">{entry.points}</td>
+                            <td className="py-4 px-4 md:px-6 text-center text-xs font-bold text-[#8899aa]">{entry.all.played}</td>
+                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa] hidden sm:table-cell">{entry.all.win}</td>
+                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa] hidden sm:table-cell">{entry.all.draw}</td>
+                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa] hidden sm:table-cell">{entry.all.lose}</td>
+                            <td className="py-4 px-6 text-center text-xs font-bold text-[#8899aa] hidden sm:table-cell">{entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}</td>
+                            <td className="py-4 px-4 md:px-6 text-center text-sm font-black text-white italic bg-kickr/5 border-x border-white/5">{entry.points}</td>
                             <td className="py-4 px-6 text-center hidden md:table-cell">
                                 <div className="flex items-center justify-center gap-1">
                                     {entry.form?.split('').map((char, i) => (

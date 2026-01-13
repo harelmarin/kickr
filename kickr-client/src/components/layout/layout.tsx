@@ -17,7 +17,7 @@ export const Layout = ({ children }: RootLayoutProps) => {
       <Header />
       <div className="flex-1 animate-fade-in">{children}</div>
       {!shouldHideFooter && <Footer />}
-      <MobileBottomNav />
+      {!shouldHideFooter && <MobileBottomNav />}
     </div>
   );
 };

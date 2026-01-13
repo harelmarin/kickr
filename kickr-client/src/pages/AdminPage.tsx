@@ -30,12 +30,12 @@ export default function AdminPage() {
                     <p className="text-[10px] text-kickr uppercase tracking-[0.2em] font-black">System Terminal · Authorization Level 4</p>
                 </div>
 
-                <div className="flex p-1 bg-white/5 rounded-lg">
+                <div className="flex p-1 bg-white/5 rounded-lg w-full md:w-auto overflow-x-auto no-scrollbar">
                     {(['dashboard', 'users', 'reports'] as Tab[]).map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-6 py-2 rounded text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab
+                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
                                 ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
                                 : 'text-[#667788] hover:text-white'
                                 }`}
