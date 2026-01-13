@@ -79,8 +79,8 @@ const DashboardTab = () => {
         <div className="space-y-10">
             {/* Stats Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard label="Total Users" value={stats.totalUsers} trend="+12%" />
-                <StatCard label="Total Reviews" value={stats.totalReviews} trend="+5%" />
+                <StatCard label="Total Users" value={stats.totalUsers} trend={stats.userGrowthTrend} />
+                <StatCard label="Total Reviews" value={stats.totalReviews} trend={stats.reviewVolumeTrend} />
                 <StatCard label="Resolved Reports" value={stats.totalReports - stats.pendingReports} />
                 <StatCard label="Pending Reports" value={stats.pendingReports} warning={stats.pendingReports > 0} />
             </div>

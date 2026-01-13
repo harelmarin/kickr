@@ -47,4 +47,6 @@ public interface UserMatchRepository extends JpaRepository<UserMatch, UUID> {
 
     @Query(value = "SELECT CAST(watched_at AS DATE) as date, COUNT(*) as count FROM user_matches WHERE watched_at >= :startDate GROUP BY CAST(watched_at AS DATE) ORDER BY date", nativeQuery = true)
     List<Object[]> countReviewsByDay(@Param("startDate") java.time.LocalDateTime startDate);
+
+    long countByWatchedAtBetween(java.time.LocalDateTime start, java.time.LocalDateTime end);
 }

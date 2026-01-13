@@ -10,6 +10,7 @@ import com.kickr_server.usermatch.UserMatchRepository;
 import com.kickr_server.utils.DateTimeConverter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -289,8 +290,44 @@ public class MatchService {
                 if (responseNode != null && responseNode.isArray() && responseNode.size() > 0) {
                         Competition comp = competitionRepository.findByExternalId(leagueId)
                                         .orElseThrow(() -> new RuntimeException("Competition not found"));
-                        comp.setStandingsJson(responseNode.get(0).get("league").get("standings").toString());
+                        JsonNode standingsNode = responseNode.get(0).get("league").get("standings");
+                        comp.setStandingsJson(standingsNode.toString());
                         competitionRepository.save(comp);
+
+                        // Proactively create teams from standings if they don't exist
+                        try {
+                                if (standingsNode.isArray()) {
+                                        JsonNode firstGroup = standingsNode.get(0);
+                                        if (firstGroup.isArray()) {
+                                                for (JsonNode entry : firstGroup) {
+                                                        processStandingEntry(entry, comp);
+                                                }
+                                        }
+                                }
+                        } catch (Exception e) {
+                                System.err.println("⚠️ Error creating teams from standings: " + e.getMessage());
+                        }
+                }
+        }
+
+        private void processStandingEntry(JsonNode entry, Competition competition) {
+                JsonNode teamNode = entry.get("team");
+                if (teamNode == null)
+                        return;
+
+                Integer extId = teamNode.get("id").asInt();
+                String name = teamNode.get("name").asText();
+                String logo = teamNode.get("logo").asText();
+
+                if (!teamRepository.findByExternalId(extId).isPresent()) {
+                        Team team = Team.builder()
+                                        .name(name)
+                                        .externalId(extId)
+                                        .logoUrl(logo)
+                                        .competition(competition)
+                                        .build();
+                        teamRepository.save(team);
+                        System.out.println("🆕 Created team from standings: " + name + " (" + extId + ")");
                 }
         }
 
@@ -392,7 +429,31 @@ public class MatchService {
                 if (teamOpt.isEmpty()) {
                         return List.of();
                 }
-                Team team = teamOpt.get();
+                return getMatchesForTeam(teamOpt.get());
+        }
+
+        public List<MatchDto> getAllMatchesByTeamIdOrExternalId(String idStr) {
+                Optional<Team> teamOpt;
+                try {
+                        UUID id = UUID.fromString(idStr);
+                        teamOpt = teamRepository.findById(id);
+                } catch (IllegalArgumentException e) {
+                        try {
+                                Integer externalId = Integer.parseInt(idStr);
+                                teamOpt = teamRepository.findByExternalId(externalId);
+                        } catch (NumberFormatException nfe) {
+                                return List.of();
+                        }
+                }
+
+                if (teamOpt.isEmpty()) {
+                        return List.of();
+                }
+
+                return getMatchesForTeam(teamOpt.get());
+        }
+
+        private List<MatchDto> getMatchesForTeam(Team team) {
                 List<Match> matchEntities = matchRepository.findByHomeTeamOrAwayTeamOrderByMatchDateDesc(team, team);
 
                 List<UUID> matchIds = matchEntities.stream().map(Match::getId).toList();
@@ -524,7 +585,9 @@ public class MatchService {
                         MatchDetail detail = matchDetailRepository.findByMatchId(match.getId())
                                         .orElseGet(() -> MatchDetail.builder().match(match).build());
 
-                        detail.setLineups(fixtureData.get("lineups"));
+                        JsonNode lineups = fixtureData.get("lineups");
+                        applyTacticalOverrides(lineups, match.getMatchDate());
+                        detail.setLineups(lineups);
                         detail.setStats(fixtureData.get("statistics"));
                         detail.setEvents(fixtureData.get("events"));
 
@@ -614,7 +677,9 @@ public class MatchService {
                                                                         .orElseGet(() -> MatchDetail.builder()
                                                                                         .match(match).build());
 
-                                                        detail.setLineups(fixtureData.get("lineups"));
+                                                        JsonNode lineups = fixtureData.get("lineups");
+                                                        applyTacticalOverrides(lineups, match.getMatchDate());
+                                                        detail.setLineups(lineups);
                                                         detail.setStats(fixtureData.get("statistics"));
                                                         detail.setEvents(fixtureData.get("events"));
 
@@ -741,6 +806,31 @@ public class MatchService {
                 } catch (Exception e) {
                         System.err.println("❌ Backfill failed: " + e.getMessage());
                         throw e;
+                }
+        }
+
+        /**
+         * Applique des corrections manuelles sur les données tactiques reçues de l'API.
+         * Utile en cas de changement d'entraîneur récent ou d'erreurs de l'API.
+         */
+        private void applyTacticalOverrides(JsonNode lineups, LocalDateTime matchDate) {
+                if (lineups == null || !lineups.isArray())
+                        return;
+
+                // Appointment of Liam Rosenior: January 6, 2026
+                LocalDateTime appointmentDate = LocalDateTime.of(2026, 1, 6, 0, 0);
+
+                for (JsonNode teamLineup : lineups) {
+                        JsonNode team = teamLineup.get("team");
+                        if (team != null && team.has("name") && team.get("name").asText().equalsIgnoreCase("Chelsea")) {
+                                // Only apply override if the match is after the appointment
+                                if (matchDate != null && matchDate.isAfter(appointmentDate)) {
+                                        JsonNode coach = teamLineup.get("coach");
+                                        if (coach != null && coach.isObject()) {
+                                                ((ObjectNode) coach).put("name", "Liam Rosenior");
+                                        }
+                                }
+                        }
                 }
         }
 }

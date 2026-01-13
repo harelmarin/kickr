@@ -40,9 +40,9 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Récupérer une équipe par ID")
-    public TeamDto getTeamById(@PathVariable UUID id) {
-        Team team = teamService.getTeamById(id);
+    @Operation(summary = "Récupérer une équipe par ID (UUID ou ID externe)")
+    public TeamDto getTeamById(@PathVariable String id) {
+        Team team = teamService.getTeamByIdOrExternalId(id);
         return TeamDto.fromEntity(team);
     }
 

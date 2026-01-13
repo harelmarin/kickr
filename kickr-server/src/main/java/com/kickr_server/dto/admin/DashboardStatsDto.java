@@ -17,6 +17,8 @@ public class DashboardStatsDto {
     private long totalReviews;
     private long totalReports;
     private long pendingReports;
+    private String userGrowthTrend;
+    private String reviewVolumeTrend;
     private List<DailyStatDto> userGrowth;
     private List<DailyStatDto> reviewVolume;
 

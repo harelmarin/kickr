@@ -10,6 +10,8 @@ export interface DashboardStats {
     totalReviews: number;
     totalReports: number;
     pendingReports: number;
+    userGrowthTrend: string;
+    reviewVolumeTrend: string;
     userGrowth: DailyStat[];
     reviewVolume: DailyStat[];
 }

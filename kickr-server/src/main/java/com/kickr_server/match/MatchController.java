@@ -82,8 +82,8 @@ public class MatchController {
         })
         @GetMapping("/team/{teamId}")
         public List<MatchDto> getAllMatchesByTeam(
-                        @Parameter(description = "Team ID") @PathVariable UUID teamId) {
-                return matchService.getAllMatchesByTeamId(teamId);
+                        @Parameter(description = "Team ID (UUID or externalId)") @PathVariable String teamId) {
+                return matchService.getAllMatchesByTeamIdOrExternalId(teamId);
         }
 
         @Operation(summary = "Retrieve a specific match by its external ID (fixture ID)", tags = {

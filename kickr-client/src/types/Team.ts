@@ -3,5 +3,11 @@ export interface Team {
   name: string;
   logoUrl: string;
   country?: string;
-  competitionId: string;
+  competitionId?: string;
+  competition?: {
+    id: string;
+    name: string;
+    logoUrl: string;
+    country?: string;
+  };
 }

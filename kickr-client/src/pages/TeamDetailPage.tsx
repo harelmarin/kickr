@@ -43,7 +43,7 @@ export const TeamDetailPage = () => {
   }, [matches]);
 
   const stats = useMemo(() => {
-    if (!matches || matches.length === 0) return {
+    if (!matches || matches.length === 0 || !team) return {
       winRate: '0%', drawRate: '0%', lossRate: '0%',
       wins: 0, draws: 0, losses: 0,
       avgScored: '0.0', avgConceded: '0.0',
@@ -60,7 +60,7 @@ export const TeamDetailPage = () => {
     let cleanSheets = 0;
 
     finished.forEach(m => {
-      const isHome = m.homeTeamId === id;
+      const isHome = m.homeTeamId === team.id;
       const hS = m.homeScore!;
       const aS = m.awayScore!;
 
@@ -79,7 +79,7 @@ export const TeamDetailPage = () => {
 
     const total = finished.length || 1;
     const form = finished.slice(0, 5).map(m => {
-      const isHome = m.homeTeamId === id;
+      const isHome = m.homeTeamId === team.id;
       const teamScore = isHome ? m.homeScore! : m.awayScore!;
       const oppScore = isHome ? m.awayScore! : m.homeScore!;
       if (teamScore > oppScore) return 'W';
@@ -103,7 +103,7 @@ export const TeamDetailPage = () => {
       cleanSheets,
       form
     };
-  }, [matches, id]);
+  }, [matches, team?.id]);
 
   if (isLoadingTeam || !team) return null;
 
@@ -122,9 +122,9 @@ export const TeamDetailPage = () => {
           <div className="flex-1 text-left mb-2">
             <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
             <div className="flex flex-wrap items-center gap-6">
-              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.country}</span>
+              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.competition?.country || 'France'}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#2c3440]"></span>
-              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.competitionId ? 'Division 1' : 'Club International'}</span>
+              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-xs">{team.competition?.name || 'Club International'}</span>
             </div>
           </div>
 

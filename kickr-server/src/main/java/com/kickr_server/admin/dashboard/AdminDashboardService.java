@@ -39,7 +39,20 @@ public class AdminDashboardService {
                                 log.warn("Reporting system might not be fully initialized: {}", e.getMessage());
                         }
 
-                        LocalDateTime thirtyDaysAgo = LocalDate.now().minusDays(30).atStartOfDay();
+                        LocalDateTime now = LocalDateTime.now();
+                        LocalDateTime sevenDaysAgo = now.minusDays(7);
+                        LocalDateTime fourteenDaysAgo = now.minusDays(14);
+                        LocalDateTime thirtyDaysAgo = now.minusDays(30);
+
+                        // Calculate trends (weekly growth)
+                        long newUsersThisWeek = userRepository.countByCreatedAtBetween(sevenDaysAgo, now);
+                        long newUsersLastWeek = userRepository.countByCreatedAtBetween(fourteenDaysAgo, sevenDaysAgo);
+                        String userTrend = calculateWeeklyTrend(newUsersThisWeek, newUsersLastWeek);
+
+                        long newReviewsThisWeek = userMatchRepository.countByWatchedAtBetween(sevenDaysAgo, now);
+                        long newReviewsLastWeek = userMatchRepository.countByWatchedAtBetween(fourteenDaysAgo,
+                                        sevenDaysAgo);
+                        String reviewTrend = calculateWeeklyTrend(newReviewsThisWeek, newReviewsLastWeek);
 
                         List<DashboardStatsDto.DailyStatDto> userGrowth = mapDailyStats(
                                         userRepository.countUsersByDay(thirtyDaysAgo));
@@ -51,6 +64,8 @@ public class AdminDashboardService {
                                         .totalReviews(totalReviews)
                                         .totalReports(totalReports)
                                         .pendingReports(pendingReports)
+                                        .userGrowthTrend(userTrend)
+                                        .reviewVolumeTrend(reviewTrend)
                                         .userGrowth(userGrowth)
                                         .reviewVolume(reviewVolume)
                                         .build();
@@ -58,6 +73,14 @@ public class AdminDashboardService {
                         log.error("Fatal error during dashboard stats generation: ", e);
                         throw e;
                 }
+        }
+
+        private String calculateWeeklyTrend(long current, long previous) {
+                if (previous == 0) {
+                        return current > 0 ? "+100%" : "0%";
+                }
+                double diff = ((double) (current - previous) / previous) * 100;
+                return String.format("%s%.1f%%", diff >= 0 ? "+" : "", diff);
         }
 
         private List<DashboardStatsDto.DailyStatDto> mapDailyStats(List<Object[]> results) {
