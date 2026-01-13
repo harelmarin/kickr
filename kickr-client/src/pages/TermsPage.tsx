@@ -21,8 +21,8 @@ export const TermsPage: FC = () => {
                             <div className="space-y-4">
                                 <h3 className="text-xs font-black text-kickr uppercase tracking-widest">Platform Editor</h3>
                                 <ul className="list-none text-[#8899aa] text-sm space-y-1">
-                                    <li>Agency Lead: <span className="text-white">[VOTRE NOM]</span></li>
-                                    <li>Secure Intel: <span className="text-white">[VOTRE EMAIL]</span></li>
+                                    <li>Agency Lead: <span className="text-white">Kickr</span></li>
+                                    <li>Secure Intel: <span className="text-white">contact@kickrhq.com</span></li>
                                     <li>Status: Non-profit Research Project</li>
                                 </ul>
                             </div>

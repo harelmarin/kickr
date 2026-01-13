@@ -32,10 +32,10 @@ public class DataSeeder {
     @org.springframework.beans.factory.annotation.Value("${admin.name:Marin}")
     private String adminName;
 
-    @org.springframework.beans.factory.annotation.Value("${admin.email:admin@kickr.com}")
+    @org.springframework.beans.factory.annotation.Value("${admin.email:yubi2a1812@gmail.com}")
     private String adminEmail;
 
-    @org.springframework.beans.factory.annotation.Value("${admin.password:Marin1812}")
+    @org.springframework.beans.factory.annotation.Value("${admin.password:Marinpierre1812!}")
     private String adminPassword;
 
     @Bean

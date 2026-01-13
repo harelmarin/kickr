@@ -9,7 +9,7 @@ server:
 
 kickr:
   mail:
-    from: ${FROM_EMAIL:noreply@kickr.com}
+    from: ${FROM_EMAIL:contact@kickrhq.com}
 
 app:
   frontend:

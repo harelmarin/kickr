@@ -19,7 +19,7 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Value("${kickr.mail.from:noreply@kickr.com}")
+    @Value("${kickr.mail.from:contact@kickrhq.com}")
     private String fromEmail;
 
     /**

@@ -32,10 +32,10 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
             await Promise.all(
                 Array.from(images).map(img => {
                     if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
-                    return new Promise((resolve, reject) => {
+                    return new Promise((resolve) => {
                         const timeout = setTimeout(() => {
-                            console.error('Image load timeout:', img.src);
-                            reject(new Error('Image load timeout'));
+                            console.warn('Image load timeout (skipping):', img.src);
+                            resolve(null); // Resolve anyway to continue
                         }, 5000);
                         img.onload = () => {
                             clearTimeout(timeout);
@@ -43,14 +43,22 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                         };
                         img.onerror = () => {
                             clearTimeout(timeout);
-                            console.error('Image load error:', img.src);
-                            reject(new Error('Image load error'));
+                            console.warn('Image load error (skipping):', img.src);
+                            // Set a transparent pixel or empty to avoid broken icon and capture failure
+                            img.style.opacity = '0';
+                            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+                            resolve(null); // Resolve anyway to continue
                         };
                         // Force reload if not loaded
                         if (!img.complete || img.naturalHeight === 0) {
-                            const src = img.src;
-                            img.src = '';
-                            img.src = src;
+                            try {
+                                const src = img.src;
+                                img.src = '';
+                                img.src = src;
+                            } catch (e) {
+                                console.warn('Error reloading image:', e);
+                                resolve(null);
+                            }
                         }
                     });
                 })

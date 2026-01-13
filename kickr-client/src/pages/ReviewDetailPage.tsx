@@ -83,50 +83,50 @@ export const ReviewDetailPage: FC = () => {
     }
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-20 pb-20">
-            <div className="max-w-5xl mx-auto px-6">
-                <header className="mb-8">
+        <main className="min-h-screen bg-[#0a0b0d] pt-16 sm:pt-20 pb-20">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
+                <header className="mb-6 sm:mb-8">
                     <Link to={`/matches/${review.match.id}`} className="block group">
-                        <div className="aspect-[3/1] sm:aspect-[4.5/1] bg-[#1b2228] rounded-2xl overflow-hidden relative border border-white/5 transition-all duration-500 poster-hover-effect">
+                        <div className="aspect-[2.5/1] sm:aspect-[4.5/1] bg-[#1b2228] rounded-xl sm:rounded-2xl overflow-hidden relative border border-white/5 transition-all duration-500 poster-hover-effect">
                             <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
 
-                            <div className="absolute inset-0 flex items-center justify-between px-8 sm:px-16 py-4">
-                                <div className="flex items-center gap-6 flex-1">
-                                    <img src={review.match.homeLogo} alt="" className="w-12 h-12 sm:w-16 sm:h-16 object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500" />
+                            <div className="absolute inset-0 flex items-center justify-between px-4 sm:px-16 py-4">
+                                <div className="flex items-center gap-3 sm:gap-6 flex-1">
+                                    <img src={review.match.homeLogo} alt="" className="w-8 h-8 sm:w-16 sm:h-16 object-contain filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" />
                                     <div className="hidden md:flex flex-col">
                                         <span className="text-white font-black uppercase italic tracking-tighter text-2xl leading-none">{review.match.homeTeam}</span>
                                         <span className="text-[#445566] text-[10px] font-bold uppercase tracking-[0.2em] mt-1 italic">Host Team</span>
                                     </div>
                                 </div>
 
-                                <div className="flex items-center gap-8 sm:gap-12">
-                                    <span className="text-4xl sm:text-6xl font-black text-white italic leading-none">{review.match.homeScore}</span>
-                                    <div className="w-[2px] h-12 bg-kickr/60 rounded-full"></div>
-                                    <span className="text-4xl sm:text-6xl font-black text-white italic leading-none">{review.match.awayScore}</span>
+                                <div className="flex items-center gap-4 sm:gap-12">
+                                    <span className="text-3xl sm:text-6xl font-black text-white italic leading-none">{review.match.homeScore}</span>
+                                    <div className="w-[1px] sm:w-[2px] h-8 sm:h-12 bg-kickr/40 rounded-full"></div>
+                                    <span className="text-3xl sm:text-6xl font-black text-white italic leading-none">{review.match.awayScore}</span>
                                 </div>
 
-                                <div className="flex items-center gap-6 flex-1 justify-end">
+                                <div className="flex items-center gap-3 sm:gap-6 flex-1 justify-end">
                                     <div className="hidden md:flex flex-col items-end text-right">
                                         <span className="text-white font-black uppercase italic tracking-tighter text-2xl leading-none">{review.match.awayTeam}</span>
                                         <span className="text-[#445566] text-[10px] font-bold uppercase tracking-[0.2em] mt-1 italic">Visitor</span>
                                     </div>
-                                    <img src={review.match.awayLogo} alt="" className="w-12 h-12 sm:w-16 sm:h-16 object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500" />
+                                    <img src={review.match.awayLogo} alt="" className="w-8 h-8 sm:w-16 sm:h-16 object-contain filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" />
                                 </div>
                             </div>
                         </div>
                     </Link>
 
-                    <Link to={`/matches/${review.match.id}`} className="mt-6 px-2 flex items-center justify-between hover:opacity-70 transition-opacity">
-                        <div className="flex items-center gap-4">
-                            <span className="text-[#667788] text-[10px] font-black uppercase tracking-[0.3em]">{review.match.competition}</span>
+                    <Link to={`/matches/${review.match.id}`} className="mt-4 px-1 flex items-center justify-between hover:opacity-70 transition-opacity">
+                        <div className="flex items-center gap-3">
+                            <span className="text-[#667788] text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em]">{review.match.competition}</span>
                             <span className="text-white/10 text-[8px]">●</span>
-                            <span className="text-[#445566] text-[10px] font-black uppercase tracking-[0.3em]">{new Date(review.match.matchDate).getFullYear()}</span>
+                            <span className="text-[#445566] text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em]">{new Date(review.match.matchDate).getFullYear()}</span>
                         </div>
-                        <div className="text-[10px] font-black text-kickr/40 uppercase tracking-[0.2em] group-hover:text-kickr transition-colors">Match Details →</div>
+                        <div className="text-[9px] sm:text-[10px] font-black text-kickr/40 uppercase tracking-[0.2em] group-hover:text-kickr transition-colors">Details →</div>
                     </Link>
                 </header>
                 <div className="max-w-3xl mx-auto">
-                    <div className="space-y-12">
+                    <div className="space-y-8 sm:space-y-12">
                         <header className="border-b border-white/10 pb-6 mb-8">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
@@ -137,26 +137,26 @@ export const ReviewDetailPage: FC = () => {
                                             review.user.name[0].toUpperCase()
                                         )}
                                     </Link>
-                                    <p className="text-[#99aabb] text-xs font-medium uppercase tracking-widest">
-                                        Review by <Link to={`/user/${review.user.id}`} className="text-white font-black hover:text-kickr transition-colors">{review.user.name}</Link>
+                                    <p className="text-[#99aabb] text-[11px] sm:text-xs font-medium uppercase tracking-widest">
+                                        By <Link to={`/user/${review.user.id}`} className="text-white font-black hover:text-kickr transition-colors">{review.user.name}</Link>
                                     </p>
                                 </div>
                                 <Link
                                     to={`/user/${review.user.id}/diary`}
-                                    className="text-[10px] font-black text-[#445566] uppercase tracking-[0.2em] hover:text-white transition-colors border border-white/10 px-4 py-2 rounded-lg"
+                                    className="text-[9px] sm:text-[10px] font-black text-[#445566] uppercase tracking-[0.2em] hover:text-white transition-colors border border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg"
                                 >
-                                    View Diary →
+                                    Diary →
                                 </Link>
                             </div>
 
-                            <div className="flex items-center gap-6 mb-8">
+                            <div className="grid grid-cols-2 sm:flex sm:items-center gap-6 sm:gap-8 mb-8">
                                 <div className="flex flex-col">
-                                    <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Rating</span>
-                                    <div className="flex gap-1">
+                                    <span className="text-[8px] sm:text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Rating</span>
+                                    <div className="flex gap-0.5 sm:gap-1">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <span
                                                 key={star}
-                                                className={`text-xl ${star <= Math.round(review.note) ? 'text-[#4466ff]' : 'text-white/5'}`}
+                                                className={`text-base sm:text-xl ${star <= Math.round(review.note) ? 'text-[#4466ff]' : 'text-white/5'}`}
                                             >
                                                 ★
                                             </span>
@@ -165,10 +165,10 @@ export const ReviewDetailPage: FC = () => {
                                 </div>
 
                                 <div className="flex flex-col">
-                                    <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Date Logged</span>
+                                    <span className="text-[8px] sm:text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Date Logged</span>
                                     <div className="flex items-center gap-2">
-                                        <span className="text-white font-bold text-sm tracking-tight">
-                                            {new Date(review.watchedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
+                                        <span className="text-white font-bold text-xs sm:text-sm tracking-tight">
+                                            {new Date(review.watchedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}
                                         </span>
                                         {review.isLiked && (
                                             <span
@@ -193,7 +193,7 @@ export const ReviewDetailPage: FC = () => {
 
                                 {currentUser?.role === 'ADMIN' && (
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Moderation</span>
+                                        <span className="text-[8px] sm:text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Moderation</span>
                                         {!review.isModerated && (
                                             <button
                                                 onClick={() => {
@@ -207,9 +207,9 @@ export const ReviewDetailPage: FC = () => {
                                                         error: 'Failed to moderate'
                                                     });
                                                 }}
-                                                className="text-[10px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
+                                                className="text-[9px] sm:text-[10px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
                                             >
-                                                Moderate Review
+                                                Moderate
                                             </button>
                                         )}
                                     </div>
@@ -217,28 +217,28 @@ export const ReviewDetailPage: FC = () => {
 
                                 {currentUser?.id === review.user.id && (
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Actions</span>
+                                        <span className="text-[8px] sm:text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Actions</span>
                                         <div className="relative">
                                             {!showConfirmDelete ? (
                                                 <button
                                                     onClick={() => setShowConfirmDelete(true)}
-                                                    className="text-[10px] font-black text-[#667788] hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
+                                                    className="text-[9px] sm:text-[10px] font-black text-[#667788] hover:text-[#ff4444] uppercase tracking-widest transition-colors text-left"
                                                 >
-                                                    Delete Log Entry
+                                                    Delete
                                                 </button>
                                             ) : (
                                                 <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-2 duration-300">
                                                     <button
                                                         onClick={handleDeleteReview}
                                                         disabled={deleteReviewMutation.isPending}
-                                                        className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:underline"
+                                                        className="text-[9px] sm:text-[10px] font-black text-red-500 uppercase tracking-widest hover:underline"
                                                     >
-                                                        {deleteReviewMutation.isPending ? 'Removing...' : 'Confirm'}
+                                                        {deleteReviewMutation.isPending ? '...' : 'Confirm'}
                                                     </button>
                                                     <span className="text-[#445566] text-[10px]">/</span>
                                                     <button
                                                         onClick={() => setShowConfirmDelete(false)}
-                                                        className="text-[10px] font-black text-[#667788] hover:text-white uppercase tracking-widest"
+                                                        className="text-[9px] sm:text-[10px] font-black text-[#667788] hover:text-white uppercase tracking-widest"
                                                     >
                                                         Cancel
                                                     </button>
@@ -250,22 +250,22 @@ export const ReviewDetailPage: FC = () => {
 
                                 {currentUser?.id !== review.user.id && (
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Feedback</span>
+                                        <span className="text-[8px] sm:text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-1">Feedback</span>
                                         <button
                                             onClick={() => setReportConfig({ id: review.id, type: 'MATCH_REVIEW' })}
-                                            className="text-[10px] font-black text-[#667788] hover:text-red-500 uppercase tracking-widest transition-colors text-left"
+                                            className="text-[9px] sm:text-[10px] font-black text-[#667788] hover:text-red-500 uppercase tracking-widest transition-colors text-left"
                                         >
-                                            Report Review
+                                            Report
                                         </button>
                                     </div>
                                 )}
                             </div>
 
-                            <div className={`${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'} text-xl md:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-4 pl-8 py-2 mb-12 bg-white/[0.02] rounded-r-xl`}>
+                            <div className={`${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'} text-lg sm:text-2xl leading-relaxed whitespace-pre-wrap font-serif italic border-l-2 sm:border-l-4 pl-4 sm:pl-8 py-2 mb-8 sm:mb-12 bg-white/[0.02] rounded-r-xl`}>
                                 "{review.comment || "No comment provided."}"
                             </div>
 
-                            <div className="flex items-center justify-between mb-12 pt-6 border-t border-white/5">
+                            <div className="flex items-center justify-between mb-8 sm:mb-12 pt-6 border-t border-white/5">
                                 <ShareReviewButton review={review} variant="full" />
                                 <LikeButton reviewId={review.id} likesCount={review.likesCount} />
                             </div>

@@ -12,12 +12,16 @@ const getProxyUrl = (url: string) => {
     if (url.startsWith('data:') || url.startsWith('/') || url.startsWith(window.location.origin)) {
         return url;
     }
-    // Use production URL if VITE_API_URL is not defined
-    const apiUrl = import.meta.env.VITE_API_URL ||
-        (window.location.hostname === 'localhost'
-            ? 'http://localhost:8080/api'
-            : 'https://kickrhq.com/api');
-    return `${apiUrl.replace('/api', '')}/api/proxy/image?url=${encodeURIComponent(url)}`;
+
+    // In production, just use relative path to avoid domain doubling issues
+    if (window.location.hostname !== 'localhost' && !import.meta.env.VITE_API_URL) {
+        return `/api/proxy/image?url=${encodeURIComponent(url)}`;
+    }
+
+    // Use environment variable or default
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+    const baseUrl = apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
+    return `${baseUrl}/api/proxy/image?url=${encodeURIComponent(url)}`;
 };
 
 export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {

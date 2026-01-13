@@ -5,7 +5,7 @@ server:
 
 kickr:
   mail:
-    from: ${FROM_EMAIL:noreply@kickr.com}
+    from: ${FROM_EMAIL:contact@kickrhq.com}
   
   application:
     name: kickr-server
@@ -111,5 +111,5 @@ resilience4j:
 
 admin:
   name: ${ADMIN_NAME:Marin}
-  email: ${ADMIN_EMAIL:admin@kickr.com}
+  email: ${ADMIN_EMAIL:contact@kickrhq.com}
   password: ${ADMIN_PASSWORD:Marin1812}
