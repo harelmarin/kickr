@@ -56,7 +56,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     };
 
     return (
-        <div className="w-[320px] bg-[#0d0f12] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden">
+        <div className="w-[280px] bg-[#0d0f12] border border-white/5 rounded-2xl shadow-2xl relative overflow-hidden">
             <AnimatePresence mode="wait">
                 {!isForgot ? (
                     <motion.form
@@ -65,11 +65,11 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.98 }}
                         onSubmit={handleSubmit(onSubmit)}
-                        className="p-8 flex flex-col gap-6"
+                        className="p-6 flex flex-col gap-5"
                     >
                         <div>
                             <h3 className="text-[10px] font-bold text-kickr uppercase tracking-[0.4em] mb-1">Tactical Access</h3>
-                            <p className="text-white text-xl font-black tracking-tighter italic uppercase">Welcome</p>
+                            <p className="text-white text-lg font-black tracking-tighter italic uppercase">Welcome</p>
                         </div>
 
                         <div className="space-y-3">
@@ -108,7 +108,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-4 rounded-2xl bg-kickr text-white text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30"
+                            className="w-full py-3.5 rounded-xl bg-kickr text-white text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30"
                         >
                             {isLoading ? 'Verifying...' : 'Authenticate'}
                         </button>
@@ -127,7 +127,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.98 }}
-                        className="p-8 flex flex-col gap-6"
+                        className="p-6 flex flex-col gap-5"
                     >
                         <div>
                             <h3 className="text-[10px] font-bold text-kickr uppercase tracking-[0.4em] mb-1">Recovery</h3>

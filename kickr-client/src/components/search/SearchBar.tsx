@@ -36,9 +36,9 @@ export const SearchBar = () => {
     return (
         <div className="relative group" ref={containerRef}>
             <div className="bg-[#2c3440] hover:bg-[#38424e] rounded-full flex items-center transition-all duration-300">
-                <div className="pl-4 pr-2">
+                <div className="pl-3 sm:pl-4 pr-1.5 sm:pr-2">
                     <svg
-                        className="w-3.5 h-3.5 text-[#667788] group-focus-within:text-white transition-colors"
+                        className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#667788] group-focus-within:text-white transition-colors"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -52,7 +52,7 @@ export const SearchBar = () => {
                     value={query}
                     onChange={handleInputChange}
                     onFocus={() => setIsOpen(true)}
-                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-base sm:text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-2 w-20 focus:w-32 sm:w-24 sm:focus:w-48 transition-all duration-300"
+                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-base sm:text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-1.5 sm:py-2 w-10 focus:w-32 sm:w-24 sm:focus:w-48 transition-all duration-300"
                 />
             </div>
 

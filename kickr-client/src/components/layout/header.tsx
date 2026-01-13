@@ -78,7 +78,7 @@ export const Header = () => {
               </Link>
 
               {authModalMode === 'login' && (
-                <div className="absolute top-full right-0 mt-3 z-50 w-80 animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-xl overflow-hidden">
+                <div className="absolute top-full right-0 mt-3 z-50 w-[280px] animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-xl overflow-hidden">
                   <LoginDropdown onSuccess={() => closeAuthModal()} />
                 </div>
               )}
