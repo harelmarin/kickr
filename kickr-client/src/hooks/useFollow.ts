@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { followService } from '../services/followService';
-import type { PageResponse, User } from '../types/User';
+import type { PageResponse, User } from '../types/user';
 import toast from 'react-hot-toast';
 
 export const useFollowStatus = (followerId: string | undefined, followedId: string | undefined) => {

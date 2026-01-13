@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { useTeam } from '../hooks/useTeams';
-import { useMatchesByTeam } from '../hooks/useNextMatchs';
-import { MatchCard } from '../components/Matchs/MatchCard';
+import { useMatchesByTeam } from '../hooks/useNextMatches';
+import { MatchCard } from '../components/matches/MatchCard';
 
 export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();

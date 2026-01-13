@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { teamService } from '../services/teamService';
-import type { Team } from '../types/Team';
+import type { Team } from '../types/team';
 
 export const useTeams = () => {
   return useQuery<Team[], Error>({

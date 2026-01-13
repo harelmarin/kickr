@@ -1,5 +1,5 @@
 import axiosInstance from './axios';
-import type { Team } from '../types/Team';
+import type { Team } from '../types/team';
 
 export const teamService = {
   getAll: async (): Promise<Team[]> => {

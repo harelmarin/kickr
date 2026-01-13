@@ -1,6 +1,6 @@
 import { Header } from './header';
 import { Footer } from './footer';
-import { MobileBottomNav } from './MobileBottomNav';
+import { MobileBottomNav } from './mobileBottomNav';
 import { useLocation } from 'react-router-dom';
 
 type RootLayoutProps = {

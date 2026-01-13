@@ -1,5 +1,5 @@
 import api from './axios';
-import type { User, PageResponse } from '../types/User';
+import type { User, PageResponse } from '../types/user';
 
 export interface FollowResponse {
     followerId: string;

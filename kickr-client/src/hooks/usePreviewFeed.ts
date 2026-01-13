@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import type { UserMatchResponseApi } from '../types/UserMatchResponseApi';
+import type { UserMatchResponseApi } from '../types/userMatchResponseApi';
 import { fetchPreviewFeed } from '../services/feedService';
-import type { UserMatch } from '../types/UserMatch';
+import type { UserMatch } from '../types/userMatch';
 
 export const usePreviewFeed = (userId: string, page = 0, limit = 9) => {
   return useQuery<UserMatchResponseApi[], Error>({

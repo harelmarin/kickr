@@ -1,6 +1,6 @@
 import api from './axios';
-import type { User } from '../types/User';
-import type { PageResponse } from '../types/Common';
+import type { User } from '../types/user';
+import type { PageResponse } from '../types/common';
 
 export interface ApiResponse<T> {
     status: string;

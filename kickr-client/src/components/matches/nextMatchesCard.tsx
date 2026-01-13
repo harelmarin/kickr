@@ -1,8 +1,8 @@
 import { MatchCard } from './MatchCard';
-import { useNextMatchs } from '../../hooks/useNextMatchs';
+import { useNextMatches } from '../../hooks/useNextMatches';
 
 export const NextMatchesHomePage = () => {
-  const { data, isLoading } = useNextMatchs(0, 6);
+  const { data, isLoading } = useNextMatches(0, 6);
 
   if (isLoading) {
     return (

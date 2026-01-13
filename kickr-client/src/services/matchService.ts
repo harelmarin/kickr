@@ -1,6 +1,6 @@
 import axiosInstance from './axios';
-import type { Match } from '../types/Match';
-import type { MatchApiResponse } from '../types/MatchApiResponse';
+import type { Match } from '../types/match';
+import type { MatchApiResponse } from '../types/matchApiResponse';
 
 export interface MatchesPageResponse {
   content: Match[];

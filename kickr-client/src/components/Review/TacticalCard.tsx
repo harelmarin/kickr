@@ -1,5 +1,5 @@
 import React from 'react';
-import type { UserMatch } from '../../types/UserMatch';
+import type { UserMatch } from '../../types/userMatch';
 
 interface TacticalCardProps {
     review: UserMatch;

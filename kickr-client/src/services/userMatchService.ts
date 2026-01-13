@@ -1,6 +1,6 @@
 import api from './axios';
-import type { UserMatch } from '../types/UserMatch';
-import type { PageResponse } from '../types/Common';
+import type { UserMatch } from '../types/userMatch';
+import type { PageResponse } from '../types/common';
 
 export interface CreateUserMatchDto {
     userId: string;

@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import toast from 'react-hot-toast';
 import { authService } from '../services/authService';
-import type { User } from '../types/User';
-import type { LoginRequest, RegisterRequest } from '../types/Auth';
+import type { User } from '../types/user';
+import type { LoginRequest, RegisterRequest } from '../types/auth';
 
 interface AuthState {
     user: User | null;

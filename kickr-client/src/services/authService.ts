@@ -1,6 +1,6 @@
 import axiosInstance from './axios';
-import type { LoginRequest, RegisterRequest, AuthResponse, RefreshTokenResponse, ApiResponse } from '../types/Auth';
-import type { User } from '../types/User';
+import type { LoginRequest, RegisterRequest, AuthResponse, RefreshTokenResponse, ApiResponse } from '../types/auth';
+import type { User } from '../types/user';
 
 const TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';

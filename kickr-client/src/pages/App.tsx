@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
-import { Layout } from '../components/Layout/layout';
+import { Layout } from '../components/layout/layout';
 import { ReactQueryProvider } from '../services/queryProvider';
 import { ScrollToTop } from '../components/ScrollToTop';
 import { useAuth } from '../hooks/useAuth';

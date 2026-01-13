@@ -3,7 +3,7 @@ import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { useUser } from '../hooks/useUser';
 import { useAuth } from '../hooks/useAuth';
-import { MatchCard } from '../components/Matchs/MatchCard';
+import { MatchCard } from '../components/matches/MatchCard';
 
 export const UserMatchesPage = () => {
     const { id } = useParams<{ id: string }>();

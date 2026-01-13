@@ -1,5 +1,5 @@
 import api from './axios';
-import type { SearchResponse, SearchResult } from '../types/Search';
+import type { SearchResponse, SearchResult } from '../types/search';
 
 export const searchService = {
     search: async (query: string): Promise<SearchResult[]> => {
@@ -14,7 +14,7 @@ export const searchService = {
         const results: SearchResult[] = [];
 
         // Add users to results
-        response.data.users.forEach(user => {
+        response.data.users.forEach((user: any) => {
             results.push({
                 id: user.id,
                 name: user.name,
@@ -24,7 +24,7 @@ export const searchService = {
         });
 
         // Add teams to results
-        response.data.teams.forEach(team => {
+        response.data.teams.forEach((team: any) => {
             results.push({
                 id: team.id,
                 name: team.name,
@@ -35,7 +35,7 @@ export const searchService = {
         });
 
         // Add competitions to results
-        response.data.competitions.forEach(competition => {
+        response.data.competitions.forEach((competition: any) => {
             results.push({
                 id: competition.id,
                 name: competition.name,

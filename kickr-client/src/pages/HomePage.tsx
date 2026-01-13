@@ -1,13 +1,13 @@
-import { NextMatchesHomePage } from '../components/Matchs/nextMatchsClient';
+import { NextMatchesHomePage } from '../components/matches/nextMatchesClient';
 import { Link } from 'react-router-dom';
 import { useLatestReviews, useUserMatchesByUser, useFollowingReviews, usePopularReviews } from '../hooks/useUserMatch';
 import { useGlobalFeed } from '../hooks/usePreviewFeed';
 import { useAuth } from '../hooks/useAuth';
 import { useUsers } from '../hooks/useUser';
-import { ReviewCard } from '../components/Review/ReviewCard';
+import { ReviewCard } from '../components/review/ReviewCard';
 import { ReviewCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { motion } from 'framer-motion';
-import { useTrendingMatches } from '../hooks/useNextMatchs';
+import { useTrendingMatches } from '../hooks/useNextMatches';
 import { useCompetitions } from '../hooks/useCompetitions';
 
 export default function HomePage() {

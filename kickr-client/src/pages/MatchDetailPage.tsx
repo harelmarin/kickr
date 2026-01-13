@@ -7,8 +7,8 @@ import { matchService } from '../services/matchService';
 import { useAuth } from '../hooks/useAuth';
 import { useCreateUserMatch, useUserMatchesByMatch, useDeleteUserMatch } from '../hooks/useUserMatch';
 import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
-import { ShareReviewButton } from '../components/Review/ShareReviewButton';
-import type { UserMatch } from '../types/UserMatch';
+import { ShareReviewButton } from '../components/review/ShareReviewButton';
+import type { UserMatch } from '../types/userMatch';
 import { AnimatePresence } from 'framer-motion';
 
 export const MatchDetailPage = () => {

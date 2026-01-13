@@ -1,6 +1,6 @@
-import type { User } from './User';
-import type { Team } from './Team';
-import type { Competition } from './Competition';
+import type { User } from './user';
+import type { Team } from './team';
+import type { Competition } from './competition';
 
 export type SearchResultType = 'user' | 'team' | 'competition';
 

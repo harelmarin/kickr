@@ -1,5 +1,5 @@
 import axiosInstance from './axios';
-import type { UserMatchResponseApi } from '../types/UserMatchResponseApi';
+import type { UserMatchResponseApi } from '../types/userMatchResponseApi';
 
 export const fetchPreviewFeed = async (
   userId: string,

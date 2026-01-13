@@ -1,7 +1,7 @@
 import axiosInstance from './axios';
-import type { User } from '../types/User';
-import type { PageResponse } from '../types/Common';
-import type { ApiResponse } from '../types/Auth';
+import type { User } from '../types/user';
+import type { PageResponse } from '../types/common';
+import type { ApiResponse } from '../types/auth';
 
 class AdminService {
     /**

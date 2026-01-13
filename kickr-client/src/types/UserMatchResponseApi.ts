@@ -1,5 +1,5 @@
-import type { MatchApiResponse } from "./MatchApiResponse";
-import type { User } from "./User";
+import type { MatchApiResponse } from './matchApiResponse';
+import type { User } from './user';
 
 export interface UserMatchResponseApi {
   id: string;

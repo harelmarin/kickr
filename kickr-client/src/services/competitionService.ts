@@ -1,5 +1,5 @@
 import axiosInstance from './axios';
-import type { Competition } from '../types/Competition';
+import type { Competition } from '../types/competition';
 
 export const competitionService = {
   getAll: async (): Promise<Competition[]> => {

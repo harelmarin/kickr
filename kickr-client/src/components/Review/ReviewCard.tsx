@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { UserMatch } from '../../types/UserMatch';
+import type { UserMatch } from '../../types/userMatch';
 import { authService } from '../../services/authService';
 import { adminService } from '../../services/adminService';
 import { ShareReviewButton } from './ShareReviewButton';

@@ -7,7 +7,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useUpdateUserMatch } from '../hooks/useUserMatch';
 import { useReviewLikeStatus, useToggleReviewLike } from '../hooks/useReviewLikes';
 import { adminService } from '../services/adminService';
-import { ShareReviewButton } from '../components/Review/ShareReviewButton';
+import { ShareReviewButton } from '../components/review/ShareReviewButton';
 import { useDeleteUserMatch } from '../hooks/useUserMatch';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';

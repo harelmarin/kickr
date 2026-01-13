@@ -3,8 +3,8 @@ import { UserMenu } from '../auth/UserMenu';
 import { useAuth } from '../../hooks/useAuth';
 import { useUIStore } from '../../hooks/useUIStore';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { SearchBar } from '../Search/SearchBar';
-import { NotificationBell } from './NotificationBell';
+import { SearchBar } from '../search/SearchBar';
+import { NotificationBell } from './notificationBell';
 import { useEffect, useRef } from 'react';
 
 export const Header = () => {

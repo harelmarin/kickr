@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userMatchService, type CreateUserMatchDto, type UpdateUserMatchDto } from '../services/userMatchService';
-import type { UserMatch } from '../types/UserMatch';
-import type { PageResponse } from '../types/Common';
+import type { UserMatch } from '../types/userMatch';
+import type { PageResponse } from '../types/common';
 import { useAuth } from './useAuth';
 import toast from 'react-hot-toast';
 

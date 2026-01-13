@@ -1,5 +1,5 @@
 import api from './axios';
-import type { ReviewComment } from '../types/ReviewComment';
+import type { ReviewComment } from '../types/reviewComment';
 
 export const reviewCommentService = {
     getComments: async (reviewId: string): Promise<ReviewComment[]> => {

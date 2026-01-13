@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { UserMatch } from '../../types/UserMatch';
+import type { UserMatch } from '../../types/userMatch';
 
 interface FeedReviewCardProps {
     review: UserMatch;

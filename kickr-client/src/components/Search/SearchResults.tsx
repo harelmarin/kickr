@@ -1,4 +1,4 @@
-import type { SearchResult } from '../../types/Search';
+import type { SearchResult } from '../../types/search';
 import { Link } from 'react-router-dom';
 
 interface SearchResultsProps {

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useNextMatchs } from '../../hooks/useNextMatchs';
+import { useNextMatches } from '../../hooks/useNextMatches';
 import { MatchCard } from './MatchCard';
 
 export function NextMatchesHomePage() {
   const [currentPage, setCurrentPage] = useState(0);
   const matchesPerPage = 9; // Grid friendly
 
-  const { data, isLoading } = useNextMatchs(
+  const { data, isLoading } = useNextMatches(
     currentPage,
     matchesPerPage,
   );

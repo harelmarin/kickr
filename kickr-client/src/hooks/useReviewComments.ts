@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { reviewCommentService } from '../services/reviewCommentService';
-import type { ReviewComment } from '../types/ReviewComment';
+import type { ReviewComment } from '../types/reviewComment';
 import toast from 'react-hot-toast';
 
 export const useReviewComments = (reviewId: string) => {

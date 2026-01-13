@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useFollowingReviews } from '../hooks/useUserMatch';
-import { FeedReviewCard } from '../components/Review/FeedReviewCard';
+import { FeedReviewCard } from '../components/review/FeedReviewCard';
 import { Link } from 'react-router-dom';
 
 export const FriendsFeedPage = () => {

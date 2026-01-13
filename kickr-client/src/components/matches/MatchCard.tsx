@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import type { Match } from '../../types/Match';
+import type { Match } from '../../types/match';
 
 interface MatchCardProps {
     match: Match;

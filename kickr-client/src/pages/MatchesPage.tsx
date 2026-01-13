@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useSearchMatches } from '../hooks/useNextMatchs';
+import { useSearchMatches } from '../hooks/useNextMatches';
 import { useCompetitions } from '../hooks/useCompetitions';
-import { MatchCard } from '../components/Matchs/MatchCard';
+import { MatchCard } from '../components/matches/MatchCard';
 import { MatchCardPosterSkeleton } from '../components/ui/LoadingSkeletons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EmptyState } from '../components/ui/EmptyState';

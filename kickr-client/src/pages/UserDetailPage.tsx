@@ -1,10 +1,10 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/useUser';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
-import { ReviewCard } from '../components/Review/ReviewCard';
+import { ReviewCard } from '../components/review/ReviewCard';
 import { useAuth } from '../hooks/useAuth';
 import { useFollowStatus, useFollowAction, useFollowers, useFollowing } from '../hooks/useFollow';
-import type { UserMatch } from '../types/UserMatch';
+import type { UserMatch } from '../types/userMatch';
 
 export const UserDetailPage = () => {
     const { id } = useParams<{ id: string }>();

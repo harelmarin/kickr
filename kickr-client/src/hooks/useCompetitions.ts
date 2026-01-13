@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { competitionService } from '../services/competitionService';
-import type { Competition } from '../types/Competition';
+import type { Competition } from '../types/competition';
 
 export const useCompetitions = () => {
   return useQuery<Competition[], Error>({

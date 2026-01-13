@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import { TacticalCard } from './TacticalCard';
-import type { UserMatch } from '../../types/UserMatch';
+import type { UserMatch } from '../../types/userMatch';
 import toast from 'react-hot-toast';
 
 interface ShareReviewButtonProps {
