@@ -19,6 +19,7 @@ export const searchService = {
                 id: user.id,
                 name: user.name,
                 type: 'user',
+                imageUrl: user.avatarUrl,
                 subtitle: 'Member'
             });
         });

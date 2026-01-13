@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 @RestController
-@org.springframework.web.bind.annotation.CrossOrigin
 public class ImageProxyController {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -44,12 +43,9 @@ public class ImageProxyController {
                 mediaType = response.getHeaders().getContentType();
             }
 
-            // Add CORS headers
+            // Headers - let global CORS config handle Access-Control headers
             org.springframework.http.HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
             responseHeaders.setContentType(mediaType);
-            responseHeaders.set("Access-Control-Allow-Origin", "*");
-            responseHeaders.set("Access-Control-Allow-Methods", "GET");
-            responseHeaders.set("Access-Control-Allow-Headers", "*");
             responseHeaders.set("Cache-Control", "public, max-age=86400");
 
             System.out.println("Successfully proxied image: " + url);
