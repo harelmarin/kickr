@@ -12,9 +12,15 @@
 :root {
   --kickr-primary: #4466ff;
   --kickr-primary-rgb: 68, 102, 255;
-  --color-bg-primary: #0a0b0d;
-  --color-bg-secondary: #14181c;
-  --color-bg-tertiary: #1b2228;
+  --color-bg-primary: #050505;
+  /* Deeper black for better contrast */
+  --color-bg-secondary: #0f1115;
+  /* Clean surface color */
+  --color-bg-tertiary: #1b2128;
+  --text-main: #ffffff;
+  --text-secondary: #94a3b8;
+  /* Cleaner blue-gray */
+  --text-muted: #64748b;
   --pitch-green: #1a4d2e;
   --pitch-light: #2d6a4f;
 }
@@ -32,8 +38,8 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #0a0b0d;
-    color: #ffffff;
+    background: var(--color-bg-primary);
+    color: var(--text-main);
   }
 
   code {
@@ -138,11 +144,19 @@
       rgba(255, 255, 255, 0.02) 20px);
 }
 
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
 .section-contrast {
-  background-color: rgba(20, 24, 28, 0.5);
+  background-color: var(--color-bg-secondary);
   padding: 2rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 /* Custom Scrollbar */

@@ -124,9 +124,11 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                             <line x1="12" y1="15" x2="12" y2="3" />
                         </svg>
                     )}
-                    <span className="truncate hidden sm:block">
-                        {variant === 'full' ? 'Generate Tactical Card' : 'Tactical Card'}
-                    </span>
+                    {variant === 'full' && (
+                        <span className="truncate hidden sm:block">
+                            Generate Tactical Card
+                        </span>
+                    )}
                 </button>
 
                 {showXShare && (

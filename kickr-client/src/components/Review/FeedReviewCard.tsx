@@ -52,9 +52,6 @@ export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
                     </div>
                 </div>
 
-                <Link to={`/matches/${review.match.id}`} className="text-white text-[11px] font-black uppercase tracking-tight mb-3 hover:text-kickr transition-colors truncate">
-                    {review.match.homeTeam} v {review.match.awayTeam}
-                </Link>
 
                 {review.comment && (
                     <p className="text-[#99aabb] text-[12px] leading-relaxed italic line-clamp-3 mb-4 pl-3 border-l border-kickr/20 flex-1">

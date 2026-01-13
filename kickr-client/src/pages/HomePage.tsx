@@ -127,23 +127,23 @@ export default function HomePage() {
           <div className="col-span-1 lg:col-span-3 space-y-16 md:space-y-24">
 
             {/* 1. Feed Section (Personalized or Discovery) */}
-            <section className="section-contrast p-6 md:p-8 rounded-2xl">
-              <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-kickr">
-                  {user ? "Your Network Activity" : "Live from the community"}
-                </span>
-                <Link to="/feed" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold">
-                  {user ? "Friend Feed →" : "All Reviews →"}
+            <section className="section-contrast">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">
+                  {user ? "Your Network Activity" : "Community Feed"}
+                </h2>
+                <Link to="/feed" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">
+                  {user ? "See All →" : "Discover →"}
                 </Link>
               </div>
 
               {isLoadingFeed ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
                   <ReviewCardSkeleton />
                   <ReviewCardSkeleton />
                 </div>
               ) : activeFeedContent && activeFeedContent.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
                   {activeFeedContent.map((review) => (
                     <ReviewCard key={review.id} review={review} />
                   ))}
@@ -161,30 +161,30 @@ export default function HomePage() {
             </section>
 
             {/* 2. Upcoming Matches */}
-            <section>
-              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Upcoming Matches</span>
-                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">All Matches →</Link>
+            <section className="section-contrast">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">Top matches today</h2>
+                <Link to="/matches" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">See Schedule →</Link>
               </div>
               <p className="text-[#445566] text-xs italic mb-8">Next matches to watch and log.</p>
               <NextMatchesHomePage />
             </section>
 
             {/* 3. Popular Reviews from the Community */}
-            <section className="section-contrast p-6 md:p-8 rounded-2xl">
-              <div className="flex items-center justify-between mb-10 border-b border-kickr/20 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white">Popular Logs from the Community</span>
-                <Link to="/community" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">View All →</Link>
+            <section className="section-contrast">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">Popular this week</h2>
+                <Link to="/community" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">View All →</Link>
               </div>
               {isPopularLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
                   <ReviewCardSkeleton />
                   <ReviewCardSkeleton />
                   <ReviewCardSkeleton />
                   <ReviewCardSkeleton />
                 </div>
               ) : popularReviews && popularReviews.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
                   {popularReviews.slice(0, 4).map((review) => (
                     <ReviewCard
                       key={review.id}
@@ -198,10 +198,10 @@ export default function HomePage() {
             </section>
 
             {/* 3. Trending Matches - Best Rated */}
-            <section>
-              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-4">
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#667788]">Trending on Kickr</span>
-                <Link to="/matches" className="text-[10px] text-[#445566] hover:text-kickr transition-colors font-bold uppercase tracking-widest">All Matches →</Link>
+            <section className="section-contrast">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">Trending on Kickr</h2>
+                <Link to="/matches" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">All Matches →</Link>
               </div>
               <p className="text-[#445566] text-xs italic mb-8">The best-rated matches according to our community.</p>
               {isTrendingLoading ? (
@@ -211,7 +211,7 @@ export default function HomePage() {
                   ))}
                 </div>
               ) : trendingMatches && trendingMatches.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                   {trendingMatches.map((match) => (
                     <Link
                       key={match.matchUuid}
@@ -222,7 +222,6 @@ export default function HomePage() {
                         {/* Home Team */}
                         <div className="flex items-center gap-3 flex-1 min-w-0">
                           <img src={match.homeLogo} alt={match.homeTeam} className="w-12 h-12 object-contain flex-shrink-0" />
-                          <span className="text-white font-bold text-sm truncate">{match.homeTeam}</span>
                         </div>
 
                         {/* Score */}
@@ -234,7 +233,6 @@ export default function HomePage() {
 
                         {/* Away Team */}
                         <div className="flex items-center gap-3 flex-1 min-w-0 justify-end">
-                          <span className="text-white font-bold text-sm truncate text-right">{match.awayTeam}</span>
                           <img src={match.awayLogo} alt={match.awayTeam} className="w-12 h-12 object-contain flex-shrink-0" />
                         </div>
                       </div>
@@ -264,9 +262,9 @@ export default function HomePage() {
           {/* Right Sidebar */}
           <div className="col-span-1 space-y-12 md:space-y-16">
             {user && (
-              <section className="bg-[#1b2228] border border-white/5 rounded p-8">
-                <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-6">Your Recent Activity</h3>
-                <div className="space-y-6">
+              <section className="section-contrast">
+                <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Recent Activity</h3>
+                <div className="space-y-8">
                   {sortedUserReviews && sortedUserReviews.length > 0 ? (
                     sortedUserReviews.map(review => (
                       <Link
@@ -284,15 +282,14 @@ export default function HomePage() {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-3 mb-1 overflow-hidden">
-                            <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                              <img src={review.match.homeLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-60 flex-shrink-0" />
-                              <span className="text-white text-[9px] font-black tracking-tighter truncate uppercase italic">{review.match.homeTeam}</span>
+                          <div className="flex items-center gap-2 mb-1">
+                            <img src={review.match.homeLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80 flex-shrink-0" />
+                            <div className="flex items-center gap-1 font-black italic text-[9px] text-white/40">
+                              <span>{review.match.homeScore}</span>
+                              <span className="opacity-30">-</span>
+                              <span>{review.match.awayScore}</span>
                             </div>
-                            <div className="flex items-center gap-1.5 min-w-0 flex-1 justify-end">
-                              <span className="text-white text-[9px] font-black tracking-tighter truncate uppercase italic text-right">{review.match.awayTeam}</span>
-                              <img src={review.match.awayLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-60 flex-shrink-0" />
-                            </div>
+                            <img src={review.match.awayLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80 flex-shrink-0" />
                           </div>
                           {review.comment && review.comment.trim() !== "" && (
                             <p className="text-[9px] text-[#5c6470] line-clamp-1 italic mt-1.5 border-l border-kickr/30 pl-2 leading-none">
@@ -313,9 +310,9 @@ export default function HomePage() {
             )}
 
             {/* Discover Tacticians Section */}
-            <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-6 md:p-8">
-              <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.3em] mb-8 border-b border-white/5 pb-4">Rising Tacticians</h3>
-              <div className="space-y-6">
+            <section className="section-contrast">
+              <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Rising Tacticians</h3>
+              <div className="space-y-8">
                 {communityScouts?.content && communityScouts.content.length > 0 ? (
                   communityScouts.content
                     .filter(s => s.id !== user?.id)
@@ -350,8 +347,8 @@ export default function HomePage() {
             </section>
 
             {/* Trending Leagues */}
-            <section>
-              <h3 className="text-[11px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8">Trending Leagues</h3>
+            <section className="section-contrast">
+              <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Trending Leagues</h3>
               <div className="flex flex-col gap-5">
                 {competitions ? (
                   competitions.slice(0, 6).map(c => (

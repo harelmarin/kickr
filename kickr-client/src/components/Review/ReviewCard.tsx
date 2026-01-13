@@ -51,13 +51,12 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                 <img src={review.match.awayLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
             </Link>
 
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 py-1">
                 <div className="flex flex-col gap-1.5 mb-2">
                     <div className="flex items-center justify-between">
-                        <Link to={`/matches/${review.match.id}`} className="text-white text-[11px] sm:text-sm font-black tracking-tight hover:text-kickr transition-colors uppercase leading-tight">
+                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest truncate max-w-[140px]">
                             {review.match.homeTeam} v {review.match.awayTeam}
-                        </Link>
-
+                        </span>
                         <div className="flex items-center gap-3">
                             {isAdmin && !review.isModerated && (
                                 <button
