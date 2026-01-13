@@ -116,7 +116,7 @@ export const RegisterPage = () => {
                                     type="text"
                                     placeholder="Your analyst name"
                                     {...register("name")}
-                                    className={`w-full bg-[#1b2228]/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                    className={`w-full bg-[#1b2228]/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                 />
                                 {errors.name && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
@@ -129,7 +129,7 @@ export const RegisterPage = () => {
                                     type="email"
                                     placeholder="name@example.com"
                                     {...register("email")}
-                                    className={`w-full bg-[#1b2228]/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                    className={`w-full bg-[#1b2228]/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                 />
                                 {errors.email && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
@@ -143,7 +143,7 @@ export const RegisterPage = () => {
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("password")}
-                                        className={`w-full bg-[#1b2228]/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                        className={`w-full bg-[#1b2228]/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-5 py-4 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                     />
                                     {errors.password && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.password.message}</p>
@@ -156,7 +156,7 @@ export const RegisterPage = () => {
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("confirmPassword")}
-                                        className={`w-full bg-[#1b2228]/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-xl px-5 py-4 text-sm font-medium text-white placeholder-[#445566] outline-none`}
+                                        className={`w-full bg-[#1b2228]/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-xl px-5 py-4 text-base sm:text-sm font-medium text-white placeholder-[#445566] outline-none`}
                                     />
                                     {errors.confirmPassword && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.confirmPassword.message}</p>

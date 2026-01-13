@@ -104,7 +104,7 @@ export const CommunityPage = () => {
                                             placeholder="Enter name..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full bg-black/20 border border-white/5 rounded-xl pl-9 pr-4 py-2.5 text-[11px] font-bold text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none"
+                                            className="w-full bg-black/20 border border-white/5 rounded-xl pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none"
                                         />
                                     </div>
                                 </div>

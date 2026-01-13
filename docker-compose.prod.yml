@@ -31,6 +31,8 @@ services:
       - ADMIN_NAME=${ADMIN_NAME}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - FROM_EMAIL=contact@kickrhq.com
     mem_limit: 1024M
     depends_on:
       - postgres

@@ -58,6 +58,23 @@
     outline: none !important;
     box-shadow: none !important;
   }
+
+  /* Prevent auto-zoom on mobile (iOS) by ensuring inputs are at least 16px */
+  /* We use base size of 16px and scale down on larger screens if needed */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  @media (min-width: 768px) {
+
+    input,
+    select,
+    textarea {
+      font-size: inherit !important;
+    }
+  }
 }
 
 /* Custom component classes */

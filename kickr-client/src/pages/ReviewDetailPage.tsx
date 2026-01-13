@@ -343,7 +343,7 @@ export const ReviewDetailPage: FC = () => {
                                         value={commentText}
                                         onChange={(e) => setCommentText(e.target.value)}
                                         placeholder="Add a comment..."
-                                        className="w-full bg-black/20 border border-white/10 rounded-lg p-4 outline-none text-[#99aabb] text-sm mb-4 min-h-[100px] resize-none focus:border-kickr/50 focus:ring-1 focus:ring-kickr/20 transition-all"
+                                        className="w-full bg-black/20 border border-white/10 rounded-lg p-4 outline-none text-white text-base sm:text-sm mb-4 min-h-[100px] resize-none focus:border-kickr/50 focus:ring-1 focus:ring-kickr/20 transition-all placeholder-[#667788]"
                                     />
                                     <div className="flex justify-end">
                                         <button

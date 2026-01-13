@@ -78,7 +78,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                     type="text"
                                     placeholder="Identity"
                                     {...register("username")}
-                                    className={`w-full bg-black/40 border ${errors.username ? 'border-red-500/30' : 'border-white/5'} rounded-2xl px-5 py-3.5 text-xs font-bold text-white placeholder-[#334455] outline-none`}
+                                    className={`w-full bg-black/40 border ${errors.username ? 'border-red-500/30' : 'border-white/5'} rounded-2xl px-5 py-3.5 text-base sm:text-xs font-bold text-white placeholder-[#334455] outline-none`}
                                 />
                             </div>
                             {errors.username && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase tracking-tighter">{errors.username.message}</p>}
@@ -88,7 +88,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Security Pass"
                                     {...register("password")}
-                                    className={`w-full bg-black/40 border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-2xl px-5 py-3.5 pr-12 text-xs font-bold text-white placeholder-[#334455] outline-none`}
+                                    className={`w-full bg-black/40 border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-2xl px-5 py-3.5 pr-12 text-base sm:text-xs font-bold text-white placeholder-[#334455] outline-none`}
                                 />
                                 <button
                                     type="button"
@@ -144,7 +144,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                         value={forgotEmail}
                                         onChange={(e) => setForgotEmail(e.target.value)}
                                         placeholder="name@example.com"
-                                        className="w-full bg-black/40 border border-white/5 rounded-2xl px-5 py-3.5 text-xs font-bold text-white placeholder-[#334455] outline-none"
+                                        className="w-full bg-black/40 border border-white/5 rounded-2xl px-5 py-3.5 text-base sm:text-xs font-bold text-white placeholder-[#334455] outline-none"
                                     />
                                 </div>
 
@@ -246,7 +246,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                         type="text"
                         placeholder="Choose a username"
                         {...register("name")}
-                        className={`bg-[#14181c] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} rounded-lg px-4 py-3.5 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none`}
+                        className={`bg-[#14181c] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none`}
                     />
                     {errors.name && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.name.message}</p>}
                 </div>
@@ -257,7 +257,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                         type="email"
                         placeholder="your.email@example.com"
                         {...register("email")}
-                        className={`bg-[#14181c] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} rounded-lg px-4 py-3.5 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none`}
+                        className={`bg-[#14181c] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none`}
                     />
                     {errors.email && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.email.message}</p>}
                 </div>
@@ -268,7 +268,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                         type="password"
                         placeholder="Create a strong password"
                         {...register("password")}
-                        className={`bg-[#14181c] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-lg px-4 py-3.5 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none`}
+                        className={`bg-[#14181c] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none`}
                     />
                     {errors.password && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.password.message}</p>}
                 </div>
@@ -279,7 +279,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                         type="password"
                         placeholder="Repeat your password"
                         {...register("confirmPassword")}
-                        className={`bg-[#14181c] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-lg px-4 py-3.5 text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none`}
+                        className={`bg-[#14181c] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none`}
                     />
                     {errors.confirmPassword && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.confirmPassword.message}</p>}
 
