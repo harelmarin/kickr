@@ -41,10 +41,10 @@ public class EmailService {
                     <!DOCTYPE html>
                     <html>
                     <body style="margin: 0; padding: 0; background-color: #050607; font-family: 'Inter', Arial, sans-serif; color: #ffffff;">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #050607; padding: 40px 20px;">
+                        <table width="100%%" border="0" cellspacing="0" cellpadding="0" style="background-color: #050607; padding: 40px 20px;">
                             <tr>
                                 <td align="center">
-                                    <table width="100%" max-width="500px" border="0" cellspacing="0" cellpadding="0" style="background-color: #0d0f12; border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                                    <table width="100%%" max-width="500px" border="0" cellspacing="0" cellpadding="0" style="background-color: #0d0f12; border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
                                         <!-- Header Accent -->
                                         <tr><td height="4" style="background: linear-gradient(to right, #00f2fe, #4facfe, #00f2fe);"></td></tr>
 
