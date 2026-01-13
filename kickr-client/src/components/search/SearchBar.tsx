@@ -52,7 +52,7 @@ export const SearchBar = () => {
                     value={query}
                     onChange={handleInputChange}
                     onFocus={() => setIsOpen(true)}
-                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-base sm:text-[11px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-0 w-8 focus:w-28 sm:w-24 sm:focus:w-48 transition-all duration-300"
+                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[10px] font-bold uppercase tracking-widest text-white placeholder-[#667788] py-0 w-8 focus:w-28 sm:w-24 sm:focus:w-48 transition-all duration-300"
                 />
             </div>
 
