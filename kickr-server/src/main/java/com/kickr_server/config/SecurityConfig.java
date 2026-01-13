@@ -60,6 +60,8 @@ public class SecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
+                                                .permitAll()
                                                 .requestMatchers("/api/auth/**").permitAll()
                                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**",
                                                                 "/swagger-ui.html",
@@ -109,28 +111,28 @@ public class SecurityConfig {
         public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
                 org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
 
-                // Load origins from environment variable/property
                 java.util.List<String> origins = new java.util.ArrayList<>();
                 if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
                         origins.addAll(java.util.Arrays.asList(allowedOrigins.split(",")));
                 }
 
-                // Pour le développement local, s'assurer que localhost est présent
-                if (!origins.contains("http://localhost:5173")) {
+                // Domains must be exact and without trailing slash
+                if (!origins.contains("https://kickrhq.com"))
+                        origins.add("https://kickrhq.com");
+                if (!origins.contains("https://www.kickrhq.com"))
+                        origins.add("https://www.kickrhq.com");
+                if (!origins.contains("http://localhost:5173"))
                         origins.add("http://localhost:5173");
-                }
-                if (!origins.contains("http://localhost")) {
-                        origins.add("http://localhost");
-                }
-                if (!origins.contains("http://127.0.0.1")) {
-                        origins.add("http://127.0.0.1");
-                }
 
                 configuration.setAllowedOrigins(origins);
-                configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-                configuration.setAllowedHeaders(java.util.List.of("*"));
+                configuration.setAllowedMethods(
+                                java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+                configuration.setAllowedHeaders(java.util.Arrays.asList("Authorization", "Content-Type",
+                                "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method",
+                                "Access-Control-Request-Headers"));
+                configuration.setExposedHeaders(java.util.Arrays.asList("Authorization", "Link", "X-Total-Count"));
                 configuration.setAllowCredentials(true);
-                configuration.setMaxAge(3600L); // 1 hour
+                configuration.setMaxAge(3600L);
 
                 org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
                 source.registerCorsConfiguration("/**", configuration);
