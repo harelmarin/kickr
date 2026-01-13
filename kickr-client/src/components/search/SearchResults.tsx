@@ -52,7 +52,7 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
     };
 
     return (
-        <div className="absolute top-full left-0 mt-2 w-full bg-[#1b2228] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[350px] overflow-y-auto">
+        <div className="absolute top-full right-0 mt-2 w-[240px] sm:w-full bg-[#1b2228] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[350px] overflow-y-auto">
             {isLoading ? (
                 <div className="p-4 text-center text-[#667788]">
                     <div className="flex items-center justify-center gap-2">

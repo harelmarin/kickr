@@ -32,6 +32,8 @@ services:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - RESEND_API_KEY=${RESEND_API_KEY}
+      - SPRING_MAIL_USERNAME=resend
+      - SPRING_MAIL_PASSWORD=${RESEND_API_KEY}
       - FROM_EMAIL=contact@kickrhq.com
       - FRONTEND_URL=https://kickrhq.com
     mem_limit: 1024M

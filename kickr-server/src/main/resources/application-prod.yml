@@ -30,6 +30,10 @@ spring:
           auth: true
           starttls:
             enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
   servlet:
     multipart:
@@ -78,6 +82,7 @@ logging:
     com.kickr_server: INFO
     org.hibernate.SQL: WARN
     org.springframework.security: WARN
+    org.springframework.mail: DEBUG
   file:
     name: /var/log/kickr/application.log
   pattern:
