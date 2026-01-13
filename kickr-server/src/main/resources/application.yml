@@ -1,7 +1,7 @@
 server:
   port: 8080
   cors:
-    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000}
+    allowed-origins: ${ALLOWED_ORIGINS:https://kickrhq.com,https://www.kickrhq.com,http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000}
 
 kickr:
   mail:
@@ -85,23 +85,23 @@ resilience4j:
   ratelimiter:
     instances:
       authRateLimiter:
-        limitForPeriod: 5
+        limitForPeriod: 50
         limitRefreshPeriod: 30s
         timeoutDuration: 1s
       feedRateLimiter:
-        limitForPeriod: 20
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 200ms
       userRateLimiter:
-        limitForPeriod: 10
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
       userMatchRateLimiter:
-        limitForPeriod: 10
+        limitForPeriod: 100
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
       followRateLimiter:
-        limitForPeriod: 5
+        limitForPeriod: 50
         limitRefreshPeriod: 10s
         timeoutDuration: 500ms
 
