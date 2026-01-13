@@ -20,15 +20,15 @@ export const UserDiaryPage = () => {
 
     if (isError) return <ErrorState />;
 
-    const filteredReviews = (reviews || []).filter(review => {
+    const filteredReviews = (reviews || []).filter((review: any) => {
         const matchesSearch = search === '' ||
             review.match.homeTeam.toLowerCase().includes(search.toLowerCase()) ||
             review.match.awayTeam.toLowerCase().includes(search.toLowerCase());
 
         return matchesSearch;
-    }).sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
+    }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
-    const groupedReviews = filteredReviews.reduce((acc, review) => {
+    const groupedReviews = filteredReviews.reduce((acc: any, review: any) => {
         const date = new Date(review.watchedAt);
         const monthYear = date.toLocaleDateString('en', { month: 'long', year: 'numeric' });
         if (!acc[monthYear]) acc[monthYear] = [];
@@ -117,7 +117,7 @@ export const UserDiaryPage = () => {
                             </div>
                             <div className="flex flex-col items-end">
                                 <span className="text-2xl font-black text-kickr italic leading-none tracking-tighter">
-                                    {reviews.filter(r => r.isLiked).length}
+                                    {reviews.filter((r: any) => r.isLiked).length}
                                 </span>
                                 <span className="text-[8px] uppercase tracking-widest text-[#445566] font-bold mt-1">Prime Matches</span>
                             </div>
@@ -152,14 +152,14 @@ export const UserDiaryPage = () => {
                     </div>
                 ) : Object.keys(groupedReviews).length > 0 ? (
                     <div className="space-y-16">
-                        {Object.entries(groupedReviews).map(([monthYear, monthReviews]) => (
+                        {Object.entries(groupedReviews).map(([monthYear, monthReviews]: [string, any]) => (
                             <section key={monthYear} className="bg-[#14181c]/50 p-6 rounded-2xl border border-white/5">
                                 <h2 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.3em] mb-6 border-b border-white/5 pb-2">
                                     {monthYear}
                                 </h2>
 
                                 <div className="space-y-4">
-                                    {monthReviews.map((review) => (
+                                    {monthReviews.map((review: any) => (
                                         <div key={review.id} className="group relative">
                                             <div className="flex gap-6 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-kickr/20 transition-all duration-300 items-center">
                                                 <div className="w-12 text-center border-r border-white/10 pr-6 flex-shrink-0">

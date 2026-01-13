@@ -171,7 +171,7 @@ export const UserDetailPage = () => {
                                     {([...pageData.content]
                                         .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
                                         .slice(0, 3)
-                                    ).map(review => (
+                                    ).map((review: any) => (
                                         <ReviewCard key={review.id} review={review} />
                                     ))}
                                 </div>
@@ -196,7 +196,7 @@ export const UserDetailPage = () => {
                                     </div>
                                     {following?.content && following.content.length > 0 ? (
                                         <div className="grid grid-cols-12 gap-3">
-                                            {following.content.slice(0, 24).map((f) => (
+                                            {following.content.slice(0, 24).map((f: any) => (
                                                 <Link
                                                     key={f.id}
                                                     to={`/user/${f.id}`}
@@ -229,7 +229,7 @@ export const UserDetailPage = () => {
                                     </div>
                                     {followers?.content && followers.content.length > 0 ? (
                                         <div className="grid grid-cols-12 gap-3">
-                                            {followers.content.slice(0, 24).map((f) => (
+                                            {followers.content.slice(0, 24).map((f: any) => (
                                                 <Link
                                                     key={f.id}
                                                     to={`/user/${f.id}`}
@@ -269,7 +269,7 @@ export const UserDetailPage = () => {
                                     <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Average</span>
                                     <span className="text-xl font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
-                                            ? (pageData.content.reduce((acc, r) => acc + r.note, 0) / pageData.content.length).toFixed(1)
+                                            ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
                                             : '0.0'}
                                     </span>
                                 </div>
@@ -292,14 +292,14 @@ export const UserDetailPage = () => {
                                     <span className="text-[11px] font-bold text-[#99aabb]">Avg Rating</span>
                                     <span className="text-sm font-black text-kickr">
                                         {pageData && pageData.content.length > 0
-                                            ? (pageData.content.reduce((acc, r) => acc + r.note, 0) / pageData.content.length).toFixed(1)
+                                            ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
                                             : '0.0'} ★
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-[11px] font-bold text-[#99aabb]">Liked Matches</span>
                                     <span className="text-sm font-black text-orange-500">
-                                        {pageData?.content.filter(r => r.isLiked).length || 0}
+                                        {pageData?.content.filter((r: any) => r.isLiked).length || 0}
                                     </span>
                                 </div>
                             </div>
@@ -380,8 +380,8 @@ const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
 
     // Sort teams by count and get top 5
     const topTeams = Object.entries(teamStats)
-        .map(([id, data]) => ({ id, name: data.name, count: data.count }))
-        .sort((a, b) => b.count - a.count)
+        .map(([id, data]: [string, any]) => ({ id, name: data.name, count: data.count }))
+        .sort((a: any, b: any) => b.count - a.count)
         .slice(0, 5);
 
     if (topTeams.length === 0) {

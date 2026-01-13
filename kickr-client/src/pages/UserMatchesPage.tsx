@@ -49,7 +49,7 @@ export const UserMatchesPage = () => {
 
     if (isError) return <ErrorState />;
 
-    const filteredReviews = (reviews || []).filter(review => {
+    const filteredReviews = (reviews || []).filter((review: any) => {
         const matchesSearch = search === '' ||
             review.match.homeTeam.toLowerCase().includes(search.toLowerCase()) ||
             review.match.awayTeam.toLowerCase().includes(search.toLowerCase());
@@ -65,7 +65,7 @@ export const UserMatchesPage = () => {
             : review.note >= minRating;
 
         return matchesSearch && matchesStatus && matchesRating;
-    }).sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
+    }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
         <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
@@ -160,7 +160,7 @@ export const UserMatchesPage = () => {
                             <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-xl" />
                         ))
                     ) : (
-                        filteredReviews.map((review) => (
+                        filteredReviews.map((review: any) => (
                             <div key={review.id} className="flex flex-col gap-3 group/item">
                                 <MatchCard match={review.match as any} variant="poster" />
 

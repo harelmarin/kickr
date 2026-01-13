@@ -28,7 +28,7 @@ export default function HomePage() {
   const isLoadingFeed = user ? isFollowingLoading : (isGlobalLoading || isLatestLoading);
 
   const sortedUserReviews = (userReviews?.content || [])
-    .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
+    .sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
     .slice(0, 3);
 
   return (
@@ -144,7 +144,7 @@ export default function HomePage() {
                 </div>
               ) : activeFeedContent && activeFeedContent.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
-                  {activeFeedContent.map((review) => (
+                  {activeFeedContent.map((review: any) => (
                     <ReviewCard key={review.id} review={review} />
                   ))}
                 </div>
@@ -266,7 +266,7 @@ export default function HomePage() {
                 <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Recent Activity</h3>
                 <div className="space-y-8">
                   {sortedUserReviews && sortedUserReviews.length > 0 ? (
-                    sortedUserReviews.map(review => (
+                    sortedUserReviews.map((review: any) => (
                       <Link
                         key={review.id}
                         to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
@@ -315,9 +315,9 @@ export default function HomePage() {
               <div className="space-y-8">
                 {communityScouts?.content && communityScouts.content.length > 0 ? (
                   communityScouts.content
-                    .filter(s => s.id !== user?.id)
+                    .filter((s: any) => s.id !== user?.id)
                     .slice(0, 4)
-                    .map((scout) => (
+                    .map((scout: any) => (
                       <Link
                         key={scout.id}
                         to={`/user/${scout.id}`}

@@ -62,7 +62,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                 <div className="space-y-4">
                     {networkUsers && networkUsers.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
-                            {networkUsers.map((user, index) => (
+                            {networkUsers.map((user: any, index: number) => (
                                 <motion.div
                                     key={user.id}
                                     initial={{ opacity: 0, y: 10 }}

@@ -49,8 +49,8 @@ export const CommunityPage = () => {
 
     // Stats calculations
     const statsTotalMinds = pageData?.totalElements || 0;
-    const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc, u) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
-    const statsTotalNetwork = pageData?.totalElements ? Math.round((pageData.content.reduce((acc, u) => acc + (u.followersCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
+    const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
+    const statsTotalNetwork = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.followersCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
         <motion.main
