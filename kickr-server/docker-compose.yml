@@ -50,5 +50,16 @@ services:
       - postgres
     restart: unless-stopped
 
+  client:
+    build:
+      context: ../kickr-client
+      dockerfile: Dockerfile
+    container_name: kickr-client
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
 volumes:
   postgres_data:

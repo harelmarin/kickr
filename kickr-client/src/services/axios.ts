@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 // Configuration de base pour Axios
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:8080/api'),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -88,7 +88,8 @@ axiosInstance.interceptors.response.use(
 
       try {
         // Attempt to refresh the token
-        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8080/api'}/auth/refresh`, {
+        const refreshUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:8080/api');
+        const response = await axios.post(`${refreshUrl}/auth/refresh`, {
           refreshToken
         });
 
