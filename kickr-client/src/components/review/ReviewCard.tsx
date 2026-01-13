@@ -116,7 +116,13 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 if (!user) {
-                                    toast.error('Please log in to report content');
+                                    toast.error('You need to be logged in to report content', {
+                                        duration: 4000,
+                                        position: 'top-center',
+                                    });
+                                    setTimeout(() => {
+                                        window.location.href = '/register';
+                                    }, 500);
                                     return;
                                 }
                                 setIsReportModalOpen(true);

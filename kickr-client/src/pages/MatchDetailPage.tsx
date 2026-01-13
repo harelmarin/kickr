@@ -39,7 +39,13 @@ export const MatchDetailPage = () => {
 
   const handleSaveRating = async () => {
     if (!user) {
-      navigate('/register');
+      toast.error('You need to be logged in to log matches', {
+        duration: 4000,
+        position: 'top-center',
+      });
+      setTimeout(() => {
+        navigate('/register');
+      }, 500);
       return;
     }
 
@@ -501,7 +507,13 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
 
   const handleLike = () => {
     if (!currentUser) {
-      navigate('/register');
+      toast.error('You need to be logged in to like reviews', {
+        duration: 4000,
+        position: 'top-center',
+      });
+      setTimeout(() => {
+        navigate('/register');
+      }, 500);
       return;
     }
     toggleLike.mutate({ reviewId: review.id, userId: currentUser.id });

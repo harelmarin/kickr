@@ -35,16 +35,17 @@ export const Header = () => {
   return (
     <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-16">
       <div className="max-w-7xl mx-auto flex items-center h-full px-6">
-        <Link to="/" className="flex items-center gap-3 group mr-2 md:mr-10 transition-transform hover:scale-[1.02] active:scale-95">
-          <img src="/favicon.png" alt="Kickr Logo" className="w-8 h-8 object-contain" />
-          <span className="text-2xl font-black italic tracking-tighter uppercase leading-none bg-gradient-to-r from-white via-white to-white group-hover:from-kickr group-hover:to-kickr/50 bg-clip-text text-transparent transition-all duration-500 pr-2">
+        <Link to="/" className="flex items-center gap-3 mr-2 md:mr-10">
+          <div className="w-10 h-10 flex items-center justify-center">
+            <img src="/favicon.png" alt="Kickr Logo" className="w-full h-full object-contain" />
+          </div>
+          <span className="text-lg font-black italic tracking-tighter uppercase leading-none text-white">
             KICKR
           </span>
         </Link>
 
         <nav className="hidden md:flex flex-1 items-center gap-6">
           <NavSlot to="/matches" label="Matches" />
-          <NavSlot to="/feed" label="Feed" />
           <NavSlot to="/competitions" label="Leagues" />
           <NavSlot to="/teams" label="Teams" />
           <NavSlot to="/community" label="Community" />
@@ -55,6 +56,7 @@ export const Header = () => {
 
           {isAuthenticated ? (
             <div className="flex items-center gap-6 border-l border-white/10 pl-5">
+              <NavSlot to="/feed" label="Feed" />
               <NotificationBell />
               <UserMenu />
             </div>

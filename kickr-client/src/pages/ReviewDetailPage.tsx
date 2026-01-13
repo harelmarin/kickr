@@ -382,7 +382,13 @@ const LikeButton: FC<{ reviewId: string; likesCount: number }> = ({ reviewId, li
 
     const handleLike = () => {
         if (!currentUser) {
-            toast.error('Please log in to like reviews');
+            toast.error('You need to be logged in to like reviews', {
+                duration: 4000,
+                position: 'top-center',
+            });
+            setTimeout(() => {
+                window.location.href = '/register';
+            }, 500);
             return;
         }
         toggleLike.mutate({ reviewId, userId: currentUser.id });

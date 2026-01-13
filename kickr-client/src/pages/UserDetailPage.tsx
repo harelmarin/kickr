@@ -5,6 +5,7 @@ import { ReviewCard } from '../components/review/ReviewCard';
 import { useAuth } from '../hooks/useAuth';
 import { useFollowStatus, useFollowAction, useFollowers, useFollowing } from '../hooks/useFollow';
 import type { UserMatch } from '../types/userMatch';
+import toast from 'react-hot-toast';
 
 export const UserDetailPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -22,7 +23,13 @@ export const UserDetailPage = () => {
 
     const handleFollowToggle = () => {
         if (!currentUser) {
-            navigate('/register');
+            toast.error('You need to be logged in to follow users', {
+                duration: 4000,
+                position: 'top-center',
+            });
+            setTimeout(() => {
+                navigate('/register');
+            }, 500);
             return;
         }
         followAction.mutate({

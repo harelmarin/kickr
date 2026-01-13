@@ -12,7 +12,11 @@ const getProxyUrl = (url: string) => {
     if (url.startsWith('data:') || url.startsWith('/') || url.startsWith(window.location.origin)) {
         return url;
     }
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+    // Use production URL if VITE_API_URL is not defined
+    const apiUrl = import.meta.env.VITE_API_URL ||
+        (window.location.hostname === 'localhost'
+            ? 'http://localhost:8080/api'
+            : 'https://kickrhq.com/api');
     return `${apiUrl.replace('/api', '')}/api/proxy/image?url=${encodeURIComponent(url)}`;
 };
 
