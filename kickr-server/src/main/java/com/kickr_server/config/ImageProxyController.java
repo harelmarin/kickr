@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 @RestController
+@org.springframework.web.bind.annotation.CrossOrigin
 public class ImageProxyController {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -17,7 +18,19 @@ public class ImageProxyController {
     @GetMapping("/api/proxy/image")
     public ResponseEntity<byte[]> proxyImage(@RequestParam String url) {
         try {
-            byte[] imageBytes = restTemplate.getForObject(new URI(url), byte[].class);
+            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+            headers.set("User-Agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+
+            org.springframework.http.HttpEntity<String> entity = new org.springframework.http.HttpEntity<>(headers);
+
+            ResponseEntity<byte[]> response = restTemplate.exchange(
+                    new URI(url),
+                    org.springframework.http.HttpMethod.GET,
+                    entity,
+                    byte[].class);
+
+            byte[] imageBytes = response.getBody();
 
             // Try to determine content type from extension
             MediaType mediaType = MediaType.IMAGE_PNG;
@@ -25,6 +38,8 @@ public class ImageProxyController {
                 mediaType = MediaType.IMAGE_JPEG;
             } else if (url.toLowerCase().endsWith(".webp")) {
                 mediaType = MediaType.parseMediaType("image/webp");
+            } else if (response.getHeaders().getContentType() != null) {
+                mediaType = response.getHeaders().getContentType();
             }
 
             return ResponseEntity.ok()

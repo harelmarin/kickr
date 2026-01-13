@@ -32,7 +32,7 @@ import org.springframework.http.HttpStatus;
 public class SecurityConfig {
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-        @Value("${kickr.cors.allowed-origins:http://localhost:5173}")
+        @Value("${server.cors.allowed-origins:http://localhost:5173}")
         private String allowedOrigins;
 
         /**
@@ -117,7 +117,7 @@ public class SecurityConfig {
                                                                 org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.DISABLED))
                                                 .contentSecurityPolicy(csp -> csp
                                                                 .policyDirectives(
-                                                                                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com;"))
+                                                                                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com https://media.api-sports.io *;"))
                                                 .frameOptions(frame -> frame.deny())
                                                 .httpStrictTransportSecurity(hsts -> hsts
                                                                 .includeSubDomains(true)
@@ -135,11 +135,25 @@ public class SecurityConfig {
                 org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
 
                 // Load origins from environment variable/property
-                java.util.List<String> origins = java.util.Arrays.asList(allowedOrigins.split(","));
-                configuration.setAllowedOrigins(origins);
+                java.util.List<String> origins = new java.util.ArrayList<>();
+                if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
+                        origins.addAll(java.util.Arrays.asList(allowedOrigins.split(",")));
+                }
 
+                // Pour le développement local, s'assurer que localhost est présent
+                if (!origins.contains("http://localhost:5173")) {
+                        origins.add("http://localhost:5173");
+                }
+                if (!origins.contains("http://localhost")) {
+                        origins.add("http://localhost");
+                }
+                if (!origins.contains("http://127.0.0.1")) {
+                        origins.add("http://127.0.0.1");
+                }
+
+                configuration.setAllowedOrigins(origins);
                 configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-                configuration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "Cache-Control"));
+                configuration.setAllowedHeaders(java.util.List.of("*"));
                 configuration.setAllowCredentials(true);
                 configuration.setMaxAge(3600L); // 1 hour
 
