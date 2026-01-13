@@ -55,7 +55,7 @@ jobs:
           tags: ${{ steps.meta-client.outputs.tags }}
           labels: ${{ steps.meta-client.outputs.labels }}
           build-args: |
-            VITE_API_URL=https://api.kickrhq.com
+            VITE_API_URL=https://api.kickrhq.com/api
 
   deploy:
     needs: build-and-push
