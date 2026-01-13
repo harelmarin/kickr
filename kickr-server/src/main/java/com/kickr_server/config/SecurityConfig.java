@@ -71,38 +71,13 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 // Public Read access to data
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/matchs/next",
-                                                                "/api/matchs/search",
-                                                                "/api/matchs/trending",
-                                                                "/api/matchs/{id}",
-                                                                "/api/matchs/team/**",
-                                                                "/api/matchs/rounds/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/teams/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/competitions/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/search/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/user_match/latest")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/user_match/match/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/user_match/user/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/feed/global")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                                                "/api/users/**")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
+                                                                "/api/matchs/**",
+                                                                "/api/teams/**",
+                                                                "/api/competitions/**",
+                                                                "/api/search/**",
+                                                                "/api/user_match/**",
+                                                                "/api/feed/global",
+                                                                "/api/users/**",
                                                                 "/api/follows/following/**",
                                                                 "/api/follows/followers/**")
                                                 .permitAll()
