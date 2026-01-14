@@ -39,6 +39,8 @@ const mapApiResponseToUserMatch = (um: any): UserMatch => ({
         awayLogo: um.match.away_logo ?? um.match.awayLogo,
         matchDate: um.match.match_date ?? um.match.matchDate,
         competition: um.match.competition_name || um.match.competition,
+        competitionId: um.match.competition_id || um.match.competitionId,
+        competitionLogo: um.match.competition_logo || um.match.competitionLogo,
         location: um.match.location,
         homeScore: um.match.home_score ?? um.match.homeScore,
         awayScore: um.match.away_score ?? um.match.awayScore,
@@ -90,9 +92,8 @@ export const userMatchService = {
     },
 
     getPopular: async (limit = 10): Promise<UserMatch[]> => {
-        const response = await api.get<any[]>(`/user_match/latest?limit=${limit}`);
-        const reviews = response.data.map(mapApiResponseToUserMatch);
-        return reviews.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
+        const response = await api.get<any[]>(`/user_match/popular?limit=${limit}`);
+        return response.data.map(mapApiResponseToUserMatch);
     },
 
     update: async (id: string, dto: UpdateUserMatchDto): Promise<UserMatch> => {

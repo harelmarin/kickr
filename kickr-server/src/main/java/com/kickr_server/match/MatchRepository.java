@@ -42,10 +42,11 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                         +
                         "GROUP BY m.id " +
                         "ORDER BY " +
-                        "CASE WHEN :sort = 'popularity' THEN COUNT(um.id) END DESC, " +
-                        "CASE WHEN :sort = 'rating' THEN COALESCE(AVG(um.note), 0) END DESC, " +
-                        "CAST(m.matchDate AS date) DESC, m.matchDate ASC", countQuery = "SELECT COUNT(DISTINCT m) FROM Match m "
-                                        +
+                        "(CASE WHEN :sort = 'popularity' THEN COUNT(um.id) ELSE 0 END) DESC, " +
+                        "(CASE WHEN :sort = 'rating' THEN COALESCE(AVG(um.note), 0) ELSE 0 END) DESC, " +
+                        "(CASE WHEN :sort = 'date_asc' THEN m.matchDate END) ASC, " +
+                        "(CASE WHEN :sort = 'date_desc' THEN m.matchDate END) DESC, " +
+                        "m.matchDate ASC", countQuery = "SELECT COUNT(DISTINCT m) FROM Match m " +
                                         "WHERE (:competitionId IS NULL OR m.competition.id = :competitionId) " +
                                         "AND (:round IS NULL OR m.round = :round) " +
                                         "AND (:isFinished IS NULL OR (:isFinished = true AND m.homeScore IS NOT NULL) OR (:isFinished = false AND m.homeScore IS NULL)) "

@@ -34,107 +34,125 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
         });
     };
 
-
     return (
-        <div className={`flex gap-3 sm:gap-5 group/review ${review.isModerated ? 'opacity-60' : ''}`}>
+        <div className={`relative bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden group/review transition-all duration-500 hover:border-white/10 flex flex-col ${review.isModerated ? 'opacity-60' : ''}`}>
+            {/* Full Card Link Overlay - ONLY if we have a valid target */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                className="relative w-16 h-12 sm:w-32 sm:h-20 bg-[#1b2228] rounded-lg sm:rounded-xl border border-white/5 overflow-hidden shadow-xl flex-shrink-0 transition-all duration-300 flex items-center justify-center gap-1 sm:gap-3 px-1 sm:px-3 poster-hover-effect"
-            >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
-                <img src={review.match.homeLogo} className="w-4 h-4 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
-                <div className="flex items-center gap-1 sm:gap-2 z-10">
-                    <span className="text-[10px] sm:text-[16px] font-black text-white italic leading-none">{review.match.homeScore}</span>
-                    <div className="w-[1px] h-2 sm:h-4 bg-kickr/40"></div>
-                    <span className="text-[10px] sm:text-[16px] font-black text-white italic leading-none">{review.match.awayScore}</span>
-                </div>
-                <img src={review.match.awayLogo} className="w-4 h-4 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10" alt="" />
-            </Link>
+                className="absolute inset-0 z-0"
+                onClick={(e) => {
+                    // Prevent navigation if ID is missing (fail-safe)
+                    if (!review.id && !review.match.id) {
+                        e.preventDefault();
+                        console.warn('ReviewCard: Missing ID for navigation');
+                    }
+                }}
+            />
 
-            <div className="flex flex-col flex-1 py-0 sm:py-1 min-w-0">
-                <div className="flex flex-col gap-1 sm:gap-1.5 mb-1 sm:mb-2">
-                    <div className="flex items-center justify-between">
-                        <span className="text-[9px] sm:text-[10px] font-bold text-white/40 uppercase tracking-widest truncate max-w-[120px] sm:max-w-[140px]">
-                            {review.match.homeTeam} v {review.match.awayTeam}
-                        </span>
-                        <div className="flex items-center gap-2 sm:gap-3">
+            <div className="relative z-10 flex flex-col h-full pointer-events-none">
+                {/* Header Section */}
+                <div className="relative w-full h-16 sm:h-20 bg-white/[0.02] border-b border-white/5 flex items-center justify-between px-4 sm:px-6 transition-all duration-300 group-hover/review:bg-white/[0.04]">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <img src={review.match.homeLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt="" />
+                    </div>
+
+                    <div className="flex flex-col items-center px-4 sm:px-8">
+                        <div className="flex items-center gap-2 sm:gap-4">
+                            <span className="text-xl sm:text-2xl font-black text-white italic tabular-nums">{review.match.homeScore}</span>
+                            <div className="w-[1px] h-4 bg-white/10"></div>
+                            <span className="text-xl sm:text-2xl font-black text-white italic tabular-nums">{review.match.awayScore}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-1 min-w-0 justify-end">
+                        <img src={review.match.awayLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt="" />
+                    </div>
+                </div>
+
+                <div className="p-4 sm:p-6 flex flex-col flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                            <div className="flex text-kickr text-[8px] sm:text-[9px]">
+                                {'★'.repeat(Math.round(review.note))}
+                                <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+                            </div>
+                            {review.isLiked && (
+                                <span className="text-[#ff8000] text-[10px] sm:text-xs" title="Liked">❤</span>
+                            )}
+                            <span className="text-[9px] font-bold text-white/60 uppercase tracking-widest">
+                                {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
+                            </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 pointer-events-auto relative z-20">
                             {isAdmin && !review.isModerated && (
                                 <button
                                     onClick={handleModerate}
-                                    className="text-[10px] font-bold text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
+                                    className="text-[9px] font-black text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
                                 >
                                     Moderate
                                 </button>
                             )}
                             {review.isModerated && (
-                                <span className="text-[8px] font-black bg-[#ff4444]/10 text-[#ff4444] px-2 py-0.5 rounded border border-[#ff4444]/20 uppercase tracking-widest">
-                                    Moderated
+                                <span className="text-[8px] font-black bg-[#ff4444]/10 text-[#ff4444] px-2 py-0.5 rounded-sm border border-[#ff4444]/20 uppercase tracking-widest leading-none">
+                                    MODERATED
                                 </span>
                             )}
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <div className="flex text-[#4466ff] text-[8px] sm:text-[9px]">
-                            {'★'.repeat(Math.round(review.note))}
-                            <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+                    {review.comment && review.comment.trim() !== "" && (
+                        <div className="mb-6">
+                            <p className={`text-[11px] sm:text-[13px] leading-relaxed italic border-l-2 pl-4 transition-colors ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20 group-hover/review:text-white'}`}>
+                                {review.comment}
+                            </p>
                         </div>
-                        {review.isLiked && (
-                            <span className="text-[#ff8000] text-[10px] sm:text-xs ml-0.5" title="Liked">❤</span>
-                        )}
-                        <span className="text-[8px] sm:text-[9px] font-bold text-[#445566] uppercase tracking-widest">
-                            {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' })}
-                        </span>
-                    </div>
-                </div>
+                    )}
 
-                {review.comment && review.comment.trim() !== "" && (
-                    <Link to={`/reviews/${review.id}`} className="block hover:opacity-80 transition-opacity min-w-0">
-                        <p className={`text-[10px] sm:text-[13px] leading-relaxed italic line-clamp-2 pl-2 sm:pl-3 border-l-2 mb-2 sm:mb-3 ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20'}`}>
-                            {review.comment}
-                        </p>
-                    </Link>
-                )}
-
-                <div className="flex items-center justify-between mt-auto">
-                    <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/10 flex items-center justify-center text-[8px] sm:text-[10px] text-white font-black border border-white/5 uppercase overflow-hidden shadow-sm flex-shrink-0">
-                            {review.user?.avatarUrl ? (
-                                <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
-                            ) : (
-                                <span>{review.user ? review.user.name[0] : '?'}</span>
-                            )}
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/[0.03]">
+                        <div className="flex items-center gap-3 min-w-0 pointer-events-auto relative z-20">
+                            <Link
+                                to={`/user/${review.user?.id}`}
+                                className="w-6 h-6 rounded-sm bg-white/[0.04] border border-white/5 flex items-center justify-center text-[10px] text-kickr font-black italic uppercase overflow-hidden transition-colors hover:border-kickr/40"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {review.user?.avatarUrl ? (
+                                    <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <span>{review.user ? review.user.name[0] : '?'}</span>
+                                )}
+                            </Link>
+                            <Link
+                                to={`/user/${review.user?.id}`}
+                                className="text-white/60 text-[9px] sm:text-[10px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {review.user?.name}
+                            </Link>
                         </div>
-                        <Link to={`/user/${review.user?.id}`} className="text-[#445566] text-[9px] sm:text-[10px] font-black uppercase tracking-widest group-hover/review:text-white transition-colors truncate">
-                            {review.user?.name}
-                        </Link>
-                    </div>
 
-                    <div className="flex items-center gap-2 sm:gap-3 opacity-100 lg:opacity-0 group-hover/review:opacity-100 transition-opacity flex-shrink-0">
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                if (!user) {
-                                    toast.error('You need to be logged in to report content', {
-                                        duration: 4000,
-                                        position: 'top-center',
-                                    });
-                                    setTimeout(() => {
-                                        window.location.href = '/register';
-                                    }, 500);
-                                    return;
-                                }
-                                setIsReportModalOpen(true);
-                            }}
-                            className="text-[#667788] hover:text-red-500 transition-colors p-1"
-                            title="Report Review"
-                        >
-                            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                        </button>
-                        <ShareReviewButton review={review} />
+                        <div className="flex items-center gap-3 pointer-events-auto relative z-20">
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    if (!user) {
+                                        toast.error('Authentication required for report protocol');
+                                        return;
+                                    }
+                                    setIsReportModalOpen(true);
+                                }}
+                                className="text-[#334455] hover:text-red-500 transition-colors p-1"
+                                title="Report Violation"
+                            >
+                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </button>
+                            <div onClick={(e) => e.stopPropagation()}>
+                                <ShareReviewButton review={review} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -145,6 +163,6 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                 targetType="MATCH_REVIEW"
                 targetId={review.id}
             />
-        </div >
+        </div>
     );
 };

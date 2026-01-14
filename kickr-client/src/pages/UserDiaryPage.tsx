@@ -37,9 +37,9 @@ export const UserDiaryPage = () => {
     }, {} as Record<string, typeof filteredReviews>);
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
+        <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
             <div className="relative h-[400px] w-full overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/80 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-[#14181c]/80 to-transparent z-10"></div>
                 <div className="absolute inset-0 bg-[#14181c] opacity-50">
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
                 </div>
@@ -286,7 +286,7 @@ export const UserDiaryPage = () => {
 };
 
 const ErrorState = () => (
-    <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#0a0b0d]">
+    <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#14181c]">
         <div className="max-w-md">
             <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Tactical Log Error</h2>
             <p className="text-[#667788] text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>

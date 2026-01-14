@@ -55,7 +55,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <main className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-52px)] md:h-[calc(100vh-64px)] bg-[#0a0b0d] overflow-hidden">
+        <main className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-52px)] md:h-[calc(100vh-64px)] bg-[#14181c] overflow-hidden">
 
             {/* Visual / Marketing Side (Left) */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 border-r border-white/5">

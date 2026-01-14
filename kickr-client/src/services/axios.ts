@@ -79,10 +79,9 @@ axiosInstance.interceptors.response.use(
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (!refreshToken) {
-        // No refresh token, log out the user
+        // No refresh token: session is invalid. Clear storage to sync UI state
+        // but don't redirect to avoid interrupting public page browsing.
         localStorage.clear();
-        toast.error('Session expired. Please log in again.');
-        window.location.href = '/';
         return Promise.reject(error);
       }
 
@@ -110,11 +109,8 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError as Error);
 
-        // Refresh failed, log out the user
+        // Refresh failed: session definitively expired.
         localStorage.clear();
-        toast.error('Session expired. Please log in again.');
-        window.location.href = '/';
-
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

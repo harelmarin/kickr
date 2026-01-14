@@ -39,7 +39,7 @@ export const Header = () => {
           <div className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center">
             <img src="/favicon.png" alt="Kickr Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="text-sm md:text-lg font-black italic tracking-tighter uppercase leading-none text-white">
+          <span className="text-sm md:text-lg font-black italic tracking-tighter uppercase leading-none text-white/90">
             KICKR
           </span>
         </Link>
@@ -55,7 +55,7 @@ export const Header = () => {
           <SearchBar />
 
           {isAuthenticated ? (
-            <div className="flex items-center gap-3 md:gap-6 border-l border-white/10 pl-3 md:pl-5">
+            <div className="flex items-center gap-3 md:gap-6 border-l border-white/5 pl-3 md:pl-5">
               <div className="hidden md:block">
                 <NavSlot to="/feed" label="Feed" />
               </div>
@@ -63,22 +63,22 @@ export const Header = () => {
               <UserMenu />
             </div>
           ) : (
-            <div className="flex items-center gap-2 md:gap-5 border-l border-white/10 pl-3 md:pl-5 relative" ref={dropdownRef}>
+            <div className="flex items-center gap-2 md:gap-5 border-l border-white/5 pl-3 md:pl-5 relative" ref={dropdownRef}>
               <button
-                className="text-[#99aabb] hover:text-white font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-colors"
+                className="text-white/40 hover:text-white/80 font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-colors"
                 onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
               >
                 Sign In
               </button>
               <Link
                 to="/register"
-                className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-3 py-1 md:py-1.5 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 whitespace-nowrap"
+                className="bg-kickr hover:brightness-110 text-black px-4 py-1.5 md:py-2 rounded-sm text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-kickr/10 italic"
               >
                 Sign Up
               </Link>
 
               {authModalMode === 'login' && (
-                <div className="absolute top-full right-0 mt-3 z-50 w-[280px] animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-xl overflow-hidden">
+                <div className="absolute top-full right-0 mt-4 z-50 w-[300px] animate-fade-in">
                   <LoginDropdown onSuccess={() => closeAuthModal()} />
                 </div>
               )}
@@ -94,7 +94,7 @@ const NavSlot = ({ to, label }: { to: string; label: string }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `uppercase tracking-[0.25em] text-[10px] font-bold transition-colors ${isActive ? 'text-white' : 'text-[#667788] hover:text-[#99aabb]'
+      `uppercase tracking-[0.25em] text-[10px] font-bold transition-colors ${isActive ? 'text-white' : 'text-white/40 hover:text-white/60'
       }`
     }
   >

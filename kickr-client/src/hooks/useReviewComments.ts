@@ -17,8 +17,8 @@ export const useAddReviewComment = () => {
     return useMutation({
         mutationFn: ({ reviewId, userId, content }: { reviewId: string; userId: string; content: string }) =>
             reviewCommentService.addComment(reviewId, userId, content),
-        onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ['reviewComments', data.userMatchId] });
+        onSuccess: (_data, variables) => {
+            queryClient.invalidateQueries({ queryKey: ['reviewComments', variables.reviewId] });
             toast.success('Comment added!');
         },
         onError: (error: any) => {
