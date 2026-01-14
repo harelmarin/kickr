@@ -111,7 +111,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     <div className="flex items-center gap-3 flex-1 min-w-0 border-l border-white/5 pl-6">
                         <div className="flex -space-x-1.5 flex-shrink-0">
                             <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt="" />
-                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-[#0a0a0a]" alt="" />
+                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-[#0a0b0d]" alt="" />
                         </div>
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                             <span className="text-[10px] sm:text-[11px] font-black text-white/80 uppercase italic truncate max-w-[45%]">

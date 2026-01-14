@@ -52,7 +52,7 @@ export default function HomePage() {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-[#14181c] min-h-screen text-white/90 selection:bg-kickr/30"
+      className="bg-[#0a0b0d] min-h-screen text-white/90 selection:bg-kickr/30"
     >
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[85vh] flex items-center justify-center border-b border-white/5 overflow-hidden">
@@ -101,8 +101,8 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
                 {!user ? (
-                  <Link to="/register" className="h-[60px] px-12 flex items-center bg-[#f1f5f9] text-black text-[11px] font-black uppercase tracking-[0.2em] rounded-sm hover:bg-white transition-all border border-white/10">
-                    Join the pitch, it's free
+                  <Link to="/register" className="h-[60px] px-12 flex items-center bg-kickr text-black text-[11px] font-black uppercase tracking-[0.3em] rounded-sm hover:brightness-110 transition-all border border-white/10 shadow-lg shadow-kickr/5 italic">
+                    Join the pitch
                   </Link>
                 ) : (
                   <Link to={`/user/${user.id}`} className="min-w-[280px] h-[64px] px-8 flex items-center bg-white/[0.02] border border-white/5 rounded-sm gap-6 transition-all group">
@@ -220,14 +220,12 @@ export default function HomePage() {
 
                         {/* Match Info */}
                         <div className="flex items-center gap-4 flex-1 min-w-0 border-l border-white/5 pl-6">
-                          <div className="flex -space-x-1.5 flex-shrink-0">
-                            <img src={review.match.homeLogo} className="w-5 h-5 object-contain" alt="" />
-                            <img src={review.match.awayLogo} className="w-5 h-5 object-contain border-l border-[#0a0a0a]" alt="" />
+                          <div className="flex items-center gap-3">
+                            <img src={review.match.homeLogo} className="w-5 h-5 object-contain" alt="" title={review.match.homeTeam} />
+                            <span className="text-[8px] font-black text-white/10 italic">VS</span>
+                            <img src={review.match.awayLogo} className="w-5 h-5 object-contain" alt="" title={review.match.awayTeam} />
                           </div>
-                          <p className="text-[10px] font-black text-white/80 uppercase italic truncate leading-none">
-                            {review.match.homeTeam} <span className="text-[#334455] not-italic font-bold normal-case mx-1">vs</span> {review.match.awayTeam}
-                          </p>
-                          <span className="hidden md:block text-[8px] font-black text-white/40 uppercase tracking-widest">{review.match.competition}</span>
+                          <span className="hidden md:block text-[8px] font-black text-white/20 uppercase tracking-[0.3em] ml-auto italic">{review.match.competition}</span>
                         </div>
                       </div>
 
@@ -274,15 +272,11 @@ export default function HomePage() {
                         </div>
                         <div className="flex flex-col flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              <div className="flex -space-x-1.5 flex-shrink-0">
-                                <img src={review.match.homeLogo} className="w-4 h-4 object-contain" alt="" />
-                                <img src={review.match.awayLogo} className="w-4 h-4 object-contain border-l border-[#08080a]" alt="" />
-                              </div>
-                              <p className="text-[10px] font-black text-white/60 group-hover/item:text-white transition-colors uppercase italic truncate leading-none">
-                                {review.match.homeTeam} <span className="text-[#334455] not-italic mx-3">VS</span> {review.match.awayTeam}
-                                {review.isLiked && <span className="ml-2 text-[#ff8000] not-italic inline-block" title="Liked">❤</span>}
-                              </p>
+                            <div className="flex items-center gap-3">
+                              <img src={review.match.homeLogo} className="w-4 h-4 object-contain" alt="" title={review.match.homeTeam} />
+                              <span className="text-[7px] font-black text-white/20 italic">VS</span>
+                              <img src={review.match.awayLogo} className="w-4 h-4 object-contain" alt="" title={review.match.awayTeam} />
+                              {review.isLiked && <span className="text-[#ff8000] text-[8px] ml-1">❤</span>}
                             </div>
                             <span className="text-[10px] font-mono font-black text-white/40 group-hover/item:text-kickr transition-colors italic">
                               {review.match.homeScore}-{review.match.awayScore}

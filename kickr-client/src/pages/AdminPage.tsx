@@ -30,7 +30,7 @@ export default function AdminPage() {
                     <p className="text-[10px] text-kickr uppercase tracking-[0.2em] font-black">System Terminal · Authorization Level 4</p>
                 </div>
 
-                <div className="flex p-1 bg-white/5 rounded-lg w-full md:w-auto overflow-x-auto no-scrollbar">
+                <div className="flex p-1 bg-white/5 rounded-sm w-full md:w-auto overflow-x-auto no-scrollbar">
                     {(['dashboard', 'users', 'reports'] as Tab[]).map((tab) => (
                         <button
                             key={tab}
@@ -297,50 +297,69 @@ const ReportsTab = () => {
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-8 hover:border-kickr/20 transition-all">
+                        <div key={report.id} className="bg-[#0a0b0d] border border-white/5 rounded-sm p-8 hover:border-kickr/20 transition-all">
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
-                                <div className="space-y-4 flex-1">
+                                <div className="space-y-6 flex-1">
                                     <div className="flex items-center gap-3">
-                                        <span className={`px-2 py-0.5 rounded-[4px] text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
+                                        <span className={`px-2 py-0.5 rounded-sm text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
                                             report.status === 'RESOLVED' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
                                                 'bg-white/5 text-[#445566] border border-white/10'
                                             }`}>
                                             {report.status}
                                         </span>
-                                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.2em]">{report.targetType}</span>
-                                        <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">{report.reason}</span>
+                                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.2em] italic">{report.targetType}</span>
+                                        <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
                                     </div>
 
-                                    <div>
-                                        <p className="text-[10px] text-[#445566] uppercase tracking-widest font-black mb-2">Internal Note</p>
-                                        <p className="text-[13px] text-[#99aabb] leading-relaxed bg-black/20 p-4 rounded-lg italic">
-                                            "{report.description || 'No additional details provided'}"
-                                        </p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <div className="flex items-center justify-between mb-2">
+                                                <p className="text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic">REPORTED CONTENT</p>
+                                                <Link
+                                                    to={report.targetType === 'MATCH_REVIEW' ? `/reviews/${report.targetId}` : `/reviews/${report.targetId}`} // Assuming comments also live on reviews for now, or need specific linking
+                                                    target="_blank"
+                                                    className="text-[9px] font-black text-kickr hover:underline uppercase tracking-widest italic"
+                                                >
+                                                    View Source ↗
+                                                </Link>
+                                            </div>
+                                            <div className="text-[12px] text-white/80 leading-relaxed bg-white/[0.02] border border-white/5 p-4 rounded-sm italic">
+                                                {report.targetType === 'MATCH_REVIEW' ? 'Review content encrypted in external node...' : 'Target comment trace found...'}
+                                                <p className="mt-2 text-[10px] text-[#445566] non-italic font-medium">// ID: {report.targetId}</p>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
+                                            <p className="text-[12px] text-[#99aabb] leading-relaxed bg-black/40 border border-white/5 p-4 rounded-sm italic h-full">
+                                                "{report.description || 'No additional intelligence provided'}"
+                                            </p>
+                                        </div>
                                     </div>
 
-                                    <div className="flex items-center gap-4 text-[10px]">
-                                        <span className="text-[#667788] font-bold uppercase">Reported by: <span className="text-white">{report.reporter.name}</span></span>
+                                    <div className="flex items-center gap-4 text-[10px] pt-4 border-t border-white/5">
+                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
                                         <span className="text-[#445566]">●</span>
-                                        <span className="text-[#667788] font-bold uppercase">{new Date(report.createdAt).toLocaleString()}</span>
+                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
                                     </div>
                                 </div>
 
                                 <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
                                     <button
                                         onClick={() => handleAction(report.id, 'RESOLVED')}
-                                        className="flex-1 sm:w-32 py-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-emerald-500/20 transition-all"
+                                        className="flex-1 sm:w-32 py-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-emerald-500/20 transition-all italic"
                                     >
                                         Resolve
                                     </button>
                                     <button
                                         onClick={() => handleAction(report.id, 'REJECTED')}
-                                        className="flex-1 sm:w-32 py-3 bg-white/5 border border-white/10 text-[#667788] text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-white/10 transition-all"
+                                        className="flex-1 sm:w-32 py-3 bg-white/5 border border-white/10 text-[#667788] text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
                                     >
                                         Reject
                                     </button>
                                     <button
                                         onClick={() => reportService.deleteReport(report.id).then(loadReports)}
-                                        className="flex-1 sm:w-32 py-3 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-red-500/20 transition-all"
+                                        className="flex-1 sm:w-32 py-3 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-red-500/20 transition-all italic"
                                     >
                                         Delete
                                     </button>
@@ -357,7 +376,7 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-[#14181c] border rounded-2xl p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
+    <div className={`bg-[#0a0b0d] border rounded-sm p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
         <p className="text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-4">{label}</p>
         <div className="flex items-end justify-between">
             <h3 className={`text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
@@ -370,7 +389,7 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
     const maxVal = Math.max(...data.map((d: any) => d.count), 1);
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-2xl p-8 shadow-xl">
+        <div className="bg-[#0a0b0d] border border-white/5 rounded-sm p-8 shadow-xl">
             <div className="mb-10">
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
                 <p className="text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>

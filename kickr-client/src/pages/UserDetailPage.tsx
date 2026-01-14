@@ -43,7 +43,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-20 md:pt-32 pb-24 md:pb-20">
+        <main className="min-h-screen bg-[#0a0b0d] pt-20 md:pt-32 pb-24 md:pb-20">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
                 <header className="mb-8 md:mb-16">
@@ -105,32 +105,24 @@ export const UserDetailPage = () => {
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
-                                    className="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider px-6 py-2.5 sm:px-6 sm:py-2.5 rounded-lg border border-white/10 transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
+                                    className="bg-kickr hover:brightness-110 text-black text-[10px] font-black uppercase tracking-[0.3em] px-8 py-3 rounded-sm transition-all flex items-center gap-2 w-full sm:w-auto justify-center italic shadow-lg shadow-kickr/5"
                                 >
-                                    <span>✎</span>
-                                    Edit Settings
+                                    EDIT PARAMETERS
                                 </Link>
                             ) : (
                                 <button
                                     onClick={handleFollowToggle}
                                     disabled={followAction.isPending}
-                                    className={`group flex items-center justify-center gap-2 px-6 py-2.5 sm:px-4 sm:py-2.5 rounded-lg transition-all w-full sm:w-auto ${isFollowing
+                                    className={`group flex items-center justify-center gap-2 px-8 py-3 rounded-sm transition-all w-full sm:w-auto italic ${isFollowing
                                         ? 'bg-white/5 border border-white/10 hover:border-red-500/50'
-                                        : 'bg-kickr/10 border border-kickr/30 hover:bg-kickr/20'
+                                        : 'bg-kickr hover:brightness-110 text-black shadow-lg shadow-kickr/5'
                                         } disabled:opacity-50`}
-                                    title={isFollowing ? 'Unfollow' : 'Follow'}
                                 >
-                                    <span className={`text-sm transition-colors ${isFollowing
+                                    <span className={`text-[10px] font-black uppercase tracking-[0.3em] transition-colors ${isFollowing
                                         ? 'text-white group-hover:text-red-500'
-                                        : 'text-kickr'
+                                        : 'text-black'
                                         }`}>
-                                        👤
-                                    </span>
-                                    <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${isFollowing
-                                        ? 'text-white group-hover:text-red-500'
-                                        : 'text-kickr'
-                                        }`}>
-                                        {followAction.isPending ? '...' : isFollowing ? 'Following' : 'Follow'}
+                                        {followAction.isPending ? '...' : isFollowing ? 'Unfollow' : 'Follow'}
                                     </span>
                                 </button>
                             )}

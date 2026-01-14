@@ -68,7 +68,7 @@ export const UserMatchesPage = () => {
     }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#14181c] py-20 px-6">
+        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
             <div className="max-w-7xl mx-auto">
 
                 <header className="mb-20">
@@ -76,10 +76,10 @@ export const UserMatchesPage = () => {
                         {isOwnProfile ? (
                             <Link
                                 to="/settings"
-                                className="relative group/avatar w-10 h-10 rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-110"
+                                className="relative group/avatar w-10 h-10 rounded-sm overflow-hidden shadow-lg transition-transform hover:scale-110"
                                 title="Change Profile Picture"
                             >
-                                <div className="w-full h-full bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black">
+                                <div className="w-full h-full bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black italic">
                                     {user?.avatarUrl ? (
                                         <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover group-hover/avatar:opacity-40 transition-opacity" />
                                     ) : (
@@ -87,11 +87,11 @@ export const UserMatchesPage = () => {
                                     )}
                                 </div>
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/40">
-                                    <span className="text-[8px] font-black text-white uppercase tracking-widest">Edit</span>
+                                    <span className="text-[8px] font-black text-white uppercase tracking-widest italic">Edit</span>
                                 </div>
                             </Link>
                         ) : (
-                            <Link to={`/user/${id}`} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black hover:bg-white/10 transition-all overflow-hidden shadow-lg">
+                            <Link to={`/user/${id}`} className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black hover:bg-white/10 transition-all overflow-hidden shadow-lg italic">
                                 {user?.avatarUrl ? (
                                     <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                                 ) : (

@@ -108,14 +108,14 @@ export const TeamDetailPage = () => {
   if (isLoadingTeam || !team) return null;
 
   return (
-    <main className="min-h-screen bg-[#14181c]">
-      <div className="bg-[#14181c] border-b border-white/5 pt-20 pb-20 relative overflow-hidden">
+    <main className="min-h-screen bg-[#0a0b0d]">
+      <div className="bg-[#0a0b0d] border-b border-white/5 pt-20 pb-20 relative overflow-hidden">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.03] pointer-events-none">
           <img src={team.logoUrl} className="w-full h-full object-contain" alt="" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 relative z-10 text-center md:text-left">
-          <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-[#1b2228] rounded-md shadow-2xl p-4 sm:p-8 border border-white/10 relative group flex-shrink-0">
+          <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-[#0a0b0d] rounded-sm shadow-2xl p-4 sm:p-8 border border-white/10 relative group flex-shrink-0">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 

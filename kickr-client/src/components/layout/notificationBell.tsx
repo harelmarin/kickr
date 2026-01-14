@@ -38,28 +38,28 @@ export const NotificationBell: FC = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-[#667788] hover:text-white transition-colors"
+                className="relative p-2 text-[#667788] hover:text-white transition-all active:scale-90"
                 aria-label="Notifications"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                 </svg>
                 {Number(unreadCount) > 0 ? (
-                    <span className="absolute top-1 right-1 w-4 h-4 bg-kickr text-white text-[8px] font-black rounded-full flex items-center justify-center border-2 border-[#14181c]">
+                    <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-kickr text-black text-[7px] font-black rounded-sm flex items-center justify-center border border-black shadow-lg shadow-kickr/20">
                         {unreadCount! > 9 ? '9+' : unreadCount}
                     </span>
                 ) : null}
             </button>
 
             {isOpen && (
-                <div className="absolute top-[calc(100%+0.5rem)] right-0 w-[280px] sm:w-80 bg-[#1b2228] border border-white/10 rounded-lg shadow-2xl z-[100] overflow-hidden animate-fade-in">
-                    <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between bg-black/10">
-                        <span className="text-[10px] font-black text-white uppercase tracking-widest">Notifications</span>
-                        <div className="flex items-center gap-3">
+                <div className="absolute top-[calc(100%+0.75rem)] right-0 w-[280px] sm:w-[320px] bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_10px_50px_rgba(0,0,0,0.8)] z-[100] overflow-hidden animate-fade-in">
+                    <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                        <span className="text-[9px] font-black text-white uppercase tracking-[0.3em] italic">Notifications</span>
+                        <div className="flex items-center gap-4">
                             {Number(unreadCount) > 0 && (
                                 <button
                                     onClick={handleMarkAllAsRead}
-                                    className="text-[8px] font-black text-kickr uppercase tracking-widest hover:underline"
+                                    className="text-[8px] font-black text-kickr uppercase tracking-widest hover:brightness-110 transition-all italic underline underline-offset-4 decoration-kickr/30"
                                 >
                                     Mark all as read
                                 </button>
@@ -67,7 +67,7 @@ export const NotificationBell: FC = () => {
                             {notifications && notifications.length > 0 && (
                                 <button
                                     onClick={handleClearAll}
-                                    className="text-[8px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest hover:underline"
+                                    className="text-[8px] font-black text-white/20 hover:text-white/40 uppercase tracking-widest transition-all italic"
                                 >
                                     Clear all
                                 </button>
@@ -75,19 +75,23 @@ export const NotificationBell: FC = () => {
                         </div>
                     </div>
 
-                    <div className="max-h-96 overflow-y-auto">
+                    <div className="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
                         {notifications && notifications.length > 0 ? (
-                            notifications.map((notif) => (
-                                <NotificationItem
-                                    key={notif.id}
-                                    notification={notif}
-                                    onRead={() => markAsRead.mutate(notif.id)}
-                                    onClose={() => setIsOpen(false)}
-                                />
-                            ))
+                            <div className="divide-y divide-white/[0.03]">
+                                {notifications.map((notif) => (
+                                    <NotificationItem
+                                        key={notif.id}
+                                        notification={notif}
+                                        onRead={() => markAsRead.mutate(notif.id)}
+                                        onClose={() => setIsOpen(false)}
+                                    />
+                                ))}
+                            </div>
                         ) : (
-                            <div className="p-10 text-center">
-                                <p className="text-[#445566] text-[10px] font-bold uppercase tracking-widest">Everything is caught up</p>
+                            <div className="py-20 text-center flex flex-col items-center gap-4">
+                                <div className="w-8 h-[1px] bg-white/5 mx-auto"></div>
+                                <p className="text-[#445566] text-[9px] font-black uppercase tracking-[0.4em] italic">No notifications</p>
+                                <p className="text-[#445566] text-[7px] font-black uppercase tracking-[0.2em] opacity-30">// You're all caught up</p>
                             </div>
                         )}
                     </div>
@@ -112,26 +116,47 @@ const NotificationItem = ({ notification, onRead, onClose }: { notification: any
         onClose();
     };
 
+    const getTypeColor = () => {
+        if (isFollow) return 'text-blue-400 bg-blue-400/5 border-blue-400/20';
+        if (isComment) return 'text-orange-400 bg-orange-400/5 border-orange-400/20';
+        return 'text-kickr bg-kickr/5 border-kickr/20';
+    };
+
     return (
         <Link
             to={getTargetUrl()}
             onClick={handleClick}
-            className={`flex items-start gap-3 p-4 border-b border-white/5 hover:bg-white/[0.03] transition-colors relative ${!notification.isRead ? 'bg-kickr/5' : ''}`}
+            className={`flex items-start gap-4 p-5 hover:bg-white/[0.03] transition-all group/item relative ${!notification.isRead ? 'bg-kickr/[0.02]' : ''}`}
         >
-            <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-[10px] font-black text-white ${isFollow ? 'bg-blue-500/20' : isComment ? 'bg-orange-500/20' : 'bg-green-500/20'}`}>
-                {isFollow ? '👤' : isComment ? '💬' : '⚽'}
+            <div className={`w-9 h-9 flex-shrink-0 flex items-center justify-center border rounded-sm transition-all group-hover/item:border-white/20 ${getTypeColor()}`}>
+                <span className="text-xs filter grayscale opacity-80 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all">
+                    {isFollow ? '👤' : isComment ? '💬' : '⚽'}
+                </span>
             </div>
+
             <div className="flex-1 min-w-0">
-                <p className="text-[11px] text-[#99aabb] leading-tight mb-1">
-                    <span className="text-white font-bold">{notification.actorName}</span>{' '}
-                    {isFollow ? 'started following you' : isComment ? 'commented on your review' : 'reviewed a new match'}
+                <div className="flex items-center justify-between mb-1">
+                    <span className={`text-[8px] font-black uppercase tracking-[0.2em] italic ${!notification.isRead ? 'text-kickr' : 'text-white/20'}`}>
+                        {notification.type}
+                    </span>
+                    <span className="text-[8px] font-black text-white/20 uppercase tracking-widest italic group-hover/item:text-white/40 transition-colors">
+                        {new Date(notification.createdAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
+                    </span>
+                </div>
+
+                <p className="text-[11px] text-white/50 leading-[1.4] italic">
+                    <span className="text-white font-black not-italic group-hover/item:text-kickr transition-colors tracking-tight uppercase">{notification.actorName}</span>{' '}
+                    {isFollow ? 'started following you' : isComment ? 'commented on your review' : 'posted a new match review'}
                 </p>
-                <p className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">
-                    {new Date(notification.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}
-                </p>
+
+                <div className="mt-2 flex items-center gap-2">
+                    <div className={`h-[1px] bg-white/5 transition-all group-hover/item:bg-kickr/20 ${!notification.isRead ? 'w-8' : 'w-4'}`}></div>
+                    <span className="text-[7px] font-black text-white/10 uppercase tracking-[0.3em]">View details</span>
+                </div>
             </div>
+
             {!notification.isRead && (
-                <div className="w-1.5 h-1.5 rounded-full bg-kickr absolute right-4 top-1/2 -translate-y-1/2"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-kickr shadow-[0_0_10px_rgba(255,128,0,0.5)]"></div>
             )}
         </Link>
     );
