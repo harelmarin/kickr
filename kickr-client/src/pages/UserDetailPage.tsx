@@ -161,23 +161,23 @@ export const UserDetailPage = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-20">
                     {/* Main Content: Activity */}
-                    <div className="lg:col-span-2 space-y-24">
+                    <div className="lg:col-span-2 space-y-12">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-12 bg-[#080808]/40 border border-white/5 p-8 rounded-sm">
-                            <div className="flex items-center justify-between border-b border-white/5 pb-6">
-                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Journal →</Link>
-                                <span className="text-[10px] font-black text-[#445566] uppercase tracking-widest leading-none">Sector Log: {pageData?.totalElements || 0}</span>
+                        <section id="diary-entries" className="space-y-8 bg-[#080808]/40 border border-white/5 p-6 rounded-sm">
+                            <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Last Review</Link>
+                                <span className="text-[10px] font-black text-[#445566] uppercase tracking-widest leading-none">{pageData?.totalElements || 0} logs</span>
                             </div>
 
                             {isReviewsLoading ? (
-                                <div className="space-y-12 animate-pulse">
-                                    {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl"></div>)}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-pulse">
+                                    {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl"></div>)}
                                 </div>
                             ) : pageData?.content && pageData.content.length > 0 ? (
-                                <div className="grid grid-cols-1 gap-12">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {([...pageData.content]
                                         .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
-                                        .slice(0, 3)
+                                        .slice(0, 4)
                                     ).map((review: any) => (
                                         <ReviewCard key={review.id} review={review} />
                                     ))}
@@ -189,28 +189,45 @@ export const UserDetailPage = () => {
                             )}
                         </section>
 
+                        {/* Top Teams & Leagues Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
+                                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Top Teams</h3>
+                                <MostWatchedTeams reviews={pageData?.content || []} />
+                            </section>
+
+                            <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
+                                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Top Leagues</h3>
+                                <MostWatchedLeagues reviews={pageData?.content || []} />
+                            </section>
+                        </div>
+                    </div>
+
+                    {/* Sidebar: Stats & Favorites */}
+                    <div className="space-y-8">
                         {/* Network Section (Followers/Following) */}
-                        <section id="network-section" className="space-y-16 pt-12 bg-[#14181c]/50 p-8 rounded-2xl border border-white/5">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                                {/* Following Column */}
-                                <div className="space-y-6">
+                        <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
+
+                            <div className="space-y-8 relative z-10">
+                                {/* Following */}
+                                <div className="space-y-4">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <h2 className="text-xs font-bold text-white uppercase tracking-widest">Following</h2>
-                                            <span className="text-[9px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{following?.totalElements ?? user.followingCount}</span>
+                                            <h4 className="text-[10px] font-black text-white/80 uppercase tracking-widest">Following</h4>
+                                            <span className="text-[8px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{following?.totalElements ?? user.followingCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/following`} className="text-[9px] font-bold text-kickr hover:text-white transition-colors uppercase tracking-widest">View All →</Link>
+                                        <Link to={`/user/${id}/following`} className="text-[8px] font-black text-white/40 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer">All →</Link>
                                     </div>
                                     {following?.content && following.content.length > 0 ? (
-                                        <div className="grid grid-cols-12 gap-3">
-                                            {following.content.slice(0, 24).map((f: any) => (
+                                        <div className="grid grid-cols-8 gap-2">
+                                            {following.content.slice(0, 16).map((f: any) => (
                                                 <Link
                                                     key={f.id}
                                                     to={`/user/${f.id}`}
-                                                    className="group relative"
+                                                    className="group relative cursor-pointer"
                                                     title={f.name}
                                                 >
-                                                    <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 group-hover:scale-110 transition-all shadow-lg overflow-hidden">
+                                                    <div className="w-6 h-6 rounded-sm bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 transition-all overflow-hidden">
                                                         {f.avatarUrl ? (
                                                             <img src={f.avatarUrl} alt={f.name} className="w-full h-full object-cover" />
                                                         ) : (
@@ -221,29 +238,29 @@ export const UserDetailPage = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-[9px] text-[#445566] italic uppercase font-bold">Not following anyone yet.</p>
+                                        <p className="text-[9px] text-[#445566] italic font-bold">Not following anyone yet.</p>
                                     )}
                                 </div>
 
-                                {/* Followers Column */}
-                                <div className="space-y-6">
+                                {/* Followers */}
+                                <div className="space-y-4 pt-6 border-t border-white/5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <h2 className="text-xs font-bold text-white uppercase tracking-widest">Followers</h2>
-                                            <span className="text-[9px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{followers?.totalElements ?? user.followersCount}</span>
+                                            <h4 className="text-[10px] font-black text-white/80 uppercase tracking-widest">Followers</h4>
+                                            <span className="text-[8px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{followers?.totalElements ?? user.followersCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/followers`} className="text-[9px] font-bold text-kickr hover:text-white transition-colors uppercase tracking-widest">View All →</Link>
+                                        <Link to={`/user/${id}/followers`} className="text-[8px] font-black text-white/40 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer">All →</Link>
                                     </div>
                                     {followers?.content && followers.content.length > 0 ? (
-                                        <div className="grid grid-cols-12 gap-3">
-                                            {followers.content.slice(0, 24).map((f: any) => (
+                                        <div className="grid grid-cols-8 gap-2">
+                                            {followers.content.slice(0, 16).map((f: any) => (
                                                 <Link
                                                     key={f.id}
                                                     to={`/user/${f.id}`}
-                                                    className="group relative"
+                                                    className="group relative cursor-pointer"
                                                     title={f.name}
                                                 >
-                                                    <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 group-hover:scale-110 transition-all shadow-lg overflow-hidden">
+                                                    <div className="w-6 h-6 rounded-sm bg-gradient-to-br from-[#1b2228] to-[#2c3440] border border-white/10 flex items-center justify-center text-[8px] font-black text-kickr uppercase group-hover:border-kickr/50 transition-all overflow-hidden">
                                                         {f.avatarUrl ? (
                                                             <img src={f.avatarUrl} alt={f.name} className="w-full h-full object-cover" />
                                                         ) : (
@@ -254,26 +271,23 @@ export const UserDetailPage = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-[9px] text-[#445566] italic uppercase font-bold">No followers yet.</p>
+                                        <p className="text-[9px] text-[#445566] italic font-bold">No followers yet.</p>
                                     )}
                                 </div>
                             </div>
                         </section>
-                    </div>
 
-                    {/* Sidebar: Stats & Favorites */}
-                    <div className="space-y-12">
-                        <section className="bg-[#080808] border border-white/5 rounded-sm p-8 shadow-xl">
-                            <h3 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4 italic">Ratings Distribution</h3>
+                        <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
+                            <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Ratings Distribution</h3>
                             <RatingsChart reviews={pageData?.content || []} />
 
                             <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
                                 <div className="flex flex-col">
-                                    <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Total Logs</span>
-                                    <span className="text-xl font-black text-white italic">{pageData?.totalElements || 0}</span>
+                                    <span className="text-[7px] font-mono text-white/10 uppercase tracking-widest leading-none mb-2">Total Logs</span>
+                                    <span className="text-xl font-black text-white/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                    <span className="text-[9px] font-bold text-[#445566] uppercase tracking-widest leading-none mb-1">Average</span>
+                                    <span className="text-[7px] font-mono text-white/10 uppercase tracking-widest leading-none mb-2">Average</span>
                                     <span className="text-xl font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -283,38 +297,33 @@ export const UserDetailPage = () => {
                             </div>
                         </section>
 
-                        <section className="bg-[#080808] border border-white/5 rounded-sm p-8 shadow-xl">
-                            <h3 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4 italic">Strategic Analysis</h3>
-                            <MostWatchedTeams reviews={pageData?.content || []} />
-                        </section>
-
-                        <section className="bg-[#080808] border border-white/5 rounded-sm p-8 shadow-xl">
-                            <h3 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4 italic">Technical Stats</h3>
-                            <div className="space-y-4">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[11px] font-bold text-[#99aabb]">Total Logs</span>
-                                    <span className="text-sm font-black text-white">{pageData?.totalElements || 0}</span>
+                        <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
+                            <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Match Stats</h3>
+                            <div className="space-y-6">
+                                <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Total Logs</span>
+                                    <span className="text-base font-black text-white/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[11px] font-bold text-[#99aabb]">Avg Rating</span>
-                                    <span className="text-sm font-black text-kickr">
+                                <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Avg Rating</span>
+                                    <span className="text-base font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
-                                            : '0.0'} ★
+                                            : '0.0'}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[11px] font-bold text-[#99aabb]">Liked Matches</span>
-                                    <span className="text-sm font-black text-orange-500">
+                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Liked Matches</span>
+                                    <span className="text-base font-black text-white/90 italic">
                                         {pageData?.content.filter((r: any) => r.isLiked).length || 0}
                                     </span>
                                 </div>
                             </div>
                         </section>
-                    </div>
-                </div>
-            </div>
-        </main>
+                    </div >
+                </div >
+            </div >
+        </main >
     );
 };
 
@@ -370,50 +379,121 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
 };
 
 const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
-    // Calculate team statistics from reviews (ID as key, storing name and count)
+    // Calculate team statistics from reviews (ID as key, storing name, logo and count)
     const teamStats = reviews.reduce((acc, review) => {
-        const home = { id: review.match.homeTeamId, name: review.match.homeTeam };
-        const away = { id: review.match.awayTeamId, name: review.match.awayTeam };
+        const home = { id: review.match.homeTeamId, name: review.match.homeTeam, logo: review.match.homeLogo };
+        const away = { id: review.match.awayTeamId, name: review.match.awayTeam, logo: review.match.awayLogo };
 
         [home, away].forEach(team => {
             if (!acc[team.id]) {
-                acc[team.id] = { name: team.name, count: 0 };
+                acc[team.id] = { name: team.name, logo: team.logo, count: 0 };
             }
             acc[team.id].count += 1;
         });
 
         return acc;
-    }, {} as Record<string, { name: string, count: number }>);
+    }, {} as Record<string, { name: string, logo: string, count: number }>);
 
-    // Sort teams by count and get top 5
+    // Sort teams by count and get top 4
     const topTeams = Object.entries(teamStats)
-        .map(([id, data]: [string, any]) => ({ id, name: data.name, count: data.count }))
+        .map(([id, data]: [string, any]) => ({ id, name: data.name, logo: data.logo, count: data.count }))
         .sort((a: any, b: any) => b.count - a.count)
-        .slice(0, 5);
+        .slice(0, 4);
 
     if (topTeams.length === 0) {
         return (
-            <p className="text-[9px] text-[#445566] italic uppercase font-bold">
+            <p className="text-[10px] text-[#445566] italic font-bold">
                 No teams watched yet.
             </p>
         );
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             {topTeams.map((team, index) => (
                 <Link
                     key={team.id}
                     to={`/teams/${team.id}`}
-                    className="flex justify-between items-center group cursor-pointer hover:translate-x-1 transition-transform"
+                    className="group relative block cursor-pointer"
                 >
-                    <div className="flex items-center gap-3 flex-1">
-                        <span className="text-[10px] font-black text-kickr/50 w-4">#{index + 1}</span>
-                        <span className="text-[11px] font-bold text-[#99aabb] group-hover:text-white transition-colors truncate">
-                            {team.name}
-                        </span>
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                            <span className="text-[9px] font-mono text-white/40">0{index + 1}</span>
+                            {team.logo && (
+                                <img src={team.logo} alt="" className="w-4 h-4 object-contain" />
+                            )}
+                            <span className="text-[10px] font-black text-white uppercase italic tracking-widest">{team.name}</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-kickr italic">{team.count}</span>
                     </div>
-                    <span className="text-sm font-black text-white">{team.count}</span>
+                    <div className="flex justify-between mt-1 pt-1 border-t border-white/5">
+                        <span className="text-[7px] font-mono text-white/40 uppercase tracking-widest">Watched</span>
+                        <span className="text-[7px] font-mono text-white/40 uppercase tracking-widest">{team.count} matches</span>
+                    </div>
+                </Link>
+            ))}
+        </div>
+    );
+};
+
+const MostWatchedLeagues = ({ reviews }: { reviews: UserMatch[] }) => {
+    // Calculate league statistics from reviews
+    const leagueStats = reviews.reduce((acc, review) => {
+        const competition = review.match.competition;
+        const logo = review.match.competitionLogo;
+        const id = review.match.competitionId;
+
+        if (!acc[competition]) {
+            acc[competition] = { logo, id, count: 0, totalNote: 0 };
+        }
+        acc[competition].count += 1;
+        acc[competition].totalNote += review.note;
+
+        return acc;
+    }, {} as Record<string, { logo?: string, id?: string, count: number, totalNote: number }>);
+
+    // Sort leagues by count and get top 4
+    const topLeagues = Object.entries(leagueStats)
+        .map(([name, data]) => ({
+            name,
+            logo: data.logo,
+            id: data.id,
+            count: data.count,
+            rating: data.totalNote / data.count
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 4);
+
+    if (topLeagues.length === 0) {
+        return (
+            <p className="text-[10px] text-[#445566] italic font-bold">
+                No leagues watched yet.
+            </p>
+        );
+    }
+
+    return (
+        <div className="space-y-6">
+            {topLeagues.map((league, index) => (
+                <Link
+                    key={league.name}
+                    to={league.id ? `/competitions/${league.id}` : `/matches?competition=${encodeURIComponent(league.name)}`}
+                    className="group relative block cursor-pointer"
+                >
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                            <span className="text-[9px] font-mono text-white/40">0{index + 1}</span>
+                            {league.logo && (
+                                <img src={league.logo} alt="" className="w-4 h-4 object-contain" />
+                            )}
+                            <span className="text-[10px] font-black text-white uppercase italic tracking-widest">{league.name}</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-kickr italic">{league.rating.toFixed(1)}</span>
+                    </div>
+                    <div className="flex justify-between mt-1 pt-1 border-t border-white/5">
+                        <span className="text-[7px] font-mono text-white/40 uppercase tracking-widest">Popularity</span>
+                        <span className="text-[7px] font-mono text-white/40 uppercase tracking-widest">{league.count} matches</span>
+                    </div>
                 </Link>
             ))}
         </div>

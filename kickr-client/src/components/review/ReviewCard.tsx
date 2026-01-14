@@ -53,9 +53,6 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
 
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                         <img src={review.match.homeLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10 transition-all" alt="" />
-                        <span className="text-[10px] sm:text-[11px] font-black text-white/60 group-hover/review:text-white uppercase italic tracking-tighter truncate z-10 transition-colors">
-                            {review.match.homeTeam}
-                        </span>
                     </div>
 
                     <div className="flex flex-col items-center px-4 sm:px-8 z-10">
@@ -67,9 +64,6 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                     </div>
 
                     <div className="flex items-center gap-3 flex-1 min-w-0 justify-end">
-                        <span className="text-[10px] sm:text-[11px] font-black text-white/60 group-hover/review:text-white uppercase italic tracking-tighter truncate z-10 transition-colors text-right">
-                            {review.match.awayTeam}
-                        </span>
                         <img src={review.match.awayLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain drop-shadow-lg z-10 transition-all" alt="" />
                     </div>
                 </Link>
@@ -127,7 +121,6 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                                 <Link to={`/user/${review.user?.id}`} className="text-white/60 text-[9px] sm:text-[10px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate z-20">
                                     {review.user?.name}
                                 </Link>
-                                <span className="text-[7px] text-[#445566] font-bold uppercase tracking-widest">Sector ID: {review.user?.id ? String(review.user.id).substring(0, 8) : 'UNK-000'}</span>
                             </div>
                         </div>
 
