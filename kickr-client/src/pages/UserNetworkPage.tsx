@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../hooks/useUser';
 import { useFollowers, useFollowing } from '../hooks/useFollow';
+import { useAuth } from '../hooks/useAuth';
 import { motion } from 'framer-motion';
 
 interface UserNetworkPageProps {
@@ -10,172 +11,194 @@ interface UserNetworkPageProps {
 
 export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
     const { id } = useParams<{ id: string }>();
+    const { user: currentUser } = useAuth();
     const { data: profileUser, isLoading: isUserLoading } = useUser(id);
     const [currentPage, setCurrentPage] = useState(0);
+    const pageSize = 12; // 3 columns * 4 rows
+
     const { data: pageData, isLoading: isNetworkLoading } =
-        type === 'followers' ? useFollowers(id, currentPage, 20) : useFollowing(id, currentPage, 20);
+        type === 'followers'
+            ? useFollowers(id, currentPage, pageSize)
+            : useFollowing(id, currentPage, pageSize);
 
     const networkUsers = pageData?.content || [];
-
 
     if (isUserLoading || isNetworkLoading) return <LoadingState />;
     if (!profileUser) return <NotFoundState />;
 
     return (
         <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
-            <div className="max-w-4xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header Context */}
-                <div className="flex items-start gap-6 mb-16 border-b border-white/5 pb-10">
-                    <Link to={`/user/${profileUser.id}`} className="group relative">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl font-black text-kickr overflow-hidden transition-transform group-hover:scale-105">
-                            {profileUser.avatarUrl ? (
-                                <img src={profileUser.avatarUrl} alt={profileUser.name} className="w-full h-full object-cover" />
-                            ) : (
-                                profileUser.name[0].toUpperCase()
-                            )}
+                <header className="mb-16">
+                    <div className="flex items-center gap-4 mb-6">
+                        <div className="h-[2px] w-6 bg-kickr" />
+                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] italic">Network</span>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
+                        <div>
+                            <h1 className="text-3xl md:text-5xl font-black text-white italic tracking-tighter uppercase mb-2">
+                                {type === 'followers' ? 'Followers' : 'Following'}
+                            </h1>
+                            <p className="text-white/40 uppercase tracking-[0.25em] text-[10px] font-black italic">
+                                Connections for <span className="text-kickr">{profileUser.name}</span>
+                            </p>
                         </div>
-                    </Link>
-                    <div className="flex-1">
-                        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase italic display-font mb-1">
-                            {type === 'followers' ? 'Followers of' : 'Following by'} <span className="text-kickr break-all">{profileUser.name}</span>
-                        </h1>
-                        <nav className="flex items-center gap-4 mt-2">
+
+                        <nav className="flex items-center gap-2 bg-black/20 p-1 rounded-sm border border-white/5">
                             <Link
                                 to={`/user/${id}/following`}
-                                className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${type === 'following' ? 'text-kickr' : 'text-[#445566] hover:text-white'}`}
+                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-black' : 'text-white/40 hover:text-white'}`}
                             >
-                                Following ({profileUser.followingCount})
+                                Following [{profileUser.followingCount}]
                             </Link>
-                            <span className="text-white/10 text-[8px]">●</span>
                             <Link
                                 to={`/user/${id}/followers`}
-                                className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${type === 'followers' ? 'text-kickr' : 'text-[#445566] hover:text-white'}`}
+                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'followers' ? 'bg-kickr text-black' : 'text-white/40 hover:text-white'}`}
                             >
-                                Followers ({profileUser.followersCount})
+                                Followers [{profileUser.followersCount}]
                             </Link>
                         </nav>
                     </div>
-                </div>
+                </header>
 
-                {/* Users List */}
-                <div className="space-y-4">
+                {/* Users Grid */}
+                <div>
                     {networkUsers && networkUsers.length > 0 ? (
-                        <div className="grid grid-cols-1 gap-4">
-                            {networkUsers.map((user: any, index: number) => (
-                                <motion.div
-                                    key={user.id}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.05 }}
-                                >
-                                    <Link
-                                        to={`/user/${user.id}`}
-                                        className="flex items-center justify-between p-4 bg-[#1b2228]/40 border border-white/5 rounded-xl hover:bg-[#1b2228] hover:border-kickr/30 transition-all group"
+                        <>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {networkUsers.map((user: any, index: number) => (
+                                    <motion.div
+                                        key={user.id}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.05 }}
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-white/10 flex items-center justify-center text-sm font-black text-kickr uppercase group-hover:scale-105 transition-transform overflow-hidden">
-                                                {user.avatarUrl ? (
-                                                    <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
-                                                ) : (
-                                                    user.name[0]
-                                                )}
-                                            </div>
-                                            <div>
-                                                <h3 className="text-white font-black italic tracking-tight group-hover:text-kickr transition-colors">
-                                                    {user.name}
-                                                </h3>
-                                                <p className="text-[9px] text-[#445566] font-bold uppercase tracking-widest mt-0.5">
-                                                    Joined {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex items-center gap-4 sm:gap-8 pr-2 sm:pr-4">
-                                            <div className="flex flex-col items-center">
-                                                <span className="text-sm sm:text-lg font-black text-white italic leading-none">{user.matchesCount}</span>
-                                                <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Logs</span>
-                                            </div>
-                                            <div className="flex flex-col items-center">
-                                                <span className="text-sm sm:text-lg font-black text-white italic leading-none">{user.followersCount}</span>
-                                                <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Fans</span>
-                                            </div>
-                                            <div className="flex flex-col items-center hidden sm:flex">
-                                                <span className="text-sm sm:text-lg font-black text-white italic leading-none">{user.followingCount}</span>
-                                                <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em] mt-1">Following</span>
-                                            </div>
-                                            <div className="ml-2 sm:ml-4 text-kickr opacity-0 lg:group-hover:opacity-100 transition-opacity translate-x-4 lg:group-hover:translate-x-0 transition-transform hidden sm:block">
-                                                →
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="py-20 text-center bg-white/[0.02] border border-dashed border-white/10 rounded-2xl">
-                            <p className="text-[#445566] text-sm font-bold uppercase tracking-widest italic">
-                                {type === 'followers' ? "No followers yet." : "Not following anyone yet."}
-                            </p>
-                        </div>
-                    )}
-
-                    {/* Pagination Controls */}
-                    {!isNetworkLoading && pageData && pageData.totalPages > 1 && (
-                        <div className="mt-16 flex items-center justify-center gap-4">
-                            <button
-                                onClick={() => {
-                                    setCurrentPage(prev => Math.max(0, prev - 1));
-                                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                                }}
-                                disabled={pageData.first}
-                                className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                            >
-                                Previous
-                            </button>
-
-                            <div className="flex items-center gap-2">
-                                {[...Array(pageData.totalPages)].map((_, i) => {
-                                    if (pageData.totalPages > 5) {
-                                        if (i < currentPage - 2 && i !== 0) return null;
-                                        if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                        if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-[#334455]">...</span>;
-                                        if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-[#334455]">...</span>;
-                                    }
-
-                                    return (
-                                        <button
-                                            key={i}
-                                            onClick={() => {
-                                                setCurrentPage(i);
-                                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                                            }}
-                                            className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                                ? 'bg-kickr text-black'
-                                                : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
-                                                }`}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    );
-                                })}
+                                        <UserCard user={user} isMe={user.id === currentUser?.id} />
+                                    </motion.div>
+                                ))}
                             </div>
 
-                            <button
-                                onClick={() => {
-                                    setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1));
-                                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                                }}
-                                disabled={pageData.last}
-                                className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                            >
-                                Next
-                            </button>
+                            {/* Pagination Controls */}
+                            {!isNetworkLoading && pageData && pageData.totalPages > 1 && (
+                                <div className="mt-16 flex items-center justify-center gap-4">
+                                    <button
+                                        onClick={() => {
+                                            setCurrentPage(prev => Math.max(0, prev - 1));
+                                            window.scrollTo({ top: 300, behavior: 'smooth' });
+                                        }}
+                                        disabled={pageData.first}
+                                        className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                    >
+                                        Previous
+                                    </button>
+
+                                    <div className="flex items-center gap-2">
+                                        {[...Array(pageData.totalPages)].map((_, i) => {
+                                            if (pageData.totalPages > 5) {
+                                                if (i < currentPage - 2 && i !== 0) return null;
+                                                if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
+                                                if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-white/20">...</span>;
+                                                if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-white/20">...</span>;
+                                            }
+
+                                            return (
+                                                <button
+                                                    key={i}
+                                                    onClick={() => {
+                                                        setCurrentPage(i);
+                                                        window.scrollTo({ top: 300, behavior: 'smooth' });
+                                                    }}
+                                                    className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                                        ? 'bg-kickr text-black'
+                                                        : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:border-white/10'
+                                                        }`}
+                                                >
+                                                    {i + 1}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <button
+                                        onClick={() => {
+                                            setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1));
+                                            window.scrollTo({ top: 300, behavior: 'smooth' });
+                                        }}
+                                        disabled={pageData.last}
+                                        className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="py-20 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-sm">
+                            <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.4em] italic leading-none">
+                                {type === 'followers' ? "No followers yet." : "Not following anyone yet."}
+                            </p>
                         </div>
                     )}
                 </div>
             </div>
         </main>
+    );
+};
+
+const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
+    return (
+        <Link
+            to={`/user/${user.id}`}
+            className="group relative bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden hover:border-white/10 transition-all flex flex-col"
+        >
+            <div className="p-5 flex flex-col">
+                {isMe && (
+                    <div className="absolute top-2 right-2">
+                        <span className="bg-kickr text-black text-[7px] font-black uppercase tracking-tight px-1.5 py-0.5 rounded-sm">
+                            You
+                        </span>
+                    </div>
+                )}
+
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 rounded-sm bg-black/40 border border-white/5 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
+                        {user.avatarUrl ? (
+                            <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                        ) : (
+                            user.name[0].toUpperCase()
+                        )}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                        <h3 className="text-[13px] font-black text-white uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                            {user.name}
+                        </h3>
+                        <p className="text-[8px] text-white/30 font-bold uppercase tracking-widest mt-1">
+                            Joined {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-around pt-4 border-t border-white/5 gap-2">
+                    <div className="flex flex-col items-center">
+                        <span className="text-base font-black text-white italic tracking-tighter leading-none">
+                            {user.matchesCount || 0}
+                        </span>
+                        <span className="text-[7px] font-bold text-white/30 uppercase tracking-[0.2em] leading-none mt-1">Logs</span>
+                    </div>
+                    <div className="w-px h-6 bg-white/5"></div>
+                    <div className="flex flex-col items-center">
+                        <span className="text-base font-black text-white italic tracking-tighter leading-none">
+                            {user.followersCount || 0}
+                        </span>
+                        <span className="text-[7px] font-bold text-white/30 uppercase tracking-[0.2em] leading-none mt-1">Followers</span>
+                    </div>
+                </div>
+            </div>
+        </Link>
     );
 };
 
@@ -191,8 +214,8 @@ const LoadingState = () => (
 const NotFoundState = () => (
     <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center text-center">
         <div>
-            <h2 className="text-4xl font-black text-white mb-4 italic tracking-tighter uppercase">User Not Found</h2>
-            <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Go Home</Link>
+            <h2 className="text-4xl font-black text-white mb-8 italic tracking-tighter uppercase">Signal Lost</h2>
+            <Link to="/" className="text-black bg-kickr font-black uppercase tracking-widest text-[10px] px-8 py-4 rounded-sm hover:brightness-110 transition-all italic">Restore Feed</Link>
         </div>
     </div>
 );

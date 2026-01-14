@@ -144,7 +144,7 @@ export const UserDetailPage = () => {
                         />
                         <div className="w-px h-8 bg-white/10" />
                         <StatHorizontal
-                            label="Fans"
+                            label="Followers"
                             value={user.followersCount.toString()}
                             onClick={() => navigate(`/user/${id}/followers`)}
                         />
