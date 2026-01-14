@@ -60,6 +60,14 @@ public class UserMatchService {
     }
 
     /**
+     * Récupère les évaluations les plus aimées globalement.
+     */
+    public List<UserMatch> getPopularReviews(int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return userMatchRepository.findPopularReviews(pageable);
+    }
+
+    /**
      * Récupère toutes les évaluations de matchs.
      *
      * @return la liste de tous les {@link UserMatch} enregistrés

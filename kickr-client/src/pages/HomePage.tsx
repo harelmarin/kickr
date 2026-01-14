@@ -202,19 +202,21 @@ export default function HomePage() {
               ) : (
                 <div className="space-y-3">
                   {activeGlobal.map((review: UserMatch) => (
-                    <Link
+                    <div
                       key={review.id}
-                      to={`/reviews/${review.id}`}
-                      className="group flex items-center justify-between px-4 py-2 bg-white/[0.02] border border-white/5 hover:border-kickr/20 hover:bg-white/[0.04] transition-all rounded-sm gap-4"
+                      className="group relative flex items-center justify-between px-4 py-2 bg-white/[0.02] border border-white/5 hover:border-kickr/20 hover:bg-white/[0.04] transition-all rounded-sm gap-4"
                     >
-                      <div className="flex items-center gap-6 flex-1 min-w-0">
+                      {/* Review Link Overlay */}
+                      <Link to={`/reviews/${review.id}`} className="absolute inset-0 z-0" />
+
+                      <div className="flex items-center gap-6 flex-1 min-w-0 relative z-10 pointer-events-none">
                         {/* User ID / Avatar */}
-                        <div className="flex items-center gap-3 w-32 flex-shrink-0">
-                          <div className="w-6 h-6 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center overflow-hidden">
+                        <Link to={`/user/${review.user?.id}`} className="flex items-center gap-3 w-32 flex-shrink-0 pointer-events-auto">
+                          <div className="w-6 h-6 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center overflow-hidden hover:border-kickr/40 transition-colors">
                             {review.user?.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <span className="text-kickr text-[10px] font-black">{review.user?.name[0]}</span>}
                           </div>
-                          <span className="text-[10px] font-black text-white/60 group-hover:text-white truncate uppercase italic">{review.user?.name}</span>
-                        </div>
+                          <span className="text-[10px] font-black text-white/60 hover:text-white truncate uppercase italic transition-colors">{review.user?.name}</span>
+                        </Link>
 
                         {/* Match Info */}
                         <div className="flex items-center gap-4 flex-1 min-w-0 border-l border-white/5 pl-6">
@@ -222,14 +224,14 @@ export default function HomePage() {
                             <img src={review.match.homeLogo} className="w-5 h-5 object-contain" alt="" />
                             <img src={review.match.awayLogo} className="w-5 h-5 object-contain border-l border-[#0a0a0a]" alt="" />
                           </div>
-                          <p className="text-[10px] font-black text-white/80 group-hover:text-kickr uppercase italic truncate leading-none">
+                          <p className="text-[10px] font-black text-white/80 uppercase italic truncate leading-none">
                             {review.match.homeTeam} <span className="text-[#334455] not-italic font-bold normal-case mx-1">vs</span> {review.match.awayTeam}
                           </p>
                           <span className="hidden md:block text-[8px] font-black text-white/40 uppercase tracking-widest">{review.match.competition}</span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-6 flex-shrink-0">
+                      <div className="flex items-center gap-6 flex-shrink-0 relative z-10 pointer-events-none">
                         {/* Rating */}
                         <div className="flex items-center gap-1.5 bg-kickr/5 px-3 py-1 border border-kickr/10">
                           <span className="text-kickr text-[10px] font-black italic">{review.note.toFixed(1)}</span>
@@ -242,7 +244,7 @@ export default function HomePage() {
                           </span>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               )}

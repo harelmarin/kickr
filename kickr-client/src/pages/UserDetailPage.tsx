@@ -165,7 +165,7 @@ export const UserDetailPage = () => {
                         {/* Diary Section */}
                         <section id="diary-entries" className="space-y-8 bg-white/[0.02] border border-white/5 p-6 rounded-sm">
                             <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Last Review</Link>
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Diary</Link>
                                 <span className="text-[10px] font-black text-white/40 uppercase tracking-widest leading-none">{pageData?.totalElements || 0} logs</span>
                             </div>
 
@@ -192,12 +192,12 @@ export const UserDetailPage = () => {
                         {/* Top Teams & Leagues Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
-                                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Top Teams</h3>
+                                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">{user.name}'s Top Teams</h3>
                                 <MostWatchedTeams reviews={pageData?.content || []} />
                             </section>
 
                             <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
-                                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Top Leagues</h3>
+                                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">{user.name}'s Top Leagues</h3>
                                 <MostWatchedLeagues reviews={pageData?.content || []} />
                             </section>
                         </div>

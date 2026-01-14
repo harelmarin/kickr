@@ -473,9 +473,9 @@ export const MatchDetailPage = () => {
                 <div className="w-20 h-20 bg-kickr/10 rounded-full flex items-center justify-center mb-8 border border-kickr/30">
                   <span className="text-4xl">⚽</span>
                 </div>
-                <h3 className="text-3xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">Intelligence Logged</h3>
+                <h3 className="text-3xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">Match Logged</h3>
                 <p className="text-[#99aabb] text-[13px] mb-10 leading-relaxed font-medium">
-                  Your tactical report is now part of the Kickr network. Generate your card to share your session on social media!
+                  Your tactical report is now part of the Kickr network. Export your Review Poster to share your session on social media!
                 </p>
 
                 <div className="w-full space-y-4">

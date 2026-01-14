@@ -76,7 +76,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                             {match.competition}
                         </span>
                         <span className="text-white/10 text-[8px]">●</span>
-                        <span className="text-[#5c6470] text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em]">
+                        <span className="text-white/40 text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em]">
                             {dateStr}
                         </span>
                         {!isFinished && (

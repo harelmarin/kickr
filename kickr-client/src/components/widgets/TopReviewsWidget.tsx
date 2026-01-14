@@ -20,32 +20,37 @@ export const TopReviewsWidget = () => {
                     ))
                 ) : popularReviews && popularReviews.length > 0 ? (
                     popularReviews.slice(0, 4).map((review) => (
-                        <Link key={review.id} to={`/user/${review.user.id}/match/${review.match.id}`} className="block group">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="w-4 h-4 rounded-full overflow-hidden bg-white/10">
-                                    {review.user.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-white/10 flex items-center justify-center text-[8px]">{review.user.name[0]}</div>}
-                                </div>
-                                <span className="text-[9px] font-bold text-white/40 uppercase tracking-wider">{review.user.name || 'Analyst'}</span>
-                                <span className="text-[9px] font-black text-kickr ml-auto">{review.note.toFixed(1)}</span>
+                        <div key={review.id} className="relative group">
+                            {/* Review Link Overlay */}
+                            <Link to={`/reviews/${review.id}`} className="absolute inset-0 z-0" />
+
+                            <div className="flex items-center gap-2 mb-2 relative z-10 pointer-events-none">
+                                <Link to={`/user/${review.user?.id}`} className="w-4 h-4 rounded-sm overflow-hidden bg-white/10 border border-white/5 pointer-events-auto hover:border-kickr/40 transition-colors">
+                                    {review.user.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-white/10 flex items-center justify-center text-[7px] font-black italic text-kickr">{review.user.name[0]}</div>}
+                                </Link>
+                                <Link to={`/user/${review.user?.id}`} className="text-[9px] font-black text-white/40 uppercase tracking-widest hover:text-white transition-colors italic pointer-events-auto">
+                                    {review.user.name || 'Analyst'}
+                                </Link>
+                                <span className="text-[9px] font-black text-kickr ml-auto italic">{review.note.toFixed(1)}</span>
                             </div>
 
-                            <div className="bg-black/20 border border-white/5 p-3 rounded-sm group-hover:border-white/10 transition-colors">
+                            <div className="bg-black/20 border border-white/5 p-3 rounded-sm group-hover:border-kickr/20 transition-all relative z-10 pointer-events-none">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className="flex -space-x-2">
-                                        <img src={review.match.homeLogo} className="w-6 h-6 object-contain z-10" alt="" />
-                                        <img src={review.match.awayLogo} className="w-6 h-6 object-contain opacity-70" alt="" />
+                                    <div className="flex -space-x-1.5">
+                                        <img src={review.match.homeLogo} className="w-5 h-5 object-contain z-10" alt="" />
+                                        <img src={review.match.awayLogo} className="w-5 h-5 object-contain opacity-50" alt="" />
                                     </div>
-                                    <span className="text-[9px] font-black text-white uppercase italic tracking-tighter truncate max-w-[140px]">
-                                        {review.match.homeTeam} vs {review.match.awayTeam}
+                                    <span className="text-[9px] font-black text-white/80 uppercase italic tracking-tighter truncate leading-none group-hover:text-kickr transition-colors">
+                                        {review.match.homeTeam} VS {review.match.awayTeam}
                                     </span>
                                 </div>
                                 {review.comment && (
-                                    <p className="text-[10px] text-white/60 line-clamp-2 italic leading-relaxed">
+                                    <p className="text-[10px] text-white/40 line-clamp-2 italic leading-relaxed font-medium">
                                         "{review.comment}"
                                     </p>
                                 )}
                             </div>
-                        </Link>
+                        </div>
                     ))
                 ) : (
                     <p className="text-[10px] text-white/20 italic">No reviews yet.</p>

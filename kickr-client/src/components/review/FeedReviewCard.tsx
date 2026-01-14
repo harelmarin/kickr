@@ -55,8 +55,8 @@ export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
                 )}
 
                 <div className="mt-auto flex items-center justify-between">
-                    <span className="text-[7px] font-bold text-white/20 uppercase tracking-[0.2em] font-mono">
-                        // {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
+                    <span className="text-[9px] font-bold text-white/60 uppercase tracking-widest">
+                        {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                     </span>
                     <Link
                         to={`/reviews/${review.id}`}

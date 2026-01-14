@@ -92,9 +92,8 @@ export const userMatchService = {
     },
 
     getPopular: async (limit = 10): Promise<UserMatch[]> => {
-        const response = await api.get<any[]>(`/user_match/latest?limit=${limit}`);
-        const reviews = response.data.map(mapApiResponseToUserMatch);
-        return reviews.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
+        const response = await api.get<any[]>(`/user_match/popular?limit=${limit}`);
+        return response.data.map(mapApiResponseToUserMatch);
     },
 
     update: async (id: string, dto: UpdateUserMatchDto): Promise<UserMatch> => {

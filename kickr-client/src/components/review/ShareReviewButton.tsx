@@ -138,7 +138,7 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                     )}
                     {variant === 'full' && (
                         <span className="truncate hidden sm:block">
-                            Generate Tactical Card
+                            Export Review Poster
                         </span>
                     )}
                 </button>

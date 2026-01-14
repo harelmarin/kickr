@@ -63,6 +63,19 @@ public class UserMatchController {
                                 .toList();
         }
 
+        @Operation(summary = "Récupère les évaluations les plus populaires")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Liste des évaluations populaires")
+        })
+        @RateLimiter(name = "userMatchRateLimiter")
+        @GetMapping("/popular")
+        public List<UserMatchFullDto> getPopularReviews(
+                        @Parameter(description = "Nombre maximum d'évaluations", example = "10") @RequestParam(defaultValue = "10") int limit) {
+                return userMatchService.getPopularReviews(limit).stream()
+                                .map(UserMatchFullDto::fromEntity)
+                                .toList();
+        }
+
         @Operation(summary = "Récupère toutes les évaluations faites par un utilisateur donné")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Liste des évaluations de l'utilisateur"),
