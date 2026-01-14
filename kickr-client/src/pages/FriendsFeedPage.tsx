@@ -14,7 +14,7 @@ export const FriendsFeedPage = () => {
     const reviews = pageData?.content || [];
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
+        <main className="min-h-screen bg-[#14181c] py-20 px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-20 text-center md:text-left">
                     <div className="flex items-center justify-center md:justify-start gap-4 mb-4">

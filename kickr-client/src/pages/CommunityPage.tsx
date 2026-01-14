@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { UserCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { EmptyState } from '../components/ui/EmptyState';
+import { TopTeamsWidget } from '../components/widgets/TopTeamsWidget';
+import { TopReviewsWidget } from '../components/widgets/TopReviewsWidget';
 
 export const CommunityPage = () => {
     const [currentPage, setCurrentPage] = useState(0);
@@ -88,7 +90,7 @@ export const CommunityPage = () => {
                                             <button
                                                 key={s}
                                                 onClick={() => setSortBy(s)}
-                                                className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === s ? 'bg-kickr text-white' : 'text-white/40 hover:text-white/60'}`}
+                                                className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === s ? 'bg-kickr text-black' : 'text-white/40 hover:text-white/60'}`}
                                             >
                                                 {s}
                                             </button>
@@ -121,80 +123,91 @@ export const CommunityPage = () => {
                     </div>
                 </header>
 
-                <section className="pb-32">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {isLoading ? (
-                            Array.from({ length: 8 }).map((_, i) => <UserCardSkeleton key={i} />)
-                        ) : (
-                            filteredUsers?.map((user) => (
-                                <UserCard key={user.id} user={user} isMe={user.id === currentUser?.id} />
-                            ))
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    {/* Main Content */}
+                    <div className="lg:col-span-8">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic mb-8">All Tacticians</h2>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {isLoading ? (
+                                Array.from({ length: 8 }).map((_, i) => <UserCardSkeleton key={i} />)
+                            ) : (
+                                filteredUsers?.map((user) => (
+                                    <UserCard key={user.id} user={user} isMe={user.id === currentUser?.id} />
+                                ))
+                            )}
+                        </div>
+
+                        {!isLoading && pageData && pageData.totalPages > 1 && (
+                            <div className="mt-16 flex items-center justify-center gap-4">
+                                <button
+                                    onClick={() => {
+                                        setCurrentPage(prev => Math.max(0, prev - 1));
+                                        window.scrollTo({ top: 300, behavior: 'smooth' });
+                                    }}
+                                    disabled={pageData.first}
+                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                >
+                                    Previous
+                                </button>
+
+                                <div className="flex items-center gap-2">
+                                    {[...Array(pageData.totalPages)].map((_, i) => {
+                                        if (pageData.totalPages > 5) {
+                                            if (i < currentPage - 2 && i !== 0) return null;
+                                            if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
+                                            if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-white/20">...</span>;
+                                            if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-white/20">...</span>;
+                                        }
+
+                                        return (
+                                            <button
+                                                key={i}
+                                                onClick={() => {
+                                                    setCurrentPage(i);
+                                                    window.scrollTo({ top: 300, behavior: 'smooth' });
+                                                }}
+                                                className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                                    ? 'bg-kickr text-black'
+                                                    : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:border-white/10'
+                                                    }`}
+                                            >
+                                                {i + 1}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1));
+                                        window.scrollTo({ top: 300, behavior: 'smooth' });
+                                    }}
+                                    disabled={pageData.last}
+                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )}
+
+                        {!isLoading && filteredUsers.length === 0 && (
+                            <EmptyState
+                                icon="👤"
+                                title="No tacticians identified"
+                                description="No records match this signature. Try resetting your surveillance parameters."
+                                actionLabel="Reset Surveillance"
+                                onAction={() => setSearchQuery('')}
+                            />
                         )}
                     </div>
 
-                    {!isLoading && pageData && pageData.totalPages > 1 && (
-                        <div className="mt-16 flex items-center justify-center gap-4">
-                            <button
-                                onClick={() => {
-                                    setCurrentPage(prev => Math.max(0, prev - 1));
-                                    window.scrollTo({ top: 300, behavior: 'smooth' });
-                                }}
-                                disabled={pageData.first}
-                                className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                            >
-                                Previous
-                            </button>
-
-                            <div className="flex items-center gap-2">
-                                {[...Array(pageData.totalPages)].map((_, i) => {
-                                    if (pageData.totalPages > 5) {
-                                        if (i < currentPage - 2 && i !== 0) return null;
-                                        if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                        if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-white/20">...</span>;
-                                        if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-white/20">...</span>;
-                                    }
-
-                                    return (
-                                        <button
-                                            key={i}
-                                            onClick={() => {
-                                                setCurrentPage(i);
-                                                window.scrollTo({ top: 300, behavior: 'smooth' });
-                                            }}
-                                            className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                                ? 'bg-kickr text-black'
-                                                : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:border-white/10'
-                                                }`}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-
-                            <button
-                                onClick={() => {
-                                    setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1));
-                                    window.scrollTo({ top: 300, behavior: 'smooth' });
-                                }}
-                                disabled={pageData.last}
-                                className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    )}
-
-                    {!isLoading && filteredUsers.length === 0 && (
-                        <EmptyState
-                            icon="👤"
-                            title="No tacticians identified"
-                            description="No records match this signature. Try resetting your surveillance parameters."
-                            actionLabel="Reset Surveillance"
-                            onAction={() => setSearchQuery('')}
-                        />
-                    )}
-                </section>
+                    {/* Sidebar */}
+                    <div className="lg:col-span-4 space-y-8">
+                        <TopTeamsWidget />
+                        <TopReviewsWidget />
+                    </div>
+                </div>
             </div>
         </main>
     );

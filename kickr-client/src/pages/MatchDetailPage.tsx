@@ -89,7 +89,7 @@ export const MatchDetailPage = () => {
   const isPast = match.homeScore !== null;
 
   return (
-    <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
+    <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
       <div className="relative h-[600px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex">
           <div className="flex-1 relative overflow-hidden">
@@ -100,7 +100,7 @@ export const MatchDetailPage = () => {
           </div>
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/70 to-[#0a0b0d]/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-[#14181c]/70 to-[#14181c]/40"></div>
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
       </div>
 

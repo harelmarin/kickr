@@ -68,7 +68,7 @@ export const UserMatchesPage = () => {
     }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
+        <main className="min-h-screen bg-[#14181c] py-20 px-6">
             <div className="max-w-7xl mx-auto">
 
                 <header className="mb-20">
@@ -257,7 +257,7 @@ export const UserMatchesPage = () => {
 };
 
 const ErrorState = () => (
-    <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#0a0b0d]">
+    <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#14181c]">
         <div className="max-w-md">
             <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Scouting Report Error</h2>
             <p className="text-[#667788] text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
