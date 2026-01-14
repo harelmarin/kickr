@@ -94,72 +94,57 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
     }
 
     return (
-        <Link to={`/matches/${match.id}`} className={`group block ${className}`}>
+        <Link to={`/matches/${match.id}`} className={`group block relative overflow-hidden bg-white/[0.02] border border-white/5 hover:border-kickr/20 hover:bg-white/[0.04] transition-all rounded-sm ${className}`}>
             <motion.div
-                whileHover={{ x: 4 }}
-                className={`bg-[#14181c] border border-white/5 rounded-xl transition-all hover:bg-white/[0.03] hover:border-white/10 flex items-center ${isCompact ? 'p-1.5 py-2 sm:p-2 sm:py-3' : 'p-2 sm:p-4'
-                    }`}
+                whileHover={{ x: 2 }}
+                className={`flex items-center justify-between px-4 py-2 gap-4 ${isCompact ? 'h-10' : 'h-12'}`}
             >
-                <div className={`flex flex-col items-start flex-shrink-0 ${isCompact ? 'w-[40px] sm:w-[45px]' : 'w-[45px] sm:w-[65px]'}`}>
-                    <span className={`${isCompact ? 'text-[8px] sm:text-[9px]' : 'text-[8.5px] sm:text-[10px]'} font-black text-kickr uppercase tracking-tighter truncate w-full`}>
-                        {isFinished ? 'FT' : timeStr}
-                    </span>
-                    <span className="text-[7px] sm:text-[8px] font-bold text-white/60 uppercase tracking-[0.1em] leading-none mt-0.5 sm:mt-1">
-                        {dateStr}
-                    </span>
-                </div>
-
-                <div className={`flex-1 flex items-center min-w-0 ${isCompact ? 'gap-0.5 sm:gap-1' : 'gap-1.5 px-0.5 sm:gap-4 sm:px-2'}`}>
-                    <div className="flex items-center justify-end gap-1.5 sm:gap-2 flex-1 min-w-0">
-                        <span className={`text-[8.5px] sm:text-[9.5px] font-black text-white uppercase tracking-tight text-right truncate ${isCompact ? 'hidden sm:block' : 'block'
-                            }`}>
-                            {match.homeTeam}
+                <div className="flex items-center gap-6 flex-1 min-w-0">
+                    {/* Time / Status info */}
+                    <div className="flex items-center gap-3 w-16 sm:w-20 flex-shrink-0">
+                        <span className={`text-[10px] font-black uppercase italic ${isFinished ? 'text-kickr/60' : 'text-kickr animate-pulse'}`}>
+                            {isFinished ? 'FT' : timeStr}
                         </span>
-                        <div className={`${isCompact ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-5 h-5 sm:w-8 sm:h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
-                            <img src={match.homeLogo} alt="" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform" />
-                        </div>
                     </div>
 
-                    <div className={`${isCompact ? 'w-[30px] sm:w-[35px]' : 'w-[40px] sm:w-[60px]'} flex flex-col items-center flex-shrink-0`}>
+                    {/* Combatants Info */}
+                    <div className="flex items-center gap-3 flex-1 min-w-0 border-l border-white/5 pl-6">
+                        <div className="flex -space-x-1.5 flex-shrink-0">
+                            <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt="" />
+                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-[#0a0a0a]" alt="" />
+                        </div>
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <span className="text-[10px] sm:text-[11px] font-black text-white/80 uppercase italic truncate max-w-[45%]">
+                                {match.homeTeam}
+                            </span>
+                            <span className="text-[8px] font-bold text-kickr/20 italic flex-shrink-0">vs</span>
+                            <span className="text-[10px] sm:text-[11px] font-black text-white/80 uppercase italic truncate max-w-[45%]">
+                                {match.awayTeam}
+                            </span>
+                        </div>
+                        <span className="hidden md:block text-[8px] font-black text-white/20 uppercase tracking-[0.2em] ml-auto pl-4">{match.competition}</span>
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-6 flex-shrink-0">
+                    {/* Average Rating (if exists) */}
+                    {match.averageRating !== undefined && match.averageRating !== null && !isCompact && (
+                        <div className="hidden sm:flex items-center gap-1.5 bg-kickr/5 px-2 py-0.5 border border-kickr/10">
+                            <span className="text-kickr text-[9px] font-black italic">{match.averageRating.toFixed(1)}</span>
+                        </div>
+                    )}
+
+                    {/* Final Score or Date */}
+                    <div className="w-20 text-right">
                         {isFinished ? (
-                            <div className="flex items-center gap-1">
-                                <span className={`${isCompact ? 'text-[10px] sm:text-xs' : 'text-sm sm:text-base'} font-black italic display-font ${match.homeScore! > match.awayScore! ? 'text-white' : 'text-[#445566]'}`}>
-                                    {match.homeScore}
-                                </span>
-                                <span className="text-[9px] text-white/20">-</span>
-                                <span className={`${isCompact ? 'text-[10px] sm:text-xs' : 'text-sm sm:text-base'} font-black italic display-font ${match.awayScore! > match.homeScore! ? 'text-white' : 'text-[#445566]'}`}>
-                                    {match.awayScore}
-                                </span>
-                            </div>
+                            <span className="text-[14px] sm:text-[16px] font-black text-white/90 italic font-mono group-hover:text-kickr transition-colors tracking-tighter">
+                                {match.homeScore}-{match.awayScore}
+                            </span>
                         ) : (
-                            <span className={`${isCompact ? 'text-[7px] sm:text-[8px]' : 'text-[9px] sm:text-[10px]'} font-black text-[#445566] uppercase italic w-full text-center transition-colors group-hover:text-kickr`}>VS</span>
+                            <span className="text-[9px] font-black text-[#445566] uppercase tracking-widest">{dateStr}</span>
                         )}
-                    </div>
-
-                    <div className="flex items-center justify-start gap-1.5 sm:gap-2 flex-1 min-w-0">
-                        <div className={`${isCompact ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-5 h-5 sm:w-8 sm:h-8'} rounded-full bg-white/5 p-1 flex-shrink-0 flex items-center justify-center`}>
-                            <img src={match.awayLogo} alt="" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform" />
-                        </div>
-                        <span className={`text-[8.5px] sm:text-[9.5px] font-black text-white uppercase tracking-tight text-left truncate ${isCompact ? 'hidden sm:block' : 'block'
-                            }`}>
-                            {match.awayTeam}
-                        </span>
                     </div>
                 </div>
-
-                {!isCompact && (
-                    <div className="flex items-center gap-4 w-[90px] flex-shrink-0 justify-end">
-                        {match.averageRating && (
-                            <div className="flex flex-col items-end">
-                                <div className="flex items-center gap-1">
-                                    <span className="text-xs font-black text-kickr italic">{match.averageRating.toFixed(1)}</span>
-                                    <div className="w-1 h-1 rounded-full bg-kickr"></div>
-                                </div>
-                                <span className="text-[8px] font-bold text-[#445566] uppercase tracking-widest">{match.reviewsCount} REVIEWS</span>
-                            </div>
-                        )}
-                    </div>
-                )}
             </motion.div>
         </Link>
     );

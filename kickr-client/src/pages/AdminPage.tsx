@@ -169,13 +169,13 @@ const UsersTab = () => {
     return (
         <div className="bg-[#14181c] border border-white/5 rounded-2xl overflow-hidden shadow-xl">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr">User Directory</h2>
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Tactician Directory</h2>
                 <input
                     type="text"
                     placeholder="Search systems..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-black/20 border border-white/5 rounded-lg px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64"
+                    className="bg-black/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
                 />
             </div>
             <div className="overflow-x-auto">
@@ -290,14 +290,15 @@ const ReportsTab = () => {
         <div className="space-y-6">
             <div className="grid grid-cols-1 gap-4">
                 {reports.length === 0 ? (
-                    <div className="bg-[#14181c] border border-white/5 rounded-2xl p-20 text-center">
-                        <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em]">All Clear</p>
-                        <p className="text-[#667788] text-xs font-bold uppercase mt-2">No active reports in queue</p>
+                    <div className="bg-[#14181c] border border-white/5 rounded-sm p-32 text-center">
+                        <p className="text-kickr text-[24px] mb-4">🛡️</p>
+                        <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em]">Sector Secured</p>
+                        <p className="text-[#667788] text-[11px] font-bold uppercase mt-2 italic">Zero active incidents detected in current buffer</p>
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-2xl p-6 hover:border-white/10 transition-all">
-                            <div className="flex flex-col sm:flex-row justify-between items-start gap-6">
+                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-8 hover:border-kickr/20 transition-all">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
                                 <div className="space-y-4 flex-1">
                                     <div className="flex items-center gap-3">
                                         <span className={`px-2 py-0.5 rounded-[4px] text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :

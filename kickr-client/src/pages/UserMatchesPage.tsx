@@ -101,53 +101,53 @@ export const UserMatchesPage = () => {
                         )}
                         <div>
                             <h1 className="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase display-font">
-                                {user?.name}'s Matches
+                                Tactical <span className="text-kickr">Diary</span>
                             </h1>
                             <p className="text-[#667788] uppercase tracking-[0.25em] text-[11px] font-bold mt-1">
-                                {pageData?.totalElements || 0} Matches Logged by {user?.name}
+                                Historical log of {pageData?.totalElements || 0} observations by {user?.name}
                             </p>
                         </div>
                     </div>
 
-                    <div className="mt-8 md:mt-12 flex flex-col items-stretch md:items-center justify-between border-y border-kickr/20 py-4 gap-6 section-contrast rounded-xl px-4 md:px-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12 w-full">
+                    <div className="mt-8 md:mt-12 flex flex-col items-stretch md:items-center justify-between border-y border-white/5 py-6 gap-6 section-contrast bg-white/[0.01] px-4 md:px-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-16 w-full">
                             <div className="flex flex-col gap-1.5">
-                                <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Team</span>
+                                <span className="text-[9px] uppercase font-black text-kickr/40 tracking-[0.3em]">Target Entity</span>
                                 <input
                                     type="text"
-                                    placeholder="Search teams..."
+                                    placeholder="Filter by match..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    className="bg-transparent text-[12px] md:text-[11px] font-bold text-white placeholder-[#445566] outline-none w-full"
+                                    className="bg-transparent text-[12px] md:text-[11px] font-bold text-white placeholder-white/10 outline-none w-full uppercase italic"
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-1">
-                                <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
+                            <div className="flex flex-col gap-1.5">
+                                <span className="text-[9px] uppercase font-black text-kickr/40 tracking-[0.3em]">Log Status</span>
                                 <select
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value as any)}
-                                    className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
+                                    className="bg-transparent text-[11px] font-bold text-white/60 focus:text-kickr outline-none cursor-pointer border-none p-0 m-0 uppercase italic"
                                 >
-                                    <option value="all" className="bg-[#14181c]">All Matches</option>
-                                    <option value="finished" className="bg-[#14181c]">Finished</option>
-                                    <option value="upcoming" className="bg-[#14181c]">Upcoming</option>
+                                    <option value="all" className="bg-[#14181c]">All Entries</option>
+                                    <option value="finished" className="bg-[#14181c]">Completed</option>
+                                    <option value="upcoming" className="bg-[#14181c]">Projected</option>
                                 </select>
                             </div>
 
-                            <div className="flex flex-col gap-1">
-                                <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Min Rating</span>
+                            <div className="flex flex-col gap-1.5">
+                                <span className="text-[9px] uppercase font-black text-kickr/40 tracking-[0.3em]">Min Assessment</span>
                                 <select
                                     value={minRating}
                                     onChange={(e) => setMinRating(Number(e.target.value))}
-                                    className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
+                                    className="bg-transparent text-[11px] font-bold text-white/60 focus:text-kickr outline-none cursor-pointer border-none p-0 m-0 uppercase italic"
                                 >
-                                    <option value="0" className="bg-[#14181c]">Any Rating</option>
+                                    <option value="0" className="bg-[#14181c]">No Threshold</option>
                                     <option value="1" className="bg-[#14181c]">1+ Star</option>
                                     <option value="2" className="bg-[#14181c]">2+ Stars</option>
                                     <option value="3" className="bg-[#14181c]">3+ Stars</option>
                                     <option value="4" className="bg-[#14181c]">4+ Stars</option>
-                                    <option value="5" className="bg-[#14181c]">5 Stars Only</option>
+                                    <option value="5" className="bg-[#14181c]">Elite Performance</option>
                                 </select>
                             </div>
                         </div>
