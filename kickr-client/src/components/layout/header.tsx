@@ -72,13 +72,13 @@ export const Header = () => {
               </button>
               <Link
                 to="/register"
-                className="bg-white/5 hover:bg-white/10 text-white/90 border border-white/10 px-3 py-1 md:py-1.5 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 whitespace-nowrap"
+                className="bg-kickr hover:brightness-110 text-black px-4 py-1.5 md:py-2 rounded-sm text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-kickr/10 italic"
               >
                 Sign Up
               </Link>
 
               {authModalMode === 'login' && (
-                <div className="absolute top-full right-0 mt-3 z-50 w-[280px] animate-fade-in shadow-2xl bg-[#1b2228] border border-white/10 rounded-xl overflow-hidden">
+                <div className="absolute top-full right-0 mt-4 z-50 w-[300px] animate-fade-in">
                   <LoginDropdown onSuccess={() => closeAuthModal()} />
                 </div>
               )}

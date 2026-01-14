@@ -15,26 +15,26 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
     const getTypeLabel = (type: string) => {
         switch (type) {
             case 'user':
-                return 'User';
+                return 'TACTICIAN';
             case 'team':
-                return 'Team';
+                return 'CLUB';
             case 'competition':
-                return 'League';
+                return 'LEAGUE';
             default:
-                return type;
+                return type.toUpperCase();
         }
     };
 
     const getTypeBadgeColor = (type: string) => {
         switch (type) {
             case 'user':
-                return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+                return 'text-kickr border-kickr/20 bg-kickr/[0.02]';
             case 'team':
-                return 'bg-green-500/20 text-green-300 border-green-500/30';
+                return 'text-white/40 border-white/5 bg-white/[0.02]';
             case 'competition':
-                return 'bg-purple-500/20 text-purple-300 border-purple-500/30';
+                return 'text-white/40 border-white/5 bg-white/[0.02]';
             default:
-                return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+                return 'text-white/20 border-white/5 bg-white/[0.01]';
         }
     };
 
@@ -52,58 +52,65 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
     };
 
     return (
-        <div className="absolute top-full right-0 mt-2 w-[240px] sm:w-full bg-[#1b2228] border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[350px] overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.7)] overflow-hidden z-50 max-h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
             {isLoading ? (
-                <div className="p-4 text-center text-[#667788]">
-                    <div className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                        <span className="text-xs uppercase tracking-wider">Searching...</span>
+                <div className="p-6 text-center">
+                    <div className="flex flex-col items-center justify-center gap-3">
+                        <div className="w-4 h-4 border-2 border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
+                        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] italic">Scanning...</span>
                     </div>
                 </div>
             ) : results.length === 0 ? (
-                <div className="p-4 text-center text-[#667788]">
-                    <p className="text-xs uppercase tracking-wider">No results for "{query}"</p>
+                <div className="p-6 text-center">
+                    <p className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] italic">No Signal</p>
                 </div>
             ) : (
-                <div className="py-2">
+                <div className="py-1">
+                    <div className="px-4 py-2 mb-1 border-b border-white/5 bg-white/[0.01]">
+                        <span className="text-[7px] font-black text-white/10 uppercase tracking-[0.4em] italic">Database Matches</span>
+                    </div>
                     {results.map((result) => (
                         <Link
                             key={`${result.type}-${result.id}`}
                             to={getResultLink(result)}
-                            className="flex items-center gap-3 px-3 py-3 sm:py-2.5 hover:bg-white/5 transition-colors group"
+                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/[0.04] transition-all group/item relative border-b border-white/[0.02] last:border-none"
                         >
+                            <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-kickr scale-y-0 group-hover/item:scale-y-100 transition-transform origin-center"></div>
+
                             {/* Image or Icon */}
-                            <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                                {result.imageUrl ? (
-                                    <img
-                                        src={result.imageUrl}
-                                        alt={result.name}
-                                        className={`w-full h-full ${result.type === 'user' ? 'object-cover rounded-full bg-[#2c3440]' : 'object-contain'}`}
-                                    />
-                                ) : (
-                                    <div className={`w-full h-full rounded-full bg-[#2c3440] flex items-center justify-center`}>
-                                        <span className="text-sm">
-                                            {result.type === 'user' ? '👤' : result.type === 'team' ? '⚽' : '🏆'}
-                                        </span>
+                            <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 relative">
+                                <div className="absolute inset-0 bg-white/5 rounded-sm p-[1px]">
+                                    <div className="w-full h-full bg-black rounded-sm overflow-hidden flex items-center justify-center">
+                                        {result.imageUrl ? (
+                                            <img
+                                                src={result.imageUrl}
+                                                alt={result.name}
+                                                className={`w-full h-full ${result.type === 'user' ? 'object-cover' : 'object-contain p-1'}`}
+                                            />
+                                        ) : (
+                                            <span className="text-[10px] opacity-20">
+                                                {result.type === 'user' ? '👤' : result.type === 'team' ? '⚽' : '🏆'}
+                                            </span>
+                                        )}
                                     </div>
-                                )}
+                                </div>
                             </div>
 
                             {/* Content */}
                             <div className="flex-1 min-w-0">
-                                <h4 className="text-white font-bold text-[11px] truncate group-hover:text-white transition-colors block leading-tight">
+                                <h4 className="text-white/40 font-black text-[10px] truncate uppercase tracking-tight italic group-hover/item:text-white transition-colors block leading-tight">
                                     {result.name}
                                 </h4>
                                 {result.subtitle && (
-                                    <p className="text-[#667788] text-[8px] uppercase font-black tracking-wider truncate mt-0.5 opacity-80">{result.subtitle}</p>
+                                    <p className="text-white/10 text-[7px] uppercase font-black tracking-[0.2em] truncate mt-0.5 italic group-hover/item:text-white/30 transition-colors uppercase">{result.subtitle}</p>
                                 )}
                             </div>
 
-                            {/* Type Badge - Smaller */}
+                            {/* Type Badge */}
                             <span
-                                className={`px-1.5 py-0.5 rounded-full text-[8px] font-bold uppercase tracking-wider border flex-shrink-0 ${getTypeBadgeColor(
+                                className={`px-1.5 py-0.5 rounded-sm text-[6px] font-black uppercase tracking-[0.1em] border flex-shrink-0 italic transition-all ${getTypeBadgeColor(
                                     result.type
-                                )}`}
+                                )} opacity-30 group-hover/item:opacity-100 group-hover/item:border-kickr/40`}
                             >
                                 {getTypeLabel(result.type)}
                             </span>

@@ -159,22 +159,24 @@ export const SettingsPage = () => {
             animate={{ opacity: 1 }}
             className="pt-32 pb-20 px-4 max-w-xl mx-auto"
         >
-            <div className="mb-10">
-                <h1 className="text-2xl font-black text-white italic tracking-tighter uppercase mb-2">
-                    Tactical <span className="text-kickr">Settings</span>
+            <div className="mb-12 border-b border-white/5 pb-8 relative">
+                <div className="absolute top-0 left-0 w-8 h-[1px] bg-kickr"></div>
+                <h1 className="text-3xl font-black text-white italic tracking-tighter uppercase mb-2">
+                    Tactical <span className="text-kickr">Parameters</span>
                 </h1>
-                <p className="text-[#556677] font-black uppercase tracking-widest text-[9px]">
-                    User Identification Parameters
+                <p className="text-[#445566] font-black uppercase tracking-[0.4em] text-[9px] italic">
+                    Central User Identification Node
                 </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
                 {/* 1. Identity & Avatar Section */}
-                <section className="bg-[#14181c] border border-white/5 rounded-xl p-8">
-                    <div className="flex flex-col md:flex-row items-center gap-10">
+                <section className="bg-white/[0.02] border border-white/5 rounded-sm p-10 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-kickr/[0.01] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
                         <div className="relative">
-                            <div className="w-28 h-28 rounded-xl overflow-hidden border border-white/10 p-1 bg-[#1b2228]">
-                                <div className="w-full h-full rounded-lg overflow-hidden relative">
+                            <div className="w-32 h-32 rounded-sm overflow-hidden border border-white/10 p-1 bg-black/40">
+                                <div className="w-full h-full rounded-sm overflow-hidden relative">
                                     {user.avatarUrl ? (
                                         <img
                                             key={user.avatarUrl}
@@ -184,12 +186,12 @@ export const SettingsPage = () => {
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-white/5 flex items-center justify-center">
-                                            <span className="text-3xl font-black text-kickr italic">{user.name[0].toUpperCase()}</span>
+                                            <span className="text-4xl font-black text-kickr italic italic">{user.name[0].toUpperCase()}</span>
                                         </div>
                                     )}
                                     {isUploading && (
-                                        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                            <div className="w-4 h-4 border-2 border-kickr border-t-transparent rounded-full animate-spin"></div>
+                                        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center">
+                                            <div className="w-5 h-5 border border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
                                         </div>
                                     )}
                                 </div>
@@ -197,9 +199,10 @@ export const SettingsPage = () => {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="absolute -bottom-2 -right-2 bg-kickr text-[#0a1b28] w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#00aaff] transition-colors disabled:opacity-50 border-4 border-[#14181c]"
+                                className="absolute -bottom-3 -right-3 bg-kickr text-black w-10 h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[6px] border-[#0a0b0d] shadow-xl shadow-kickr/10"
+                                title="Upload Signal"
                             >
-                                <span className="text-xs">📸</span>
+                                <span className="text-sm">⚡</span>
                             </button>
                             <input
                                 type="file"
@@ -212,26 +215,26 @@ export const SettingsPage = () => {
 
                         <div className="flex-1 text-center md:text-left space-y-4">
                             <div>
-                                <h2 className="text-white font-black text-lg italic uppercase tracking-tight leading-none mb-1">
-                                    Photo Identification
+                                <h2 className="text-white font-black text-xl italic uppercase tracking-tighter leading-none mb-1">
+                                    Visual ID
                                 </h2>
-                                <p className="text-[#445566] text-[8px] font-black uppercase tracking-widest">
-                                    Official field biometric data
+                                <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] italic">
+                                    Biometric recognition signature
                                 </p>
                             </div>
-                            <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                            <div className="flex flex-wrap justify-center md:justify-start gap-6 pt-2">
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="text-[9px] font-black text-white hover:text-kickr uppercase tracking-widest transition-colors"
+                                    className="text-[9px] font-black text-white/40 hover:text-kickr uppercase tracking-[0.4em] transition-all italic"
                                 >
-                                    Update Picture
+                                    [ UPDATE RECORD ]
                                 </button>
                                 {user.avatarUrl && (
                                     <button
                                         onClick={handleDeleteAvatar}
-                                        className="text-[9px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest transition-colors"
+                                        className="text-[9px] font-black text-red-500/40 hover:text-red-500 uppercase tracking-[0.4em] transition-all italic"
                                     >
-                                        Remove Record
+                                        [ PURGE DATA ]
                                     </button>
                                 )}
                             </div>
@@ -240,56 +243,59 @@ export const SettingsPage = () => {
                 </section>
 
                 {/* 2. Credentials Form */}
-                <section className="bg-[#14181c] border border-white/5 rounded-xl">
-                    <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6">
-                        <div className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-[9px] font-black text-[#445566] uppercase tracking-widest px-1">Tactician Callsign</label>
+                <section className="bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden">
+                    <form onSubmit={handleSubmit(onSubmit)} className="p-10 space-y-8">
+                        <div className="space-y-6">
+                            <div className="space-y-3">
+                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] px-1 italic">Tactician Callsign</label>
                                 <input
                                     type="text"
                                     {...register("name")}
-                                    className={`w-full bg-[#1b2228] border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-lg px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
+                                    className={`w-full bg-black/40 border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
                                 />
                                 {errors.name && (
-                                    <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
+                                    <p className="text-[9px] text-red-500 font-black mt-2 pl-1 uppercase tracking-tighter italic">{errors.name.message}</p>
                                 )}
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[9px] font-black text-[#445566] uppercase tracking-widest px-1">Encrypted Email</label>
+                            <div className="space-y-3">
+                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] px-1 italic">Communication Link</label>
                                 <input
                                     type="email"
                                     {...register("email")}
-                                    className={`w-full bg-[#1b2228] border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
+                                    className={`w-full bg-black/40 border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
                                 />
                                 {errors.email && (
-                                    <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
+                                    <p className="text-[9px] text-red-500 font-black mt-2 pl-1 uppercase tracking-tighter italic">{errors.email.message}</p>
                                 )}
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between pt-4">
-                            <div className="flex items-center gap-2">
-                                <div className={`w-1 h-1 rounded-full ${isSaving ? 'bg-kickr animate-pulse' : (isDirty ? 'bg-kickr/40' : 'bg-white/10')}`}></div>
-                                <span className="text-[8px] font-black text-[#334455] uppercase tracking-widest">
-                                    {isDirty ? 'Changes ready' : 'Synced'}
+                        <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                            <div className="flex items-center gap-3">
+                                <div className={`w-1.5 h-1.5 rounded-full ${isSaving ? 'bg-kickr animate-pulse shadow-[0_0_8px_rgba(var(--kickr-rgb),0.5)]' : (isDirty ? 'bg-kickr/40' : 'bg-white/10')}`}></div>
+                                <span className="text-[8px] font-black text-white/10 uppercase tracking-[0.4em] italic">
+                                    {isDirty ? 'Awaiting Commit' : 'System Synced'}
                                 </span>
                             </div>
                             <button
                                 type="submit"
                                 disabled={isSaving || isUploading || !isDirty}
-                                className="bg-white text-[#0a1b28] text-[9px] font-black uppercase tracking-widest px-8 py-3 rounded-lg hover:bg-kickr hover:text-white transition-all disabled:opacity-20"
+                                className="bg-kickr text-black text-[10px] font-black uppercase tracking-[0.3em] px-10 py-4 rounded-sm hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-20 italic shadow-lg shadow-kickr/5"
                             >
-                                {isSaving ? 'Syncing...' : 'Save Changes'}
+                                {isSaving ? 'SYNCING...' : 'SAVE PARAMETERS'}
                             </button>
                         </div>
                     </form>
                 </section>
 
                 {/* 3. Dangerous Zone */}
-                <section className="p-8 flex items-center justify-between border-t border-white/5 opacity-30 hover:opacity-100 transition-opacity">
-                    <h4 className="text-[#445566] font-black text-[8px] uppercase tracking-widest">Decommission Account</h4>
-                    <button className="text-[9px] font-black text-[#ff4444]/60 hover:text-[#ff4444] uppercase tracking-widest">
-                        Execute
+                <section className="p-10 flex items-center justify-between opacity-10 hover:opacity-100 transition-opacity border border-dashed border-red-500/20 rounded-sm bg-red-500/[0.01]">
+                    <div className="flex flex-col gap-1">
+                        <h4 className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] italic">System Decommission</h4>
+                        <p className="text-white/20 text-[8px] font-black uppercase tracking-widest leading-none italic">Irreversible authentication purge</p>
+                    </div>
+                    <button className="text-[9px] font-black text-white/40 hover:text-red-500 uppercase tracking-[0.4em] transition-all italic">
+                        [ EXECUTE ]
                     </button>
                 </section>
             </div>

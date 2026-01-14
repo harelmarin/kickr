@@ -56,111 +56,112 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     };
 
     return (
-        <div className="w-[280px] bg-[#0d0f12] border border-white/5 rounded-2xl shadow-2xl relative overflow-hidden">
+        <div className="w-[300px] bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
             <AnimatePresence mode="wait">
                 {!isForgot ? (
                     <motion.form
                         key="login"
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
                         onSubmit={handleSubmit(onSubmit)}
-                        className="p-6 flex flex-col gap-5"
+                        className="p-8 flex flex-col gap-6"
                     >
                         <div>
-                            <h3 className="text-[10px] font-bold text-kickr uppercase tracking-[0.4em] mb-1">Tactical Access</h3>
-                            <p className="text-white text-lg font-black tracking-tighter italic uppercase">Welcome</p>
+                            <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">Kickr Access</h3>
+                            <p className="text-white text-xl font-black tracking-tighter italic uppercase leading-none">Authorization</p>
                         </div>
 
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             <div className="relative group">
                                 <input
                                     type="text"
-                                    placeholder="Identity"
+                                    placeholder="Username"
                                     {...register("username")}
-                                    className={`w-full bg-black/40 border ${errors.username ? 'border-red-500/30' : 'border-white/5'} rounded-2xl px-5 py-3.5 text-base sm:text-xs font-bold text-white placeholder-[#334455] outline-none`}
+                                    className={`w-full bg-white/[0.02] border ${errors.username ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic`}
                                 />
                             </div>
-                            {errors.username && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase tracking-tighter">{errors.username.message}</p>}
+                            {errors.username && <p className="text-[9px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.username.message}</p>}
 
                             <div className="relative group">
                                 <input
                                     type={showPassword ? "text" : "password"}
-                                    placeholder="Security Pass"
+                                    placeholder="Password"
                                     {...register("password")}
-                                    className={`w-full bg-black/40 border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-2xl px-5 py-3.5 pr-12 text-base sm:text-xs font-bold text-white placeholder-[#334455] outline-none`}
+                                    className={`w-full bg-white/[0.02] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 pr-12 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic`}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 opacity-30 hover:opacity-100 transition-opacity"
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 opacity-20 hover:opacity-100 transition-opacity"
                                 >
                                     {showPassword ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                                     ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     )}
                                 </button>
                             </div>
-                            {errors.password && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase tracking-tighter">{errors.password.message}</p>}
+                            {errors.password && <p className="text-[9px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.password.message}</p>}
                         </div>
 
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-3.5 rounded-xl bg-kickr text-white text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30"
+                            className="w-full py-4 rounded-sm bg-kickr text-black text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30 italic shadow-lg shadow-kickr/5"
                         >
-                            {isLoading ? 'Verifying...' : 'Authenticate'}
+                            {isLoading ? 'VERIFYING...' : 'AUTHENTICATE'}
                         </button>
 
                         <button
                             type="button"
                             onClick={() => setIsForgot(true)}
-                            className="text-[9px] font-black text-[#334455] hover:text-kickr uppercase tracking-[0.2em] transition-colors pt-2"
+                            className="text-[9px] font-black text-white/20 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 italic"
                         >
-                            Forgot Details?
+                            [ FORGOT DETAILS? ]
                         </button>
                     </motion.form>
                 ) : (
                     <motion.div
                         key="forgot"
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        className="p-6 flex flex-col gap-5"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="p-8 flex flex-col gap-6"
                     >
                         <div>
-                            <h3 className="text-[10px] font-bold text-kickr uppercase tracking-[0.4em] mb-1">Recovery</h3>
-                            <p className="text-white text-xl font-black tracking-tighter italic uppercase">Restore</p>
+                            <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">Forgot Password</h3>
+                            <p className="text-white text-xl font-black tracking-tighter italic uppercase leading-none">Reset Access</p>
                         </div>
 
                         {!isForgotSent ? (
                             <form onSubmit={handleForgotSubmit} className="space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-[9px] font-bold text-[#334455] uppercase tracking-[0.2em] pl-1 text-center block">Enter your email</label>
+                                <div className="space-y-3">
+                                    <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] pl-1 block italic">Email Adress</label>
                                     <input
                                         type="email"
                                         required
                                         value={forgotEmail}
                                         onChange={(e) => setForgotEmail(e.target.value)}
-                                        placeholder="name@example.com"
-                                        className="w-full bg-black/40 border border-white/5 rounded-2xl px-5 py-3.5 text-base sm:text-xs font-bold text-white placeholder-[#334455] outline-none"
+                                        placeholder="Enter your email"
+                                        className="w-full bg-white/[0.02] border border-white/5 rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic"
                                     />
                                 </div>
 
                                 <button
                                     type="submit"
                                     disabled={isForgotLoading}
-                                    className="w-full py-4 rounded-2xl bg-kickr text-white text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30"
+                                    className="w-full py-4 rounded-sm bg-kickr text-black text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30 italic shadow-lg shadow-kickr/5"
                                 >
-                                    {isForgotLoading ? 'Processing...' : 'Send Link'}
+                                    {isForgotLoading ? 'PROCESSING...' : 'SEND RESET LINK'}
                                 </button>
                             </form>
                         ) : (
-                            <div className="text-center space-y-6 py-4">
-                                <div className="text-2xl">✉️</div>
-                                <p className="text-[#99aabb] text-[11px] leading-relaxed font-medium uppercase tracking-wider">
-                                    Secure link dispatched. Check your transmission.
+                            <div className="text-center space-y-6 py-6 border border-dashed border-kickr/20 bg-kickr/[0.02] rounded-sm">
+                                <div className="text-3xl animate-bounce">✉️</div>
+                                <p className="text-kickr/60 text-[10px] leading-relaxed font-black uppercase tracking-[0.2em] italic px-4">
+                                    Reset link sent. Please check your inbox.
                                 </p>
                             </div>
                         )}
@@ -171,9 +172,9 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                 setIsForgot(false);
                                 setIsForgotSent(false);
                             }}
-                            className="text-[9px] font-black text-[#334455] hover:text-kickr uppercase tracking-[0.2em] transition-colors"
+                            className="text-[9px] font-black text-white/20 hover:text-kickr uppercase tracking-[0.3em] transition-all italic"
                         >
-                            Back to Login
+                            [ BACK TO LOGIN ]
                         </button>
                     </motion.div>
                 )}
@@ -233,88 +234,83 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="p-8 flex flex-col gap-6 bg-[#1b2228] border border-white/5 rounded-xl shadow-2xl">
-            <div className="mb-2">
-                <h3 className="text-[11px] font-black text-[#667788] uppercase tracking-[0.3em] mb-1">Join the Community</h3>
-                <p className="text-white text-xl font-black tracking-tight">Create your Kickr account</p>
+        <form onSubmit={handleSubmit(onSubmit)} className="p-10 flex flex-col gap-8 bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
+
+            <div className="mb-4">
+                <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">System Enrollment</h3>
+                <p className="text-white text-2xl font-black tracking-tighter italic uppercase leading-none">New Tactician</p>
             </div>
 
-            <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                    <label className="text-[9px] font-black text-[#445566] uppercase tracking-[0.2em] pl-1">Username</label>
+            <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                    <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] pl-1 italic">Tactician Callsign</label>
                     <input
                         type="text"
-                        placeholder="Choose a username"
+                        placeholder="CHOOSE_IDENTITY"
                         {...register("name")}
-                        className={`bg-[#14181c] border ${errors.name ? 'border-red-500/50' : 'border-white/10'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none`}
+                        className={`bg-white/[0.02] border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic`}
                     />
-                    {errors.name && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.name.message}</p>}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="text-[9px] font-black text-[#445566] uppercase tracking-[0.2em] pl-1">Email</label>
-                    <input
-                        type="email"
-                        placeholder="your.email@example.com"
-                        {...register("email")}
-                        className={`bg-[#14181c] border ${errors.email ? 'border-red-500/50' : 'border-white/10'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:ring-2 focus:ring-kickr/20 transition-all outline-none`}
-                    />
-                    {errors.email && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.email.message}</p>}
+                    {errors.name && <p className="text-[9px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.name.message}</p>}
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[9px] font-black text-[#445566] uppercase tracking-[0.2em] pl-1">Security Code</label>
+                    <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] pl-1 italic">Communication Link</label>
                     <input
-                        type="password"
-                        placeholder="Create a strong password"
-                        {...register("password")}
-                        className={`bg-[#14181c] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none`}
+                        type="email"
+                        placeholder="ENCRYPTED@SIGNAL.MAIL"
+                        {...register("email")}
+                        className={`bg-white/[0.02] border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic`}
                     />
-                    {errors.password && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.password.message}</p>}
+                    {errors.email && <p className="text-[9px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.email.message}</p>}
                 </div>
 
-                <div className="flex flex-col gap-2">
-                    <label className="text-[9px] font-black text-[#445566] uppercase tracking-[0.2em] pl-1">Confirm Identity</label>
+                <div className="flex flex-col gap-3">
+                    <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] pl-1 italic">Security Pass</label>
                     <input
                         type="password"
-                        placeholder="Repeat your password"
-                        {...register("confirmPassword")}
-                        className={`bg-[#14181c] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-lg px-4 py-3.5 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 transition-all outline-none`}
+                        placeholder="CREATE_ENCRYPTION_PASS"
+                        {...register("password")}
+                        className={`bg-white/[0.02] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic`}
                     />
-                    {errors.confirmPassword && <p className="text-[9px] text-red-500 font-bold pl-1 uppercase italic tracking-tighter">{errors.confirmPassword.message}</p>}
+                    {errors.password && <p className="text-[9px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.password.message}</p>}
+                </div>
+
+                <div className="flex flex-col gap-3">
+                    <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] pl-1 italic">Confirm Security</label>
+                    <input
+                        type="password"
+                        placeholder="VERIFY_ENCRYPTION_PASS"
+                        {...register("confirmPassword")}
+                        className={`bg-white/[0.02] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/10 outline-none focus:border-kickr/20 transition-all italic`}
+                    />
+                    {errors.confirmPassword && <p className="text-[9px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.confirmPassword.message}</p>}
 
                     {password.length > 0 && (
-                        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-4 space-y-2">
-                            <div className="flex items-center gap-2">
-                                <span className={`text-sm transition-colors ${hasMinLength ? 'text-kickr' : 'text-[#445566]'}`}>
-                                    {hasMinLength ? '✓' : '○'}
-                                </span>
-                                <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${hasMinLength ? 'text-[#99aabb]' : 'text-[#445566]'}`}>
-                                    At least 8 characters
-                                </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className={`text-sm transition-colors ${hasUppercase ? 'text-kickr' : 'text-[#445566]'}`}>
-                                    {hasUppercase ? '✓' : '○'}
-                                </span>
-                                <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${hasUppercase ? 'text-[#99aabb]' : 'text-[#445566]'}`}>
-                                    One uppercase letter
+                        <div className="bg-white/[0.01] border border-white/5 rounded-sm p-6 space-y-3 mt-2">
+                            <div className="text-[8px] font-black text-white/10 uppercase tracking-[0.3em] mb-2 italic">Security Checklist</div>
+                            <div className="flex items-center gap-3">
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-kickr' : 'bg-white/10'}`}></div>
+                                <span className={`text-[9px] font-black uppercase tracking-widest italic transition-colors ${hasMinLength ? 'text-white/60' : 'text-white/10'}`}>
+                                    Minimum 8 Clusters
                                 </span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <span className={`text-sm transition-colors ${hasLowercase ? 'text-kickr' : 'text-[#445566]'}`}>
-                                    {hasLowercase ? '✓' : '○'}
-                                </span>
-                                <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${hasLowercase ? 'text-[#99aabb]' : 'text-[#445566]'}`}>
-                                    One lowercase letter
+                            <div className="flex items-center gap-3">
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasUppercase ? 'bg-kickr' : 'bg-white/10'}`}></div>
+                                <span className={`text-[9px] font-black uppercase tracking-widest italic transition-colors ${hasUppercase ? 'text-white/60' : 'text-white/10'}`}>
+                                    Alpha-Upper Requirement
                                 </span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <span className={`text-sm transition-colors ${hasNumber ? 'text-kickr' : 'text-[#445566]'}`}>
-                                    {hasNumber ? '✓' : '○'}
+                            <div className="flex items-center gap-3">
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasLowercase ? 'bg-kickr' : 'bg-white/10'}`}></div>
+                                <span className={`text-[9px] font-black uppercase tracking-widest italic transition-colors ${hasLowercase ? 'text-white/60' : 'text-white/10'}`}>
+                                    Alpha-Lower Requirement
                                 </span>
-                                <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${hasNumber ? 'text-[#99aabb]' : 'text-[#445566]'}`}>
-                                    One number
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasNumber ? 'bg-kickr' : 'bg-white/10'}`}></div>
+                                <span className={`text-[9px] font-black uppercase tracking-widest italic transition-colors ${hasNumber ? 'text-white/60' : 'text-white/10'}`}>
+                                    Numeric Requirement
                                 </span>
                             </div>
                         </div>
@@ -325,18 +321,18 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
             <button
                 type="submit"
                 disabled={isLoading}
-                className="btn-primary-kickr py-3.5 rounded-lg text-[11px] font-black uppercase tracking-[0.2em] hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                className="w-full py-4 rounded-sm bg-kickr text-black text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30 italic shadow-lg shadow-kickr/5 mt-4"
             >
-                {isLoading ? 'Creating account...' : 'Create Account'}
+                {isLoading ? 'ENROLLING...' : 'INITIALIZE ACCOUNT'}
             </button>
 
             {onSwitchToLogin && (
                 <button
                     type="button"
                     onClick={onSwitchToLogin}
-                    className="text-[9px] font-black text-[#445566] hover:text-kickr uppercase tracking-[0.2em] transition-colors pt-2 mx-auto"
+                    className="text-[9px] font-black text-white/20 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 mx-auto italic"
                 >
-                    Already have an account? Log in
+                    [ ALREADY AUTHORIZED? LOGIN ]
                 </button>
             )}
         </form>
