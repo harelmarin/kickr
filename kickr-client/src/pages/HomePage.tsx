@@ -22,10 +22,10 @@ export default function HomePage() {
 
   const trendingSectors = useMemo(() => {
     if (!popularReviews || !Array.isArray(popularReviews)) return [];
-    const sectors: Record<string, { count: number, totalNote: number, logo?: string }> = {};
+    const sectors: Record<string, { count: number, totalNote: number, logo?: string, id?: string }> = {};
     popularReviews.forEach((review: UserMatch) => {
       const name = review.match.competition;
-      if (!sectors[name]) sectors[name] = { count: 0, totalNote: 0, logo: review.match.competitionLogo };
+      if (!sectors[name]) sectors[name] = { count: 0, totalNote: 0, logo: review.match.competitionLogo, id: review.match.competitionId };
       sectors[name].count++;
       sectors[name].totalNote += review.note;
     });
@@ -34,7 +34,8 @@ export default function HomePage() {
         name,
         activity: data.count,
         rating: data.totalNote / data.count,
-        logo: data.logo
+        logo: data.logo,
+        id: data.id
       }))
       .sort((a, b) => b.activity - a.activity)
       .slice(0, 5);
@@ -51,14 +52,14 @@ export default function HomePage() {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-[#0d0d0f] min-h-screen text-white/90 selection:bg-kickr/30"
+      className="bg-[#08080a] min-h-screen text-white/90 selection:bg-kickr/30"
     >
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[85vh] flex items-center justify-center border-b border-white/5 overflow-hidden">
         {/* Background Atmosphere */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-[#0d0d0f]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#0d0d0f_100%)] opacity-90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-[#08080a]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#08080a_100%)] opacity-90"></div>
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
             alt="Stadium"
@@ -274,10 +275,10 @@ export default function HomePage() {
                             <div className="flex items-center gap-2">
                               <div className="flex -space-x-1.5 flex-shrink-0">
                                 <img src={review.match.homeLogo} className="w-4 h-4 object-contain" alt="" />
-                                <img src={review.match.awayLogo} className="w-4 h-4 object-contain border-l border-[#0d0d0f]" alt="" />
+                                <img src={review.match.awayLogo} className="w-4 h-4 object-contain border-l border-[#08080a]" alt="" />
                               </div>
                               <p className="text-[10px] font-black text-white/60 group-hover/item:text-white transition-colors uppercase italic truncate leading-none">
-                                {review.match.homeTeam} <span className="text-[#334455] not-italic mr-0.5">V</span> {review.match.awayTeam}
+                                {review.match.homeTeam} <span className="text-[#334455] not-italic mx-3">VS</span> {review.match.awayTeam}
                                 {review.isLiked && <span className="ml-2 text-[#ff8000] not-italic inline-block" title="Liked">❤</span>}
                               </p>
                             </div>
@@ -314,7 +315,11 @@ export default function HomePage() {
                   Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-10 bg-white/5 animate-pulse rounded-sm"></div>)
                 ) : trendingSectors.length > 0 ? (
                   trendingSectors.map((sector, i) => (
-                    <div key={sector.name} className="group relative">
+                    <Link
+                      key={sector.name}
+                      to={sector.id ? `/competitions/${sector.id}` : `/matches?competition=${encodeURIComponent(sector.name)}`}
+                      className="group relative block"
+                    >
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
                           <span className="text-[9px] font-mono text-white/20">0{i + 1}</span>
@@ -325,18 +330,11 @@ export default function HomePage() {
                         </div>
                         <span className="text-[10px] font-mono text-kickr italic">{sector.rating.toFixed(1)}</span>
                       </div>
-                      <div className="w-full h-[1px] bg-white/5 relative overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${(sector.activity / trendingSectors[0].activity) * 100}%` }}
-                          className="absolute h-full bg-gradient-to-right from-kickr/40 to-kickr"
-                        />
-                      </div>
-                      <div className="flex justify-between mt-1">
+                      <div className="flex justify-between mt-1 pt-1 border-t border-white/5">
                         <span className="text-[7px] font-mono text-white/10 uppercase tracking-widest">Popularity</span>
                         <span className="text-[7px] font-mono text-white/10 uppercase tracking-widest">Reports: {sector.activity} matches</span>
                       </div>
-                    </div>
+                    </Link>
                   ))
                 ) : (
                   <p className="text-[10px] text-[#445566] italic font-bold">Waiting for sector synchronization...</p>

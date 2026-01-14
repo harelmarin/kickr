@@ -52,7 +52,10 @@ export function NextMatchesHomePage() {
                 <span className="text-xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">
                   {new Date(match.matchDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
                 </span>
-                <div className="w-4 h-[1px] bg-kickr/40 mt-2"></div>
+                <span className="text-[7px] font-mono text-white/30 uppercase tracking-[0.2em] mt-1.5 font-bold">
+                  {new Date(match.matchDate).toLocaleDateString('en-US', { day: '2-digit', month: 'short' }).toUpperCase()}
+                </span>
+                <div className="w-4 h-[1px] bg-kickr/20 mt-2"></div>
               </div>
 
               <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
