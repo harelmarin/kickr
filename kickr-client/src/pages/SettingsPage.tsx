@@ -173,7 +173,7 @@ export const SettingsPage = () => {
                 <section className="bg-[#14181c] border border-white/5 rounded-xl p-8">
                     <div className="flex flex-col md:flex-row items-center gap-10">
                         <div className="relative">
-                            <div className="w-28 h-28 rounded-xl overflow-hidden border border-white/10 p-1 bg-[#0a0b0d]">
+                            <div className="w-28 h-28 rounded-xl overflow-hidden border border-white/10 p-1 bg-[#1b2228]">
                                 <div className="w-full h-full rounded-lg overflow-hidden relative">
                                     {user.avatarUrl ? (
                                         <img
@@ -248,7 +248,7 @@ export const SettingsPage = () => {
                                 <input
                                     type="text"
                                     {...register("name")}
-                                    className={`w-full bg-[#0a0b0d] border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-lg px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
+                                    className={`w-full bg-[#1b2228] border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-lg px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
                                 />
                                 {errors.name && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
@@ -259,7 +259,7 @@ export const SettingsPage = () => {
                                 <input
                                     type="email"
                                     {...register("email")}
-                                    className={`w-full bg-[#0a0b0d] border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
+                                    className={`w-full bg-[#1b2228] border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-sm text-white focus:border-kickr/30 outline-none transition-all`}
                                 />
                                 {errors.email && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>

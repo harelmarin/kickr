@@ -42,7 +42,7 @@ export const MatchesPage = () => {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-[#0a0b0d] py-8 sm:py-20"
+      className="min-h-screen bg-[#14181c] py-8 sm:py-20"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -238,7 +238,7 @@ export const MatchesPage = () => {
 };
 
 const ErrorState = () => (
-  <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#0a0b0d]">
+  <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#14181c]">
     <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}

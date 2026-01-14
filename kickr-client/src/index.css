@@ -12,14 +12,14 @@
 :root {
   --kickr-primary: #4466ff;
   --kickr-primary-rgb: 68, 102, 255;
-  --color-bg-primary: #08080a;
-  /* Unified middle-ground black-gray */
-  --color-bg-secondary: #14181c;
-  /* Slightly lighter for highlights */
-  /* Clean surface color */
-  --color-bg-tertiary: #1b1b1f;
-  --text-main: #f1f5f9;
-  /* Off-white for less halation */
+  --color-bg-primary: #14181c;
+  /* Letterboxd-style background */
+  --color-bg-secondary: #1b2228;
+  /* Slightly lighter for cards/headers */
+  --color-bg-tertiary: #242c33;
+  /* Lighter accents */
+  --text-main: #e2e8f0;
+  /* White/90 equivalent - Softer white */
   --text-secondary: #94a3b8;
   /* Cleaner blue-gray */
   --text-muted: #64748b;

@@ -38,7 +38,7 @@ export const CompetitionDetailPage = () => {
 
   if (isLoadingComp) {
     return (
-      <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center">
+      <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-kickr border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -46,9 +46,9 @@ export const CompetitionDetailPage = () => {
 
   if (!competition) {
     return (
-      <div className="min-h-screen bg-[#0a0b0d] flex flex-col items-center justify-center p-6 text-center">
-        <h1 className="text-2xl font-black text-white uppercase italic mb-4">Competition Not Found</h1>
-        <p className="text-white/60 mb-8">The requested sequence does not exist in our database.</p>
+      <div className="min-h-screen bg-[#14181c] flex flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-2xl font-black text-white/90 uppercase italic mb-4">Competition Not Found</h1>
+        <p className="text-white/40 mb-8">The requested sequence does not exist in our database.</p>
         <Link to="/" className="px-8 py-4 bg-kickr text-white font-black uppercase italic tracking-widest hover:bg-kickr/90 transition-all rounded-sm">
           Back to base
         </Link>
@@ -89,7 +89,7 @@ export const CompetitionDetailPage = () => {
     competition.name.toLowerCase().includes('fa cup');
 
   return (
-    <main className="min-h-screen bg-[#121212]">
+    <main className="min-h-screen bg-[#14181c]">
       <div className="bg-white/[0.02] border-b border-white/5 py-24">
         <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
           <div className="w-32 h-32 bg-white/[0.02] rounded-sm p-6 border border-white/5">
@@ -97,7 +97,7 @@ export const CompetitionDetailPage = () => {
           </div>
 
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-5xl md:text-8xl font-black text-white mb-4 tracking-tighter leading-none uppercase italic">{competition.name}</h1>
+            <h1 className="text-5xl md:text-8xl font-black text-white/90 mb-4 tracking-tighter leading-none uppercase italic">{competition.name}</h1>
             <p className="text-white/40 uppercase tracking-[0.25em] font-bold text-[11px]">
               Official {competition.country || 'International'} {isTournament ? 'Tournament' : 'League'} Page
             </p>
@@ -212,6 +212,6 @@ export const CompetitionDetailPage = () => {
 const CompStat = ({ label, value }: { label: string; value: string | number }) => (
   <div className="text-left">
     <div className="text-[9px] font-bold text-white/40 uppercase tracking-[0.2em] mb-1">{label}</div>
-    <div className="text-xl font-black text-white uppercase tracking-tighter">{value}</div>
+    <div className="text-xl font-black text-white/90 uppercase tracking-tighter">{value}</div>
   </div>
 );

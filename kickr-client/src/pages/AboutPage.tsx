@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const AboutPage: FC = () => {
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
+        <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
             <div className="max-w-4xl mx-auto px-6">
                 <header className="mb-20">
                     <div className="flex items-center gap-4 mb-6">

@@ -43,7 +43,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#121212] pt-20 md:pt-32 pb-24 md:pb-20">
+        <main className="min-h-screen bg-[#14181c] pt-20 md:pt-32 pb-24 md:pb-20">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
                 <header className="mb-8 md:mb-16">
@@ -138,7 +138,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-[#181818] border border-white/5 rounded-sm overflow-x-auto no-scrollbar">
+                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-white/[0.02] border border-white/5 rounded-sm overflow-x-auto no-scrollbar">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}
@@ -511,13 +511,13 @@ const StatHorizontal = ({ label, value, onClick }: { label: string; value: strin
 );
 
 const LoadingState = () => (
-    <div className="min-h-screen bg-[#121212] flex items-center justify-center">
+    <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
     </div>
 );
 
 const NotFoundState = () => (
-    <div className="min-h-screen bg-[#121212] flex items-center justify-center text-center">
+    <div className="min-h-screen bg-[#14181c] flex items-center justify-center text-center">
         <div>
             <h2 className="text-4xl font-black text-white/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
             <p className="text-white/40 mb-8">This tactician hasn't joined Kickr yet.</p>

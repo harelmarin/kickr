@@ -12,7 +12,7 @@ export const CompetitionsPage = () => {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <main className="min-h-screen bg-[#121212] pt-32 pb-20">
+    <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <header className="mb-16">
           <div className="flex items-center gap-4 mb-6">
