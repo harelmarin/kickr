@@ -7,67 +7,62 @@ interface FeedReviewCardProps {
 
 export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
     return (
-        <div className="group/card bg-[#14181c] border border-white/5 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full">
-            {/* Match Header (Small Poster Style) */}
+        <div className="group/card bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden hover:border-kickr/20 transition-all duration-300 flex flex-col h-full">
+            {/* Match Header (Compact) */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                className="relative h-24 sm:h-32 overflow-hidden block"
+                className="relative h-20 overflow-hidden block bg-black/20 border-b border-white/5"
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] to-transparent z-10" />
-                <div className="absolute inset-0 bg-[#000] opacity-20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] to-transparent opacity-40 z-10" />
 
                 {/* Team Logos & Score */}
-                <div className="absolute inset-0 flex items-center justify-around px-2 sm:px-4 z-20">
-                    <img src={review.match.homeLogo} className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-xl group-hover/card:scale-110 transition-transform" alt="" />
+                <div className="absolute inset-0 flex items-center justify-center gap-6 px-4 z-20">
+                    <img src={review.match.homeLogo} className="w-8 h-8 object-contain drop-shadow-lg group-hover/card:scale-105 transition-transform" alt="" />
                     <div className="flex flex-col items-center">
-                        <div className="flex items-center gap-2">
-                            <span className="text-lg sm:text-xl font-black text-white italic">{review.match.homeScore}</span>
-                            <span className="text-kickr/40 font-black">-</span>
-                            <span className="text-lg sm:text-xl font-black text-white italic">{review.match.awayScore}</span>
-                        </div>
+                        <span className="text-sm font-black text-white italic tracking-tighter">
+                            {review.match.homeScore} - {review.match.awayScore}
+                        </span>
                     </div>
-                    <img src={review.match.awayLogo} className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-xl group-hover/card:scale-110 transition-transform" alt="" />
+                    <img src={review.match.awayLogo} className="w-8 h-8 object-contain drop-shadow-lg group-hover/card:scale-105 transition-transform" alt="" />
                 </div>
             </Link>
 
             {/* Content Body */}
-            <div className="p-3 sm:p-5 flex flex-col flex-1">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                    <Link to={`/user/${review.user?.id}`} className="flex items-center gap-2 group/user">
-                        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/10 flex items-center justify-center text-[9px] sm:text-[10px] font-black text-kickr border border-white/5 overflow-hidden">
+            <div className="p-4 flex flex-col flex-1">
+                <div className="flex items-center justify-between mb-3 pb-3 border-b border-white/5">
+                    <Link to={`/user/${review.user?.id}`} className="flex items-center gap-2 group/user min-w-0">
+                        <div className="w-5 h-5 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center text-[8px] font-black text-kickr overflow-hidden flex-shrink-0">
                             {review.user?.avatarUrl ? (
                                 <img src={review.user.avatarUrl} alt="" className="w-full h-full object-cover" />
                             ) : (
                                 review.user?.name[0]
                             )}
                         </div>
-                        <span className="text-[9px] sm:text-[10px] font-black text-[#667788] group-hover/user:text-white transition-colors uppercase tracking-widest truncate max-w-[80px] sm:max-w-[100px]">
+                        <span className="text-[9px] font-black text-white/40 group-hover/user:text-kickr transition-colors uppercase italic truncate">
                             {review.user?.name}
                         </span>
                     </Link>
 
-                    <div className="flex text-kickr text-[7px] sm:text-[8px]">
-                        {'★'.repeat(Math.round(review.note))}
-                        <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+                    <div className="flex items-center gap-1.5 bg-kickr/5 px-2 py-0.5 border border-kickr/10">
+                        <span className="text-kickr text-[10px] font-black italic">{review.note.toFixed(1)}</span>
                     </div>
                 </div>
 
-
                 {review.comment && (
-                    <p className="text-[#99aabb] text-[10px] sm:text-[12px] leading-relaxed italic line-clamp-3 mb-3 sm:mb-4 pl-2 sm:pl-3 border-l border-kickr/20 flex-1">
+                    <p className="text-white/60 text-[10px] leading-relaxed italic line-clamp-2 mb-4">
                         "{review.comment}"
                     </p>
                 )}
 
-                <div className="mt-auto pt-3 sm:pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.2em]">
-                        {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' })}
+                <div className="mt-auto flex items-center justify-between">
+                    <span className="text-[7px] font-bold text-white/20 uppercase tracking-[0.2em] font-mono">
+                        // {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                     </span>
                     <Link
                         to={`/reviews/${review.id}`}
-                        className="text-[8px] sm:text-[9px] font-black text-kickr/60 hover:text-kickr uppercase tracking-widest transition-colors"
+                        className="text-[8px] font-black text-white/20 hover:text-kickr uppercase tracking-widest transition-colors flex items-center gap-1"
                     >
-                        Review details →
+                        Details <span className="text-xs">→</span>
                     </Link>
                 </div>
             </div>
