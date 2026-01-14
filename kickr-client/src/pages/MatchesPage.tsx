@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchMatches } from '../hooks/useNextMatches';
 import { useCompetitions } from '../hooks/useCompetitions';
-import { MatchCard } from '../components/matches/MatchCard';
-import { MatchCardPosterSkeleton } from '../components/ui/LoadingSkeletons';
+import { CompactMatchCard } from '../components/matches/CompactMatchCard';
 import { AnimatePresence, motion } from 'framer-motion';
 import { EmptyState } from '../components/ui/EmptyState';
 import { TopTeamsWidget } from '../components/widgets/TopTeamsWidget';
@@ -12,7 +11,7 @@ export const MatchesPage = () => {
   const [page, setPage] = useState(0);
   const [competitionId, setCompetitionId] = useState<string | undefined>(undefined);
   const [status, setStatus] = useState<'all' | 'finished' | 'upcoming'>('all');
-  const [sort, setSort] = useState<string>('date');
+
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
 
@@ -29,13 +28,17 @@ export const MatchesPage = () => {
 
   const finished = status === 'all' ? undefined : status === 'finished';
 
+  // Sort logic: Upcoming/All -> Closest first (ASC). Finished -> Most recent first (DESC).
+  // Now using backend-supported keys 'date_asc' and 'date_desc'
+  const sortParam = status === 'finished' ? 'date_desc' : 'date_asc';
+
   const { data, isLoading, isError } = useSearchMatches({
     page,
-    limit: 18,
+    limit: 12,
     competitionId,
     finished,
     query: debouncedQuery,
-    sort
+    sort: sortParam
   });
 
   if (isError) return <ErrorState />;
@@ -134,10 +137,10 @@ export const MatchesPage = () => {
               <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">Match Feed</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {isLoading ? (
-                Array.from({ length: 6 }).map((_, i) => (
-                  <MatchCardPosterSkeleton key={i} />
+                Array.from({ length: 9 }).map((_, i) => (
+                  <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
                 ))
               ) : (
                 <AnimatePresence mode="popLayout">
@@ -149,7 +152,7 @@ export const MatchesPage = () => {
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <MatchCard match={match} variant="poster" />
+                      <CompactMatchCard match={match} />
                     </motion.div>
                   ))}
                 </AnimatePresence>
@@ -169,11 +172,11 @@ export const MatchesPage = () => {
 
             {/* Pagination */}
             {!isLoading && data && data.totalPages > 1 && (
-              <div className="mt-24 flex items-center justify-center gap-8 border-t border-white/5 pt-12">
+              <div className="mt-8 flex items-center justify-center gap-8 border-t border-white/5 pt-6">
                 <button
                   onClick={() => {
                     setPage(p => Math.max(0, p - 1));
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
                   className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
@@ -191,7 +194,7 @@ export const MatchesPage = () => {
                 <button
                   onClick={() => {
                     setPage(p => p + 1);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
                   className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"

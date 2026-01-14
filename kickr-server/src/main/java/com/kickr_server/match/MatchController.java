@@ -107,7 +107,7 @@ public class MatchController {
                         @Parameter(description = "Match finished (true/false)") @RequestParam(required = false) Boolean finished,
                         @Parameter(description = "Text search (team)") @RequestParam(required = false) String query,
                         @Parameter(description = "Round") @RequestParam(required = false) String round,
-                        @Parameter(description = "Sort (popularity, rating, date)") @RequestParam(defaultValue = "date") String sort,
+                        @Parameter(description = "Sort (popularity, rating, date)") @RequestParam(defaultValue = "date_asc") String sort,
                         @Parameter(description = "Page") @RequestParam(defaultValue = "0") int page,
                         @Parameter(description = "Limit") @RequestParam(defaultValue = "18") int limit) {
                 return matchService.findMatchesWithFilters(competitionId, finished, query, round, sort, page, limit);
