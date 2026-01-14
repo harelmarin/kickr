@@ -52,7 +52,7 @@ export default function HomePage() {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-[#08080a] min-h-screen text-white/90 selection:bg-kickr/30"
+      className="bg-[#121212] min-h-screen text-white/90 selection:bg-kickr/30"
     >
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[85vh] flex items-center justify-center border-b border-white/5 overflow-hidden">

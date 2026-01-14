@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useCompetitions } from '../hooks/useCompetitions';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { LeagueCardSkeleton } from '../components/ui/LoadingSkeletons';
 
 export const CompetitionsPage = () => {
@@ -13,26 +12,21 @@ export const CompetitionsPage = () => {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="min-h-screen bg-[#0a0b0d] py-8 sm:py-20"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <header className="mb-8 sm:mb-16">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-          >
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-2 sm:mb-4 italic tracking-tighter uppercase display-font">
-              The World <span className="text-kickr">Leagues</span>
-            </h1>
-            <p className="text-[#667788] uppercase tracking-[0.25em] text-[10px] sm:text-[11px] font-bold">
-              Major football competitions around the globe
-            </p>
-          </motion.div>
+    <main className="min-h-screen bg-[#121212] pt-32 pb-20">
+      <div className="max-w-7xl mx-auto px-6">
+        <header className="mb-16">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-[2px] w-6 bg-kickr" />
+            <span className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] italic">Competitions</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase">
+            The World <span className="text-kickr">Leagues</span>
+          </h1>
+          <p className="text-white/40 uppercase tracking-[0.25em] text-[11px] font-bold">
+            Major football competitions around the globe
+          </p>
 
-          <div className="mt-8 sm:mt-12 flex flex-col md:flex-row items-center justify-between border-y border-white/5 py-4 sm:py-6 gap-6">
+          <div className="mt-12 flex flex-col md:flex-row items-center justify-between border border-white/5 bg-white/[0.02] rounded-sm p-6 gap-6">
             <div className="flex-1 max-w-md w-full relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs opacity-40">🔍</span>
               <input
@@ -40,48 +34,39 @@ export const CompetitionsPage = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search major leagues..."
-                className="w-full bg-black/20 border border-white/10 rounded-xl pl-11 pr-4 py-2.5 sm:py-3 text-[11px] font-bold text-white focus:outline-none focus:border-kickr/40 transition-all placeholder-[#445566]"
+                className="w-full bg-black/20 border border-white/5 rounded-sm pl-11 pr-4 py-3 text-[11px] font-bold text-white focus:outline-none focus:border-kickr/40 transition-all placeholder-white/20"
               />
             </div>
             <div className="flex flex-col items-end">
-              <span className="text-xl sm:text-2xl font-black text-white italic leading-none tabular-nums">
+              <span className="text-2xl font-black text-white italic leading-none tabular-nums">
                 {isLoading ? '...' : filteredCompetitions.length}
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#445566] font-bold">Leagues Active</span>
+              <span className="text-[9px] uppercase tracking-widest text-white/40 font-bold">Leagues Active</span>
             </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-8">
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {isLoading ? (
             Array.from({ length: 12 }).map((_, i) => <LeagueCardSkeleton key={i} />)
           ) : (
-            <AnimatePresence>
-              {filteredCompetitions.map((comp, index) => (
-                <motion.div
-                  key={comp.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: Math.min(index * 0.03, 1) }}
-                >
-                  <Link to={`/competitions/${comp.id}`} className="group block">
-                    <div className="aspect-square bg-[#14181c] rounded-2xl border border-white/5 p-4 sm:p-8 flex items-center justify-center mb-2 sm:mb-4 transition-all duration-500 group-hover:border-kickr/40 group-hover:bg-[#1b2228] relative overflow-hidden">
-                      <img
-                        src={comp.logoUrl}
-                        alt={comp.name}
-                        className="max-w-[80%] max-h-[80%] sm:max-w-[70%] sm:max-h-[70%] object-contain transition-transform duration-500 group-hover:scale-110 relative z-10"
-                      />
-                    </div>
-                    <h3 className="text-center text-[9px] sm:text-[10px] font-black text-[#667788] group-hover:text-white transition-colors tracking-widest uppercase px-1 sm:px-2 truncate">
-                      {comp.name}
-                    </h3>
-                  </Link>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+            filteredCompetitions.map((comp) => (
+              <Link key={comp.id} to={`/competitions/${comp.id}`} className="group block">
+                <div className="aspect-square bg-white/[0.02] rounded-sm border border-white/5 p-6 flex items-center justify-center mb-3 transition-all group-hover:border-white/10">
+                  <img
+                    src={comp.logoUrl}
+                    alt={comp.name}
+                    className="max-w-[70%] max-h-[70%] object-contain"
+                  />
+                </div>
+                <h3 className="text-center text-[10px] font-black text-white/60 group-hover:text-white transition-colors tracking-widest uppercase px-2 truncate">
+                  {comp.name}
+                </h3>
+              </Link>
+            ))
           )}
         </div>
       </div>
-    </motion.main>
+    </main>
   );
 };

@@ -43,7 +43,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#050505] pt-20 md:pt-32 pb-24 md:pb-20">
+        <main className="min-h-screen bg-[#121212] pt-20 md:pt-32 pb-24 md:pb-20">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
                 <header className="mb-8 md:mb-16">
@@ -138,7 +138,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-[#080808] border border-white/5 rounded-sm overflow-x-auto no-scrollbar">
+                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-[#181818] border border-white/5 rounded-sm overflow-x-auto no-scrollbar">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}
@@ -163,10 +163,10 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-12">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-8 bg-[#080808]/40 border border-white/5 p-6 rounded-sm">
+                        <section id="diary-entries" className="space-y-8 bg-white/[0.02] border border-white/5 p-6 rounded-sm">
                             <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Last Review</Link>
-                                <span className="text-[10px] font-black text-[#445566] uppercase tracking-widest leading-none">{pageData?.totalElements || 0} logs</span>
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Last Review</Link>
+                                <span className="text-[10px] font-black text-white/40 uppercase tracking-widest leading-none">{pageData?.totalElements || 0} logs</span>
                             </div>
 
                             {isReviewsLoading ? (
@@ -505,22 +505,22 @@ const StatHorizontal = ({ label, value, onClick }: { label: string; value: strin
         onClick={onClick}
         className="flex items-center gap-3 hover:opacity-70 transition-opacity cursor-pointer group"
     >
-        <span className="text-lg sm:text-2xl font-black text-white group-hover:text-kickr transition-colors">{value}</span>
-        <span className="text-[10px] font-bold text-[#667788] uppercase tracking-widest">{label}</span>
+        <span className="text-lg sm:text-2xl font-black text-white/90 group-hover:text-kickr transition-colors">{value}</span>
+        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{label}</span>
     </button>
 );
 
 const LoadingState = () => (
-    <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center">
+    <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
     </div>
 );
 
 const NotFoundState = () => (
-    <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center text-center">
+    <div className="min-h-screen bg-[#121212] flex items-center justify-center text-center">
         <div>
-            <h2 className="text-4xl font-black text-white mb-4 italic tracking-tighter uppercase">User Not Found</h2>
-            <p className="text-[#667788] mb-8">This tactician hasn't joined Kickr yet.</p>
+            <h2 className="text-4xl font-black text-white/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
+            <p className="text-white/40 mb-8">This tactician hasn't joined Kickr yet.</p>
             <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Go Home</Link>
         </div>
     </div>
