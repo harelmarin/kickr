@@ -17,6 +17,7 @@ export interface UserMatch {
     awayLogo: string;
     matchDate: string;
     competition: string;
+    competitionLogo?: string;
     location: string;
     homeScore: number;
     awayScore: number;

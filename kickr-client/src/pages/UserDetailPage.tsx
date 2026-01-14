@@ -43,7 +43,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-20 md:pt-32 pb-24 md:pb-20">
+        <main className="min-h-screen bg-[#050505] pt-20 md:pt-32 pb-24 md:pb-20">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
                 <header className="mb-8 md:mb-16">
@@ -52,10 +52,10 @@ export const UserDetailPage = () => {
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
-                                    className="relative group/avatar w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shadow-2xl transition-transform hover:scale-105"
+                                    className="relative group/avatar w-20 h-20 sm:w-20 sm:h-20 rounded-sm overflow-hidden shadow-2xl transition-transform hover:scale-105"
                                     title="Change Profile Picture"
                                 >
-                                    <div className="w-full h-full bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
+                                    <div className="w-full h-full bg-[#0a0a0a] border border-white/5 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
                                         {user.avatarUrl ? (
                                             <img
                                                 key={user.avatarUrl}
@@ -72,7 +72,7 @@ export const UserDetailPage = () => {
                                     </div>
                                 </Link>
                             ) : (
-                                <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-kickr/20 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
+                                <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-sm bg-[#0a0a0a] border border-white/5 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
                                     {user.avatarUrl ? (
                                         <img
                                             key={user.avatarUrl}
@@ -138,7 +138,7 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-[#1b2228] border border-white/5 rounded-xl overflow-x-auto no-scrollbar">
+                    <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-8 px-4 sm:px-6 py-4 bg-[#080808] border border-white/5 rounded-sm overflow-x-auto no-scrollbar">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}
@@ -163,10 +163,10 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-24">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-12 section-contrast p-8 rounded-2xl">
-                            <div className="flex items-center justify-between border-b border-kickr/20 pb-6">
-                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em]">Recent Diary Entries →</Link>
-                                <span className="text-[10px] font-bold text-kickr uppercase tracking-widest">{pageData?.totalElements || 0} Total</span>
+                        <section id="diary-entries" className="space-y-12 bg-[#080808]/40 border border-white/5 p-8 rounded-sm">
+                            <div className="flex items-center justify-between border-b border-white/5 pb-6">
+                                <Link to={`/user/${id}/diary`} className="text-sm font-black text-white hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Journal →</Link>
+                                <span className="text-[10px] font-black text-[#445566] uppercase tracking-widest leading-none">Sector Log: {pageData?.totalElements || 0}</span>
                             </div>
 
                             {isReviewsLoading ? (
@@ -263,8 +263,8 @@ export const UserDetailPage = () => {
 
                     {/* Sidebar: Stats & Favorites */}
                     <div className="space-y-12">
-                        <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
-                            <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Ratings Distribution</h3>
+                        <section className="bg-[#080808] border border-white/5 rounded-sm p-8 shadow-xl">
+                            <h3 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4 italic">Ratings Distribution</h3>
                             <RatingsChart reviews={pageData?.content || []} />
 
                             <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
@@ -283,13 +283,13 @@ export const UserDetailPage = () => {
                             </div>
                         </section>
 
-                        <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
-                            <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Most Watched Teams</h3>
+                        <section className="bg-[#080808] border border-white/5 rounded-sm p-8 shadow-xl">
+                            <h3 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4 italic">Strategic Analysis</h3>
                             <MostWatchedTeams reviews={pageData?.content || []} />
                         </section>
 
-                        <section className="bg-[#1b2228] border border-white/5 rounded-2xl p-8 shadow-xl">
-                            <h3 className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">Quick Stats</h3>
+                        <section className="bg-[#080808] border border-white/5 rounded-sm p-8 shadow-xl">
+                            <h3 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-4 italic">Technical Stats</h3>
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center">
                                     <span className="text-[11px] font-bold text-[#99aabb]">Total Logs</span>

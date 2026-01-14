@@ -121,9 +121,9 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 <button
                     onClick={handleDownload}
                     disabled={isGenerating}
-                    className={`flex items-center gap-2 rounded-xl transition-all duration-300 group overflow-hidden cursor-pointer ${variant === 'full'
+                    className={`flex items-center gap-2 rounded-sm transition-all duration-300 group overflow-hidden cursor-pointer ${variant === 'full'
                         ? 'px-5 py-3 bg-[#4466ff] text-white font-black uppercase text-xs hover:brightness-110 active:scale-95'
-                        : 'px-2.5 py-1.5 bg-white/5 text-[#445566] hover:text-[#4466ff] hover:bg-white/10 text-[9px] font-bold uppercase tracking-widest border border-white/5'
+                        : 'p-1 text-[#445566] hover:text-[#4466ff] active:scale-90'
                         }`}
                     title="Download PNG Card"
                 >
@@ -146,7 +146,7 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 {showXShare && (
                     <button
                         onClick={handleShareTwitter}
-                        className={`flex items-center justify-center rounded-lg bg-white/5 text-[#445566] hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/10 transition-all duration-300 cursor-pointer border border-white/5 ${variant === 'full' ? 'w-10 h-10' : 'w-7 h-7'
+                        className={`flex items-center justify-center transition-all duration-300 cursor-pointer ${variant === 'full' ? 'w-10 h-10 bg-white/5 border border-white/5 rounded-lg' : 'p-1 hover:text-[#1DA1F2] active:scale-90 text-[#445566]'
                             }`}
                         title="Share to X (Twitter)"
                     >

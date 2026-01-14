@@ -111,7 +111,7 @@ export const TeamDetailPage = () => {
     <main className="min-h-screen bg-[#0a0b0d]">
       <div className="bg-[#14181c] border-b border-white/5 pt-20 pb-20 relative overflow-hidden">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.03] pointer-events-none">
-          <img src={team.logoUrl} className="w-full h-full object-contain grayscale" alt="" />
+          <img src={team.logoUrl} className="w-full h-full object-contain" alt="" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 relative z-10 text-center md:text-left">

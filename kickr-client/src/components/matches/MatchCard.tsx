@@ -52,7 +52,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center">
-                                    <div className="text-[9px] sm:text-[10px] font-black text-kickr/50 uppercase tracking-[0.4em] italic">VS</div>
+                                    <div className="text-xl sm:text-3xl font-black text-white italic tracking-tighter tabular-nums drop-shadow-lg">{timeStr}</div>
                                 </div>
                             )}
                         </div>
@@ -104,7 +104,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     <span className={`${isCompact ? 'text-[8px] sm:text-[9px]' : 'text-[8.5px] sm:text-[10px]'} font-black text-kickr uppercase tracking-tighter truncate w-full`}>
                         {isFinished ? 'FT' : timeStr}
                     </span>
-                    <span className="text-[7px] sm:text-[8px] font-bold text-[#445566] uppercase tracking-[0.1em] leading-none mt-0.5 sm:mt-1">
+                    <span className="text-[7px] sm:text-[8px] font-bold text-white/60 uppercase tracking-[0.1em] leading-none mt-0.5 sm:mt-1">
                         {dateStr}
                     </span>
                 </div>

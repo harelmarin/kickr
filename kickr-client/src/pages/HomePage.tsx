@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { NextMatchesHomePage } from '../components/matches/nextMatchesClient';
 import { Link } from 'react-router-dom';
 import { useLatestReviews, useUserMatchesByUser, useFollowingReviews, usePopularReviews } from '../hooks/useUserMatch';
@@ -7,370 +8,373 @@ import { useUsers } from '../hooks/useUser';
 import { ReviewCard } from '../components/review/ReviewCard';
 import { ReviewCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { motion } from 'framer-motion';
-import { useTrendingMatches } from '../hooks/useNextMatches';
-import { useCompetitions } from '../hooks/useCompetitions';
+import type { UserMatch } from '../types/userMatch';
 
 export default function HomePage() {
+
   const { user } = useAuth();
-  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(3);
-  const { data: popularReviews, isLoading: isPopularLoading } = usePopularReviews(6);
-  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 3);
-  const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(3);
+  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(4);
+  const { data: popularReviews, isLoading: isPopularLoading } = usePopularReviews(4);
+  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 4);
+  const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(4);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
   const { data: communityScouts } = useUsers();
-  const { data: trendingMatches, isLoading: isTrendingLoading } = useTrendingMatches(6);
-  const { data: competitions } = useCompetitions();
 
-  const activeFeedContent = user
-    ? (followingReviews?.content || [])
-    : (globalFeed || latestReviews || []);
+  const trendingSectors = useMemo(() => {
+    if (!popularReviews || !Array.isArray(popularReviews)) return [];
+    const sectors: Record<string, { count: number, totalNote: number, logo?: string }> = {};
+    popularReviews.forEach((review: UserMatch) => {
+      const name = review.match.competition;
+      if (!sectors[name]) sectors[name] = { count: 0, totalNote: 0, logo: review.match.competitionLogo };
+      sectors[name].count++;
+      sectors[name].totalNote += review.note;
+    });
+    return Object.entries(sectors)
+      .map(([name, data]) => ({
+        name,
+        activity: data.count,
+        rating: data.totalNote / data.count,
+        logo: data.logo
+      }))
+      .sort((a, b) => b.activity - a.activity)
+      .slice(0, 5);
+  }, [popularReviews]);
 
-  const isLoadingFeed = user ? isFollowingLoading : (isGlobalLoading || isLatestLoading);
+  const activeFollowing = followingReviews?.content || [];
+  const activeGlobal = globalFeed || latestReviews || [];
 
   const sortedUserReviews = (userReviews?.content || [])
     .sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
-    .slice(0, 3);
+    .slice(0, 5);
 
   return (
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="flex flex-col min-h-screen bg-[#0a0b0d]"
+      className="bg-[#0d0d0f] min-h-screen text-white/90 selection:bg-kickr/30"
     >
-      {/* Cinematic Hero */}
-      <section className="relative h-[450px] md:h-[650px] flex items-center overflow-hidden">
+      {/* 1. HERO SECTION */}
+      <section className="relative min-h-[85vh] flex items-center justify-center border-b border-white/5 overflow-hidden">
+        {/* Background Atmosphere */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-transparent to-[#0a0b0d]/40"></div>
-          <div className="absolute inset-0 bg-[#000] opacity-30"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-[#0d0d0f]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#0d0d0f_100%)] opacity-90"></div>
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
             alt="Stadium"
-            className="w-full h-full object-cover grayscale opacity-40 blur-[2px]"
+            className="w-full h-full object-cover grayscale opacity-[0.15]"
           />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
-          {/* Hero Text Content */}
-          <div className="flex-1 text-center">
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-kickr/10 border border-kickr/20 mb-6"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-kickr opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-kickr"></span>
-              </span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-kickr">The Tactical Network</span>
-            </motion.div>
-
+        <div className="max-w-[1400px] mx-auto px-6 relative z-40 w-full">
+          <div className="max-w-5xl mx-auto text-center">
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-4 md:mb-6 leading-none tracking-tighter uppercase display-font px-2"
+              transition={{ delay: 0.3 }}
+              className="font-black tracking-tighter uppercase italic display-font mb-12"
             >
-              Track football. <br />
-              <span className="text-kickr">Rate matchdays.</span>
+              <span className="text-5xl md:text-8xl text-white/90 block leading-none antialiased">
+                The Tactical Network.
+              </span>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-x-10 gap-y-2 mt-8 md:mt-12">
+                <span className="text-xl md:text-4xl text-white/30 normal-case not-italic font-bold tracking-tight">Track football.</span>
+                <span className="text-xl md:text-4xl text-kickr/80 normal-case not-italic font-bold tracking-tight">Rate matchdays.</span>
+              </div>
             </motion.h1>
-            <motion.p
+
+            <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-[#667788] text-[10px] md:text-xs uppercase tracking-[0.3em] font-black mb-8 md:mb-12 max-w-lg mx-auto leading-relaxed"
+              transition={{ delay: 0.4 }}
+              className="flex flex-col items-center gap-12"
             >
-              The premier platform for tactical analysis <br className="hidden sm:block" />
-              and professional match grading.
-            </motion.p>
+              <div className="space-y-6 max-w-2xl mx-auto">
+                <p className="text-white/60 text-xs md:text-sm font-black uppercase tracking-[0.4em] leading-relaxed">
+                  The premier platform for tactical analysis <br className="hidden md:block" /> and professional match grading.
+                </p>
+                <p className="text-[#64748b] text-sm md:text-base font-medium leading-relaxed max-w-xl mx-auto">
+                  The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life.
+                </p>
+              </div>
 
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-base md:text-xl text-[#99aabb] mb-8 md:mb-12 font-medium max-w-2xl mx-auto leading-relaxed"
-            >
-              {user
-                ? "The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life."
-                : "Discover tactical reviews from our global network, follow your friends, and log your favorite matchdays. Join the pitch."}
-            </motion.p>
-
-            <div className="flex items-center justify-center gap-6">
-              {!user ? (
-                <Link to="/register" className="btn-primary-kickr px-10 py-4 rounded text-xs transition-all hover:-translate-y-0.5">
-                  Join the Pitch — It's Free
-                </Link>
-              ) : (
-                <Link
-                  to={`/user/${user.id}`}
-                  className="bg-black/60 backdrop-blur-md px-8 py-4 rounded-xl border border-white/10 inline-flex items-center gap-3 group/welcome hover:border-kickr/40 transition-all"
-                >
-                  <span className="text-[#99aabb] font-bold uppercase tracking-widest text-[11px] group-hover:text-white transition-colors">
-                    Dashboard for <span className="text-kickr font-black">{user.name}</span>
-                  </span>
-                  <span className="text-kickr group-hover:translate-x-1 transition-transform">→</span>
-                </Link>
-              )}
-            </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+                {!user ? (
+                  <Link to="/register" className="h-[60px] px-12 flex items-center bg-[#f1f5f9] text-black text-[11px] font-black uppercase tracking-[0.2em] rounded-sm hover:bg-white transition-all border border-white/10">
+                    Join the pitch, it's free
+                  </Link>
+                ) : (
+                  <Link to={`/user/${user.id}`} className="min-w-[280px] h-[64px] px-8 flex items-center bg-white/[0.02] border border-white/5 rounded-sm gap-6 transition-all group">
+                    <div className="w-10 h-10 rounded-sm bg-white/[0.04] border border-white/5 flex items-center justify-center text-kickr text-lg font-black italic overflow-hidden">
+                      {user.avatarUrl ? <img src={user.avatarUrl} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" /> : user.name[0]}
+                    </div>
+                    <div className="flex flex-col items-start min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-black text-white uppercase italic tracking-[0.1em]">My Dashboard</span>
+                        <div className="w-1 h-1 rounded-full bg-kickr animate-pulse"></div>
+                      </div>
+                      <span className="text-[7px] font-mono text-white/20 uppercase tracking-[0.2em] mt-1 truncate w-full">Terminal // {user.name}</span>
+                    </div>
+                    <div className="ml-auto opacity-20 group-hover:opacity-100 transition-opacity">
+                      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </Link>
+                )}
+              </div>
+            </motion.div>
           </div>
-
-          {/* Featured match removed */}
         </div>
       </section>
 
-      {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-16">
+      {/* 2. DATA GRID INTERFACE */}
+      <div className="max-w-[1400px] mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
-          {/* Main Column: Social & Discover */}
-          <div className="col-span-1 lg:col-span-3 space-y-8 md:space-y-24">
+          {/* PRIMARY FEED COLUMN */}
+          <div className="lg:col-span-8 space-y-16">
 
-            {/* 1. Feed Section (Personalized or Discovery) */}
-            <section className="section-contrast">
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">
-                  {user ? "Your Network Activity" : "Community Feed"}
-                </h2>
-                <Link to="/feed" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">
-                  {user ? "See All →" : "Discover →"}
-                </Link>
+            {/* PRIORITY SECTOR: CURRENT FIXTURES */}
+            <section>
+              <div className="flex items-center justify-between mb-12">
+                <div className="flex items-center gap-3">
+                  <div className="h-4 w-[1px] bg-kickr opacity-50"></div>
+                  <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">Upcoming Fixtures</h2>
+                </div>
+                <Link to="/matches" className="text-[9px] font-black uppercase tracking-widest text-[#445566] hover:text-kickr transition-colors">See all data →</Link>
               </div>
-
-              {isLoadingFeed ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
-                  <ReviewCardSkeleton />
-                  <ReviewCardSkeleton />
-                </div>
-              ) : activeFeedContent && activeFeedContent.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
-                  {activeFeedContent.map((review: any) => (
-                    <ReviewCard key={review.id} review={review} />
-                  ))}
-                </div>
-              ) : (
-                <div className="bg-white/[0.02] border border-dashed border-white/10 rounded-2xl p-12 text-center">
-                  <p className="text-[#445566] text-xs font-bold uppercase tracking-widest mb-4">
-                    {user ? "No reviews from your network yet" : "No reviews yet. Be the first to share your thoughts!"}
-                  </p>
-                  <Link to={user ? "/community" : "/matches"} className="text-kickr text-[10px] font-black uppercase tracking-widest hover:underline">
-                    {user ? "Find users to follow" : "Log a match now"}
-                  </Link>
-                </div>
-              )}
+              <div className="bg-white/[0.02] border border-white/5 p-8 rounded-sm">
+                <NextMatchesHomePage />
+              </div>
             </section>
 
-            {/* 2. Upcoming Matches */}
-            <section className="section-contrast">
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">Top matches today</h2>
-                <Link to="/matches" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">See Schedule →</Link>
-              </div>
-              <p className="text-[#445566] text-xs italic mb-8">Next matches to watch and log.</p>
-              <NextMatchesHomePage />
-            </section>
-
-            {/* 3. Popular Reviews from the Community */}
-            <section className="section-contrast">
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">Popular this week</h2>
-                <Link to="/community" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">View All →</Link>
-              </div>
-              {isPopularLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
-                  <ReviewCardSkeleton />
-                  <ReviewCardSkeleton />
-                  <ReviewCardSkeleton />
-                  <ReviewCardSkeleton />
-                </div>
-              ) : popularReviews && popularReviews.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-20 md:gap-x-16 md:gap-y-24">
-                  {popularReviews.slice(0, 4).map((review) => (
-                    <ReviewCard
-                      key={review.id}
-                      review={review}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <p className="text-[#445566] text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
-              )}
-            </section>
-
-            {/* 3. Trending Matches - Best Rated */}
-            <section className="section-contrast">
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white">Trending on Kickr</h2>
-                <Link to="/matches" className="text-[10px] text-muted hover:text-kickr transition-colors font-bold uppercase tracking-widest">All Matches →</Link>
-              </div>
-              <p className="text-[#445566] text-xs italic mb-8">The best-rated matches according to our community.</p>
-              {isTrendingLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="h-64 bg-white/5 rounded-xl animate-pulse"></div>
-                  ))}
-                </div>
-              ) : trendingMatches && trendingMatches.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                  {trendingMatches.map((match) => (
-                    <Link
-                      key={match.matchUuid}
-                      to={`/matches/${match.id}`}
-                      className="group block bg-[#1b2228]/60 border border-white/5 rounded-xl p-6 hover:border-kickr/40 hover:bg-[#1b2228] transition-all"
-                    >
-                      <div className="flex items-center justify-between gap-6">
-                        {/* Home Team */}
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <img src={match.homeLogo} alt={match.homeTeam} className="w-12 h-12 object-contain flex-shrink-0" />
-                        </div>
-
-                        {/* Score */}
-                        <div className="flex items-center gap-3 flex-shrink-0">
-                          <span className="text-2xl font-black text-white tabular-nums">{match.homeScore}</span>
-                          <span className="text-[#445566] font-black">-</span>
-                          <span className="text-2xl font-black text-white tabular-nums">{match.awayScore}</span>
-                        </div>
-
-                        {/* Away Team */}
-                        <div className="flex items-center gap-3 flex-1 min-w-0 justify-end">
-                          <img src={match.awayLogo} alt={match.awayTeam} className="w-12 h-12 object-contain flex-shrink-0" />
-                        </div>
-                      </div>
-
-                      {/* Match Info */}
-                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] text-[#445566] uppercase tracking-widest font-bold">{match.competition}</span>
-                        </div>
-                        {match.averageRating && match.averageRating > 0 && (
-                          <div className="flex items-center gap-2">
-                            <span className="text-kickr text-sm">★</span>
-                            <span className="text-white font-bold text-sm">{match.averageRating.toFixed(1)}</span>
-                            <span className="text-[10px] text-[#445566]">({match.reviewsCount} reviews)</span>
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-[#445566] text-sm italic">No rated matches yet.</p>
-              )}
-            </section>
-          </div>
-
-          {/* Right Sidebar */}
-          <div className="col-span-1 space-y-12 md:space-y-16">
+            {/* INTEL FEED: NETWORK OBSERVATIONS */}
             {user && (
-              <section className="section-contrast">
-                <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Recent Activity</h3>
-                <div className="space-y-8">
-                  {sortedUserReviews && sortedUserReviews.length > 0 ? (
-                    sortedUserReviews.map((review: any) => (
-                      <Link
-                        key={review.id}
-                        to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                        className="flex items-center gap-4 group/sb p-3 -mx-3 rounded-xl hover:bg-white/5 transition-all"
-                      >
-                        {/* Rating Box */}
-                        <div className="flex-shrink-0 w-12 h-12 bg-black/20 rounded-lg flex flex-col items-center justify-center border border-white/5 group-hover/sb:border-kickr/40 transition-colors relative">
-                          <span className="text-kickr text-lg font-black italic leading-none">{review.note}</span>
-                          <span className="text-[6px] text-[#445566] font-black uppercase tracking-widest mt-1">Note</span>
-                          {review.isLiked && (
-                            <span className="absolute -top-1 -right-1 text-[#ff8000] text-xs" title="Liked">❤</span>
-                          )}
-                        </div>
+              <section>
+                <div className="flex items-center justify-between mb-12">
+                  <div className="flex items-center gap-4">
+                    <div className="h-6 w-[2px] bg-white/20"></div>
+                    <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-white italic">Friend Activity</h2>
+                  </div>
+                  <Link to="/feed" className="text-[9px] font-black uppercase tracking-widest text-[#445566] hover:text-kickr transition-colors">View all reports →</Link>
+                </div>
 
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <img src={review.match.homeLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80 flex-shrink-0" />
-                            <div className="flex items-center gap-1 font-black italic text-[9px] text-white/40">
-                              <span>{review.match.homeScore}</span>
-                              <span className="opacity-30">-</span>
-                              <span>{review.match.awayScore}</span>
-                            </div>
-                            <img src={review.match.awayLogo} alt="" className="w-3.5 h-3.5 object-contain opacity-80 flex-shrink-0" />
-                          </div>
-                          {review.comment && review.comment.trim() !== "" && (
-                            <p className="text-[9px] text-[#5c6470] line-clamp-1 italic mt-1.5 border-l border-kickr/30 pl-2 leading-none">
-                              {review.comment}
-                            </p>
-                          )}
-                        </div>
-                      </Link>
-                    ))
+                <div className="bg-white/[0.02] border border-white/5 p-8 rounded-sm">
+                  {isFollowingLoading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <ReviewCardSkeleton /><ReviewCardSkeleton />
+                    </div>
+                  ) : activeFollowing.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {activeFollowing.map((review: any) => (
+                        <ReviewCard key={review.id} review={review} />
+                      ))}
+                    </div>
                   ) : (
-                    <p className="text-[10px] text-[#5c6470] italic text-center py-4">No matches logged yet.</p>
+                    <div className="p-8 text-center group transition-all">
+                      <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.3em] mb-6">No match reports found in your network.</p>
+                      <Link to="/community" className="inline-flex items-center h-10 px-8 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:text-kickr transition-all">Go to Community →</Link>
+                    </div>
                   )}
-                  <Link to={`/user/${user.id}/diary`} className="block text-center text-[9px] font-bold uppercase tracking-widest text-[#99aabb] hover:text-white transition-colors pt-2">
-                    View full diary →
-                  </Link>
                 </div>
               </section>
             )}
 
-            {/* Discover Tacticians Section */}
-            <section className="section-contrast">
-              <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Rising Tacticians</h3>
-              <div className="space-y-8">
-                {communityScouts?.content && communityScouts.content.length > 0 ? (
-                  communityScouts.content
-                    .filter((s: any) => s.id !== user?.id)
-                    .slice(0, 4)
-                    .map((scout: any) => (
+            {/* GLOBAL ACTIVITY: TECHNICAL LOGS */}
+            <section className="mt-16 pt-12 border-t border-white/5">
+              <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center gap-3">
+                  <div className="h-4 w-[1px] bg-kickr opacity-50"></div>
+                  <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">Global Match Feed</h2>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-kickr animate-pulse"></div>
+                  <span className="text-[9px] font-black text-[#445566] uppercase tracking-[widest]">Live Hub</span>
+                </div>
+              </div>
+
+              {isGlobalLoading || isLatestLoading ? (
+                <div className="space-y-3">
+                  {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-12 bg-white/5 animate-pulse rounded-sm"></div>)}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {activeGlobal.map((review: UserMatch) => (
+                    <Link
+                      key={review.id}
+                      to={`/reviews/${review.id}`}
+                      className="group flex items-center justify-between px-4 py-2 bg-white/[0.02] border border-white/5 hover:border-kickr/20 hover:bg-white/[0.04] transition-all rounded-sm gap-4"
+                    >
+                      <div className="flex items-center gap-6 flex-1 min-w-0">
+                        {/* User ID / Avatar */}
+                        <div className="flex items-center gap-3 w-32 flex-shrink-0">
+                          <div className="w-6 h-6 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center overflow-hidden">
+                            {review.user?.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <span className="text-kickr text-[10px] font-black">{review.user?.name[0]}</span>}
+                          </div>
+                          <span className="text-[10px] font-black text-white/60 group-hover:text-white truncate uppercase italic">{review.user?.name}</span>
+                        </div>
+
+                        {/* Match Info */}
+                        <div className="flex items-center gap-4 flex-1 min-w-0 border-l border-white/5 pl-6">
+                          <div className="flex -space-x-1.5 flex-shrink-0">
+                            <img src={review.match.homeLogo} className="w-5 h-5 object-contain" alt="" />
+                            <img src={review.match.awayLogo} className="w-5 h-5 object-contain border-l border-[#0a0a0a]" alt="" />
+                          </div>
+                          <p className="text-[10px] font-black text-white/80 group-hover:text-kickr uppercase italic truncate leading-none">
+                            {review.match.homeTeam} <span className="text-[#334455] not-italic font-bold normal-case mx-1">vs</span> {review.match.awayTeam}
+                          </p>
+                          <span className="hidden md:block text-[8px] font-black text-white/40 uppercase tracking-widest">{review.match.competition}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-6 flex-shrink-0">
+                        {/* Rating */}
+                        <div className="flex items-center gap-1.5 bg-kickr/5 px-3 py-1 border border-kickr/10">
+                          <span className="text-kickr text-[10px] font-black italic">{review.note.toFixed(1)}</span>
+                        </div>
+
+                        {/* Final Score */}
+                        <div className="w-16 text-right">
+                          <span className="text-[14px] font-black text-white/90 italic font-mono group-hover:text-kickr transition-colors tracking-tighter">
+                            {review.match.homeScore}-{review.match.awayScore}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </section>
+          </div>
+
+          {/* SIDEBAR: TECHNICAL DATA */}
+          <div className="lg:col-span-4 space-y-16">
+
+            {/* ANALYST JOURNAL: USER ACTIVITY */}
+            {user && (
+              <section className="bg-white/[0.02] border border-white/5 p-8 rounded-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <span className="text-6xl font-black italic uppercase tracking-tighter">LOG</span>
+                </div>
+                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-10 border-b border-white/5 pb-6 italic">My Match Diary</h3>
+                <div className="space-y-9">
+                  {sortedUserReviews.length > 0 ? (
+                    sortedUserReviews.map((review: any) => (
                       <Link
-                        key={scout.id}
-                        to={`/user/${scout.id}`}
-                        className="flex items-center gap-4 group/scout"
+                        key={review.id}
+                        to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
+                        className="flex items-center gap-6 group/item transition-all"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-kickr/20 to-kickr/5 border border-white/10 flex items-center justify-center text-xs font-black text-kickr uppercase group-hover:border-kickr/40 group-hover:scale-110 transition-all overflow-hidden">
-                          {scout.avatarUrl ? (
-                            <img src={scout.avatarUrl} alt={scout.name} className="w-full h-full object-cover" />
-                          ) : (
-                            scout.name[0]
-                          )}
+                        <div className="w-11 h-11 flex-shrink-0 bg-white/[0.02] border border-white/5 flex items-center justify-center text-[10px] font-mono font-black italic text-kickr group-hover/item:border-kickr transition-all">
+                          {review.note.toFixed(1)}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white text-sm font-black italic truncate group-hover:text-kickr transition-colors tracking-tight">{scout.name}</p>
-                          <p className="text-[9px] text-[#445566] font-bold uppercase tracking-widest">{scout.matchesCount} Logs</p>
+                        <div className="flex flex-col flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <div className="flex -space-x-1.5 flex-shrink-0">
+                                <img src={review.match.homeLogo} className="w-4 h-4 object-contain" alt="" />
+                                <img src={review.match.awayLogo} className="w-4 h-4 object-contain border-l border-[#0d0d0f]" alt="" />
+                              </div>
+                              <p className="text-[10px] font-black text-white/60 group-hover/item:text-white transition-colors uppercase italic truncate leading-none">
+                                {review.match.homeTeam} <span className="text-[#334455] not-italic mr-0.5">V</span> {review.match.awayTeam}
+                                {review.isLiked && <span className="ml-2 text-[#ff8000] not-italic inline-block" title="Liked">❤</span>}
+                              </p>
+                            </div>
+                            <span className="text-[10px] font-mono font-black text-white/40 group-hover/item:text-kickr transition-colors italic">
+                              {review.match.homeScore}-{review.match.awayScore}
+                            </span>
+                          </div>
+                          <span className="text-[7px] font-mono text-white/60 uppercase tracking-[0.3em] leading-none">
+                            // {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                          </span>
                         </div>
-                        <span className="text-kickr opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                       </Link>
                     ))
+                  ) : (
+                    <p className="text-[10px] text-[#445566] italic font-bold">No match logs recorded to memory.</p>
+                  )}
+                </div>
+                {sortedUserReviews.length > 0 && (
+                  <Link to={`/user/${user.id}/diary`} className="block mt-10 text-center pt-6 border-t border-white/5 text-[9px] font-black uppercase tracking-[0.2em] text-[#445566] hover:text-white transition-all">
+                    Access Historical Data →
+                  </Link>
+                )}
+              </section>
+            )}
+
+            {/* STRATEGIC REPORTS: TRENDING SECTORS (AGGREGATED) */}
+            <section className="bg-white/[0.02] border border-white/5 p-8 rounded-sm">
+              <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Top Leagues</h3>
+                <span className="text-[8px] font-mono text-kickr uppercase tracking-widest animate-pulse">Live Stats</span>
+              </div>
+              <div className="space-y-8">
+                {isPopularLoading ? (
+                  Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-10 bg-white/5 animate-pulse rounded-sm"></div>)
+                ) : trendingSectors.length > 0 ? (
+                  trendingSectors.map((sector, i) => (
+                    <div key={sector.name} className="group relative">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <span className="text-[9px] font-mono text-white/20">0{i + 1}</span>
+                          {sector.logo && (
+                            <img src={sector.logo} alt="" className="w-4 h-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity" />
+                          )}
+                          <span className="text-[10px] font-black text-white/80 uppercase italic tracking-widest group-hover:text-kickr transition-colors">{sector.name}</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-kickr italic">{sector.rating.toFixed(1)}</span>
+                      </div>
+                      <div className="w-full h-[1px] bg-white/5 relative overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(sector.activity / trendingSectors[0].activity) * 100}%` }}
+                          className="absolute h-full bg-gradient-to-right from-kickr/40 to-kickr"
+                        />
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-[7px] font-mono text-white/10 uppercase tracking-widest">Popularity</span>
+                        <span className="text-[7px] font-mono text-white/10 uppercase tracking-widest">Reports: {sector.activity} matches</span>
+                      </div>
+                    </div>
+                  ))
                 ) : (
-                  <p className="text-[10px] text-[#445566] italic text-center py-4">Finding analysts...</p>
+                  <p className="text-[10px] text-[#445566] italic font-bold">Waiting for sector synchronization...</p>
                 )}
               </div>
-              <Link to="/community" className="block text-center text-[9px] font-black uppercase tracking-[0.3em] text-[#5c6470] hover:text-white transition-colors mt-8 pt-4 border-t border-white/5">
-                The Tacticians Network
+            </section>
+
+            {/* TACTICIANS DIRECTORY: TOP USERS */}
+            <section className="bg-white/[0.02] border border-white/5 p-8 rounded-sm">
+              <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-6">
+                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Community Analysts</h3>
+                <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">Active Now</span>
+              </div>
+              <div className="space-y-6">
+                {communityScouts?.content?.filter((s: any) => s.id !== user?.id).slice(0, 5).map((scout: any) => (
+                  <Link key={scout.id} to={`/user/${scout.id}`} className="flex items-center gap-4 group">
+                    <div className="w-8 h-8 rounded-sm bg-white/[0.02] border border-white/5 flex items-center justify-center text-[10px] text-kickr font-black italic group-hover:border-kickr transition-all overflow-hidden">
+                      {scout.avatarUrl ? <img src={scout.avatarUrl} className="w-full h-full object-cover" /> : (scout.name ? scout.name[0] : '?')}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] font-black text-white/60 group-hover:text-kickr uppercase italic transition-all truncate">{scout.name}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[8px] font-black text-[#334455] uppercase tracking-widest">{scout.matchesCount} Reports</span>
+                        <div className="w-1 h-1 rounded-full bg-white/5"></div>
+                        <span className="text-[8px] font-black text-[#334455] uppercase tracking-widest">ID:{String(scout.id).substring(0, 4)}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <Link to="/community" className="block text-center mt-10 pt-6 border-t border-white/5 text-[9px] font-black uppercase tracking-[0.2em] text-[#445566] hover:text-white transition-all">
+                Full Network Access →
               </Link>
             </section>
 
-            {/* Trending Leagues */}
-            <section className="section-contrast">
-              <h3 className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6 pb-3 border-b border-white/5">Trending Leagues</h3>
-              <div className="flex flex-col gap-5">
-                {competitions ? (
-                  competitions.slice(0, 6).map(c => (
-                    <LeagueItem key={c.id} name={c.name} id={c.id} />
-                  ))
-                ) : (
-                  [1, 2, 3, 4, 5].map(i => (
-                    <div key={i} className="h-8 bg-white/5 rounded-lg animate-pulse"></div>
-                  ))
-                )}
-              </div>
-            </section>
           </div>
         </div>
       </div>
     </motion.main>
   );
 }
-
-const LeagueItem = ({ name, id }: { name: string, id?: string }) => (
-  <Link to={id ? `/competitions/${id}` : "/competitions"} className="flex items-center justify-between group cursor-pointer border-b border-white/5 pb-2 hover:border-kickr/30 transition-all">
-    <span className="text-xs font-bold text-[#99aabb] group-hover:text-kickr transition-colors">{name}</span>
-    <span className="text-[#445566] transition-transform group-hover:translate-x-1 group-hover:text-kickr">→</span>
-  </Link>
-);

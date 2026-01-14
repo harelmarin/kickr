@@ -39,6 +39,7 @@ const mapApiResponseToUserMatch = (um: any): UserMatch => ({
         awayLogo: um.match.away_logo ?? um.match.awayLogo,
         matchDate: um.match.match_date ?? um.match.matchDate,
         competition: um.match.competition_name || um.match.competition,
+        competitionLogo: um.match.competition_logo || um.match.competitionLogo,
         location: um.match.location,
         homeScore: um.match.home_score ?? um.match.homeScore,
         awayScore: um.match.away_score ?? um.match.awayScore,
