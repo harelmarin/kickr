@@ -46,7 +46,7 @@ export function NextMatchesHomePage() {
 
             {/* Content: Combatants & Time */}
             <div className="p-2 md:p-5 flex items-center justify-between gap-2 md:gap-4 flex-1">
-              <div className="flex md:flex-col items-center gap-1.5 md:gap-2 flex-1 min-w-0">
+              <div className="flex items-center justify-center md:flex-col gap-1.5 md:gap-2 flex-1 min-w-0">
                 <img src={match.homeLogo} className="w-5 h-5 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" alt="" />
                 <span className="hidden md:block text-[9px] md:text-[10px] font-black text-white/60 uppercase italic truncate w-full text-center">{match.homeTeam}</span>
               </div>
@@ -60,7 +60,7 @@ export function NextMatchesHomePage() {
                 </span>
               </div>
 
-              <div className="flex md:flex-col items-center gap-1.5 md:gap-2 flex-1 min-w-0">
+              <div className="flex items-center justify-center md:flex-col gap-1.5 md:gap-2 flex-1 min-w-0">
                 <img src={match.awayLogo} className="w-5 h-5 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" alt="" />
                 <span className="hidden md:block text-[9px] md:text-[10px] font-black text-white/60 uppercase italic truncate w-full text-center">{match.awayTeam}</span>
               </div>

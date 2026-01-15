@@ -230,7 +230,7 @@ export default function HomePage() {
                         </Link>
 
                         <div className="flex items-center gap-1.5 md:gap-4 flex-1 min-w-0 border-l border-white/5 pl-2 md:pl-6">
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center justify-center gap-1.5 flex-1 md:flex-none">
                             <img src={review.match.homeLogo} className="w-2.5 h-2.5 md:w-5 md:h-5 object-contain" alt="" />
                             <span className="md:hidden text-white/50 text-[7px] font-black italic tabular-nums">{review.match.homeScore}-{review.match.awayScore}</span>
                             <img src={review.match.awayLogo} className="w-2.5 h-2.5 md:w-5 md:h-5 object-contain" alt="" />
