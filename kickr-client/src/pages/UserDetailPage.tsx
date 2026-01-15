@@ -24,7 +24,7 @@ export const UserDetailPage = () => {
     const handleFollowToggle = () => {
         if (!currentUser) {
             toast.error('You need to be logged in to follow users', {
-                duration: 4000,
+                duration: 2000,
                 position: 'top-center',
             });
             setTimeout(() => {

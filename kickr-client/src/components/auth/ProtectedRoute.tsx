@@ -23,7 +23,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, requiredRole
         if (!hasShownToast.current) {
             hasShownToast.current = true;
             toast.error('You need to be logged in to access this feature', {
-                duration: 4000,
+                duration: 2000,
                 position: 'top-center',
             });
         }
@@ -34,7 +34,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, requiredRole
         if (!hasShownToast.current) {
             hasShownToast.current = true;
             toast.error('You do not have permission to access this page', {
-                duration: 4000,
+                duration: 2000,
                 position: 'top-center',
             });
         }

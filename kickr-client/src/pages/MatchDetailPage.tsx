@@ -40,7 +40,7 @@ export const MatchDetailPage = () => {
   const handleSaveRating = async () => {
     if (!user) {
       toast.error('You need to be logged in to log matches', {
-        duration: 4000,
+        duration: 2000,
         position: 'top-center',
       });
       setTimeout(() => {
@@ -513,7 +513,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
   const handleLike = () => {
     if (!currentUser) {
       toast.error('You need to be logged in to like reviews', {
-        duration: 4000,
+        duration: 2000,
         position: 'top-center',
       });
       setTimeout(() => {

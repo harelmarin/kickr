@@ -217,34 +217,34 @@ export default function HomePage() {
                   {activeGlobal.map((review: UserMatch) => (
                     <div
                       key={review.id}
-                      className="group relative flex items-center justify-between px-2 md:px-4 py-1.5 md:py-2 bg-white/[0.01] border border-white/5 hover:border-kickr/20 transition-all rounded-sm gap-2"
+                      className="group relative flex items-center justify-between px-2 md:px-4 py-1 md:py-2 bg-white/[0.01] border border-white/5 hover:border-kickr/20 transition-all rounded-sm gap-2"
                     >
                       <Link to={`/reviews/${review.id}`} className="absolute inset-0 z-0" />
 
                       <div className="flex items-center gap-2 md:gap-6 flex-1 min-w-0 relative z-10 pointer-events-none">
-                        <Link to={`/user/${review.user?.id}`} className="flex items-center gap-1.5 md:gap-3 w-16 md:w-32 flex-shrink-0 pointer-events-auto">
-                          <div className="w-4 h-4 md:w-6 md:h-6 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center overflow-hidden">
-                            {review.user?.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <span className="text-kickr text-[7px] md:text-[10px] font-black">{review.user?.name[0]}</span>}
+                        <Link to={`/user/${review.user?.id}`} className="flex items-center gap-1 w-12 md:w-32 flex-shrink-0 pointer-events-auto">
+                          <div className="w-3.5 h-3.5 md:w-6 md:h-6 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center overflow-hidden">
+                            {review.user?.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <span className="text-kickr text-[6px] md:text-[10px] font-black">{review.user?.name[0]}</span>}
                           </div>
-                          <span className="text-[7px] md:text-[10px] font-black text-white/40 hover:text-white truncate uppercase italic transition-colors leading-none">{review.user?.name}</span>
+                          <span className="text-[6.5px] md:text-[10px] font-black text-white/40 hover:text-white truncate uppercase italic transition-colors leading-none">{review.user?.name}</span>
                         </Link>
 
-                        <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0 border-l border-white/5 pl-2 md:pl-6">
-                          <div className="flex items-center gap-2">
-                            <img src={review.match.homeLogo} className="w-3 h-3 md:w-5 md:h-5 object-contain" alt="" />
-                            <span className="text-[6px] font-black text-white/5 italic">VS</span>
-                            <img src={review.match.awayLogo} className="w-3 h-3 md:w-5 md:h-5 object-contain" alt="" />
+                        <div className="flex items-center gap-1.5 md:gap-4 flex-1 min-w-0 border-l border-white/5 pl-2 md:pl-6">
+                          <div className="flex items-center gap-1.5">
+                            <img src={review.match.homeLogo} className="w-2.5 h-2.5 md:w-5 md:h-5 object-contain" alt="" />
+                            <span className="md:hidden text-white/50 text-[7px] font-black italic tabular-nums">{review.match.homeScore}-{review.match.awayScore}</span>
+                            <img src={review.match.awayLogo} className="w-2.5 h-2.5 md:w-5 md:h-5 object-contain" alt="" />
                           </div>
-                          <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-[0.1em] md:tracking-[0.3em] ml-auto italic truncate max-w-[40px] md:max-w-none">{review.match.competition}</span>
+                          <span className="text-[5.5px] md:text-[8px] font-black text-white/10 uppercase tracking-[0.05em] md:tracking-[0.3em] ml-auto italic truncate max-w-[40px] md:max-w-none">{review.match.competition}</span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 md:gap-6 flex-shrink-0 relative z-10 pointer-events-none">
-                        <div className="flex items-center justify-center bg-kickr/10 w-6 h-5 md:w-10 md:h-6 border border-kickr/20">
-                          <span className="text-kickr text-[8px] md:text-[10px] font-black italic">{review.note.toFixed(1)}</span>
+                      <div className="flex items-center gap-1 md:gap-6 flex-shrink-0 relative z-10 pointer-events-none">
+                        <div className="flex items-center justify-center bg-kickr/5 w-5 h-4 md:w-10 md:h-6 border border-kickr/10">
+                          <span className="text-kickr text-[7px] md:text-[10px] font-black italic">{review.note.toFixed(1)}</span>
                         </div>
-                        <div className="w-10 md:w-16 text-right">
-                          <span className="text-[10px] md:text-[14px] font-black text-white italic group-hover:text-kickr transition-colors tracking-tighter tabular-nums">
+                        <div className="hidden md:block w-16 text-right">
+                          <span className="text-[14px] font-black text-white italic group-hover:text-kickr transition-colors tracking-tighter tabular-nums">
                             {review.match.homeScore}-{review.match.awayScore}
                           </span>
                         </div>
@@ -265,15 +265,15 @@ export default function HomePage() {
                 <div className="space-y-3 md:space-y-8">
                   {sortedUserReviews.length > 0 ? (
                     sortedUserReviews.map((review: any) => (
-                      <Link key={review.id} to={`/reviews/${review.id}`} className="flex items-center gap-3 md:gap-6 group/item">
-                        <div className="w-7 h-7 md:w-11 md:h-11 flex-shrink-0 bg-white/[0.02] border border-white/5 flex items-center justify-center text-[8px] md:text-[10px] font-mono font-black italic text-kickr group-hover/item:border-kickr transition-all">
+                      <Link key={review.id} to={`/reviews/${review.id}`} className="flex items-center gap-2 md:gap-6 group/item">
+                        <div className="w-6 h-6 md:w-11 md:h-11 flex-shrink-0 bg-white/[0.02] border border-white/5 flex items-center justify-center text-[7px] md:text-[10px] font-mono font-black italic text-kickr group-hover/item:border-kickr transition-all">
                           {review.note.toFixed(1)}
                         </div>
                         <div className="flex flex-col flex-1 min-w-0">
-                          <div className="text-[8px] md:text-[10px] font-black text-white/30 italic">
+                          <div className="text-[7.5px] md:text-[10px] font-black text-white/30 italic leading-none">
                             {review.match.homeScore}-{review.match.awayScore}
                           </div>
-                          <span className="text-[6px] md:text-[7px] font-mono text-white/20 uppercase tracking-[0.1em] leading-none truncate mt-0.5 md:mt-1">
+                          <span className="text-[5.5px] md:text-[7px] font-mono text-white/10 uppercase tracking-[0.05em] leading-none mt-0.5">
                             {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                           </span>
                         </div>
