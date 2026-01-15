@@ -56,7 +56,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     };
 
     return (
-        <div className="w-[300px] bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="w-[300px] bg-[#14181c] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
             <AnimatePresence mode="wait">
                 {!isForgot ? (
@@ -234,7 +234,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="p-10 flex flex-col gap-8 bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-10 flex flex-col gap-8 bg-[#14181c] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
 
             <div className="mb-4">

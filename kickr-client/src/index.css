@@ -13,7 +13,7 @@
   --kickr-primary: #4466ff;
   --kickr-primary-rgb: 68, 102, 255;
   --color-bg-primary: #14181c;
-  /* Letterboxd-style background */
+  /* Dark gray from Leagues/Teams */
   --color-bg-secondary: #1b2228;
   /* Slightly lighter for cards/headers */
   --color-bg-tertiary: #242c33;
@@ -83,7 +83,7 @@
   letter-spacing: 0.1em;
   font-size: 11px;
   padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
+  border-radius: 0.125rem;
   transition: all 0.2s;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
@@ -115,7 +115,7 @@
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  border-radius: 0.125rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
@@ -157,7 +157,7 @@
 .section-contrast {
   background-color: var(--color-bg-secondary);
   padding: 2rem;
-  border-radius: 1rem;
+  border-radius: 0.125rem;
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
 

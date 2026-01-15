@@ -22,11 +22,11 @@ export const SuccessModal: FC<SuccessModalProps> = ({
 
     return (
         <div
-            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm"
+            className="fixed inset-0 bg-[#0a0b0d]/60 flex items-center justify-center z-50 backdrop-blur-sm"
             onClick={onClose}
         >
             <div
-                className="bg-primary p-8 rounded-2xl shadow-2xl w-96 relative border border-green-500/30 animate-scale-in"
+                className="bg-primary p-8 rounded-sm shadow-2xl w-96 relative border border-green-500/30 animate-scale-in"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Success Icon */}
@@ -47,7 +47,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({
                 {/* Bouton de fermeture */}
                 <button
                     onClick={onClose}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                    className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-sm transition-colors"
                 >
                     Compris !
                 </button>

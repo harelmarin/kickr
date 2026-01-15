@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 export const MatchCardPosterSkeleton = () => (
     <div className="flex flex-col gap-3">
-        <div className="aspect-[2.5/1] rounded-xl overflow-hidden shadow-2xl">
+        <div className="aspect-[2.5/1] rounded-sm overflow-hidden shadow-2xl">
             <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
         </div>
         <div className="flex justify-between items-center px-1 mt-1">
@@ -14,7 +14,7 @@ export const MatchCardPosterSkeleton = () => (
 );
 
 export const MatchCardSkeleton = () => (
-    <div className="flex items-center gap-4 p-4 bg-[#14181c] border border-white/5 rounded-xl">
+    <div className="flex items-center gap-4 p-4 bg-[#14181c] border border-white/5 rounded-sm">
         <div className="flex flex-col gap-1 w-[65px]">
             <Skeleton width={40} height={12} baseColor="#1b2228" highlightColor="#252a31" />
             <Skeleton width={30} height={8} baseColor="#1b2228" highlightColor="#252a31" />
@@ -40,7 +40,7 @@ export const MatchCardSkeleton = () => (
 
 export const ReviewCardSkeleton = () => (
     <div className="flex gap-5">
-        <div className="w-32 h-20 rounded-xl overflow-hidden flex-shrink-0">
+        <div className="w-32 h-20 rounded-sm overflow-hidden flex-shrink-0">
             <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
         </div>
         <div className="flex flex-col flex-1 gap-2 pt-1">
@@ -52,8 +52,8 @@ export const ReviewCardSkeleton = () => (
 );
 
 export const UserCardSkeleton = () => (
-    <div className="bg-[#14181c]/60 backdrop-blur-xl border border-white/5 rounded-2xl p-8 flex flex-col items-center gap-6">
-        <div className="w-24 h-24 rounded-2xl overflow-hidden">
+    <div className="bg-[#14181c]/60 backdrop-blur-xl border border-white/5 rounded-sm p-8 flex flex-col items-center gap-6">
+        <div className="w-24 h-24 rounded-sm overflow-hidden">
             <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
         </div>
         <div className="flex flex-col items-center gap-2 w-full text-center">
@@ -76,8 +76,8 @@ export const UserCardSkeleton = () => (
 
 export const LeagueCardSkeleton = () => (
     <div className="flex flex-col gap-4">
-        <div className="aspect-square bg-[#14181c] rounded-2xl border border-white/5 p-8 flex items-center justify-center relative overflow-hidden">
-            <div className="w-full h-full rounded-xl overflow-hidden">
+        <div className="aspect-square bg-[#14181c] rounded-sm border border-white/5 p-8 flex items-center justify-center relative overflow-hidden">
+            <div className="w-full h-full rounded-sm overflow-hidden">
                 <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
             </div>
         </div>

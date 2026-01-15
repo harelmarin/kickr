@@ -66,7 +66,7 @@ export const NavbarExample: FC = () => {
                                         setShowRegister(!showRegister);
                                         setShowLogin(false);
                                     }}
-                                    className="px-4 py-2 text-sm font-medium bg-secondary rounded-lg hover:opacity-90 transition"
+                                    className="px-4 py-2 text-sm font-medium bg-secondary rounded-sm hover:opacity-90 transition"
                                 >
                                     Sign up
                                 </button>

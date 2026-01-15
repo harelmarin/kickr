@@ -27,7 +27,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
     if (!profileUser) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
+        <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header Context */}
@@ -47,7 +47,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                             </p>
                         </div>
 
-                        <nav className="flex items-center gap-2 bg-black/20 p-1 rounded-sm border border-white/5">
+                        <nav className="flex items-center gap-2 bg-[#0a0b0d]/20 p-1 rounded-sm border border-white/5">
                             <Link
                                 to={`/user/${id}/following`}
                                 className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-black' : 'text-white/40 hover:text-white'}`}
@@ -164,7 +164,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                 )}
 
                 <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-sm bg-black/40 border border-white/5 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
+                    <div className="w-14 h-14 rounded-sm bg-[#0a0b0d]/40 border border-white/5 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
                         {user.avatarUrl ? (
                             <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                         ) : (
@@ -203,7 +203,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 };
 
 const LoadingState = () => (
-    <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center">
+    <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 border-4 border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
             <p className="text-kickr font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Scanning Network</p>
@@ -212,7 +212,7 @@ const LoadingState = () => (
 );
 
 const NotFoundState = () => (
-    <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center text-center">
+    <div className="min-h-screen bg-[#14181c] flex items-center justify-center text-center">
         <div>
             <h2 className="text-4xl font-black text-white mb-8 italic tracking-tighter uppercase">Signal Lost</h2>
             <Link to="/" className="text-black bg-kickr font-black uppercase tracking-widest text-[10px] px-8 py-4 rounded-sm hover:brightness-110 transition-all italic">Restore Feed</Link>

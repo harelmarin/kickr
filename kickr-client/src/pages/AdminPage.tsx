@@ -22,7 +22,7 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-[calc(100vh-4rem)] bg-[#0a0b0d] pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
+        <div className="min-h-[calc(100vh-4rem)] bg-[#14181c] pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
             {/* Header */}
             <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                 <div>
@@ -35,7 +35,7 @@ export default function AdminPage() {
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
+                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-sm text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
                                 ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
                                 : 'text-[#667788] hover:text-white'
                                 }`}
@@ -102,7 +102,7 @@ const DashboardTab = () => {
             </div>
 
             {/* Existing Data Management */}
-            <section className="bg-[#14181c] border border-white/5 rounded-2xl p-8">
+            <section className="bg-[#14181c] border border-white/5 rounded-sm p-8">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-8">System Sync Utilities</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <DataSyncCard
@@ -167,7 +167,7 @@ const UsersTab = () => {
     );
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-2xl overflow-hidden shadow-xl">
+        <div className="bg-[#14181c] border border-white/5 rounded-sm overflow-hidden shadow-xl">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Tactician Directory</h2>
                 <input
@@ -175,12 +175,12 @@ const UsersTab = () => {
                     placeholder="Search systems..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-black/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
+                    className="bg-[#0a0b0d]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
                 />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead className="bg-black/10 text-[#445566] text-[10px] font-black uppercase tracking-[0.2em]">
+                    <thead className="bg-[#0a0b0d]/10 text-[#445566] text-[10px] font-black uppercase tracking-[0.2em]">
                         <tr>
                             <th className="px-6 py-4">User</th>
                             <th className="px-6 py-4">Status</th>
@@ -193,7 +193,7 @@ const UsersTab = () => {
                             <tr key={user.id} className="hover:bg-white/[0.01] transition-colors">
                                 <td className="px-6 py-4">
                                     <Link to={`/user/${user.id}`} className="flex items-center gap-3 group/user">
-                                        <div className="w-8 h-8 rounded bg-kickr/10 border border-kickr/20 flex items-center justify-center font-black text-xs text-kickr overflow-hidden group-hover/user:border-kickr/50 transition-colors">
+                                        <div className="w-8 h-8 rounded-sm bg-kickr/10 border border-kickr/20 flex items-center justify-center font-black text-xs text-kickr overflow-hidden group-hover/user:border-kickr/50 transition-colors">
                                             {user.avatarUrl ? (
                                                 <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                                             ) : (
@@ -207,7 +207,7 @@ const UsersTab = () => {
                                     </Link>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-tighter bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-black uppercase tracking-tighter bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                                         Active
                                     </span>
                                 </td>
@@ -219,11 +219,11 @@ const UsersTab = () => {
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
                                         {user.role === 'USER' ? (
-                                            <button onClick={() => adminService.promoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-kickr/10 rounded-lg text-kickr transition-all">↑</button>
+                                            <button onClick={() => adminService.promoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-kickr/10 rounded-sm text-kickr transition-all">↑</button>
                                         ) : (
-                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-orange-500/10 rounded-lg text-orange-500 transition-all">↓</button>
+                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-orange-500/10 rounded-sm text-orange-500 transition-all">↓</button>
                                         )}
-                                        <button onClick={() => adminService.deleteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-red-500/10 rounded-lg text-red-500 transition-all">×</button>
+                                        <button onClick={() => adminService.deleteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-red-500/10 rounded-sm text-red-500 transition-all">×</button>
                                     </div>
                                 </td>
                             </tr>
@@ -234,7 +234,7 @@ const UsersTab = () => {
 
             {/* Pagination */}
             {pageData && pageData.totalPages > 1 && (
-                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-black/10">
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#0a0b0d]/10">
                     <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
                         Page {pageData.number + 1} / {pageData.totalPages}
                     </div>
@@ -242,14 +242,14 @@ const UsersTab = () => {
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
                             disabled={pageData.first}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             Previous
                         </button>
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
                             disabled={pageData.last}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             Next
                         </button>
@@ -297,7 +297,7 @@ const ReportsTab = () => {
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-[#0a0b0d] border border-white/5 rounded-sm p-8 hover:border-kickr/20 transition-all">
+                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-8 hover:border-kickr/20 transition-all">
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
                                 <div className="space-y-6 flex-1">
                                     <div className="flex items-center gap-3">
@@ -331,7 +331,7 @@ const ReportsTab = () => {
 
                                         <div>
                                             <p className="text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
-                                            <p className="text-[12px] text-[#99aabb] leading-relaxed bg-black/40 border border-white/5 p-4 rounded-sm italic h-full">
+                                            <p className="text-[12px] text-[#99aabb] leading-relaxed bg-[#0a0b0d]/40 border border-white/5 p-4 rounded-sm italic h-full">
                                                 "{report.description || 'No additional intelligence provided'}"
                                             </p>
                                         </div>
@@ -376,7 +376,7 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-[#0a0b0d] border rounded-sm p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
+    <div className={`bg-[#14181c] border rounded-sm p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
         <p className="text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-4">{label}</p>
         <div className="flex items-end justify-between">
             <h3 className={`text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
@@ -389,7 +389,7 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
     const maxVal = Math.max(...data.map((d: any) => d.count), 1);
 
     return (
-        <div className="bg-[#0a0b0d] border border-white/5 rounded-sm p-8 shadow-xl">
+        <div className="bg-[#14181c] border border-white/5 rounded-sm p-8 shadow-xl">
             <div className="mb-10">
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
                 <p className="text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
@@ -404,14 +404,14 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
                             className="w-full rounded-t-sm transition-all duration-500 group-hover:opacity-80"
                             style={{ backgroundColor: color, opacity: 0.3 + (d.count / maxVal) * 0.7 }}
                         />
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white text-black text-[9px] font-black px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white text-black text-[9px] font-black px-1.5 py-0.5 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
                             {d.count}
                         </div>
                     </div>
                 ))}
             </div>
             {data.length === 0 && (
-                <div className="h-60 flex items-center justify-center border border-dashed border-white/5 rounded-lg">
+                <div className="h-60 flex items-center justify-center border border-dashed border-white/5 rounded-sm">
                     <p className="text-[10px] text-[#445566] uppercase tracking-widest font-black">Data acquisition in progress...</p>
                 </div>
             )}
@@ -459,7 +459,7 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     };
 
     return (
-        <div className="bg-black/20 border border-white/5 rounded-xl p-6 hover:bg-white/[0.02] transition-all group">
+        <div className="bg-[#0a0b0d]/20 border border-white/5 rounded-sm p-6 hover:bg-white/[0.02] transition-all group">
             <h3 className="text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
             <p className="text-[11px] text-[#667788] font-medium mb-6 leading-relaxed">{description}</p>
             <div className="flex items-center justify-between">
@@ -467,7 +467,7 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
                 <button
                     onClick={handleSync}
                     disabled={syncing}
-                    className={`py-2 px-5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${warning
+                    className={`py-2 px-5 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${warning
                         ? 'bg-orange-500/10 border border-orange-500/20 text-orange-500 hover:bg-orange-500/20'
                         : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                         }`}

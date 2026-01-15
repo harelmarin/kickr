@@ -168,7 +168,7 @@ export const CompetitionDetailPage = () => {
               </div>
             </header>
 
-            <div className="flex gap-2 p-1 bg-black/20 rounded-sm w-fit mb-8">
+            <div className="flex gap-2 p-1 bg-[#0a0b0d]/20 rounded-sm w-fit mb-8">
               <button
                 onClick={() => handleFilterChange(false)}
                 className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black' : 'text-white/40 hover:text-white/60'}`}

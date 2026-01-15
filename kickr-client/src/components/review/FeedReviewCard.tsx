@@ -11,7 +11,7 @@ export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
             {/* Match Header (Compact) */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                className="relative h-20 overflow-hidden block bg-black/20 border-b border-white/5"
+                className="relative h-20 overflow-hidden block bg-[#0a0b0d]/20 border-b border-white/5"
             >
                 <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] to-transparent opacity-40 z-10" />
 

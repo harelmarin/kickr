@@ -69,7 +69,7 @@ export const UserDiaryPage = () => {
                                 >
                                     <Link
                                         to="/settings"
-                                        className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group/link block"
+                                        className="w-20 h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-[#14181c] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group/link block"
                                         title="Change Profile Picture"
                                     >
                                         {user?.avatarUrl ? (
@@ -77,7 +77,7 @@ export const UserDiaryPage = () => {
                                         ) : (
                                             user?.name[0].toUpperCase()
                                         )}
-                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/link:opacity-100 transition-opacity bg-black/40">
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/link:opacity-100 transition-opacity bg-[#0a0b0d]/40">
                                             <span className="text-[10px] font-black text-white uppercase tracking-widest">Edit</span>
                                         </div>
                                     </Link>
@@ -86,7 +86,7 @@ export const UserDiaryPage = () => {
                                 <motion.div
                                     initial={{ scale: 0.9, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1b2228] to-[#0a0b0d] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
+                                    className="w-20 h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-[#14181c] border border-white/10 flex items-center justify-center text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
                                 >
                                     {user?.avatarUrl ? (
                                         <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
@@ -124,7 +124,7 @@ export const UserDiaryPage = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center bg-[#14181c]/60 backdrop-blur-xl border border-white/5 p-5 rounded-2xl gap-4 shadow-xl">
+                    <div className="flex items-center bg-[#14181c]/60 backdrop-blur-xl border border-white/5 p-5 rounded-sm gap-4 shadow-xl">
                         <span className="text-lg opacity-40">🔍</span>
                         <div className="flex flex-col gap-1 flex-1">
                             <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Identification Filter</span>
@@ -143,9 +143,9 @@ export const UserDiaryPage = () => {
                     <div className="space-y-12">
                         {[1, 2, 3].map(i => (
                             <div key={i} className="animate-pulse">
-                                <div className="h-6 w-32 bg-white/5 rounded mb-6"></div>
+                                <div className="h-6 w-32 bg-white/5 rounded-sm mb-6"></div>
                                 <div className="space-y-4">
-                                    {[1, 2].map(j => <div key={j} className="h-16 bg-white/5 rounded-xl"></div>)}
+                                    {[1, 2].map(j => <div key={j} className="h-16 bg-white/5 rounded-sm"></div>)}
                                 </div>
                             </div>
                         ))}
@@ -153,7 +153,7 @@ export const UserDiaryPage = () => {
                 ) : Object.keys(groupedReviews).length > 0 ? (
                     <div className="space-y-16">
                         {Object.entries(groupedReviews).map(([monthYear, monthReviews]: [string, any]) => (
-                            <section key={monthYear} className="bg-[#14181c]/50 p-6 rounded-2xl border border-white/5">
+                            <section key={monthYear} className="bg-[#14181c]/50 p-6 rounded-sm border border-white/5">
                                 <h2 className="text-[10px] font-black text-[#445566] uppercase tracking-[0.3em] mb-6 border-b border-white/5 pb-2">
                                     {monthYear}
                                 </h2>
@@ -161,7 +161,7 @@ export const UserDiaryPage = () => {
                                 <div className="space-y-4">
                                     {monthReviews.map((review: any) => (
                                         <div key={review.id} className="group relative">
-                                            <div className="flex gap-6 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-kickr/20 transition-all duration-300 items-center">
+                                            <div className="flex gap-6 p-4 rounded-sm border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-kickr/20 transition-all duration-300 items-center">
                                                 <div className="w-12 text-center border-r border-white/10 pr-6 flex-shrink-0">
                                                     <div className="text-xl font-black text-white italic leading-none">{new Date(review.watchedAt).getDate()}</div>
                                                     <div className="text-[8px] font-black uppercase tracking-widest text-[#445566] mt-1">
@@ -169,7 +169,7 @@ export const UserDiaryPage = () => {
                                                     </div>
                                                 </div>
 
-                                                <Link to={`/matches/${review.match.id}`} className="w-32 h-16 bg-[#1b2228] rounded-xl border border-white/10 overflow-hidden flex-shrink-0 flex items-center justify-center gap-3 relative group/poster shadow-xl">
+                                                <Link to={`/matches/${review.match.id}`} className="w-32 h-16 bg-[#1b2228] rounded-sm border border-white/10 overflow-hidden flex-shrink-0 flex items-center justify-center gap-3 relative group/poster shadow-xl">
                                                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/poster:opacity-100 transition-opacity"></div>
                                                     <img src={review.match.homeLogo} className="w-7 h-7 object-contain drop-shadow-lg z-10" alt="" />
                                                     <div className="flex flex-col items-center z-10">
@@ -185,7 +185,7 @@ export const UserDiaryPage = () => {
                                                         <Link to={`/matches/${review.match.id}`} className="text-white text-base font-black uppercase italic tracking-tighter hover:text-kickr transition-colors leading-none">
                                                             {review.match.homeTeam} v {review.match.awayTeam}
                                                         </Link>
-                                                        <span className="text-[9px] font-black uppercase tracking-widest text-[#445566] px-2 py-0.5 rounded border border-white/5 bg-white/[0.02]">
+                                                        <span className="text-[9px] font-black uppercase tracking-widest text-[#445566] px-2 py-0.5 rounded-sm border border-white/5 bg-white/[0.02]">
                                                             {review.match.competition}
                                                         </span>
                                                     </div>
@@ -226,7 +226,7 @@ export const UserDiaryPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                                 >
                                     Previous
                                 </button>
@@ -247,7 +247,7 @@ export const UserDiaryPage = () => {
                                                     setCurrentPage(i);
                                                     window.scrollTo({ top: 300, behavior: 'smooth' });
                                                 }}
-                                                className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                                className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
                                                     ? 'bg-kickr text-black'
                                                     : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
                                                     }`}
@@ -264,7 +264,7 @@ export const UserDiaryPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                                 >
                                     Next
                                 </button>
@@ -290,7 +290,7 @@ const ErrorState = () => (
         <div className="max-w-md">
             <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Tactical Log Error</h2>
             <p className="text-[#667788] text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
-            <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Try Again</button>
+            <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Try Again</button>
         </div>
     </div>
 );

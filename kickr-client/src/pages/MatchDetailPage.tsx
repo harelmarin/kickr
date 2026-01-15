@@ -89,7 +89,7 @@ export const MatchDetailPage = () => {
   const isPast = match.homeScore !== null;
 
   return (
-    <main className="min-h-screen bg-[#0a0b0d] text-[#99aabb]">
+    <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
       <div className="relative h-[650px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex blur-[80px] opacity-30">
           <div className="flex-1 relative overflow-hidden">
@@ -100,7 +100,7 @@ export const MatchDetailPage = () => {
           </div>
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0d] via-[#0a0b0d]/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-[#14181c]/80 to-transparent"></div>
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] mix-blend-overlay"></div>
       </div>
 
@@ -128,7 +128,7 @@ export const MatchDetailPage = () => {
               {/* Home Team: Logo -> Name */}
               <div className="flex items-center justify-center md:justify-end gap-6 min-w-0 group/home">
                 <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
-                  <div className="p-3 rounded-sm bg-black/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
+                  <div className="p-3 rounded-sm bg-[#0a0b0d]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
                     <img src={match.homeLogo} alt={match.homeTeam} className="w-14 h-14 md:w-20 md:h-20 object-contain" />
                   </div>
                 </Link>
@@ -144,7 +144,7 @@ export const MatchDetailPage = () => {
 
               {/* Score / VS Center - FIXED BADGE */}
               <div className="flex flex-col items-center justify-center px-4 md:px-12">
-                <div className="bg-black/60 border border-white/10 px-6 py-4 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
+                <div className="bg-[#0a0b0d]/60 border border-white/10 px-6 py-4 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
                   <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {isPast ? (
                     <div className="flex items-center gap-4 md:gap-8 tabular-nums relative z-10">
@@ -167,7 +167,7 @@ export const MatchDetailPage = () => {
               {/* Away Team: Name <- Logo */}
               <div className="flex flex-row-reverse items-center justify-center md:justify-end gap-6 min-w-0 group/away">
                 <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
-                  <div className="p-3 rounded-sm bg-black/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
+                  <div className="p-3 rounded-sm bg-[#0a0b0d]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
                     <img src={match.awayLogo} alt={match.awayTeam} className="w-14 h-14 md:w-20 md:h-20 object-contain" />
                   </div>
                 </Link>
@@ -188,7 +188,7 @@ export const MatchDetailPage = () => {
               <div className="flex flex-col">
                 <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-3 italic">Theater</span>
                 <Link to={match.competitionId ? `/competitions/${match.competitionId}` : '#'} className="flex items-center gap-4 group">
-                  <div className="w-8 h-8 rounded-sm bg-black/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
+                  <div className="w-8 h-8 rounded-sm bg-[#0a0b0d]/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
                     <img src={match.competitionLogo} alt={match.competition} className="w-5 h-5 object-contain" />
                   </div>
                   <span className="text-white font-black uppercase italic text-xs tracking-widest group-hover:text-kickr transition-colors">
@@ -274,7 +274,7 @@ export const MatchDetailPage = () => {
                     <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-4">Your Tactical History</span>
                     <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2 no-scrollbar">
                       {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
-                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-3 bg-white/[0.02] border border-white/5 rounded-lg hover:border-kickr/20 transition-all group/entry">
+                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-3 bg-white/[0.02] border border-white/5 rounded-sm hover:border-kickr/20 transition-all group/entry">
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex text-kickr text-[8px]">
                               {'★'.repeat(Math.round(entry.note))}
@@ -343,7 +343,7 @@ export const MatchDetailPage = () => {
                   COMMUNITY REVIEWS ({userMatches?.length || 0})
                 </h2>
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 bg-[#1b2228] border border-white/10 rounded-lg px-3 py-2">
+                  <div className="flex items-center gap-2 bg-[#1b2228] border border-white/10 rounded-sm px-3 py-2">
                     <span className="text-[10px] font-bold text-[#667788] uppercase tracking-wider">Sort:</span>
                     <select
                       value={sortBy}
@@ -356,7 +356,7 @@ export const MatchDetailPage = () => {
                   </div>
                   <button
                     onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
-                    className="bg-[#1b2228] border border-white/10 text-white text-sm px-3 py-2 rounded-lg hover:border-kickr/50 transition-all"
+                    className="bg-[#1b2228] border border-white/10 text-white text-sm px-3 py-2 rounded-sm hover:border-kickr/50 transition-all"
                     title={sortDirection === 'desc' ? 'Descending' : 'Ascending'}
                   >
                     {sortDirection === 'desc' ? '↓' : '↑'}
@@ -433,7 +433,7 @@ export const MatchDetailPage = () => {
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                     placeholder="Write your thoughts on the match..."
-                    className="w-full bg-black/40 border border-white/5 rounded-sm p-4 text-[13px] text-white/90 placeholder-white/5 focus:outline-none focus:border-kickr/20 h-44 transition-all resize-none italic font-medium leading-relaxed"
+                    className="w-full bg-[#0a0b0d]/40 border border-white/5 rounded-sm p-4 text-[13px] text-white/90 placeholder-white/5 focus:outline-none focus:border-kickr/20 h-44 transition-all resize-none italic font-medium leading-relaxed"
                   />
                 </div>
 
@@ -458,13 +458,13 @@ export const MatchDetailPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#0a0b0d]/80 backdrop-blur-md"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-[#1b2228] border border-white/10 rounded-3xl p-10 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+              className="bg-[#1b2228] border border-white/10 rounded-sm p-10 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-kickr"></div>
               <button
@@ -489,7 +489,7 @@ export const MatchDetailPage = () => {
                   </div>
                   <button
                     onClick={() => setJustLoggedReview(null)}
-                    className="w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#445566] hover:text-white transition-all bg-white/[0.02] rounded-xl hover:bg-white/[0.05]"
+                    className="w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#445566] hover:text-white transition-all bg-white/[0.02] rounded-sm hover:bg-white/[0.05]"
                   >
                     Return to Match
                   </button>
@@ -652,11 +652,11 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
 
               {/* Subs below the pitch in visual mode but compact */}
               {teamLineup.substitutes && (
-                <div className="bg-[#1b2228]/30 rounded-xl p-4 border border-white/5">
+                <div className="bg-[#1b2228]/30 rounded-sm p-4 border border-white/5">
                   <span className="text-[9px] font-black text-[#556677] uppercase tracking-[0.2em] mb-3 block">Available Subs</span>
                   <div className="flex flex-wrap gap-2">
                     {teamLineup.substitutes.map((player: any) => (
-                      <div key={player.player.id} className="bg-white/[0.03] px-2 py-1 rounded text-[10px] text-[#8899aa] border border-white/5">
+                      <div key={player.player.id} className="bg-white/[0.03] px-2 py-1 rounded-sm text-[10px] text-[#8899aa] border border-white/5">
                         <span className="text-kickr font-bold mr-1">{player.player.number}</span> {player.player.name}
                       </div>
                     ))}
@@ -772,14 +772,14 @@ const renderTacticalPlayers = (players: any[]) => {
         {rowPlayers.map((p: any) => (
           <div key={p.player.id} className="flex flex-col items-center gap-1.5 group/player w-16">
             <div className="relative">
-              <div className="w-9 h-9 rounded-full bg-black/60 border-2 border-kickr flex items-center justify-center group-hover/player:scale-110 group-hover/player:bg-kickr transition-all duration-300">
-                <span className="text-[11px] font-black text-white flex items-center justify-center leading-none group-hover/player:text-[#0a0b0d] tabular-nums">
+              <div className="w-9 h-9 rounded-full bg-[#0a0b0d]/60 border-2 border-kickr flex items-center justify-center group-hover/player:scale-110 group-hover/player:bg-kickr transition-all duration-300">
+                <span className="text-[11px] font-black text-white flex items-center justify-center leading-none group-hover/player:text-[#14181c] tabular-nums">
                   {p.player.number}
                 </span>
               </div>
             </div>
             <div className="w-full text-center">
-              <span className="text-[9px] font-bold text-white whitespace-nowrap uppercase tracking-tighter bg-black/40 px-1.5 py-0.5 rounded backdrop-blur-md group-hover/player:bg-white group-hover/player:text-black transition-colors inline-block">
+              <span className="text-[9px] font-bold text-white whitespace-nowrap uppercase tracking-tighter bg-[#0a0b0d]/40 px-1.5 py-0.5 rounded-sm backdrop-blur-md group-hover/player:bg-white group-hover/player:text-black transition-colors inline-block">
                 {p.player.name.split(' ').pop()}
               </span>
             </div>
@@ -824,12 +824,12 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
   return (
     <div className="space-y-8 bg-white/[0.02] border border-white/5 rounded-sm p-6 sm:p-12 relative overflow-hidden">
       <div className="flex justify-between items-center pb-10 border-b border-white/5 mb-6">
-        <Link to={`/teams/${homeTeamId}`} className="flex items-center gap-3 group/team hover:bg-white/[0.03] p-2 -m-2 rounded-xl transition-all">
+        <Link to={`/teams/${homeTeamId}`} className="flex items-center gap-3 group/team hover:bg-white/[0.03] p-2 -m-2 rounded-sm transition-all">
           <img src={homeLogo} alt="" className="w-8 h-8 object-contain group-hover/team:scale-110 transition-transform" />
           <span className="text-white font-black uppercase italic tracking-tighter text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{homeTeam}</span>
         </Link>
         <div className="text-[10px] font-black uppercase tracking-[0.4em] text-kickr/40 italic">Match Intel</div>
-        <Link to={`/teams/${awayTeamId}`} className="flex items-center gap-3 group/team hover:bg-white/[0.03] p-2 -m-2 rounded-xl transition-all">
+        <Link to={`/teams/${awayTeamId}`} className="flex items-center gap-3 group/team hover:bg-white/[0.03] p-2 -m-2 rounded-sm transition-all">
           <span className="text-white font-black uppercase italic tracking-tighter text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{awayTeam}</span>
           <img src={awayLogo} alt="" className="w-8 h-8 object-contain group-hover/team:scale-110 transition-transform" />
         </Link>
@@ -949,13 +949,13 @@ const EventIcon = ({ type, detail }: { type: string, detail?: string }) => {
       if (detail === 'Yellow Card') return <div className="w-3 h-4 bg-[#ffcc00] rounded-[2px] shadow-[0_0_8px_rgba(255,204,0,0.4)]" />;
       return <div className="w-3 h-4 bg-[#ff4444] rounded-[2px] shadow-[0_0_8px_rgba(255,68,68,0.4)]" />;
     case 'subst': return <span className="text-lg text-kickr">🔄</span>;
-    case 'Var': return <span className="text-xs bg-white/10 px-1.5 py-0.5 rounded font-black text-white border border-white/10">VAR</span>;
+    case 'Var': return <span className="text-xs bg-white/10 px-1.5 py-0.5 rounded-sm font-black text-white border border-white/10">VAR</span>;
     default: return <span className="text-xs">📍</span>;
   }
 };
 
 const LoadingState = () => (
-  <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center">
+  <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
     <div className="flex flex-col items-center gap-6">
       <div className="w-12 h-12 border border-kickr/20 border-t-kickr animate-spin"></div>
       <span className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic animate-pulse">Syncing Tactical Data...</span>
@@ -964,7 +964,7 @@ const LoadingState = () => (
 );
 
 const ErrorState = () => (
-  <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center p-6">
+  <div className="min-h-screen bg-[#14181c] flex items-center justify-center p-6">
     <div className="max-w-md w-full text-center space-y-8">
       <div className="w-20 h-20 bg-red-500/10 border border-red-500/20 rounded-sm mx-auto flex items-center justify-center">
         <span className="text-3xl">⚠️</span>

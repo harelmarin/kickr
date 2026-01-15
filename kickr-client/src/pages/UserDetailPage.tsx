@@ -43,7 +43,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-20 md:pt-32 pb-24 md:pb-20">
+        <main className="min-h-screen bg-[#14181c] pt-20 md:pt-32 pb-24 md:pb-20">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
                 <header className="mb-8 md:mb-16">
@@ -55,7 +55,7 @@ export const UserDetailPage = () => {
                                     className="relative group/avatar w-20 h-20 sm:w-20 sm:h-20 rounded-sm overflow-hidden shadow-2xl transition-transform hover:scale-105"
                                     title="Change Profile Picture"
                                 >
-                                    <div className="w-full h-full bg-[#0a0a0a] border border-white/5 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
+                                    <div className="w-full h-full bg-[#1b2228] border border-white/5 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr">
                                         {user.avatarUrl ? (
                                             <img
                                                 key={user.avatarUrl}
@@ -67,12 +67,12 @@ export const UserDetailPage = () => {
                                             user.name[0].toUpperCase()
                                         )}
                                     </div>
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/40">
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-[#0a0b0d]/40">
                                         <span className="text-[10px] font-black text-white uppercase tracking-widest">Edit</span>
                                     </div>
                                 </Link>
                             ) : (
-                                <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-sm bg-[#0a0a0a] border border-white/5 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
+                                <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-sm bg-[#1b2228] border border-white/5 flex items-center justify-center text-2xl sm:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
                                     {user.avatarUrl ? (
                                         <img
                                             key={user.avatarUrl}
@@ -90,7 +90,7 @@ export const UserDetailPage = () => {
                                 <div className="flex items-center gap-3 mb-1 sm:mb-2 justify-center sm:justify-start">
                                     <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{user.name}</h1>
                                     {isOwnProfile && (
-                                        <span className="bg-kickr/10 text-kickr text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-md border border-kickr/20">
+                                        <span className="bg-kickr/10 text-kickr text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-sm border border-kickr/20">
                                             You
                                         </span>
                                     )}
@@ -163,7 +163,7 @@ export const UserDetailPage = () => {
 
                             {isReviewsLoading ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-pulse">
-                                    {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl"></div>)}
+                                    {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-white/5 rounded-sm"></div>)}
                                 </div>
                             ) : pageData?.content && pageData.content.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -175,7 +175,7 @@ export const UserDetailPage = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="py-20 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
+                                <div className="py-20 text-center bg-white/5 rounded-sm border border-dashed border-white/10">
                                     <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No match entries in the diary yet.</p>
                                 </div>
                             )}
@@ -206,7 +206,7 @@ export const UserDetailPage = () => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h4 className="text-[10px] font-black text-white/80 uppercase tracking-widest">Following</h4>
-                                            <span className="text-[8px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{following?.totalElements ?? user.followingCount}</span>
+                                            <span className="text-[8px] font-black px-2 py-0.5 bg-kickr/10 rounded-sm text-kickr">{following?.totalElements ?? user.followingCount}</span>
                                         </div>
                                         <Link to={`/user/${id}/following`} className="text-[8px] font-black text-white/40 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer">All →</Link>
                                     </div>
@@ -239,7 +239,7 @@ export const UserDetailPage = () => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h4 className="text-[10px] font-black text-white/80 uppercase tracking-widest">Followers</h4>
-                                            <span className="text-[8px] font-black px-2 py-0.5 bg-kickr/10 rounded text-kickr">{followers?.totalElements ?? user.followersCount}</span>
+                                            <span className="text-[8px] font-black px-2 py-0.5 bg-kickr/10 rounded-sm text-kickr">{followers?.totalElements ?? user.followersCount}</span>
                                         </div>
                                         <Link to={`/user/${id}/followers`} className="text-[8px] font-black text-white/40 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer">All →</Link>
                                     </div>
@@ -513,7 +513,7 @@ const NotFoundState = () => (
         <div>
             <h2 className="text-4xl font-black text-white/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
             <p className="text-white/40 mb-8">This tactician hasn't joined Kickr yet.</p>
-            <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Go Home</Link>
+            <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Go Home</Link>
         </div>
     </div>
 );

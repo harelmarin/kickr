@@ -31,7 +31,7 @@ export const EmptyState = ({ icon = '📡', title, description, actionLabel, onA
             {actionLabel && onAction && (
                 <button
                     onClick={onAction}
-                    className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-all border border-kickr/20 px-6 py-2.5 rounded-lg hover:bg-kickr/5"
+                    className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-all border border-kickr/20 px-6 py-2.5 rounded-sm hover:bg-kickr/5"
                 >
                     {actionLabel}
                 </button>

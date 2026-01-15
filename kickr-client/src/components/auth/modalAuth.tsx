@@ -11,11 +11,11 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
     return (
         <div
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-[#0a0b0d]/50 flex items-center justify-center z-50"
             onClick={onClose}
         >
             <div
-                className="bg-primary p-6 rounded-xl shadow-lg w-80 relative"
+                className="bg-primary p-6 rounded-sm shadow-lg w-80 relative"
                 onClick={(e) => e.stopPropagation()}
             >
                 <button

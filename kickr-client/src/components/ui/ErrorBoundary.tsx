@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
     public render() {
         if (this.state.hasError) {
             return (
-                <div className="min-h-screen bg-[#0a0b0d] flex items-center justify-center p-6 text-center">
+                <div className="min-h-screen bg-[#14181c] flex items-center justify-center p-6 text-center">
                     <div className="max-w-md w-full">
                         <div className="w-20 h-20 bg-red-500/10 border border-red-500/20 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
                             <span className="text-3xl">⚠️</span>
@@ -43,7 +43,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         </p>
                         <button
                             onClick={() => window.location.reload()}
-                            className="px-8 py-3 bg-white text-black text-[11px] font-black uppercase tracking-widest rounded hover:bg-kickr hover:text-white transition-all transform hover:-translate-y-px"
+                            className="px-8 py-3 bg-white text-black text-[11px] font-black uppercase tracking-widest rounded-sm hover:bg-kickr hover:text-white transition-all transform hover:-translate-y-px"
                         >
                             Restart Session
                         </button>

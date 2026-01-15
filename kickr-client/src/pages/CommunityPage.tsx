@@ -52,7 +52,7 @@ export const CommunityPage = () => {
     const statsTotalNetwork = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.followersCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
+        <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
             <div className="max-w-7xl mx-auto px-6">
                 <header className="mb-16">
                     <div className="flex items-center gap-4 mb-6">
@@ -78,14 +78,14 @@ export const CommunityPage = () => {
                                             placeholder="Enter name..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full bg-black/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
+                                            className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-2">
                                     <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">Sort by Rank</span>
-                                    <div className="flex bg-black/20 p-1 rounded-sm border border-white/5">
+                                    <div className="flex bg-[#0a0b0d]/20 p-1 rounded-sm border border-white/5">
                                         {(['logs', 'network', 'recent'] as const).map((s) => (
                                             <button
                                                 key={s}

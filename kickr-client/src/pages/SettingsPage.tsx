@@ -175,7 +175,7 @@ export const SettingsPage = () => {
                     <div className="absolute inset-0 bg-kickr/[0.01] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
                         <div className="relative">
-                            <div className="w-32 h-32 rounded-sm overflow-hidden border border-white/10 p-1 bg-black/40">
+                            <div className="w-32 h-32 rounded-sm overflow-hidden border border-white/10 p-1 bg-[#0a0b0d]/40">
                                 <div className="w-full h-full rounded-sm overflow-hidden relative">
                                     {user.avatarUrl ? (
                                         <img
@@ -190,7 +190,7 @@ export const SettingsPage = () => {
                                         </div>
                                     )}
                                     {isUploading && (
-                                        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-[#0a0b0d]/80 backdrop-blur-sm flex items-center justify-center">
                                             <div className="w-5 h-5 border border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
                                         </div>
                                     )}
@@ -199,7 +199,7 @@ export const SettingsPage = () => {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="absolute -bottom-3 -right-3 bg-kickr text-black w-10 h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[6px] border-[#0a0b0d] shadow-xl shadow-kickr/10"
+                                className="absolute -bottom-3 -right-3 bg-kickr text-black w-10 h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[6px] border-[#14181c] shadow-xl shadow-kickr/10"
                                 title="Upload Signal"
                             >
                                 <span className="text-sm">⚡</span>
@@ -251,7 +251,7 @@ export const SettingsPage = () => {
                                 <input
                                     type="text"
                                     {...register("name")}
-                                    className={`w-full bg-black/40 border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
+                                    className={`w-full bg-[#0a0b0d]/40 border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
                                 />
                                 {errors.name && (
                                     <p className="text-[9px] text-red-500 font-black mt-2 pl-1 uppercase tracking-tighter italic">{errors.name.message}</p>
@@ -262,7 +262,7 @@ export const SettingsPage = () => {
                                 <input
                                     type="email"
                                     {...register("email")}
-                                    className={`w-full bg-black/40 border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
+                                    className={`w-full bg-[#0a0b0d]/40 border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
                                 />
                                 {errors.email && (
                                     <p className="text-[9px] text-red-500 font-black mt-2 pl-1 uppercase tracking-tighter italic">{errors.email.message}</p>

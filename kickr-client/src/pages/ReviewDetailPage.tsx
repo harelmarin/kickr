@@ -174,7 +174,7 @@ export const ReviewDetailPage: FC = () => {
                                         value={commentText}
                                         onChange={(e) => setCommentText(e.target.value)}
                                         placeholder="Add response..."
-                                        className="w-full bg-black/40 border border-white/5 rounded-sm p-4 text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none resize-none h-24 mb-6"
+                                        className="w-full bg-[#0a0b0d]/40 border border-white/5 rounded-sm p-4 text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none resize-none h-24 mb-6"
                                     />
                                     <div className="flex justify-end">
                                         <button disabled={!commentText.trim() || addCommentMutation.isPending} className="px-8 py-3 bg-kickr text-black text-[9px] font-black uppercase tracking-[0.3em] rounded-sm hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-30">Post</button>
@@ -212,7 +212,7 @@ export const ReviewDetailPage: FC = () => {
             {/* Confirm Delete Popup */}
             <AnimatePresence>
                 {showConfirmDelete && (
-                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/90 backdrop-blur-sm">
+                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-[#0a0b0d]/90 backdrop-blur-sm">
                         <div className="bg-[#1b2228] border border-white/10 p-12 rounded-sm max-w-sm w-full text-center">
                             <h3 className="text-xl font-black text-white uppercase italic tracking-tighter mb-4">Terminate Record?</h3>
                             <p className="text-white/40 text-[10px] font-black uppercase tracking-widest mb-10">This tactical data will be permanently erased from the network.</p>

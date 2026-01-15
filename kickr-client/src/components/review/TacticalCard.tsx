@@ -58,7 +58,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                     </div>
 
                     <div className="flex flex-col items-center gap-6">
-                        <div className="flex items-center gap-10 bg-white/[0.03] border border-white/10 px-12 py-8 rounded-2xl">
+                        <div className="flex items-center gap-10 bg-white/[0.03] border border-white/10 px-12 py-8 rounded-sm">
                             <span className="text-[120px] font-black text-white leading-none tabular-nums">{review.match.homeScore}</span>
                             <div className="w-[2px] h-24 bg-[#4466ff]/30"></div>
                             <span className="text-[120px] font-black text-white leading-none tabular-nums">{review.match.awayScore}</span>
@@ -122,7 +122,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
 
                 <div className="flex flex-col items-end">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 bg-[#4466ff] flex items-center justify-center rounded-lg">
+                        <div className="w-10 h-10 bg-[#4466ff] flex items-center justify-center rounded-sm">
                             <span className="font-black text-white text-2xl uppercase">K</span>
                         </div>
                         <span className="text-white text-4xl font-black tracking-tighter uppercase">Kickr</span>

@@ -146,7 +146,7 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 {showXShare && (
                     <button
                         onClick={handleShareTwitter}
-                        className={`flex items-center justify-center transition-all duration-300 cursor-pointer ${variant === 'full' ? 'w-10 h-10 bg-white/5 border border-white/5 rounded-lg' : 'p-1 hover:text-[#1DA1F2] active:scale-90 text-[#445566]'
+                        className={`flex items-center justify-center transition-all duration-300 cursor-pointer ${variant === 'full' ? 'w-10 h-10 bg-white/5 border border-white/5 rounded-sm' : 'p-1 hover:text-[#1DA1F2] active:scale-90 text-[#445566]'
                             }`}
                         title="Share to X (Twitter)"
                     >

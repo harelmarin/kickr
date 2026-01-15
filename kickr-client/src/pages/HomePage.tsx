@@ -9,6 +9,7 @@ import { ReviewCard } from '../components/review/ReviewCard';
 import { ReviewCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { motion } from 'framer-motion';
 import type { UserMatch } from '../types/userMatch';
+import { LandingMatchPreview } from '../components/landing/LandingMatchPreview';
 
 export default function HomePage() {
 
@@ -52,22 +53,22 @@ export default function HomePage() {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-[#0a0b0d] min-h-screen text-white/90 selection:bg-kickr/30"
+      className="bg-[#14181c] min-h-screen text-white/90 selection:bg-kickr/30"
     >
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[85vh] flex items-center justify-center border-b border-white/5 overflow-hidden">
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center border-b border-white/5 overflow-hidden py-24">
         {/* Background Atmosphere */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-[#08080a]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#08080a_100%)] opacity-90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-[#14181c]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#14181c_100%)] opacity-90"></div>
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
             alt="Stadium"
-            className="w-full h-full object-cover grayscale opacity-[0.15]"
+            className="w-full h-full object-cover grayscale opacity-[0.1]"
           />
         </div>
 
-        <div className="max-w-[1400px] mx-auto px-6 relative z-40 w-full">
+        <div className="max-w-[1400px] mx-auto px-6 relative z-40 w-full mb-12">
           <div className="max-w-5xl mx-auto text-center">
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
@@ -94,7 +95,7 @@ export default function HomePage() {
                 <p className="text-white/60 text-xs md:text-sm font-black uppercase tracking-[0.4em] leading-relaxed">
                   The premier platform for tactical analysis <br className="hidden md:block" /> and professional match grading.
                 </p>
-                <p className="text-[#64748b] text-sm md:text-base font-medium leading-relaxed max-w-xl mx-auto">
+                <p className="text-[#64748b] text-sm md:text-base font-medium leading-relaxed max-w-xl mx-auto uppercase tracking-wide">
                   The social network for football fans. Log every match you watch, share your tactical reviews, and keep a diary of your supporter life.
                 </p>
               </div>
@@ -127,6 +128,9 @@ export default function HomePage() {
             </motion.div>
           </div>
         </div>
+
+        {/* Visual Preview for converting visitors */}
+        {!user && <LandingMatchPreview />}
       </section>
 
       {/* 2. DATA GRID INTERFACE */}

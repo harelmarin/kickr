@@ -121,7 +121,7 @@ export const AboutPage: FC = () => {
                         <p className="text-black/70 font-bold uppercase text-xs tracking-widest mb-10 max-w-md mx-auto">
                             Start your tactical diary today and join thousands of tacticians worldwide.
                         </p>
-                        <Link to="/register" className="inline-block bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] px-10 py-4 rounded-sm hover:bg-black/90 transition-all">
+                        <Link to="/register" className="inline-block bg-[#0a0b0d] text-white text-[10px] font-black uppercase tracking-[0.3em] px-10 py-4 rounded-sm hover:bg-[#0a0b0d]/90 transition-all">
                             Initialize Intel →
                         </Link>
                     </section>

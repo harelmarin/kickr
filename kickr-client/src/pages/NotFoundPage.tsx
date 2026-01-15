@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const NotFoundPage: FC = () => {
     return (
-        <div className="min-h-[calc(100vh-4rem)] bg-[#0a0b0d] flex items-center justify-center relative overflow-hidden">
+        <div className="min-h-[calc(100vh-4rem)] bg-[#14181c] flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] mix-blend-overlay"></div>
 
             <div className="text-center px-8 flex flex-col items-center relative z-10">

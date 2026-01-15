@@ -73,7 +73,7 @@ export const RegisterPage = () => {
 
                 {/* Content */}
                 <div className="relative z-10 max-w-lg">
-                    <div className="mb-8 inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl backdrop-blur-md">
+                    <div className="mb-8 inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-sm backdrop-blur-md">
                         <span className="text-[10px] font-black text-kickr uppercase tracking-[0.3em]">Season 2025/26 Live</span>
                     </div>
 
@@ -116,7 +116,7 @@ export const RegisterPage = () => {
                                     type="text"
                                     placeholder="Your analyst name"
                                     {...register("name")}
-                                    className={`w-full bg-[#1b2228]/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                    className={`w-full bg-[#1b2228]/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                 />
                                 {errors.name && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
@@ -129,7 +129,7 @@ export const RegisterPage = () => {
                                     type="email"
                                     placeholder="name@example.com"
                                     {...register("email")}
-                                    className={`w-full bg-[#1b2228]/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                    className={`w-full bg-[#1b2228]/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                 />
                                 {errors.email && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
@@ -143,7 +143,7 @@ export const RegisterPage = () => {
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("password")}
-                                        className={`w-full bg-[#1b2228]/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-xl px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                        className={`w-full bg-[#1b2228]/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
                                     />
                                     {errors.password && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.password.message}</p>
@@ -156,7 +156,7 @@ export const RegisterPage = () => {
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("confirmPassword")}
-                                        className={`w-full bg-[#1b2228]/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-xl px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] outline-none`}
+                                        className={`w-full bg-[#1b2228]/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] outline-none`}
                                     />
                                     {errors.confirmPassword && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.confirmPassword.message}</p>
@@ -184,7 +184,7 @@ export const RegisterPage = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full btn-primary-kickr py-3.5 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-50 mt-2"
+                            className="w-full btn-primary-kickr py-3.5 rounded-sm text-[11px] font-black uppercase tracking-[0.2em] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-50 mt-2"
                         >
                             {isLoading ? 'Processing...' : 'Access the Field'}
                         </button>
@@ -209,7 +209,7 @@ export const RegisterPage = () => {
 
 const FeatureItem = ({ icon, title, description }: { icon: string; title: string; description: string }) => (
     <div className="flex gap-4 group">
-        <div className="w-9 h-9 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center text-base border border-white/10 group-hover:border-kickr/30 group-hover:bg-kickr/5 transition-all">
+        <div className="w-9 h-9 rounded-sm bg-white/5 flex-shrink-0 flex items-center justify-center text-base border border-white/10 group-hover:border-kickr/30 group-hover:bg-kickr/5 transition-all">
             {icon}
         </div>
         <div>

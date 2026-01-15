@@ -52,7 +52,7 @@ export const NotificationBell: FC = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute top-[calc(100%+0.75rem)] right-0 w-[280px] sm:w-[320px] bg-[#0a0b0d] border border-white/10 rounded-sm shadow-[0_10px_50px_rgba(0,0,0,0.8)] z-[100] overflow-hidden animate-fade-in">
+                <div className="absolute top-[calc(100%+0.75rem)] right-0 w-[280px] sm:w-[320px] bg-[#14181c] border border-white/10 rounded-sm shadow-[0_10px_50px_rgba(0,0,0,0.8)] z-[100] overflow-hidden animate-fade-in">
                     <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
                         <span className="text-[9px] font-black text-white uppercase tracking-[0.3em] italic">Notifications</span>
                         <div className="flex items-center gap-4">

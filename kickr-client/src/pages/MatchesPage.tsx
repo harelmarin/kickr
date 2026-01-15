@@ -46,7 +46,7 @@ export const MatchesPage = () => {
   const statsTotalFixtures = data?.totalElements || 0;
 
   return (
-    <main className="min-h-screen bg-[#0a0b0d] pt-32 pb-20">
+    <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <header className="mb-16">
           <div className="flex items-center gap-4 mb-6">
@@ -74,7 +74,7 @@ export const MatchesPage = () => {
                       placeholder="Enter team name..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-black/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
+                      className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
                     />
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-black/20 border border-white/5 rounded-sm pl-3 pr-8 py-2.5 text-[10px] font-bold text-white/60 focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none uppercase tracking-wider hover:bg-white/[0.05] transition-all"
+                      className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-3 pr-8 py-2.5 text-[10px] font-bold text-white/60 focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none uppercase tracking-wider hover:bg-white/[0.05] transition-all"
                     >
                       <option value="" className="bg-[#1b2228]">All Leagues</option>
                       {competitions?.map(c => (
@@ -103,7 +103,7 @@ export const MatchesPage = () => {
                 {/* Status Filter */}
                 <div className="flex flex-col gap-2">
                   <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">Status</span>
-                  <div className="flex bg-black/20 p-1 rounded-sm border border-white/5">
+                  <div className="flex bg-[#0a0b0d]/20 p-1 rounded-sm border border-white/5">
                     {['all', 'upcoming', 'finished'].map((s) => (
                       <button
                         key={s}
@@ -223,7 +223,7 @@ const ErrorState = () => (
       <div className="text-5xl mb-8 opacity-20">📡</div>
       <h2 className="text-2xl font-black text-white/90 mb-4 uppercase tracking-tighter italic">Signal Interrupted</h2>
       <p className="text-white/40 text-sm mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
-      <button onClick={() => window.location.reload()} className="px-8 py-3 bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded hover:bg-white/10 hover:border-kickr/30 transition-all">
+      <button onClick={() => window.location.reload()} className="px-8 py-3 bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-sm hover:bg-white/10 hover:border-kickr/30 transition-all">
         Reconnect
       </button>
     </div>

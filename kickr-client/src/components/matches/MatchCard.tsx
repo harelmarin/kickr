@@ -33,7 +33,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
             <div className={`flex flex-col gap-2 sm:gap-3 group/card ${className}`}>
                 <Link
                     to={`/matches/${match.id}`}
-                    className="block aspect-[2.2/1] sm:aspect-[2.5/1] bg-[#1b2228] rounded-xl border border-white/5 overflow-hidden shadow-2xl transition-all duration-300 relative group/poster poster-hover-effect"
+                    className="block aspect-[2.2/1] sm:aspect-[2.5/1] bg-[#1b2228] rounded-sm border border-white/5 overflow-hidden shadow-2xl transition-all duration-300 relative group/poster poster-hover-effect"
                 >
                     <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
 
@@ -111,7 +111,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     <div className="flex items-center gap-3 flex-1 min-w-0 border-l border-white/5 pl-6">
                         <div className="flex -space-x-1.5 flex-shrink-0">
                             <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt="" />
-                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-[#0a0b0d]" alt="" />
+                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-[#14181c]" alt="" />
                         </div>
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                             <span className="text-[10px] sm:text-[11px] font-black text-white/80 uppercase italic truncate max-w-[45%]">

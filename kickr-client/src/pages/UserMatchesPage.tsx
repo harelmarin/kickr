@@ -68,7 +68,7 @@ export const UserMatchesPage = () => {
     }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#0a0b0d] py-20 px-6">
+        <main className="min-h-screen bg-[#14181c] py-20 px-6">
             <div className="max-w-7xl mx-auto">
 
                 <header className="mb-20">
@@ -86,7 +86,7 @@ export const UserMatchesPage = () => {
                                         user?.name[0].toUpperCase()
                                     )}
                                 </div>
-                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/40">
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-[#0a0b0d]/40">
                                     <span className="text-[8px] font-black text-white uppercase tracking-widest italic">Edit</span>
                                 </div>
                             </Link>
@@ -157,7 +157,7 @@ export const UserMatchesPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-12">
                     {isLoading ? (
                         Array.from({ length: 9 }).map((_, i) => (
-                            <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-xl" />
+                            <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
                         ))
                     ) : (
                         filteredReviews.map((review: any) => (
@@ -198,7 +198,7 @@ export const UserMatchesPage = () => {
                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                             }}
                             disabled={pageData.first}
-                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                         >
                             Previous
                         </button>
@@ -219,7 +219,7 @@ export const UserMatchesPage = () => {
                                             setCurrentPage(i);
                                             window.scrollTo({ top: 300, behavior: 'smooth' });
                                         }}
-                                        className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                        className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
                                             ? 'bg-kickr text-black'
                                             : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
                                             }`}
@@ -236,7 +236,7 @@ export const UserMatchesPage = () => {
                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                             }}
                             disabled={pageData.last}
-                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                         >
                             Next
                         </button>
@@ -245,7 +245,7 @@ export const UserMatchesPage = () => {
 
                 {
                     !isLoading && filteredReviews.length === 0 && (
-                        <div className="py-20 text-center bg-white/5 rounded-2xl border border-dashed border-white/10">
+                        <div className="py-20 text-center bg-white/5 rounded-sm border border-dashed border-white/10">
                             <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No matching diary entries found.</p>
                         </div>
                     )
@@ -261,7 +261,7 @@ const ErrorState = () => (
         <div className="max-w-md">
             <h2 className="text-2xl font-black text-white mb-4 uppercase tracking-tighter italic">Scouting Report Error</h2>
             <p className="text-[#667788] text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
-            <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded hover:bg-kickr/5 transition-all">Try Again</button>
+            <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Try Again</button>
         </div>
     </div>
 );
