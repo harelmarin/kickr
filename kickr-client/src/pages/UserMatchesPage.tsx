@@ -68,19 +68,18 @@ export const UserMatchesPage = () => {
     }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-12 pb-16 px-4 md:px-6">
+        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
-
-                <motion.header
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-8 md:mb-20"
-                >
-                    <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-8">
+                <header className="mb-6 md:mb-16">
+                    <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
+                        <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
+                        <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Match Records</span>
+                    </div>
+                    <div className="flex items-center gap-3 md:gap-4">
                         {isOwnProfile ? (
                             <Link
                                 to="/settings"
-                                className="relative group/avatar w-8 h-8 md:w-10 md:h-10 rounded-sm overflow-hidden shadow-lg transition-transform hover:scale-110 flex-shrink-0"
+                                className="relative group/avatar w-8 h-8 md:w-12 md:h-12 rounded-sm overflow-hidden shadow-lg transition-transform hover:scale-110 flex-shrink-0"
                                 title="Change Profile Picture"
                             >
                                 <div className="w-full h-full bg-white/5 border border-white/5 flex items-center justify-center text-kickr font-black italic">
@@ -95,7 +94,7 @@ export const UserMatchesPage = () => {
                                 </div>
                             </Link>
                         ) : (
-                            <Link to={`/user/${id}`} className="w-8 h-8 md:w-10 md:h-10 rounded-sm bg-white/5 border border-white/5 flex items-center justify-center text-kickr font-black flex-shrink-0 overflow-hidden shadow-lg italic">
+                            <Link to={`/user/${id}`} className="w-8 h-8 md:w-12 md:h-12 rounded-sm bg-white/5 border border-white/5 flex items-center justify-center text-kickr font-black flex-shrink-0 overflow-hidden shadow-lg italic">
                                 {user?.avatarUrl ? (
                                     <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                                 ) : (
@@ -104,11 +103,11 @@ export const UserMatchesPage = () => {
                             </Link>
                         )}
                         <div className="min-w-0">
-                            <h1 className="text-2xl md:text-6xl font-black text-white italic tracking-tighter uppercase display-font truncate leading-tight">
-                                Tactical <span className="text-kickr">Diary</span>
+                            <h1 className="text-2xl md:text-6xl font-black text-white italic tracking-tighter uppercase leading-none mb-1">
+                                Match <span className="text-kickr/80">Logs</span>
                             </h1>
-                            <p className="text-white/20 uppercase tracking-[0.2em] text-[7px] md:text-[11px] font-black mt-0.5 truncate italic">
-                                {pageData?.totalElements || 0} Observations // {user?.name}
+                            <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic truncate">
+                                {pageData?.totalElements || 0} Entries // {user?.name}
                             </p>
                         </div>
                     </div>
@@ -156,7 +155,7 @@ export const UserMatchesPage = () => {
                             </div>
                         </div>
                     </div>
-                </motion.header>
+                </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 md:gap-x-10 gap-y-8 md:gap-y-12">
                     {isLoading ? (
@@ -256,13 +255,11 @@ export const UserMatchesPage = () => {
                     </div>
                 )}
 
-                {
-                    !isLoading && filteredReviews.length === 0 && (
-                        <div className="py-20 text-center bg-white/5 rounded-sm border border-dashed border-white/10">
-                            <p className="text-[#445566] text-xs font-bold uppercase tracking-widest">No matching diary entries found.</p>
-                        </div>
-                    )
-                }
+                {!isLoading && filteredReviews.length === 0 && (
+                    <div className="py-20 text-center bg-white/[0.02] border border-white/5 rounded-sm">
+                        <p className="text-white/10 text-[9px] font-black uppercase tracking-widest italic">No match logs match this signature.</p>
+                    </div>
+                )}
 
             </div >
         </main >

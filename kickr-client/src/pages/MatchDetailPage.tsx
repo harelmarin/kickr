@@ -90,7 +90,7 @@ export const MatchDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
-      <div className="relative h-[300px] md:h-[650px] w-full overflow-hidden">
+      <div className="relative h-[200px] md:h-[650px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex blur-[60px] md:blur-[80px] opacity-15 md:opacity-30">
           <div className="flex-1 relative overflow-hidden">
             <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" />
@@ -104,7 +104,7 @@ export const MatchDetailPage = () => {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.02] md:opacity-[0.03] mix-blend-overlay"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-[240px] md:mt-[-550px] relative z-10 pb-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-[140px] md:mt-[-550px] relative z-10 pb-16">
         <div className="flex items-center gap-2 md:gap-6 mb-6 md:mb-12">
           <Link to="/" className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
             <span className="text-base group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
@@ -118,99 +118,98 @@ export const MatchDetailPage = () => {
         </div>
 
         <header className="mb-6 md:mb-12">
-          <div className="bg-white/[0.01] border border-white/5 rounded-sm p-3 md:p-12 relative overflow-hidden flex items-center justify-center">
+          {/* Main Poster Card */}
+          <div className="bg-white/[0.01] border border-white/5 rounded-sm relative overflow-hidden flex flex-col items-center justify-center">
             {/* Subtle tech background */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/5 md:via-white/10 to-transparent"></div>
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-5 md:opacity-10 pointer-events-none"></div>
 
-            <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4 text-center md:text-left">
-              {/* Home Team */}
-              <div className="flex flex-row md:flex-row items-center justify-center md:justify-end gap-3 md:gap-6 min-w-0 group/home">
-                <div className="min-w-0 flex-1 md:flex-none text-right md:text-right">
-                  <Link to={`/teams/${match.homeTeamId}`}>
-                    <h2 className="text-white font-black uppercase italic tracking-tighter text-sm md:text-3xl lg:text-4xl leading-tight display-font group-hover/home:text-kickr transition-colors line-clamp-2">
-                      {match.homeTeam}
-                    </h2>
-                  </Link>
-                  <span className="text-kickr/40 text-[6px] md:text-[9px] font-black uppercase tracking-[0.4em] italic leading-none mt-1 block">Home</span>
-                </div>
-                <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
-                  <div className="p-1.5 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
-                    <img src={match.homeLogo} alt={match.homeTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+            <div className="w-full p-4 md:p-12 relative z-10">
+              <div className="max-w-6xl mx-auto grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
+                {/* Home Team */}
+                <div className="flex items-center justify-end gap-3 md:gap-6 min-w-0 group/home">
+                  <div className="min-w-0 flex-1 text-right hidden xs:block">
+                    <Link to={`/teams/${match.homeTeamId}`}>
+                      <h2 className="text-white font-black uppercase italic tracking-tighter text-xs md:text-3xl lg:text-4xl leading-none md:leading-tight display-font group-hover/home:text-kickr transition-colors truncate">
+                        {match.homeTeam}
+                      </h2>
+                    </Link>
+                    <span className="text-kickr/40 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Home</span>
                   </div>
-                </Link>
-              </div>
-
-              {/* Score / VS Center */}
-              <div className="flex flex-col items-center justify-center px-1 md:px-12 mb-2 md:mb-0">
-                <div className="bg-[#14181c]/80 border border-white/10 px-3 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
-                  <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  {isPast ? (
-                    <div className="flex items-center gap-2 md:gap-8 tabular-nums relative z-10">
-                      <span className="text-xl md:text-7xl font-black text-white italic display-font leading-none">{match.homeScore}</span>
-                      <div className="w-[1px] md:w-[2px] h-4 md:h-12 bg-white/10"></div>
-                      <span className="text-xl md:text-7xl font-black text-white italic display-font leading-none">{match.awayScore}</span>
+                  <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
+                    <div className="p-2 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
+                      <img src={match.homeLogo} alt={match.homeTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
                     </div>
-                  ) : (
-                    <span className="text-sm md:text-6xl font-black text-kickr italic display-font relative z-10">VS</span>
-                  )}
+                  </Link>
                 </div>
-                <div className="mt-1.5 md:mt-4 flex flex-col items-center gap-1 opacity-20">
-                  <div className="w-0.5 h-0.5 rounded-full bg-white/20"></div>
-                  <span className="text-[5px] md:text-[8px] font-black uppercase tracking-[0.4em] italic text-white/40">
-                    {isPast ? 'COMPLETE' : 'STANDBY'}
-                  </span>
+
+                {/* Score / VS Center */}
+                <div className="flex flex-col items-center justify-center relative">
+                  <div className="bg-[#14181c]/80 border border-white/10 px-4 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group min-w-[70px] md:min-w-0 text-center z-10">
+                    <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    {isPast ? (
+                      <div className="flex items-center justify-center gap-2 md:gap-8 tabular-nums relative z-10">
+                        <span className="text-2xl md:text-7xl font-black text-white italic display-font leading-none">{match.homeScore}</span>
+                        <div className="w-[1px] md:w-[2px] h-4 md:h-12 bg-white/10"></div>
+                        <span className="text-2xl md:text-7xl font-black text-white italic display-font leading-none">{match.awayScore}</span>
+                      </div>
+                    ) : (
+                      <span className="text-xl md:text-6xl font-black text-kickr italic display-font relative z-10">VS</span>
+                    )}
+                  </div>
+                  <div className="absolute -bottom-5 md:-bottom-8 left-1/2 -translate-x-1/2 w-full flex flex-col items-center gap-1 opacity-40 md:opacity-20 whitespace-nowrap">
+                    <div className="w-0.5 h-0.5 rounded-full bg-white/20 hidden md:block"></div>
+                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em] italic text-white/60 md:text-white/40">
+                      {isPast ? 'FT' : 'Upcoming'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Away Team */}
+                <div className="flex items-center justify-start gap-3 md:gap-6 min-w-0 group/away">
+                  <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
+                    <div className="p-2 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
+                      <img src={match.awayLogo} alt={match.awayTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                    </div>
+                  </Link>
+                  <div className="min-w-0 flex-1 text-left hidden xs:block">
+                    <Link to={`/teams/${match.awayTeamId}`}>
+                      <h2 className="text-white font-black uppercase italic tracking-tighter text-xs md:text-3xl lg:text-4xl leading-none md:leading-tight display-font group-hover/away:text-kickr transition-colors truncate">
+                        {match.awayTeam}
+                      </h2>
+                    </Link>
+                    <span className="text-white/10 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Away</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Away Team */}
-              <div className="flex flex-row md:flex-row-reverse items-center justify-center md:justify-end gap-3 md:gap-6 min-w-0 group/away">
-                <div className="min-w-0 flex-1 md:flex-none text-left md:text-right">
-                  <Link to={`/teams/${match.awayTeamId}`}>
-                    <h2 className="text-white font-black uppercase italic tracking-tighter text-sm md:text-3xl lg:text-4xl leading-tight display-font group-hover/away:text-kickr transition-colors line-clamp-2">
-                      {match.awayTeam}
-                    </h2>
-                  </Link>
-                  <span className="text-white/10 text-[6px] md:text-[9px] font-black uppercase tracking-[0.4em] italic leading-none mt-1 block">Away</span>
-                </div>
-                <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
-                  <div className="p-1.5 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
-                    <img src={match.awayLogo} alt={match.awayTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
-                  </div>
-                </Link>
+              {/* Mobile Only Team Names (Center aligned below logos if needed, but 'xs:block' above handles small screens well. 
+                  If screen is VERY narrow, names hide. Let's add a row below for very small screens if needed, 
+                  or just rely on the clean logo view which is common in apps) 
+              */}
+              <div className="flex xs:hidden items-center justify-between mt-4 px-2">
+                <span className="text-[10px] font-black text-white/90 uppercase italic truncate max-w-[40%]">{match.homeTeam}</span>
+                <span className="text-[10px] font-black text-white/90 uppercase italic truncate max-w-[40%] text-right">{match.awayTeam}</span>
               </div>
             </div>
-          </div>
 
-          <div className="mt-3 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between border-y border-white/5 py-3 sm:py-8 gap-4 sm:gap-12">
-            <div className="flex items-center gap-6 md:gap-20 overflow-x-auto no-scrollbar w-full sm:w-auto">
-              <div className="flex flex-col flex-shrink-0">
-                <span className="text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-1 md:mb-3 italic leading-none">Theater</span>
-                <Link to={match.competitionId ? `/competitions/${match.competitionId}` : '#'} className="flex items-center gap-1.5 md:gap-4 group">
-                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-sm bg-[#14181c]/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
-                    <img src={match.competitionLogo} alt={match.competition} className="w-3 h-3 md:w-5 md:h-5 object-contain" />
+            {/* Metadata Bar - Integrated into poster bottom */}
+            <div className="w-full border-t border-white/5 bg-[#14181c]/20">
+              <div className="grid grid-cols-3 divide-x divide-white/5">
+                <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center group hover:bg-white/[0.02] transition-colors">
+                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-white/10 uppercase tracking-[0.2em] mb-1 italic">Theater</span>
+                  <div className="flex items-center gap-1.5 md:gap-2 justify-center">
+                    <img src={match.competitionLogo} className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
+                    <span className="text-[8px] md:text-[10px] font-bold text-white uppercase italic truncate max-w-[60px] md:max-w-none">{match.competition || 'League'}</span>
                   </div>
-                  <span className="text-white font-black uppercase italic text-[8px] md:text-xs tracking-widest group-hover:text-kickr transition-colors truncate max-w-[100px] md:max-w-none">
-                    {match.competition || 'Classified'}
-                  </span>
-                </Link>
-              </div>
-
-              <div className="flex flex-col flex-shrink-0">
-                <span className="text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-1 md:mb-3 italic leading-none">Coordinates</span>
-                <span className="text-white/40 text-[8px] md:text-xs font-black uppercase italic tracking-widest leading-normal sm:leading-8 truncate max-w-[100px] md:max-w-none">{match.location || 'Neutral Grounds'}</span>
-              </div>
-
-              <div className="flex flex-col flex-shrink-0">
-                <span className="text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-1 md:mb-3 italic leading-none">Deployment</span>
-                <div className="flex items-center gap-1.5 md:gap-4 py-1">
-                  <span className="text-white/40 text-[8px] md:text-xs font-black uppercase italic tracking-widest">
-                    {matchDate.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
-                  </span>
-                  <div className="w-1 h-1 rounded-full bg-kickr/40"></div>
-                  <span className="text-kickr/60 text-[8px] md:text-xs font-black uppercase italic tracking-widest tabular-nums font-mono">
-                    {matchDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
-                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-white/[0.02] transition-colors">
+                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-white/10 uppercase tracking-[0.2em] mb-1 italic">Date</span>
+                  <span className="text-[8px] md:text-[10px] font-bold text-white uppercase italic tabular-nums">{matchDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-white/[0.02] transition-colors">
+                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-white/10 uppercase tracking-[0.2em] mb-1 italic">Time</span>
+                  <span className="text-[8px] md:text-[10px] font-bold text-white uppercase italic tabular-nums">{matchDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
                 </div>
               </div>
             </div>
@@ -375,16 +374,16 @@ export const MatchDetailPage = () => {
           {/* Right: Actions Sidebar */}
           <div className="w-full lg:w-[300px] xl:w-[340px] flex-shrink-0 order-1 lg:order-2">
             <div className="bg-white/[0.01] border border-white/5 rounded-sm overflow-hidden shadow-2xl sticky top-24">
-              <div className="p-3 md:p-6 bg-white/[0.01] border-b border-white/5 flex items-center justify-between">
+              <div className="p-2 md:p-6 bg-white/[0.01] border-b border-white/5 flex items-center justify-between">
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
-                    <span className="text-[8px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.2em] leading-none italic">
+                    <span className="text-[7px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.2em] leading-none italic">
                       {hasAlreadyLogged ? 'History Found' : 'Rate Intel'}
                     </span>
                     <div className="w-0.5 h-0.5 rounded-full bg-kickr"></div>
                   </div>
                   {hasAlreadyLogged && (
-                    <span className="text-[7px] md:text-[9px] font-black text-kickr/40 uppercase tracking-widest mt-1 italic">
+                    <span className="text-[6px] md:text-[9px] font-black text-kickr/40 uppercase tracking-widest mt-0.5 md:mt-1 italic">
                       {myMatchEntries.length} SESSIONS
                     </span>
                   )}
@@ -397,15 +396,15 @@ export const MatchDetailPage = () => {
                 </button>
               </div>
 
-              <div className="p-4 md:p-8 space-y-6 md:space-y-10">
+              <div className="p-2 md:p-8 space-y-2 md:space-y-10">
                 {/* Rating Star Picker */}
                 <div>
-                  <div className="text-center text-[7px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Protocol Value</div>
-                  <div className="flex justify-center gap-1 md:gap-2 mb-4">
+                  <div className="hidden md:block text-center text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-2 md:mb-6 italic">Protocol Value</div>
+                  <div className="flex justify-center gap-1 md:gap-2 mb-0 md:mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-xl md:text-3xl transition-all duration-300 relative group/star ${star <= (hoveredRating || rating) ? 'text-kickr scale-110' : 'text-white/5'
+                        className={`text-base md:text-3xl transition-all duration-300 relative group/star ${star <= (hoveredRating || rating) ? 'text-kickr scale-110' : 'text-white/5'
                           }`}
                         onMouseEnter={() => setHoveredRating(star)}
                         onMouseLeave={() => setHoveredRating(0)}
@@ -421,20 +420,20 @@ export const MatchDetailPage = () => {
                 </div>
 
                 {/* Review Text Area */}
-                <div className="space-y-2 md:space-y-3">
-                  <span className="text-[7px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] italic leading-none">Intelligence Notes</span>
+                <div className="space-y-1 md:space-y-3">
+                  <span className="hidden md:block text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] italic leading-none">Intelligence Notes</span>
                   <textarea
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                     placeholder="Input observations..."
-                    className="w-full bg-[#14181c]/40 border border-white/5 rounded-sm p-3 md:p-4 text-[11px] md:text-[13px] text-white/60 placeholder-white/5 focus:outline-none focus:border-kickr/10 h-24 md:h-44 transition-all resize-none italic font-black uppercase tracking-widest leading-relaxed"
+                    className="w-full bg-[#14181c]/40 border border-white/5 rounded-sm p-2 md:p-4 text-[9px] md:text-[13px] text-white/60 placeholder-white/5 focus:outline-none focus:border-kickr/10 h-10 md:h-44 transition-all resize-none italic font-black uppercase tracking-widest leading-relaxed"
                   />
                 </div>
 
                 <button
                   onClick={handleSaveRating}
                   disabled={rating === 0 || createUserMatch.isPending}
-                  className="w-full py-2.5 md:py-4 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-10 disabled:cursor-not-allowed transition-all bg-kickr text-black"
+                  className="w-full py-2 md:py-4 rounded-sm text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-10 disabled:cursor-not-allowed transition-all bg-kickr text-black"
                 >
                   {createUserMatch.isPending ? 'TRANSMITTING...' : hasAlreadyLogged ? 'LOG AGAIN' : 'EXECUTE LOG'}
                 </button>

@@ -45,7 +45,7 @@ export const TopTeamsWidget = () => {
                     ))
                 ) : trendingTeams.length > 0 ? (
                     trendingTeams.map((team, i) => (
-                        <Link key={team.name} to={`/teams?search=${encodeURIComponent(team.name)}`} className="flex items-center justify-between group">
+                        <Link key={team.name} to={`/matches?search=${encodeURIComponent(team.name)}`} className="flex items-center justify-between group">
                             <div className="flex items-center gap-4">
                                 <span className="text-[9px] font-mono text-white/20 w-3">0{i + 1}</span>
                                 <div className="w-8 h-8 flex items-center justify-center bg-white/[0.02] rounded-full border border-white/5 p-1.5 group-hover:border-kickr/50 transition-colors">

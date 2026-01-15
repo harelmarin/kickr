@@ -14,17 +14,17 @@ export const CompetitionsPage = () => {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <main className="min-h-screen bg-[#14181c] pt-20 md:pt-32 pb-20 px-4 md:px-0">
-      <div className="max-w-7xl mx-auto md:px-6">
+    <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto">
         <header className="mb-6 md:mb-16">
-          <div className="flex items-center gap-3 mb-2 md:mb-6">
-            <div className="h-[1px] w-6 bg-kickr opacity-50" />
-            <span className="text-[8px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] italic">Competitions</span>
+          <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
+            <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
+            <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Competitions</span>
           </div>
           <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
-            The World <span className="text-kickr">Leagues</span>
+            The World <span className="text-kickr/80">Leagues</span>
           </h1>
-          <p className="text-white/40 uppercase tracking-[0.2em] text-[7px] md:text-[11px] font-bold">
+          <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
             Browse top-tier football divisions worldwide.
           </p>
 

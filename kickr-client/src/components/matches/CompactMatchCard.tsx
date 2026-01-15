@@ -27,9 +27,9 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
             </div>
 
             {/* Content: Combatants & Time/Score */}
-            <div className="p-2 md:p-5 flex items-center justify-between gap-2 md:gap-4 flex-1">
-                <div className="flex items-center justify-center md:flex-col gap-1.5 md:gap-2 flex-1 min-w-0">
-                    <img src={match.homeLogo} className="w-5 h-5 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" alt={match.homeTeam} />
+            <div className="p-1.5 md:p-5 flex items-center justify-between gap-1.5 md:gap-4 flex-1">
+                <div className="flex items-center justify-center md:flex-col gap-1 md:gap-2 flex-1 min-w-0">
+                    <img src={match.homeLogo} className="w-4 h-4 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" alt={match.homeTeam} />
                     <span className="hidden md:block text-[10px] font-black text-white/60 uppercase italic truncate w-full text-center">{match.homeTeam}</span>
                 </div>
 
@@ -37,15 +37,15 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
                     {isFinished ? (
                         <div className="flex flex-col items-center">
                             <div className="flex items-center gap-1 md:gap-2">
-                                <span className="text-xs md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.homeScore}</span>
-                                <span className="text-[8px] md:text-[10px] text-white/20 font-black">-</span>
-                                <span className="text-xs md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.awayScore}</span>
+                                <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.homeScore}</span>
+                                <span className="text-[6px] md:text-[10px] text-white/10 font-black">-</span>
+                                <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.awayScore}</span>
                             </div>
-                            <span className="text-[5.5px] md:text-[7px] font-mono text-white/30 uppercase tracking-widest font-bold mt-0.5">FT</span>
+                            <span className="text-[5px] md:text-[7px] font-mono text-white/20 uppercase tracking-widest font-bold mt-0.5">FT</span>
                         </div>
                     ) : (
                         <div className="flex flex-col items-center">
-                            <span className="text-xs md:text-xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">
+                            <span className="text-[10px] md:text-xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">
                                 {new Date(match.matchDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
                             </span>
                             <span className="hidden md:block text-[7px] font-mono text-white/30 uppercase tracking-[0.2em] mt-1.5 font-bold">
@@ -55,8 +55,8 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
                     )}
                 </div>
 
-                <div className="flex items-center justify-center md:flex-col gap-1.5 md:gap-2 flex-1 min-w-0">
-                    <img src={match.awayLogo} className="w-5 h-5 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" alt={match.awayTeam} />
+                <div className="flex items-center justify-center md:flex-col gap-1 md:gap-2 flex-1 min-w-0">
+                    <img src={match.awayLogo} className="w-4 h-4 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" alt={match.awayTeam} />
                     <span className="hidden md:block text-[10px] font-black text-white/60 uppercase italic truncate w-full text-center">{match.awayTeam}</span>
                 </div>
             </div>

@@ -49,18 +49,18 @@ export const CommunityPage = () => {
     const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-20 pb-16 px-4 md:px-6">
+        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-6 md:mb-16">
-                    <div className="flex items-center gap-2 md:gap-3 mb-1.5 md:mb-4">
-                        <div className="h-[1px] w-4 md:w-6 bg-kickr/40" />
-                        <span className="text-[7px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Intelligence Bureau</span>
+                    <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
+                        <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
+                        <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Network</span>
                     </div>
-                    <h1 className="text-xl md:text-6xl font-black text-white mb-0.5 md:mb-2 italic tracking-tighter uppercase display-font leading-none">
-                        The Global <span className="text-kickr">Tactician</span>
+                    <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
+                        The <span className="text-kickr/80">Tacticians</span>
                     </h1>
-                    <p className="text-white/20 uppercase tracking-[0.2em] text-[6px] md:text-[11px] font-black italic">
-                        Analyze. Track. Connect. Global Intelligence Network.
+                    <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+                        Analyze. Track. Connect. Global Football Network.
                     </p>
 
                     <div className="mt-4 md:mt-12">

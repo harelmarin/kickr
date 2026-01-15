@@ -44,26 +44,26 @@ export const MatchesPage = () => {
   if (isError) return <ErrorState />;
 
   return (
-    <main className="min-h-screen bg-[#14181c] pt-20 pb-16 px-4 md:px-6">
+    <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         <header className="mb-6 md:mb-16">
-          <div className="flex items-center gap-2 md:gap-3 mb-1.5 md:mb-4">
-            <div className="h-[1px] w-4 md:w-6 bg-kickr/40" />
-            <span className="text-[7px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Intelligence Feed</span>
+          <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
+            <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
+            <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Match Feed</span>
           </div>
-          <h1 className="text-xl md:text-6xl font-black text-white mb-0.5 md:mb-2 italic tracking-tighter uppercase display-font leading-none">
-            Center <span className="text-kickr">Circle</span>
+          <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
+            Center <span className="text-kickr/80">Circle</span>
           </h1>
-          <p className="text-white/20 uppercase tracking-[0.2em] text-[6px] md:text-[11px] font-black italic">
-            Global Data Hub
+          <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+            Global Match Database
           </p>
 
           <div className="mt-4 md:mt-12">
-            <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">
-              <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
+              <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-x-8 flex-1">
                 {/* Search */}
-                <div className="flex flex-col gap-1 w-full md:w-48">
-                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Team Scan</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-48">
+                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/5 tracking-widest pl-0.5 italic">Find Clubs</span>
                   <div className="relative">
                     <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                     <input
@@ -77,8 +77,8 @@ export const MatchesPage = () => {
                 </div>
 
                 {/* League Filter */}
-                <div className="flex flex-col gap-1 w-full md:w-40">
-                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Sector</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-40">
+                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/5 tracking-widest pl-0.5 italic">League</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -117,9 +117,9 @@ export const MatchesPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
           {/* Main Content */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-              <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">Match Feed</h2>
-              <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-widest italic font-mono">STATUS: ACTIVE</span>
+            <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-1.5 md:pb-4">
+              <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/20 italic">Match Feed</h2>
+              <span className="text-[5px] md:text-[8px] font-black text-white/5 uppercase tracking-widest italic font-mono">STATUS: LIVE</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
@@ -205,9 +205,9 @@ export const MatchesPage = () => {
 const ErrorState = () => (
   <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#14181c]">
     <div className="max-w-md">
-      <div className="text-5xl mb-8 opacity-20">📡</div>
-      <h2 className="text-2xl font-black text-white/90 mb-4 uppercase tracking-tighter italic">Signal Interrupted</h2>
-      <p className="text-white/40 text-sm mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
+      <div className="text-4xl mb-6 opacity-10">📡</div>
+      <h2 className="text-lg font-black text-white/90 mb-2 uppercase tracking-tighter italic">Match Feed Lost</h2>
+      <p className="text-white/20 text-xs mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
       <button onClick={() => window.location.reload()} className="px-8 py-3 bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-sm hover:bg-white/10 hover:border-kickr/30 transition-all">
         Reconnect
       </button>
