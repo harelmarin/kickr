@@ -90,7 +90,7 @@ export const MatchDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
-      <div className="relative h-[200px] md:h-[650px] w-full overflow-hidden">
+      <div className="relative h-[260px] md:h-[650px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex blur-[60px] md:blur-[80px] opacity-15 md:opacity-30">
           <div className="flex-1 relative overflow-hidden">
             <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" />
@@ -136,7 +136,7 @@ export const MatchDetailPage = () => {
                     </Link>
                     <span className="text-kickr/40 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Home</span>
                   </div>
-                  <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
+                  <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105 active:scale-95">
                     <div className="p-2 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
                       <img src={match.homeLogo} alt={match.homeTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
                     </div>
@@ -145,7 +145,7 @@ export const MatchDetailPage = () => {
 
                 {/* Score / VS Center */}
                 <div className="flex flex-col items-center justify-center relative">
-                  <div className="bg-[#14181c]/80 border border-white/10 px-4 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group min-w-[70px] md:min-w-0 text-center z-10">
+                  <div className="bg-white/[0.01] border border-white/5 px-4 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group min-w-[70px] md:min-w-0 text-center z-10">
                     <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     {isPast ? (
                       <div className="flex items-center justify-center gap-2 md:gap-8 tabular-nums relative z-10">
@@ -167,7 +167,7 @@ export const MatchDetailPage = () => {
 
                 {/* Away Team */}
                 <div className="flex items-center justify-start gap-3 md:gap-6 min-w-0 group/away">
-                  <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
+                  <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105 active:scale-95">
                     <div className="p-2 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
                       <img src={match.awayLogo} alt={match.awayTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
                     </div>
@@ -298,7 +298,7 @@ export const MatchDetailPage = () => {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab as any)}
-                    className={`pb-3 md:pb-5 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all relative italic whitespace-nowrap ${activeTab === tab ? 'text-kickr' : 'text-white/10 hover:text-white'
+                    className={`pb-3 md:pb-5 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all relative italic whitespace-nowrap active:scale-95 ${activeTab === tab ? 'text-kickr' : 'text-white/10 hover:text-white'
                       }`}
                   >
                     {tab}
@@ -528,7 +528,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
   };
 
   return (
-    <div className="flex gap-3 md:gap-4 border-b border-white/5 pb-4 md:pb-8 group/review">
+    <div className="flex gap-3 md:gap-4 border-b border-white/5 pb-4 md:pb-8 group/review hover:bg-white/[0.01] transition-colors rounded-sm px-2 -mx-2 active:bg-white/[0.02]">
       <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/[0.02] flex-shrink-0 flex items-center justify-center text-[8px] md:text-[10px] text-white/40 font-black uppercase overflow-hidden border border-white/5">
         {review.user.avatarUrl ? (
           <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />

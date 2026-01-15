@@ -33,7 +33,7 @@ export const Header = () => {
   }, [authModalMode, closeAuthModal]);
 
   return (
-    <header className="bg-[#14181c]/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-50 h-14 md:h-16 transition-all">
+    <header className="bg-[#14181c]/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] md:h-16 transition-all pt-[env(safe-area-inset-top)]">
       <div className="max-w-7xl mx-auto flex items-center h-full px-4 md:px-6 justify-between md:justify-start">
         <Link to="/" className="flex items-center gap-2 mr-0 md:mr-10 flex-shrink-0">
           <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center">

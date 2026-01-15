@@ -68,7 +68,7 @@ export const UserMatchesPage = () => {
     }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
+        <main className="min-h-screen bg-[#14181c] pt-[calc(4rem+env(safe-area-inset-top))] md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-6 md:mb-16">
                     <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">

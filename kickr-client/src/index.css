@@ -206,6 +206,25 @@
     animation: fadeIn 0.3s ease-in;
   }
 
+  /* Tactile feedback for mobile interactions */
+  .active-press {
+    transition: transform 0.1s;
+  }
+
+  .active-press:active {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+
+  /* Safe Area Utilities */
+  .pt-safe-top {
+    padding-top: calc(4rem + env(safe-area-inset-top));
+  }
+
+  .pb-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -217,4 +236,11 @@
       transform: translateY(0);
     }
   }
+}
+
+/* Optimize touch interactions */
+button,
+a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }

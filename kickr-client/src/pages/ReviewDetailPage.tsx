@@ -58,7 +58,7 @@ export const ReviewDetailPage: FC = () => {
     if (!review) return <div className="min-h-screen bg-[#14181c] pt-32 flex justify-center"><div className="text-red-500 text-[10px] font-black uppercase tracking-[0.4em] italic">Report not found</div></div>;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20">
+        <main className="min-h-screen bg-[#14181c] pt-[calc(4rem+env(safe-area-inset-top))] md:pt-32 pb-12 md:pb-20">
             <div className="max-w-7xl mx-auto px-4 md:px-6">
 
                 {/* HEAD HEADER */}
@@ -80,7 +80,7 @@ export const ReviewDetailPage: FC = () => {
                     <div className="lg:col-span-8 space-y-12">
 
                         {/* Match Context Card */}
-                        <Link to={`/matches/${review.match.id}`} className="block group">
+                        <Link to={`/matches/${review.match.id}`} className="block group active:scale-[0.99] transition-transform">
                             <div className="bg-white/[0.01] border border-white/5 p-3 md:p-8 rounded-sm hover:border-kickr/20 transition-all relative overflow-hidden">
                                 <div className="flex items-center justify-between gap-3 md:gap-8 relative z-10">
                                     <div className="flex items-center gap-2 md:gap-6">

@@ -23,7 +23,7 @@ const NavItem = ({ to, icon, label }: { to: string; icon: ReactNode; label: stri
         : location.pathname.startsWith(to);
 
     return (
-        <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-colors group">
+        <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all active:scale-90 active:bg-white/5 group rounded-lg">
             <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-[#5c6470] group-hover:text-white'}`}>
                 {icon}
             </div>
@@ -33,7 +33,7 @@ const NavItem = ({ to, icon, label }: { to: string; icon: ReactNode; label: stri
             {isActive && (
                 <motion.div
                     layoutId="activeNav"
-                    className="absolute inset-0 bg-kickr/5 border-t-2 border-kickr"
+                    className="absolute inset-x-2 top-0 h-0.5 bg-kickr shadow-[0_0_10px_var(--kickr-primary)]"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
             )}
