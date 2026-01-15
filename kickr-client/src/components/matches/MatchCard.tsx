@@ -33,7 +33,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
             <div className={`flex flex-col gap-2 sm:gap-3 group/card ${className}`}>
                 <Link
                     to={`/matches/${match.id}`}
-                    className="block aspect-[2.2/1] sm:aspect-[2.5/1] bg-[#1b2228] rounded-sm border border-white/5 overflow-hidden shadow-2xl transition-all duration-300 relative group/poster poster-hover-effect"
+                    className="block aspect-[2.2/1] sm:aspect-[2.5/1] bg-[#1b2228] rounded-sm border border-white/5 overflow-hidden shadow-2xl transition-all duration-300 relative group/poster poster-hover-effect active:scale-[0.98]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-br from-[#1b2228] to-[#252a31]"></div>
 
@@ -94,7 +94,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
     }
 
     return (
-        <Link to={`/matches/${match.id}`} className={`group block relative overflow-hidden bg-white/[0.02] border border-white/5 hover:border-kickr/20 hover:bg-white/[0.04] transition-all rounded-sm ${className}`}>
+        <Link to={`/matches/${match.id}`} className={`group block relative overflow-hidden bg-white/[0.02] border border-white/5 hover:border-kickr/20 hover:bg-white/[0.04] transition-all rounded-sm active:scale-[0.99] active:bg-white/[0.05] ${className}`}>
             <motion.div
                 whileHover={{ x: 2 }}
                 className={`flex items-center justify-between px-4 py-2 gap-4 ${isCompact ? 'h-10' : 'h-12'}`}

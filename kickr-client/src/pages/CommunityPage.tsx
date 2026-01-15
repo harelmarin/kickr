@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from 'react';
 import { useUsers } from '../hooks/useUser';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { UserCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { EmptyState } from '../components/ui/EmptyState';
 import { TopTeamsWidget } from '../components/widgets/TopTeamsWidget';
 import { TopReviewsWidget } from '../components/widgets/TopReviewsWidget';
@@ -13,7 +12,7 @@ export const CommunityPage = () => {
     const { user: currentUser } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState('');
-    const [sortBy, setSortBy] = useState<'recent' | 'logs' | 'network'>('logs');
+    const [sortBy] = useState<'recent' | 'logs' | 'network'>('logs');
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -47,90 +46,63 @@ export const CommunityPage = () => {
             });
     }, [users, debouncedQuery, sortBy]);
 
-    const statsTotalMinds = pageData?.totalElements || 0;
     const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
-    const statsTotalNetwork = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.followersCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-6">
-                <header className="mb-16">
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="h-[2px] w-6 bg-kickr" />
-                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] italic">Community</span>
+        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
+            <div className="max-w-7xl mx-auto">
+                <header className="mb-6 md:mb-16">
+                    <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
+                        <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
+                        <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Network</span>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase">
-                        The Global <span className="text-kickr">Tactician</span>
+                    <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
+                        The <span className="text-kickr/80">Tacticians</span>
                     </h1>
-                    <p className="text-white/40 uppercase tracking-[0.25em] text-[11px] font-bold">
-                        Analyze. Track. Connect. The elite football network.
+                    <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+                        Analyze. Track. Connect. Global Football Network.
                     </p>
 
-                    <div className="mt-12">
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between border border-white/5 p-6 bg-white/[0.02] rounded-sm gap-8">
-                            <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
-                                <div className="flex flex-col gap-2 w-full sm:w-64">
-                                    <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">Identify Tactician</span>
+                    <div className="mt-4 md:mt-12">
+                        <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">
+                            <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
+                                {/* Search */}
+                                <div className="flex flex-col gap-1 w-full md:w-48">
+                                    <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Identify</span>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs opacity-40">🔍</span>
+                                        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                                         <input
                                             type="text"
-                                            placeholder="Enter name..."
+                                            placeholder="SCAN..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
+                                            className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                                         />
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">Sort by Rank</span>
-                                    <div className="flex bg-[#0a0b0d]/20 p-1 rounded-sm border border-white/5">
-                                        {(['logs', 'network', 'recent'] as const).map((s) => (
-                                            <button
-                                                key={s}
-                                                onClick={() => setSortBy(s)}
-                                                className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === s ? 'bg-kickr text-black' : 'text-white/40 hover:text-white/60'}`}
-                                            >
-                                                {s}
-                                            </button>
-                                        ))}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex gap-10 lg:border-l lg:border-white/5 lg:pl-10">
-                                <div className="flex flex-col items-end">
-                                    <span className="text-[20px] font-black text-white italic leading-none tracking-tighter">
-                                        {isLoading ? '...' : statsTotalMinds}
-                                    </span>
-                                    <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold mt-1">Active Minds</span>
-                                </div>
-                                <div className="flex flex-col items-end">
-                                    <span className="text-[20px] font-black text-white italic leading-none tracking-tighter">
-                                        {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
-                                    </span>
-                                    <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold mt-1">Global Logs</span>
-                                </div>
-                                <div className="flex flex-col items-end">
-                                    <span className="text-[20px] font-black text-kickr italic leading-none tracking-tighter">
-                                        {isLoading ? '...' : (statsTotalNetwork >= 1000 ? `${(statsTotalNetwork / 1000).toFixed(1)}k` : statsTotalNetwork)}
-                                    </span>
-                                    <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold mt-1">Network Size</span>
-                                </div>
+                            <div className="hidden lg:flex flex-col items-end">
+                                <span className="text-xl font-black text-white italic leading-none tracking-tighter">
+                                    {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
+                                </span>
+                                <span className="text-[8px] uppercase tracking-widest text-white/20 font-bold mt-1">Global Logs</span>
                             </div>
                         </div>
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
                     {/* Main Content */}
                     <div className="lg:col-span-8">
-                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic mb-8">All Tacticians</h2>
+                        <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
+                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">All Tacticians</h2>
+                            <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+                        </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                             {isLoading ? (
-                                Array.from({ length: 8 }).map((_, i) => <UserCardSkeleton key={i} />)
+                                Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-[1.5/1] bg-white/5 animate-pulse rounded-sm" />)
                             ) : (
                                 filteredUsers?.map((user) => (
                                     <UserCard key={user.id} user={user} isMe={user.id === currentUser?.id} />
@@ -139,25 +111,25 @@ export const CommunityPage = () => {
                         </div>
 
                         {!isLoading && pageData && pageData.totalPages > 1 && (
-                            <div className="mt-16 flex items-center justify-center gap-4">
+                            <div className="mt-8 flex items-center justify-center gap-2 md:gap-4">
                                 <button
                                     onClick={() => {
                                         setCurrentPage(prev => Math.max(0, prev - 1));
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
-                                    Previous
+                                    [ Prev ]
                                 </button>
 
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1">
                                     {[...Array(pageData.totalPages)].map((_, i) => {
                                         if (pageData.totalPages > 5) {
-                                            if (i < currentPage - 2 && i !== 0) return null;
-                                            if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                            if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-white/20">...</span>;
-                                            if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-white/20">...</span>;
+                                            if (i < currentPage - 1 && i !== 0) return null;
+                                            if (i > currentPage + 1 && i !== pageData.totalPages - 1) return null;
+                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[7px] text-white/10">..</span>;
+                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[7px] text-white/10">..</span>;
                                         }
 
                                         return (
@@ -167,9 +139,9 @@ export const CommunityPage = () => {
                                                     setCurrentPage(i);
                                                     window.scrollTo({ top: 300, behavior: 'smooth' });
                                                 }}
-                                                className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                                className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[7px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
                                                     ? 'bg-kickr text-black'
-                                                    : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:border-white/10'
+                                                    : 'bg-white/[0.01] border border-white/5 text-white/20 hover:text-white/40'
                                                     }`}
                                             >
                                                 {i + 1}
@@ -184,9 +156,9 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
-                                    Next
+                                    [ Next ]
                                 </button>
                             </div>
                         )}
@@ -202,14 +174,14 @@ export const CommunityPage = () => {
                         )}
                     </div>
 
-                    {/* Sidebar */}
-                    <div className="lg:col-span-4 space-y-8">
+                    {/* Sidebar - Adapted for Mobile (Bottom placement) */}
+                    <div className="lg:col-span-4 space-y-6 md:space-y-8 mt-12 lg:mt-0">
                         <TopTeamsWidget />
                         <TopReviewsWidget />
                     </div>
                 </div>
-            </div>
-        </main>
+            </div >
+        </main >
     );
 };
 
@@ -217,19 +189,19 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
     return (
         <Link
             to={`/user/${user.id}`}
-            className="group relative bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden hover:border-white/10 transition-all flex flex-col"
+            className="group relative bg-white/[0.01] border border-white/5 rounded-sm overflow-hidden hover:border-kickr/30 hover:bg-white/[0.03] transition-all flex flex-col"
         >
-            <div className="p-4 flex flex-col">
+            <div className="p-2 md:p-4 flex flex-col items-center md:items-start text-center md:text-left h-full">
                 {isMe && (
-                    <div className="absolute top-2 right-2">
-                        <span className="bg-kickr text-black text-[7px] font-black uppercase tracking-tight px-1.5 py-0.5 rounded-sm">
-                            You
+                    <div className="absolute top-1 right-1">
+                        <span className="bg-kickr text-black text-[5px] md:text-[7px] font-black uppercase tracking-tight px-1 py-0.5 rounded-sm">
+                            YOU
                         </span>
                     </div>
                 )}
 
-                <div className="flex items-center gap-3 mb-3">
-                    <div className="w-12 h-12 rounded-sm bg-white/[0.02] border border-white/10 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/30 transition-all overflow-hidden flex-shrink-0">
+                <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-3 mb-1.5 md:mb-3 w-full">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-sm bg-white/[0.02] border border-white/5 flex items-center justify-center text-xs md:text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/30 transition-all overflow-hidden flex-shrink-0">
                         {user.avatarUrl ? (
                             <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                         ) : (
@@ -237,29 +209,28 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                         )}
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-black text-white uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                    <div className="flex-1 min-w-0 w-full">
+                        <h3 className="text-[9px] md:text-sm font-black text-white/80 uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
                             {user.name}
                         </h3>
-                        <p className="text-[8px] text-white/40 font-bold uppercase tracking-wide">
+                        <p className="hidden md:block text-[8px] text-white/20 font-bold uppercase tracking-wide mt-0.5">
                             {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                         </p>
                     </div>
                 </div>
 
-                <div className="flex items-center justify-around pt-3 border-t border-white/5 gap-2">
+                <div className="flex items-center justify-center md:justify-around w-full mt-auto pt-1 border-t border-white/5 gap-3 md:gap-4">
                     <div className="flex flex-col items-center">
-                        <span className="text-base font-black text-white italic tracking-tighter leading-none">
+                        <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[7px] font-bold text-white/40 uppercase tracking-wider leading-none mt-0.5">Logs</span>
+                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
                     </div>
-                    <div className="w-px h-6 bg-white/5"></div>
                     <div className="flex flex-col items-center">
-                        <span className="text-base font-black text-white italic tracking-tighter leading-none">
+                        <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[7px] font-bold text-white/40 uppercase tracking-wider leading-none mt-0.5">Network</span>
+                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-0.5">NET</span>
                     </div>
                 </div>
             </div>

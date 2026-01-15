@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchTeams } from '../hooks/useTeams';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LeagueCardSkeleton } from '../components/ui/LoadingSkeletons';
 import { EmptyState } from '../components/ui/EmptyState';
 import { TopTeamsWidget } from '../components/widgets/TopTeamsWidget';
 import { TopReviewsWidget } from '../components/widgets/TopReviewsWidget';
@@ -56,7 +55,7 @@ export const TeamsPage = () => {
                     placeholder="Enter club name..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
+                    className="w-full bg-[#14181c]/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
                   />
                 </div>
               </div>
@@ -80,23 +79,23 @@ export const TeamsPage = () => {
               <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">All Clubs</h2>
             </div>
 
-            <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
               <AnimatePresence>
                 {allTeams.length === 0 && isLoading ? (
-                  Array.from({ length: 12 }).map((_, i) => <LeagueCardSkeleton key={i} />)
+                  Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-square bg-white/5 animate-pulse rounded-sm" />)
                 ) : (
                   allTeams.map((team, index) => (
                     <motion.div
                       key={team.id}
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.3) }}
+                      transition={{ duration: 0.3, delay: Math.min(index * 0.01, 0.2) }}
                     >
                       <Link
                         to={`/teams/${team.id}`}
                         className="group block"
                       >
-                        <div className="aspect-square bg-white/[0.02] rounded-sm border border-white/5 p-6 flex items-center justify-center mb-3 transition-all group-hover:border-white/10 group-hover:bg-white/[0.04] relative overflow-hidden">
+                        <div className="aspect-square bg-white/[0.02] rounded-sm border border-white/5 p-4 md:p-6 flex items-center justify-center mb-2 md:mb-3 transition-all group-hover:border-white/10 group-hover:bg-white/[0.04] relative overflow-hidden">
                           <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                           <img
                             src={team.logoUrl}
@@ -104,7 +103,7 @@ export const TeamsPage = () => {
                             className="max-w-[70%] max-h-[70%] object-contain filter drop-shadow-md group-hover:drop-shadow-xl transition-all duration-500 transform group-hover:scale-110"
                           />
                         </div>
-                        <h3 className="text-center text-[9px] font-black text-white/60 group-hover:text-white transition-colors tracking-widest uppercase truncate px-1">
+                        <h3 className="text-center text-[7px] md:text-[9px] font-black text-white/40 md:text-white/60 group-hover:text-white transition-colors tracking-widest uppercase truncate px-1">
                           {team.name}
                         </h3>
                       </Link>

@@ -1,15 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
+import { motion } from 'framer-motion';
 
 export const MobileBottomNav = () => {
     return (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#14181c]/95 backdrop-blur-lg border-t border-white/5 z-50 pb-[env(safe-area-inset-bottom)]">
-            <div className="flex items-center justify-around h-16 px-2">
-                <NavItem to="/" icon={<HomeIcon />} label="Home" />
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#14181c]/80 backdrop-blur-xl border-t border-white/5 z-50 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+            <div className="flex items-center justify-around h-14 px-2">
                 <NavItem to="/feed" icon={<FeedIcon />} label="Feed" />
-                <NavItem to="/matches" icon={<MatchesIcon />} label="Matches" />
+                <NavItem to="/matches" icon={<MatchesIcon />} label="Fixtures" />
+                <NavItem to="/" icon={<HomeIcon />} label="Hub" />
                 <NavItem to="/competitions" icon={<TrophyIcon />} label="Leagues" />
-                <NavItem to="/community" icon={<CommunityIcon />} label="Community" />
+                <NavItem to="/community" icon={<CommunityIcon />} label="Scouts" />
             </div>
         </nav>
     );
@@ -22,11 +23,20 @@ const NavItem = ({ to, icon, label }: { to: string; icon: ReactNode; label: stri
         : location.pathname.startsWith(to);
 
     return (
-        <Link to={to} className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${isActive ? 'text-kickr' : 'text-[#667788] hover:text-[#99aabb]'}`}>
-            <div className="w-5 h-5 flex items-center justify-center">
+        <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all active:scale-90 active:bg-white/5 group rounded-lg">
+            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-[#5c6470] group-hover:text-white'}`}>
                 {icon}
             </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider">{label}</span>
+            <span className={`relative z-10 text-[7px] font-black uppercase tracking-[0.15em] transition-all duration-300 ${isActive ? 'text-kickr' : 'text-[#445566]'}`}>
+                {label}
+            </span>
+            {isActive && (
+                <motion.div
+                    layoutId="activeNav"
+                    className="absolute inset-x-2 top-0 h-0.5 bg-kickr shadow-[0_0_10px_var(--kickr-primary)]"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+            )}
         </Link>
     );
 };

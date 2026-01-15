@@ -33,13 +33,13 @@ export const Header = () => {
   }, [authModalMode, closeAuthModal]);
 
   return (
-    <header className="bg-[#14181c] border-b border-white/5 sticky top-0 z-50 h-[52px] md:h-16 transition-all">
+    <header className="bg-[#14181c]/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] md:h-16 transition-all pt-[env(safe-area-inset-top)]">
       <div className="max-w-7xl mx-auto flex items-center h-full px-4 md:px-6 justify-between md:justify-start">
-        <Link to="/" className="flex items-center gap-2 md:gap-3 mr-0 md:mr-10 flex-shrink-0">
-          <div className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center">
+        <Link to="/" className="flex items-center gap-2 mr-0 md:mr-10 flex-shrink-0">
+          <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center">
             <img src="/favicon.png" alt="Kickr Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="text-sm md:text-lg font-black italic tracking-tighter uppercase leading-none text-white/90">
+          <span className="text-xs md:text-lg font-black italic tracking-tighter uppercase leading-none text-white/90">
             KICKR
           </span>
         </Link>
@@ -63,24 +63,43 @@ export const Header = () => {
               <UserMenu />
             </div>
           ) : (
-            <div className="flex items-center gap-2 md:gap-5 border-l border-white/5 pl-3 md:pl-5 relative" ref={dropdownRef}>
+            <div className="flex items-center gap-1.5 md:gap-4 border-l border-white/5 pl-3 md:pl-5 relative" ref={dropdownRef}>
               <button
-                className="text-white/40 hover:text-white/80 font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-colors"
+                className="text-white/30 hover:text-white/80 font-black uppercase tracking-[0.2em] text-[8px] md:text-[9px] transition-colors"
                 onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
               >
                 Sign In
               </button>
               <Link
                 to="/register"
-                className="bg-kickr hover:brightness-110 text-black px-4 py-1.5 md:py-2 rounded-sm text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-kickr/10 italic"
+                className="bg-kickr hover:brightness-110 text-black px-3 py-1 md:py-1.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-[0.1em] transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-kickr/10 italic"
               >
                 Sign Up
               </Link>
 
               {authModalMode === 'login' && (
-                <div className="absolute top-full right-0 mt-4 z-50 w-[300px] animate-fade-in">
-                  <LoginDropdown onSuccess={() => closeAuthModal()} />
-                </div>
+                <>
+                  {/* Mobile Mobile Overlay */}
+                  <div
+                    className="fixed inset-x-0 top-[56px] h-[calc(100vh-56px)] bg-black/20 backdrop-blur-sm sm:hidden z-50"
+                    onClick={() => closeAuthModal()}
+                  >
+                    <div
+                      className="absolute top-0 right-0 w-full animate-fade-in"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <LoginDropdown onSuccess={() => closeAuthModal()} />
+                    </div>
+                  </div>
+
+                  {/* Desktop Dropdown */}
+                  <div
+                    className="hidden sm:block absolute top-full right-0 mt-4 w-[350px] animate-fade-in z-50"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <LoginDropdown onSuccess={() => closeAuthModal()} />
+                  </div>
+                </>
               )}
             </div>
           )}

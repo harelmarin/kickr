@@ -52,7 +52,7 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-[#0a0b0d]/80 backdrop-blur-sm"
+                    className="absolute inset-0 bg-[#14181c]/80 backdrop-blur-sm"
                 />
 
                 <motion.div
@@ -85,7 +85,7 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                                             onClick={() => setReason(r.value)}
                                             className={`py-3 px-4 rounded-sm border text-[11px] font-bold uppercase tracking-wider transition-all text-left ${reason === r.value
                                                 ? 'bg-kickr/15 border-kickr/30 text-kickr'
-                                                : 'bg-[#0a0b0d]/20 border-white/5 text-[#667788] hover:border-white/10'
+                                                : 'bg-[#14181c]/20 border-white/5 text-[#667788] hover:border-white/10'
                                                 }`}
                                         >
                                             {r.label}
@@ -100,7 +100,7 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     placeholder="Provide more context..."
-                                    className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm p-4 text-[13px] text-white focus:outline-none focus:border-kickr/30 min-h-[120px] transition-all resize-none"
+                                    className="w-full bg-[#14181c]/20 border border-white/5 rounded-sm p-4 text-[13px] text-white focus:outline-none focus:border-kickr/30 min-h-[120px] transition-all resize-none"
                                 />
                             </div>
 

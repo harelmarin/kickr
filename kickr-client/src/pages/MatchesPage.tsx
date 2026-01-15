@@ -43,45 +43,42 @@ export const MatchesPage = () => {
 
   if (isError) return <ErrorState />;
 
-  const statsTotalFixtures = data?.totalElements || 0;
-
   return (
-    <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <header className="mb-16">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="h-[2px] w-6 bg-kickr" />
-            <span className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] italic">Fixtures</span>
+    <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-6 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
+            <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
+            <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Match Feed</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase">
-            Center <span className="text-kickr">Circle</span>
+          <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
+            Center <span className="text-kickr/80">Circle</span>
           </h1>
-          <p className="text-white/40 uppercase tracking-[0.25em] text-[11px] font-bold">
-            Global Matchday Data. Analyze upcoming and past encounters.
+          <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+            Global Match Database
           </p>
 
-          <div className="mt-12">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between border border-white/5 p-6 bg-white/[0.02] rounded-sm gap-8">
-              <div className="flex flex-wrap items-center gap-x-10 gap-y-6 w-full lg:w-auto">
-
+          <div className="mt-4 md:mt-12">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
+              <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-x-8 flex-1">
                 {/* Search */}
-                <div className="flex flex-col gap-2 w-full sm:w-64">
-                  <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">Search Team</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-48">
+                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/5 tracking-widest pl-0.5 italic">Find Clubs</span>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs opacity-40">🔍</span>
+                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                     <input
                       type="text"
-                      placeholder="Enter team name..."
+                      placeholder="SCAN..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-9 pr-4 py-2.5 text-base sm:text-[11px] font-bold text-white placeholder-white/20 focus:border-kickr/40 transition-all outline-none"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                     />
                   </div>
                 </div>
 
                 {/* League Filter */}
-                <div className="flex flex-col gap-2 w-full sm:w-48">
-                  <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">League</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-40">
+                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/5 tracking-widest pl-0.5 italic">League</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -89,58 +86,46 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-[#0a0b0d]/20 border border-white/5 rounded-sm pl-3 pr-8 py-2.5 text-[10px] font-bold text-white/60 focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none uppercase tracking-wider hover:bg-white/[0.05] transition-all"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-[9px] font-black text-white/20 focus:text-white focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.03] transition-all italic"
                     >
-                      <option value="" className="bg-[#1b2228]">All Leagues</option>
+                      <option value="" className="bg-[#14181c]">ALL</option>
                       {competitions?.map(c => (
-                        <option key={c.id} value={c.id} className="bg-[#1b2228] w-64 md:w-auto overflow-hidden text-ellipsis">{c.name}</option>
+                        <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
                       ))}
                     </select>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[8px] text-white/20">▼</div>
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[6px] text-white/10 italic">▼</div>
                   </div>
                 </div>
 
                 {/* Status Filter */}
-                <div className="flex flex-col gap-2">
-                  <span className="text-[9px] uppercase font-black text-white/40 tracking-[0.2em] pl-1">Status</span>
-                  <div className="flex bg-[#0a0b0d]/20 p-1 rounded-sm border border-white/5">
-                    {['all', 'upcoming', 'finished'].map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => { setStatus(s as any); setPage(0); }}
-                        className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-white/40 hover:text-white/60'}`}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Stats */}
-              <div className="flex gap-10 lg:border-l lg:border-white/5 lg:pl-10">
-                <div className="flex flex-col items-end">
-                  <span className="text-[20px] font-black text-white italic leading-none tracking-tighter">
-                    {isLoading ? '...' : statsTotalFixtures}
-                  </span>
-                  <span className="text-[8px] uppercase tracking-widest text-white/40 font-bold mt-1">Found</span>
+                <div className="flex bg-white/[0.01] p-0.5 rounded-sm border border-white/5 w-full md:w-auto h-7 md:h-8">
+                  {['all', 'upcoming', 'finished'].map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => { setStatus(s as any); setPage(0); }}
+                      className={`px-2 md:px-3 flex items-center rounded-sm text-[6px] md:text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-white/10 hover:text-white/20'}`}
+                    >
+                      {s}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
           {/* Main Content */}
           <div className="lg:col-span-8">
-            <div className="flex items-center gap-3 mb-8">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">Match Feed</h2>
+            <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-1.5 md:pb-4">
+              <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/20 italic">Match Feed</h2>
+              <span className="text-[5px] md:text-[8px] font-black text-white/5 uppercase tracking-widest italic font-mono">STATUS: LIVE</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {isLoading ? (
                 Array.from({ length: 9 }).map((_, i) => (
-                  <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
+                  <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
                 ))
               ) : (
                 <AnimatePresence mode="popLayout">
@@ -172,22 +157,22 @@ export const MatchesPage = () => {
 
             {/* Pagination */}
             {!isLoading && data && data.totalPages > 1 && (
-              <div className="mt-8 flex items-center justify-center gap-8 border-t border-white/5 pt-6">
+              <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4 md:pt-6">
                 <button
                   onClick={() => {
                     setPage(p => Math.max(0, p - 1));
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
-                  className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
                 >
-                  <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
-                  Prev
+                  <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
+                  PREV
                 </button>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                    Page <span className="text-white">{page + 1}</span> of {data.totalPages}
+                  <span className="text-[8px] md:text-[10px] font-black text-white/10 uppercase tracking-widest italic tabular-nums font-mono">
+                    PAGE {page + 1} / {data.totalPages}
                   </span>
                 </div>
 
@@ -197,17 +182,17 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
-                  className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
                 >
-                  Next
-                  <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                  NEXT
+                  <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
                 </button>
               </div>
             )}
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-4 space-y-8">
+          {/* Sidebar - Adapted for Mobile (Bottom placement) */}
+          <div className="lg:col-span-4 space-y-6 md:space-y-8 mt-12 lg:mt-0">
             <TopTeamsWidget />
             <TopReviewsWidget />
           </div>
@@ -220,9 +205,9 @@ export const MatchesPage = () => {
 const ErrorState = () => (
   <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#14181c]">
     <div className="max-w-md">
-      <div className="text-5xl mb-8 opacity-20">📡</div>
-      <h2 className="text-2xl font-black text-white/90 mb-4 uppercase tracking-tighter italic">Signal Interrupted</h2>
-      <p className="text-white/40 text-sm mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
+      <div className="text-4xl mb-6 opacity-10">📡</div>
+      <h2 className="text-lg font-black text-white/90 mb-2 uppercase tracking-tighter italic">Match Feed Lost</h2>
+      <p className="text-white/20 text-xs mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
       <button onClick={() => window.location.reload()} className="px-8 py-3 bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-sm hover:bg-white/10 hover:border-kickr/30 transition-all">
         Reconnect
       </button>

@@ -75,7 +75,7 @@ export const ResetPasswordPage = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
-                                className="w-full bg-[#0a0b0d]/40 border border-white/5 rounded-sm px-5 py-4 text-sm font-black text-white placeholder-white/5 outline-none focus:border-kickr/20 transition-all italic"
+                                className="w-full bg-[#14181c]/40 border border-white/5 rounded-sm px-5 py-4 text-sm font-black text-white placeholder-white/5 outline-none focus:border-kickr/20 transition-all italic"
                             />
                         </div>
 
@@ -87,7 +87,7 @@ export const ResetPasswordPage = () => {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="••••••••"
-                                className={`w-full bg-[#0a0b0d]/40 border ${confirmPassword && !matches ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm font-black text-white placeholder-white/5 outline-none focus:border-kickr/20 transition-all italic`}
+                                className={`w-full bg-[#14181c]/40 border ${confirmPassword && !matches ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-sm font-black text-white placeholder-white/5 outline-none focus:border-kickr/20 transition-all italic`}
                             />
                         </div>
                     </div>

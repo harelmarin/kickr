@@ -175,25 +175,25 @@ const UsersTab = () => {
                     placeholder="Search systems..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-[#0a0b0d]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
+                    className="bg-[#14181c]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
                 />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead className="bg-[#0a0b0d]/10 text-[#445566] text-[10px] font-black uppercase tracking-[0.2em]">
+                    <thead className="bg-[#14181c]/10 text-[#445566] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em]">
                         <tr>
-                            <th className="px-6 py-4">User</th>
-                            <th className="px-6 py-4">Status</th>
-                            <th className="px-6 py-4">Auth Level</th>
-                            <th className="px-6 py-4 text-right">Sequence</th>
+                            <th className="px-3 md:px-6 py-2 md:py-4">User</th>
+                            <th className="px-3 md:px-6 py-2 md:py-4">Status</th>
+                            <th className="px-3 md:px-6 py-2 md:py-4 hidden md:table-cell">Auth Level</th>
+                            <th className="px-3 md:px-6 py-2 md:py-4 text-right">Sequence</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/[0.03]">
                         {filteredUsers.map((user: any) => (
                             <tr key={user.id} className="hover:bg-white/[0.01] transition-colors">
-                                <td className="px-6 py-4">
-                                    <Link to={`/user/${user.id}`} className="flex items-center gap-3 group/user">
-                                        <div className="w-8 h-8 rounded-sm bg-kickr/10 border border-kickr/20 flex items-center justify-center font-black text-xs text-kickr overflow-hidden group-hover/user:border-kickr/50 transition-colors">
+                                <td className="px-3 md:px-6 py-2 md:py-4">
+                                    <Link to={`/user/${user.id}`} className="flex items-center gap-2 md:gap-3 group/user">
+                                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-sm bg-kickr/10 border border-kickr/20 flex items-center justify-center font-black text-[10px] md:text-xs text-kickr overflow-hidden group-hover/user:border-kickr/50 transition-colors">
                                             {user.avatarUrl ? (
                                                 <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                                             ) : (
@@ -201,29 +201,29 @@ const UsersTab = () => {
                                             )}
                                         </div>
                                         <div>
-                                            <div className="text-sm font-black text-white group-hover/user:text-kickr transition-colors">{user.name}</div>
-                                            <div className="text-[10px] text-[#445566] font-medium">{user.email}</div>
+                                            <div className="text-[10px] md:text-sm font-black text-white group-hover/user:text-kickr transition-colors">{user.name}</div>
+                                            <div className="text-[8px] md:text-[10px] text-[#445566] font-medium hidden md:block">{user.email}</div>
                                         </div>
                                     </Link>
                                 </td>
-                                <td className="px-6 py-4">
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-black uppercase tracking-tighter bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                <td className="px-3 md:px-6 py-2 md:py-4">
+                                    <span className="inline-flex items-center px-1.5 md:px-2 py-0.5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-tighter bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                                         Active
                                     </span>
                                 </td>
-                                <td className="px-6 py-4">
-                                    <span className={`text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-[#667788]'}`}>
+                                <td className="px-3 md:px-6 py-2 md:py-4 hidden md:table-cell">
+                                    <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-[#667788]'}`}>
                                         {user.role}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4 text-right">
-                                    <div className="flex justify-end gap-2">
+                                <td className="px-3 md:px-6 py-2 md:py-4 text-right">
+                                    <div className="flex justify-end gap-1 md:gap-2">
                                         {user.role === 'USER' ? (
-                                            <button onClick={() => adminService.promoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-kickr/10 rounded-sm text-kickr transition-all">↑</button>
+                                            <button onClick={() => adminService.promoteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-kickr/10 rounded-sm text-kickr transition-all">↑</button>
                                         ) : (
-                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-orange-500/10 rounded-sm text-orange-500 transition-all">↓</button>
+                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-orange-500/10 rounded-sm text-orange-500 transition-all">↓</button>
                                         )}
-                                        <button onClick={() => adminService.deleteUser(user.id).then(() => loadUsers(currentPage))} className="p-2 hover:bg-red-500/10 rounded-sm text-red-500 transition-all">×</button>
+                                        <button onClick={() => adminService.deleteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-red-500/10 rounded-sm text-red-500 transition-all">×</button>
                                     </div>
                                 </td>
                             </tr>
@@ -234,7 +234,7 @@ const UsersTab = () => {
 
             {/* Pagination */}
             {pageData && pageData.totalPages > 1 && (
-                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#0a0b0d]/10">
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#14181c]/10">
                     <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
                         Page {pageData.number + 1} / {pageData.totalPages}
                     </div>
@@ -297,69 +297,69 @@ const ReportsTab = () => {
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-8 hover:border-kickr/20 transition-all">
-                            <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
-                                <div className="space-y-6 flex-1">
-                                    <div className="flex items-center gap-3">
-                                        <span className={`px-2 py-0.5 rounded-sm text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
+                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 md:gap-8">
+                                <div className="space-y-4 md:space-y-6 flex-1">
+                                    <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+                                        <span className={`px-2 py-0.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
                                             report.status === 'RESOLVED' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
                                                 'bg-white/5 text-[#445566] border border-white/10'
                                             }`}>
                                             {report.status}
                                         </span>
-                                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.2em] italic">{report.targetType}</span>
-                                        <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
+                                        <span className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.2em] italic">{report.targetType}</span>
+                                        <span className="text-[9px] md:text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                         <div>
                                             <div className="flex items-center justify-between mb-2">
-                                                <p className="text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic">REPORTED CONTENT</p>
+                                                <p className="text-[8px] md:text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic">REPORTED CONTENT</p>
                                                 <Link
                                                     to={report.targetType === 'MATCH_REVIEW' ? `/reviews/${report.targetId}` : `/reviews/${report.targetId}`} // Assuming comments also live on reviews for now, or need specific linking
                                                     target="_blank"
-                                                    className="text-[9px] font-black text-kickr hover:underline uppercase tracking-widest italic"
+                                                    className="text-[8px] md:text-[9px] font-black text-kickr hover:underline uppercase tracking-widest italic"
                                                 >
                                                     View Source ↗
                                                 </Link>
                                             </div>
-                                            <div className="text-[12px] text-white/80 leading-relaxed bg-white/[0.02] border border-white/5 p-4 rounded-sm italic">
+                                            <div className="text-[10px] md:text-[12px] text-white/80 leading-relaxed bg-white/[0.02] border border-white/5 p-3 md:p-4 rounded-sm italic">
                                                 {report.targetType === 'MATCH_REVIEW' ? 'Review content encrypted in external node...' : 'Target comment trace found...'}
-                                                <p className="mt-2 text-[10px] text-[#445566] non-italic font-medium">// ID: {report.targetId}</p>
+                                                <p className="mt-2 text-[8px] md:text-[10px] text-[#445566] non-italic font-medium">// ID: {report.targetId}</p>
                                             </div>
                                         </div>
 
                                         <div>
-                                            <p className="text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
-                                            <p className="text-[12px] text-[#99aabb] leading-relaxed bg-[#0a0b0d]/40 border border-white/5 p-4 rounded-sm italic h-full">
+                                            <p className="text-[8px] md:text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
+                                            <p className="text-[10px] md:text-[12px] text-[#99aabb] leading-relaxed bg-[#14181c]/40 border border-white/5 p-3 md:p-4 rounded-sm italic h-full">
                                                 "{report.description || 'No additional intelligence provided'}"
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-4 text-[10px] pt-4 border-t border-white/5">
-                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
+                                    <div className="flex items-center gap-3 md:gap-4 text-[9px] md:text-[10px] pt-3 md:pt-4 border-t border-white/5">
+                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[7px] md:text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
                                         <span className="text-[#445566]">●</span>
-                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
+                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[7px] md:text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
                                     </div>
                                 </div>
 
-                                <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
+                                <div className="flex flex-row sm:flex-col gap-2 w-full sm:w-auto">
                                     <button
                                         onClick={() => handleAction(report.id, 'RESOLVED')}
-                                        className="flex-1 sm:w-32 py-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-emerald-500/20 transition-all italic"
+                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-emerald-500/20 transition-all italic"
                                     >
                                         Resolve
                                     </button>
                                     <button
                                         onClick={() => handleAction(report.id, 'REJECTED')}
-                                        className="flex-1 sm:w-32 py-3 bg-white/5 border border-white/10 text-[#667788] text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
+                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-white/5 border border-white/10 text-[#667788] text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
                                     >
                                         Reject
                                     </button>
                                     <button
                                         onClick={() => reportService.deleteReport(report.id).then(loadReports)}
-                                        className="flex-1 sm:w-32 py-3 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-red-500/20 transition-all italic"
+                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-red-500/10 border border-red-500/20 text-red-500 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-red-500/20 transition-all italic"
                                     >
                                         Delete
                                     </button>
@@ -376,11 +376,11 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-[#14181c] border rounded-sm p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
-        <p className="text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-4">{label}</p>
+    <div className={`bg-[#14181c] border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
+        <p className="text-[8px] md:text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
         <div className="flex items-end justify-between">
-            <h3 className={`text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
-            {trend && <span className="text-emerald-500 text-[10px] font-black mb-1">{trend}</span>}
+            <h3 className={`text-2xl md:text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
+            {trend && <span className="text-emerald-500 text-[8px] md:text-[10px] font-black mb-1">{trend}</span>}
         </div>
     </div>
 );
@@ -389,13 +389,13 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
     const maxVal = Math.max(...data.map((d: any) => d.count), 1);
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-sm p-8 shadow-xl">
-            <div className="mb-10">
-                <h3 className="text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
-                <p className="text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
+        <div className="bg-[#14181c] border border-white/5 rounded-sm p-4 md:p-8 shadow-xl">
+            <div className="mb-6 md:mb-10">
+                <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
+                <p className="text-[8px] md:text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
             </div>
 
-            <div className="h-60 flex items-end gap-2 px-2">
+            <div className="h-48 md:h-60 flex items-end gap-1 md:gap-2 px-1 md:px-2">
                 {data.map((d: any, i: number) => (
                     <div key={i} className="flex-1 group relative">
                         <motion.div
@@ -404,20 +404,20 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
                             className="w-full rounded-t-sm transition-all duration-500 group-hover:opacity-80"
                             style={{ backgroundColor: color, opacity: 0.3 + (d.count / maxVal) * 0.7 }}
                         />
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white text-black text-[9px] font-black px-1.5 py-0.5 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white text-black text-[7px] md:text-[9px] font-black px-1.5 py-0.5 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
                             {d.count}
                         </div>
                     </div>
                 ))}
             </div>
             {data.length === 0 && (
-                <div className="h-60 flex items-center justify-center border border-dashed border-white/5 rounded-sm">
-                    <p className="text-[10px] text-[#445566] uppercase tracking-widest font-black">Data acquisition in progress...</p>
+                <div className="h-48 md:h-60 flex items-center justify-center border border-dashed border-white/5 rounded-sm">
+                    <p className="text-[8px] md:text-[10px] text-[#445566] uppercase tracking-widest font-black">Data acquisition in progress...</p>
                 </div>
             )}
-            <div className="mt-6 flex justify-between border-t border-white/5 pt-4">
-                <span className="text-[9px] font-black text-[#445566] uppercase tracking-widest">T-30 Days</span>
-                <span className="text-[9px] font-black text-[#445566] uppercase tracking-widest">Present</span>
+            <div className="mt-4 md:mt-6 flex justify-between border-t border-white/5 pt-3 md:pt-4">
+                <span className="text-[7px] md:text-[9px] font-black text-[#445566] uppercase tracking-widest">T-30 Days</span>
+                <span className="text-[7px] md:text-[9px] font-black text-[#445566] uppercase tracking-widest">Present</span>
             </div>
         </div>
     );
@@ -459,15 +459,15 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     };
 
     return (
-        <div className="bg-[#0a0b0d]/20 border border-white/5 rounded-sm p-6 hover:bg-white/[0.02] transition-all group">
-            <h3 className="text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
-            <p className="text-[11px] text-[#667788] font-medium mb-6 leading-relaxed">{description}</p>
+        <div className="bg-[#14181c]/20 border border-white/5 rounded-sm p-4 md:p-6 hover:bg-white/[0.02] transition-all group">
+            <h3 className="text-xs md:text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
+            <p className="text-[10px] md:text-[11px] text-[#667788] font-medium mb-4 md:mb-6 leading-relaxed">{description}</p>
             <div className="flex items-center justify-between">
-                <span className="text-[9px] text-[#445566] font-black uppercase tracking-widest">{estimatedTime}</span>
+                <span className="text-[8px] md:text-[9px] text-[#445566] font-black uppercase tracking-widest">{estimatedTime}</span>
                 <button
                     onClick={handleSync}
                     disabled={syncing}
-                    className={`py-2 px-5 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${warning
+                    className={`py-1.5 md:py-2 px-3 md:px-5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all ${warning
                         ? 'bg-orange-500/10 border border-orange-500/20 text-orange-500 hover:bg-orange-500/20'
                         : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                         }`}
