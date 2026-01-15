@@ -52,7 +52,7 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
     };
 
     return (
-        <div className="absolute top-full -right-2 w-[280px] sm:w-[500px] mt-2 bg-[#14181c] border border-white/10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.7)] overflow-hidden z-50 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
+        <div className="w-full sm:w-[500px] bg-[#14181c] border border-white/10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.7)] overflow-hidden max-h-[450px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
             {isLoading ? (
                 <div className="p-6 text-center">
                     <div className="flex flex-col items-center justify-center gap-3">

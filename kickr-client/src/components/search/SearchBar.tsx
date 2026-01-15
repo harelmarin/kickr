@@ -34,11 +34,11 @@ export const SearchBar = () => {
 
 
     return (
-        <div className="relative group transition-all duration-500" ref={containerRef}>
-            <div className="bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 rounded-sm flex items-center transition-all duration-300 h-7 sm:h-9 pr-2 overflow-hidden shadow-2xl">
-                <div className="pl-2.5 pr-1 sm:pr-2">
+        <div className="relative h-full flex items-center" ref={containerRef}>
+            <div className={`bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 rounded-sm flex items-center transition-all duration-300 h-7 md:h-9 pr-2 overflow-hidden shadow-2xl ${isOpen ? 'border-kickr/40 bg-white/[0.08]' : ''}`}>
+                <div className="pl-2.5 pr-1 md:pr-2">
                     <svg
-                        className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white/20 group-focus-within:text-kickr transition-colors"
+                        className={`w-3 h-3 md:w-3.5 md:h-3.5 transition-colors ${isOpen ? 'text-kickr' : 'text-white/20 group-hover:text-white/40'}`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -52,16 +52,18 @@ export const SearchBar = () => {
                     value={query}
                     onChange={handleInputChange}
                     onFocus={() => setIsOpen(true)}
-                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[10px] font-black uppercase tracking-[0.2em] text-white placeholder-white/10 py-0 w-8 focus:w-24 sm:w-40 sm:focus:w-72 transition-all duration-500 italic"
+                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[10px] font-black uppercase tracking-[0.2em] text-white placeholder-white/10 py-0 w-12 focus:w-28 sm:w-40 sm:focus:w-72 transition-all duration-500 italic"
                 />
             </div>
 
-            {isOpen && (
-                <SearchResults
-                    results={results}
-                    isLoading={isLoading}
-                    query={query}
-                />
+            {isOpen && query.trim() && (
+                <div className="fixed md:absolute top-[56px] md:top-[calc(100%+8px)] left-4 right-4 md:left-auto md:right-0 z-[100] md:z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <SearchResults
+                        results={results}
+                        isLoading={isLoading}
+                        query={query}
+                    />
+                </div>
             )}
         </div>
     );
