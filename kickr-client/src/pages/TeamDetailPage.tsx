@@ -108,23 +108,25 @@ export const TeamDetailPage = () => {
   if (isLoadingTeam || !team) return null;
 
   return (
-    <main className="min-h-screen bg-[#14181c]">
-      <div className="bg-[#14181c] border-b border-white/5 pt-20 pb-20 relative overflow-hidden">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.03] pointer-events-none">
+    <main className="min-h-screen bg-[#14181c] pb-24">
+      <div className="bg-[#14181c] border-b border-white/5 pt-10 pb-16 md:pt-20 md:pb-20 relative overflow-hidden">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] opacity-[0.03] pointer-events-none">
           <img src={team.logoUrl} className="w-full h-full object-contain" alt="" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 relative z-10 text-center md:text-left">
-          <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-[#14181c] rounded-sm shadow-2xl p-4 sm:p-8 border border-white/10 relative group flex-shrink-0">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 relative z-10 text-center md:text-left">
+          <div className="w-24 h-24 md:w-48 md:h-48 bg-[#14181c] rounded-sm shadow-2xl p-4 md:p-8 border border-white/10 relative group flex-shrink-0">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
-          <div className="flex-1 text-center md:text-left mb-2">
-            <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font">{team.name}</h1>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-6 text-balance">
-              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[10px] sm:text-xs">{team.competition?.country || 'France'}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2c3440] hidden sm:block"></span>
-              <span className="text-[#667788] uppercase tracking-[0.25em] font-bold text-[10px] sm:text-xs">{team.competition?.name || 'Club International'}</span>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-3xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font truncate">
+              {team.name}
+            </h1>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-6">
+              <span className="text-[#64748b] uppercase tracking-[0.2em] font-black text-[9px] md:text-xs italic">{team.competition?.country || 'France'}</span>
+              <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/10 px-0"></span>
+              <span className="text-[#64748b] uppercase tracking-[0.2em] font-black text-[9px] md:text-xs italic">{team.competition?.name || 'Club International'}</span>
             </div>
           </div>
 

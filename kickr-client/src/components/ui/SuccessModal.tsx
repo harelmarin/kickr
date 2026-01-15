@@ -22,7 +22,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({
 
     return (
         <div
-            className="fixed inset-0 bg-[#0a0b0d]/60 flex items-center justify-center z-50 backdrop-blur-sm"
+            className="fixed inset-0 bg-[#14181c]/60 flex items-center justify-center z-50 backdrop-blur-sm"
             onClick={onClose}
         >
             <div

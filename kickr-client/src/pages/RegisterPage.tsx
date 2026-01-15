@@ -55,7 +55,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <main className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-52px)] md:h-[calc(100vh-64px)] bg-[#14181c] overflow-hidden">
+        <main className="flex-1 flex flex-col lg:flex-row min-h-[calc(100vh-52px)] md:h-[calc(100vh-64px)] bg-[#14181c] overflow-hidden">
 
             {/* Visual / Marketing Side (Left) */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 border-r border-white/5">
@@ -92,20 +92,34 @@ export const RegisterPage = () => {
             </div>
 
             {/* Form Side (Right) */}
-            <div className="flex-1 flex items-center justify-center p-6 md:p-12 lg:p-16 relative overflow-hidden overflow-y-auto">
+            <div className="flex-1 flex items-start lg:items-center justify-center p-4 md:p-12 lg:p-16 relative overflow-hidden overflow-y-auto">
                 {/* Mobile-only background elements */}
-                <div className="lg:hidden absolute inset-0 -z-10 bg-gradient-to-b from-kickr/10 to-transparent opacity-50"></div>
+                <div className="lg:hidden absolute inset-0 -z-10 bg-[#14181c]">
+                    <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-kickr/20 to-transparent"></div>
+                    <div className="absolute inset-0 pitch-pattern opacity-[0.03]"></div>
+                </div>
 
-                <div className="w-full max-w-md animate-fade-in-up">
-                    <div className="lg:hidden text-center mb-6">
-                        <Link to="/" className="inline-flex items-center gap-2 mb-2">
-                            <span className="text-xl font-black font-display tracking-tighter text-white">KICKR</span>
+                <div className="w-full max-w-md animate-fade-in-up mt-4 md:mt-8 lg:mt-0 relative z-10 px-4 lg:px-0">
+                    <div className="lg:hidden mb-8 relative">
+                        {/* Background stylized text */}
+                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-8xl font-black text-white/[0.02] select-none pointer-events-none tracking-tighter italic uppercase display-font">
+                            KICKR
+                        </div>
+
+                        <Link to="/" className="flex flex-col items-center gap-2 text-center relative z-10">
+                            <img src="/favicon.png" alt="Kickr" className="w-12 h-12 md:w-14 md:h-14 mb-2 drop-shadow-[0_0_15px_rgba(68,102,255,0.3)]" />
+                            <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase display-font text-white leading-none">
+                                KICKR<span className="text-kickr">.</span><span className="hidden md:inline">AI</span>
+                            </h1>
+                            <p className="hidden md:block text-[11px] font-black text-kickr/60 uppercase tracking-[0.5em] italic mt-2 font-mono">
+                                Tactical Intelligence Link
+                            </p>
                         </Link>
                     </div>
 
                     <div className="mb-6">
-                        <h2 className="text-2xl font-black text-white tracking-tight mb-1">Join the Tacticians</h2>
-                        <p className="text-[#667788] text-[11px] font-medium">Create your credentials and start analyzing.</p>
+                        <h2 className="text-2xl font-black text-white tracking-tight mb-1 italic uppercase display-font">ACCESS ENROLLMENT</h2>
+                        <p className="text-[#667788] text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure analyst identifier.</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

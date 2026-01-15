@@ -77,7 +77,7 @@ export const UserDiaryPage = () => {
                                         ) : (
                                             user?.name[0].toUpperCase()
                                         )}
-                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/link:opacity-100 transition-opacity bg-[#0a0b0d]/40">
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/link:opacity-100 transition-opacity bg-[#14181c]/40">
                                             <span className="text-[10px] font-black text-white uppercase tracking-widest">Edit</span>
                                         </div>
                                     </Link>

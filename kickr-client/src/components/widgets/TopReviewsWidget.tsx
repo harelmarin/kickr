@@ -34,7 +34,7 @@ export const TopReviewsWidget = () => {
                                 <span className="text-[9px] font-black text-kickr ml-auto italic">{review.note.toFixed(1)}</span>
                             </div>
 
-                            <div className="bg-[#0a0b0d]/20 border border-white/5 p-3 rounded-sm group-hover:border-kickr/20 transition-all relative z-10 pointer-events-none">
+                            <div className="bg-[#14181c]/20 border border-white/5 p-3 rounded-sm group-hover:border-kickr/20 transition-all relative z-10 pointer-events-none">
                                 <div className="flex items-center gap-3 mb-2">
                                     <div className="flex -space-x-1.5">
                                         <img src={review.match.homeLogo} className="w-5 h-5 object-contain z-10" alt="" />

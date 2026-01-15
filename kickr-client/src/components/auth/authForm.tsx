@@ -56,7 +56,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     };
 
     return (
-        <div className="w-[300px] bg-[#14181c] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="w-full sm:w-[350px] bg-[#14181c] border-x border-b sm:border border-white/10 rounded-b-sm sm:rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
             <AnimatePresence mode="wait">
                 {!isForgot ? (
@@ -66,11 +66,11 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         onSubmit={handleSubmit(onSubmit)}
-                        className="p-8 flex flex-col gap-6"
+                        className="p-6 sm:p-8 flex flex-col gap-6"
                     >
                         <div>
-                            <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">Kickr Access</h3>
-                            <p className="text-white text-xl font-black tracking-tighter italic uppercase leading-none">Authorization</p>
+                            <h3 className="text-[9px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">Kickr Access</h3>
+                            <p className="text-white text-2xl font-black tracking-tighter italic uppercase leading-none display-font">Authorization</p>
                         </div>
 
                         <div className="space-y-4">
@@ -234,12 +234,12 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="p-10 flex flex-col gap-8 bg-[#14181c] border border-white/10 rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full sm:w-[450px] p-6 sm:p-10 flex flex-col gap-8 bg-[#14181c] border-x border-b sm:border border-white/10 rounded-b-sm sm:rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
 
             <div className="mb-4">
-                <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">System Enrollment</h3>
-                <p className="text-white text-2xl font-black tracking-tighter italic uppercase leading-none">New Tactician</p>
+                <h3 className="text-[9px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">System Enrollment</h3>
+                <p className="text-white text-3xl font-black tracking-tighter italic uppercase leading-none display-font">New Tactician</p>
             </div>
 
             <div className="flex flex-col gap-6">

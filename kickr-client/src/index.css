@@ -42,6 +42,28 @@
     -moz-osx-font-smoothing: grayscale;
     background: var(--color-bg-primary);
     color: var(--text-main);
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    /* Prevents pull-to-refresh on mobile if content is scrollable */
+    position: relative;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    height: -webkit-fill-available;
+    background: var(--color-bg-primary);
+  }
+
+  /* PWA Scroll Lock */
+  .no-scroll {
+    overflow: hidden;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
   }
 
   code {

@@ -128,7 +128,7 @@ export const MatchDetailPage = () => {
               {/* Home Team: Logo -> Name */}
               <div className="flex items-center justify-center md:justify-end gap-6 min-w-0 group/home">
                 <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
-                  <div className="p-3 rounded-sm bg-[#0a0b0d]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
+                  <div className="p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
                     <img src={match.homeLogo} alt={match.homeTeam} className="w-14 h-14 md:w-20 md:h-20 object-contain" />
                   </div>
                 </Link>
@@ -144,7 +144,7 @@ export const MatchDetailPage = () => {
 
               {/* Score / VS Center - FIXED BADGE */}
               <div className="flex flex-col items-center justify-center px-4 md:px-12">
-                <div className="bg-[#0a0b0d]/60 border border-white/10 px-6 py-4 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
+                <div className="bg-[#14181c]/60 border border-white/10 px-6 py-4 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
                   <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {isPast ? (
                     <div className="flex items-center gap-4 md:gap-8 tabular-nums relative z-10">
@@ -167,7 +167,7 @@ export const MatchDetailPage = () => {
               {/* Away Team: Name <- Logo */}
               <div className="flex flex-row-reverse items-center justify-center md:justify-end gap-6 min-w-0 group/away">
                 <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
-                  <div className="p-3 rounded-sm bg-[#0a0b0d]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
+                  <div className="p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
                     <img src={match.awayLogo} alt={match.awayTeam} className="w-14 h-14 md:w-20 md:h-20 object-contain" />
                   </div>
                 </Link>
@@ -188,7 +188,7 @@ export const MatchDetailPage = () => {
               <div className="flex flex-col">
                 <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-3 italic">Theater</span>
                 <Link to={match.competitionId ? `/competitions/${match.competitionId}` : '#'} className="flex items-center gap-4 group">
-                  <div className="w-8 h-8 rounded-sm bg-[#0a0b0d]/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
+                  <div className="w-8 h-8 rounded-sm bg-[#14181c]/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
                     <img src={match.competitionLogo} alt={match.competition} className="w-5 h-5 object-contain" />
                   </div>
                   <span className="text-white font-black uppercase italic text-xs tracking-widest group-hover:text-kickr transition-colors">
@@ -433,7 +433,7 @@ export const MatchDetailPage = () => {
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                     placeholder="Write your thoughts on the match..."
-                    className="w-full bg-[#0a0b0d]/40 border border-white/5 rounded-sm p-4 text-[13px] text-white/90 placeholder-white/5 focus:outline-none focus:border-kickr/20 h-44 transition-all resize-none italic font-medium leading-relaxed"
+                    className="w-full bg-[#14181c]/40 border border-white/5 rounded-sm p-4 text-[13px] text-white/90 placeholder-white/5 focus:outline-none focus:border-kickr/20 h-44 transition-all resize-none italic font-medium leading-relaxed"
                   />
                 </div>
 
@@ -458,7 +458,7 @@ export const MatchDetailPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#0a0b0d]/80 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#14181c]/80 backdrop-blur-md"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
@@ -772,14 +772,14 @@ const renderTacticalPlayers = (players: any[]) => {
         {rowPlayers.map((p: any) => (
           <div key={p.player.id} className="flex flex-col items-center gap-1.5 group/player w-16">
             <div className="relative">
-              <div className="w-9 h-9 rounded-full bg-[#0a0b0d]/60 border-2 border-kickr flex items-center justify-center group-hover/player:scale-110 group-hover/player:bg-kickr transition-all duration-300">
+              <div className="w-9 h-9 rounded-full bg-[#14181c]/60 border-2 border-kickr flex items-center justify-center group-hover/player:scale-110 group-hover/player:bg-kickr transition-all duration-300">
                 <span className="text-[11px] font-black text-white flex items-center justify-center leading-none group-hover/player:text-[#14181c] tabular-nums">
                   {p.player.number}
                 </span>
               </div>
             </div>
             <div className="w-full text-center">
-              <span className="text-[9px] font-bold text-white whitespace-nowrap uppercase tracking-tighter bg-[#0a0b0d]/40 px-1.5 py-0.5 rounded-sm backdrop-blur-md group-hover/player:bg-white group-hover/player:text-black transition-colors inline-block">
+              <span className="text-[9px] font-bold text-white whitespace-nowrap uppercase tracking-tighter bg-[#14181c]/40 px-1.5 py-0.5 rounded-sm backdrop-blur-md group-hover/player:bg-white group-hover/player:text-black transition-colors inline-block">
                 {p.player.name.split(' ').pop()}
               </span>
             </div>

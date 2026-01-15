@@ -9,6 +9,7 @@ export interface User {
     followingCount: number;
     matchesCount: number;
     avatarUrl?: string;
+    verified?: boolean;
 }
 
 export interface PageResponse<T> {

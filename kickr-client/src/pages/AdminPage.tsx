@@ -175,12 +175,12 @@ const UsersTab = () => {
                     placeholder="Search systems..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-[#0a0b0d]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
+                    className="bg-[#14181c]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
                 />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead className="bg-[#0a0b0d]/10 text-[#445566] text-[10px] font-black uppercase tracking-[0.2em]">
+                    <thead className="bg-[#14181c]/10 text-[#445566] text-[10px] font-black uppercase tracking-[0.2em]">
                         <tr>
                             <th className="px-6 py-4">User</th>
                             <th className="px-6 py-4">Status</th>
@@ -234,7 +234,7 @@ const UsersTab = () => {
 
             {/* Pagination */}
             {pageData && pageData.totalPages > 1 && (
-                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#0a0b0d]/10">
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#14181c]/10">
                     <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
                         Page {pageData.number + 1} / {pageData.totalPages}
                     </div>
@@ -331,7 +331,7 @@ const ReportsTab = () => {
 
                                         <div>
                                             <p className="text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
-                                            <p className="text-[12px] text-[#99aabb] leading-relaxed bg-[#0a0b0d]/40 border border-white/5 p-4 rounded-sm italic h-full">
+                                            <p className="text-[12px] text-[#99aabb] leading-relaxed bg-[#14181c]/40 border border-white/5 p-4 rounded-sm italic h-full">
                                                 "{report.description || 'No additional intelligence provided'}"
                                             </p>
                                         </div>
@@ -459,7 +459,7 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     };
 
     return (
-        <div className="bg-[#0a0b0d]/20 border border-white/5 rounded-sm p-6 hover:bg-white/[0.02] transition-all group">
+        <div className="bg-[#14181c]/20 border border-white/5 rounded-sm p-6 hover:bg-white/[0.02] transition-all group">
             <h3 className="text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
             <p className="text-[11px] text-[#667788] font-medium mb-6 leading-relaxed">{description}</p>
             <div className="flex items-center justify-between">

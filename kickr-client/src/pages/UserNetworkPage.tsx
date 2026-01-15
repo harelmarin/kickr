@@ -47,7 +47,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                             </p>
                         </div>
 
-                        <nav className="flex items-center gap-2 bg-[#0a0b0d]/20 p-1 rounded-sm border border-white/5">
+                        <nav className="flex items-center gap-2 bg-[#14181c]/20 p-1 rounded-sm border border-white/5">
                             <Link
                                 to={`/user/${id}/following`}
                                 className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-black' : 'text-white/40 hover:text-white'}`}
@@ -164,7 +164,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                 )}
 
                 <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-sm bg-[#0a0b0d]/40 border border-white/5 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
+                    <div className="w-14 h-14 rounded-sm bg-[#14181c]/40 border border-white/5 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
                         {user.avatarUrl ? (
                             <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                         ) : (

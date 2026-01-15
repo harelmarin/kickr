@@ -52,7 +52,7 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
     };
 
     return (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[#14181c] border border-white/10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.7)] overflow-hidden z-50 max-h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
+        <div className="absolute top-full -right-2 w-[280px] sm:w-[500px] mt-2 bg-[#14181c] border border-white/10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.7)] overflow-hidden z-50 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
             {isLoading ? (
                 <div className="p-6 text-center">
                     <div className="flex flex-col items-center justify-center gap-3">
@@ -80,7 +80,7 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
                             {/* Image or Icon */}
                             <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 relative">
                                 <div className="absolute inset-0 bg-white/5 rounded-sm p-[1px]">
-                                    <div className="w-full h-full bg-[#0a0b0d] rounded-sm overflow-hidden flex items-center justify-center">
+                                    <div className="w-full h-full bg-[#14181c] rounded-sm overflow-hidden flex items-center justify-center">
                                         {result.imageUrl ? (
                                             <img
                                                 src={result.imageUrl}
