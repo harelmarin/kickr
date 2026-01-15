@@ -68,22 +68,22 @@ export const UserMatchesPage = () => {
     }).sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime());
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-10 pb-24 md:py-20 px-4 md:px-6">
+        <main className="min-h-screen bg-[#14181c] pt-12 pb-16 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
 
                 <motion.header
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-10 md:mb-20"
+                    className="mb-8 md:mb-20"
                 >
-                    <div className="flex items-center gap-4 mb-4">
+                    <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-8">
                         {isOwnProfile ? (
                             <Link
                                 to="/settings"
-                                className="relative group/avatar w-10 h-10 rounded-sm overflow-hidden shadow-lg transition-transform hover:scale-110 flex-shrink-0"
+                                className="relative group/avatar w-8 h-8 md:w-10 md:h-10 rounded-sm overflow-hidden shadow-lg transition-transform hover:scale-110 flex-shrink-0"
                                 title="Change Profile Picture"
                             >
-                                <div className="w-full h-full bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black italic">
+                                <div className="w-full h-full bg-white/5 border border-white/5 flex items-center justify-center text-kickr font-black italic">
                                     {user?.avatarUrl ? (
                                         <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover group-hover/avatar:opacity-40 transition-opacity" />
                                     ) : (
@@ -91,11 +91,11 @@ export const UserMatchesPage = () => {
                                     )}
                                 </div>
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/40">
-                                    <span className="text-[8px] font-black text-white uppercase tracking-widest italic">Edit</span>
+                                    <span className="text-[6px] md:text-[8px] font-black text-white uppercase tracking-widest italic">Edit</span>
                                 </div>
                             </Link>
                         ) : (
-                            <Link to={`/user/${id}`} className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-kickr font-black flex-shrink-0 overflow-hidden shadow-lg italic">
+                            <Link to={`/user/${id}`} className="w-8 h-8 md:w-10 md:h-10 rounded-sm bg-white/5 border border-white/5 flex items-center justify-center text-kickr font-black flex-shrink-0 overflow-hidden shadow-lg italic">
                                 {user?.avatarUrl ? (
                                     <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                                 ) : (
@@ -104,25 +104,25 @@ export const UserMatchesPage = () => {
                             </Link>
                         )}
                         <div className="min-w-0">
-                            <h1 className="text-3xl md:text-6xl font-black text-white italic tracking-tighter uppercase display-font truncate leading-tight">
+                            <h1 className="text-2xl md:text-6xl font-black text-white italic tracking-tighter uppercase display-font truncate leading-tight">
                                 Tactical <span className="text-kickr">Diary</span>
                             </h1>
-                            <p className="text-[#667788] uppercase tracking-[0.2em] text-[8px] md:text-[11px] font-bold mt-0.5 truncate">
+                            <p className="text-white/20 uppercase tracking-[0.2em] text-[7px] md:text-[11px] font-black mt-0.5 truncate italic">
                                 {pageData?.totalElements || 0} Observations // {user?.name}
                             </p>
                         </div>
                     </div>
 
-                    <div className="mt-6 md:mt-12 border border-white/5 bg-white/[0.01] p-3 md:p-6 rounded-sm">
-                        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-x-10 w-full">
+                    <div className="mt-6 md:mt-12 border border-white/5 bg-white/[0.01] p-2.5 md:p-6 rounded-sm">
+                        <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-x-10 w-full">
                             <div className="relative flex-1">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs opacity-20 italic">🔍</span>
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] opacity-10 italic">🔍</span>
                                 <input
                                     type="text"
                                     placeholder="SCAN DIARY..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm pl-9 pr-4 py-2 text-[10px] md:text-[11px] font-black text-white placeholder-white/10 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
+                                    className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-8 pr-4 py-1.5 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                                 />
                             </div>
 
@@ -130,20 +130,20 @@ export const UserMatchesPage = () => {
                                 <select
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value as any)}
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm pl-3 pr-8 py-2 text-[10px] font-black text-white/40 focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.05] transition-all italic"
+                                    className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-3 pr-8 py-1.5 text-[9px] font-black text-white/20 focus:text-white focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.03] transition-all italic"
                                 >
                                     <option value="all" className="bg-[#14181c]">ALL STATUS</option>
                                     <option value="finished" className="bg-[#14181c]">COMPLETED</option>
                                     <option value="upcoming" className="bg-[#14181c]">PROJECTED</option>
                                 </select>
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[8px] text-white/10 italic">▼</div>
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-white/10 italic">▼</div>
                             </div>
 
                             <div className="relative w-full md:w-48">
                                 <select
                                     value={minRating}
                                     onChange={(e) => setMinRating(Number(e.target.value))}
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-sm pl-3 pr-8 py-2 text-[10px] font-black text-white/40 focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.05] transition-all italic"
+                                    className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-3 pr-8 py-1.5 text-[9px] font-black text-white/20 focus:text-white focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.03] transition-all italic"
                                 >
                                     <option value="0" className="bg-[#14181c]">UNFILTERED</option>
                                     <option value="1" className="bg-[#14181c]">1+ STAR</option>
@@ -152,13 +152,13 @@ export const UserMatchesPage = () => {
                                     <option value="4" className="bg-[#14181c]">4+ STARS</option>
                                     <option value="5" className="bg-[#14181c]">ELITE CLASS</option>
                                 </select>
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[8px] text-white/10 italic">▼</div>
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-white/10 italic">▼</div>
                             </div>
                         </div>
                     </div>
                 </motion.header>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 md:gap-x-10 gap-y-8 md:gap-y-12">
                     {isLoading ? (
                         Array.from({ length: 9 }).map((_, i) => (
                             <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
@@ -176,23 +176,23 @@ export const UserMatchesPage = () => {
                                 >
                                     <MatchCard match={review.match as any} variant="poster" />
 
-                                    <div className="px-1 flex flex-col gap-3">
+                                    <div className="px-1 flex flex-col gap-2">
                                         <div className="flex items-center justify-between">
-                                            <div className="flex text-kickr text-[10px]">
+                                            <div className="flex text-kickr text-[8px] md:text-[10px] tabular-nums">
                                                 {'★'.repeat(Math.round(review.note))}
                                                 <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
                                             </div>
                                             {review.isLiked && (
-                                                <span className="text-[#ff8000] text-xs">❤</span>
+                                                <span className="text-[#ff8000] text-[10px] md:text-xs italic">PRIME</span>
                                             )}
                                         </div>
 
                                         {review.comment && review.comment.trim() !== "" && (
                                             <Link
                                                 to={`/reviews/${review.id}`}
-                                                className="block text-[#667788] text-[11px] italic leading-relaxed line-clamp-2 pl-3 border-l border-kickr/20 hover:text-white hover:border-kickr/50 transition-all"
+                                                className="block text-white/20 text-[9px] md:text-[11px] italic leading-relaxed line-clamp-1 pl-2.5 border-l border-kickr/10 hover:text-white hover:border-kickr/30 transition-all uppercase font-medium"
                                             >
-                                                "{review.comment}"
+                                                {review.comment}
                                             </Link>
                                         )}
                                     </div>
@@ -204,25 +204,25 @@ export const UserMatchesPage = () => {
 
                 {/* Pagination Controls */}
                 {!isLoading && pageData && pageData.totalPages > 1 && (
-                    <div className="mt-16 flex items-center justify-center gap-4">
+                    <div className="mt-12 md:mt-16 flex items-center justify-center gap-3 md:gap-4">
                         <button
                             onClick={() => {
                                 setCurrentPage(prev => Math.max(0, prev - 1));
                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                             }}
                             disabled={pageData.first}
-                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            className="px-4 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-white hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
                         >
-                            Previous
+                            Prev
                         </button>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 md:gap-2">
                             {[...Array(pageData.totalPages)].map((_, i) => {
                                 if (pageData.totalPages > 5) {
                                     if (i < currentPage - 2 && i !== 0) return null;
                                     if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                    if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-[#334455]">...</span>;
-                                    if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-[#334455]">...</span>;
+                                    if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-white/5 text-[8px]">...</span>;
+                                    if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-white/5 text-[8px]">...</span>;
                                 }
 
                                 return (
@@ -232,9 +232,9 @@ export const UserMatchesPage = () => {
                                             setCurrentPage(i);
                                             window.scrollTo({ top: 300, behavior: 'smooth' });
                                         }}
-                                        className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-sm text-[8px] md:text-[10px] font-black transition-all cursor-pointer tabular-nums ${currentPage === i
                                             ? 'bg-kickr text-black'
-                                            : 'bg-white/[0.02] border border-white/5 text-[#445566] hover:text-white hover:border-white/10'
+                                            : 'bg-white/[0.01] border border-white/5 text-white/10 hover:text-white hover:border-white/10'
                                             }`}
                                     >
                                         {i + 1}
@@ -249,7 +249,7 @@ export const UserMatchesPage = () => {
                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                             }}
                             disabled={pageData.last}
-                            className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white hover:border-kickr/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                            className="px-4 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-white hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
                         >
                             Next
                         </button>

@@ -16,29 +16,29 @@ export const FriendsFeedPage = () => {
     const reviews = pageData?.content || [];
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-6">
-                <header className="mb-16">
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="h-[2px] w-6 bg-kickr" />
-                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] italic">Tactical Intelligence</span>
+        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-16 md:pb-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-6">
+                <header className="mb-8 md:mb-16">
+                    <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                        <div className="h-[1px] md:h-[2px] w-4 md:w-6 bg-kickr/40" />
+                        <span className="text-[8px] md:text-[10px] font-black text-kickr/60 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Intelligence Stream</span>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-black text-white mb-4 italic tracking-tighter uppercase">
-                        Network <span className="text-kickr">Feed</span>
+                    <h1 className="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 italic tracking-tighter uppercase leading-none">
+                        Network <span className="text-kickr/60">Feed</span>
                     </h1>
-                    <p className="text-white/40 uppercase tracking-[0.25em] text-[11px] font-bold">
-                        Analyze recent observations gathered from your network of tacticians.
+                    <p className="text-white/20 uppercase tracking-[0.2em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
+                        Real-time tactical observations from your operative network.
                     </p>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                     {/* Main Content */}
                     <div className="lg:col-span-8">
-                        <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">Intelligence Log</h2>
-                            <div className="flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 rounded-full bg-kickr animate-pulse"></div>
-                                <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">Live Updates</span>
+                        <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2">
+                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/20 italic">Intelligence Log</h2>
+                            <div className="flex items-center gap-1.5 md:gap-2">
+                                <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-kickr animate-pulse opacity-50"></div>
+                                <span className="text-[7px] md:text-[9px] font-black text-white/10 uppercase tracking-widest italic leading-none">SYNCED</span>
                             </div>
                         </div>
 
@@ -75,22 +75,22 @@ export const FriendsFeedPage = () => {
 
                         {/* Pagination */}
                         {!isLoading && pageData && pageData.totalPages > 1 && (
-                            <div className="mt-8 flex items-center justify-center gap-8 border-t border-white/5 pt-6">
+                            <div className="mt-8 flex items-center justify-center gap-4 md:gap-8 border-t border-white/5 pt-6">
                                 <button
                                     onClick={() => {
                                         setCurrentPage(prev => Math.max(0, prev - 1));
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
+                                    className="group flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
                                 >
-                                    <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
-                                    Prev
+                                    <span className="text-sm md:text-lg group-hover:-translate-x-1 transition-transform mb-0.5">←</span>
+                                    PREV
                                 </button>
 
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                                        Page <span className="text-white">{currentPage + 1}</span> of {pageData.totalPages}
+                                    <span className="text-[8px] md:text-[10px] font-black text-white/10 uppercase tracking-widest italic tabular-nums">
+                                        PAGE <span className="text-white/40">{currentPage + 1}</span> / {pageData.totalPages}
                                     </span>
                                 </div>
 
@@ -100,17 +100,17 @@ export const FriendsFeedPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
+                                    className="group flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
                                 >
-                                    Next
-                                    <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                                    NEXT
+                                    <span className="text-sm md:text-lg group-hover:translate-x-1 transition-transform mb-0.5">→</span>
                                 </button>
                             </div>
                         )}
                     </div>
 
                     {/* Sidebar */}
-                    <div className="lg:col-span-4 space-y-8">
+                    <div className="lg:col-span-4 space-y-6 md:space-y-8">
                         <TopTeamsWidget />
                         <TopReviewsWidget />
                     </div>

@@ -44,41 +44,41 @@ export const MatchesPage = () => {
   if (isError) return <ErrorState />;
 
   return (
-    <main className="min-h-screen bg-[#14181c] pt-20 md:pt-32 pb-24 md:pb-20 px-4 md:px-6">
+    <main className="min-h-screen bg-[#14181c] pt-20 pb-16 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         <header className="mb-6 md:mb-16">
-          <div className="flex items-center gap-3 mb-2 md:mb-4">
-            <div className="h-[1px] w-6 bg-kickr opacity-50" />
-            <span className="text-[8px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Fixtures</span>
+          <div className="flex items-center gap-2 md:gap-3 mb-1.5 md:mb-4">
+            <div className="h-[1px] w-4 md:w-6 bg-kickr/40" />
+            <span className="text-[7px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Intelligence Feed</span>
           </div>
-          <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-2 italic tracking-tighter uppercase display-font leading-none">
+          <h1 className="text-xl md:text-6xl font-black text-white mb-0.5 md:mb-2 italic tracking-tighter uppercase display-font leading-none">
             Center <span className="text-kickr">Circle</span>
           </h1>
-          <p className="text-white/40 uppercase tracking-[0.2em] text-[7px] md:text-[11px] font-bold">
-            Live Global Matchday Data Hub
+          <p className="text-white/20 uppercase tracking-[0.2em] text-[6px] md:text-[11px] font-black italic">
+            Global Data Hub
           </p>
 
           <div className="mt-4 md:mt-12">
-            <div className="flex items-end justify-between border-b border-white/5 pb-4 gap-4">
+            <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">
               <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                 {/* Search */}
                 <div className="flex flex-col gap-1 w-full md:w-48">
-                  <span className="text-[7px] uppercase font-black text-white/20 tracking-[1.5px] pl-0.5">Team Scan</span>
+                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Team Scan</span>
                   <div className="relative">
-                    <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[9px] opacity-20 italic">🔍</span>
+                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                     <input
                       type="text"
                       placeholder="SCAN..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-white/[0.02] border border-white/5 rounded-sm pl-7 pr-3 py-1.5 text-[10px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                     />
                   </div>
                 </div>
 
                 {/* League Filter */}
                 <div className="flex flex-col gap-1 w-full md:w-40">
-                  <span className="text-[7px] uppercase font-black text-white/20 tracking-[1.5px] pl-0.5">Sector</span>
+                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Sector</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -86,24 +86,24 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-white/[0.02] border border-white/5 rounded-sm pl-2.5 pr-6 py-1.5 text-[10px] font-black text-white/40 focus:text-white focus:border-kickr/40 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.05] transition-all italic"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-[9px] font-black text-white/20 focus:text-white focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.03] transition-all italic"
                     >
                       <option value="" className="bg-[#14181c]">ALL</option>
                       {competitions?.map(c => (
                         <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
                       ))}
                     </select>
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-white/10 italic">▼</div>
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[6px] text-white/10 italic">▼</div>
                   </div>
                 </div>
 
                 {/* Status Filter */}
-                <div className="flex bg-white/[0.02] p-0.5 rounded-sm border border-white/5 w-full md:w-auto h-8">
+                <div className="flex bg-white/[0.01] p-0.5 rounded-sm border border-white/5 w-full md:w-auto h-7 md:h-8">
                   {['all', 'upcoming', 'finished'].map((s) => (
                     <button
                       key={s}
                       onClick={() => { setStatus(s as any); setPage(0); }}
-                      className={`px-3 flex items-center rounded-sm text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-white/20 hover:text-white/40'}`}
+                      className={`px-2 md:px-3 flex items-center rounded-sm text-[6px] md:text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-white/10 hover:text-white/20'}`}
                     >
                       {s}
                     </button>
@@ -114,11 +114,12 @@ export const MatchesPage = () => {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
           {/* Main Content */}
           <div className="lg:col-span-8">
-            <div className="flex items-center gap-3 mb-8">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic">Match Feed</h2>
+            <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
+              <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">Match Feed</h2>
+              <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-widest italic font-mono">STATUS: ACTIVE</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
@@ -156,22 +157,22 @@ export const MatchesPage = () => {
 
             {/* Pagination */}
             {!isLoading && data && data.totalPages > 1 && (
-              <div className="mt-8 flex items-center justify-center gap-8 border-t border-white/5 pt-6">
+              <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4 md:pt-6">
                 <button
                   onClick={() => {
                     setPage(p => Math.max(0, p - 1));
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
-                  className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
                 >
-                  <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
-                  Prev
+                  <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
+                  PREV
                 </button>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                    Page <span className="text-white">{page + 1}</span> of {data.totalPages}
+                  <span className="text-[8px] md:text-[10px] font-black text-white/10 uppercase tracking-widest italic tabular-nums font-mono">
+                    PAGE {page + 1} / {data.totalPages}
                   </span>
                 </div>
 
@@ -181,17 +182,17 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
-                  className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 disabled:opacity-20 hover:text-white transition-all"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
                 >
-                  Next
-                  <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                  NEXT
+                  <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
                 </button>
               </div>
             )}
           </div>
 
           {/* Sidebar - Adapted for Mobile (Bottom placement) */}
-          <div className="lg:col-span-4 space-y-8 mt-12 lg:mt-0">
+          <div className="lg:col-span-4 space-y-6 md:space-y-8 mt-12 lg:mt-0">
             <TopTeamsWidget />
             <TopReviewsWidget />
           </div>

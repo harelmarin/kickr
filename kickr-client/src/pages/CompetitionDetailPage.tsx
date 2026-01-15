@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCompetition } from '../hooks/useCompetitions';
-import { useTeamsByCompetition } from '../hooks/useTeams';
 import { useSearchMatches } from '../hooks/useNextMatches';
 import { LeagueStandings } from '../components/tournament/LeagueStandings';
-import { MatchCard } from '../components/matches/MatchCard';
+import { CompactMatchCard } from '../components/matches/CompactMatchCard';
 import { useAuth } from '../hooks/useAuth';
 import axiosInstance from '../services/axios';
 import toast from 'react-hot-toast';
@@ -12,13 +11,12 @@ import toast from 'react-hot-toast';
 export const CompetitionDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [matchPage, setMatchPage] = useState(0);
-  const MATCHES_PER_PAGE = 10;
+  const MATCHES_PER_PAGE = 5;
   const { user } = useAuth();
   const isAdmin = user?.role === 'ADMIN';
   const [isSyncing, setIsSyncing] = useState(false);
 
   const { data: competition, isLoading: isLoadingComp } = useCompetition(id!);
-  const { data: teamsData } = useTeamsByCompetition(id!, 0, 1);
 
   const [showFinished, setShowFinished] = useState(false);
   const { data: timelineData, isLoading: isLoadingMatches } = useSearchMatches({
@@ -90,22 +88,26 @@ export const CompetitionDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#14181c]">
-      <div className="bg-white/[0.02] border-b border-white/5 py-24">
-        <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-          <div className="w-32 h-32 bg-white/[0.02] rounded-sm p-6 border border-white/5">
-            <img src={competition.logoUrl} alt={competition.name} className="w-full h-full object-contain" />
+      <div className="bg-white/[0.02] border-b border-white/5 pt-20 pb-6 md:py-24 relative overflow-hidden">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] opacity-[0.02] pointer-events-none">
+          <img src={competition.logoUrl} className="w-full h-full object-contain" alt="" />
+        </div>
+
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-3 md:gap-12 relative z-10">
+          <div className="w-16 h-16 md:w-32 md:h-32 bg-[#14181c] rounded-sm p-3 md:p-6 border border-white/10 shadow-2xl flex-shrink-0">
+            <img src={competition.logoUrl} alt={competition.name} className="w-full h-full object-contain filter drop-shadow-xl" />
           </div>
 
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-5xl md:text-8xl font-black text-white/90 mb-4 tracking-tighter leading-none uppercase italic">{competition.name}</h1>
-            <p className="text-white/40 uppercase tracking-[0.25em] font-bold text-[11px]">
-              Official {competition.country || 'International'} {isTournament ? 'Tournament' : 'League'} Page
-            </p>
-
-            <div className="flex items-center justify-center md:justify-start gap-8 mt-8">
-              <CompStat label="Teams" value={teamsData?.totalElements || 0} />
+          <div className="flex-1 text-center md:text-left min-w-0">
+            <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 mb-1 md:mb-4">
+              <div className="h-[1px] w-4 md:w-6 bg-kickr opacity-50"></div>
+              <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Theater of Operations</span>
+            </div>
+            <h1 className="text-xl md:text-6xl xl:text-8xl font-black text-white/90 mb-1 md:mb-4 tracking-tighter leading-none uppercase italic truncate">{competition.name}</h1>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-8">
+              <CompStat label="Theater" value={competition.country || 'Global'} />
               <CompStat label="Format" value={competition.type || (isTournament ? 'CUP' : 'LEAGUE')} />
-              <CompStat label="Season" value="2025/26" />
+              <CompStat label="ID" value={competition.externalId || 'AUTH'} />
             </div>
           </div>
 
@@ -123,26 +125,26 @@ export const CompetitionDetailPage = () => {
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 py-20">
-        <div className={`grid grid-cols-1 ${!isTournament ? 'lg:grid-cols-12 gap-20' : 'max-w-4xl mx-auto'}`}>
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-10 md:py-20">
+        <div className={`grid grid-cols-1 ${!isTournament ? 'lg:grid-cols-12 gap-8 md:gap-20' : 'max-w-4xl mx-auto'}`}>
 
           {!isTournament && (
-            <div className="lg:col-span-8 space-y-8">
-              <header className="flex items-center justify-between border-b border-white/5 pb-4">
+            <div className="lg:col-span-8 space-y-6 md:space-y-8">
+              <header className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
                 <div>
-                  <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">League Standings</h2>
-                  <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Live hierarchy</p>
+                  <h2 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">League Standings</h2>
+                  <p className="text-[7px] md:text-[10px] text-white/20 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Live hierarchy</p>
                 </div>
               </header>
               <LeagueStandings standingsJson={competition.standingsJson} maxEntries={20} />
             </div>
           )}
 
-          <div className={`${!isTournament ? 'lg:col-span-4' : 'w-full'} space-y-8`}>
-            <header className="flex items-center justify-between border-b border-white/5 pb-4">
+          <div className={`${!isTournament ? 'lg:col-span-4' : 'w-full'} space-y-6 md:space-y-8`}>
+            <header className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
               <div>
-                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">{showFinished ? 'Completed' : 'Upcoming'}</h2>
-                <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Season Timeline</p>
+                <h2 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">{showFinished ? 'Completed' : 'Upcoming'}</h2>
+                <p className="text-[7px] md:text-[10px] text-white/20 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Season Timeline</p>
               </div>
 
               <div className="flex items-center gap-4">
@@ -168,16 +170,16 @@ export const CompetitionDetailPage = () => {
               </div>
             </header>
 
-            <div className="flex gap-2 p-1 bg-[#14181c]/20 rounded-sm w-fit mb-8">
+            <div className="flex gap-1 p-1 bg-white/[0.02] border border-white/5 rounded-sm w-fit mb-6 md:mb-8">
               <button
                 onClick={() => handleFilterChange(false)}
-                className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black' : 'text-white/40 hover:text-white/60'}`}
+                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-white/20 hover:text-white/40'}`}
               >
                 Upcoming
               </button>
               <button
                 onClick={() => handleFilterChange(true)}
-                className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black' : 'text-white/40 hover:text-white/60'}`}
+                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-white/20 hover:text-white/40'}`}
               >
                 Finished
               </button>
@@ -189,15 +191,12 @@ export const CompetitionDetailPage = () => {
                   <div key={i} className="h-24 bg-white/[0.02] animate-pulse rounded-sm border border-white/5" />
                 ))
               ) : timelineData?.content.length === 0 ? (
-                <div className="py-20 text-center border border-white/5 rounded-sm bg-white/[0.02]">
-                  <p className="text-white/40 uppercase tracking-[0.3em] text-[10px] font-black">Segment Offline</p>
-                  <p className="text-[11px] text-white/60 font-bold uppercase mt-2">
-                    No {showFinished ? 'finished' : 'upcoming'} matches found
-                  </p>
+                <div className="py-12 border border-white/5 rounded-sm bg-white/[0.01] text-center">
+                  <p className="text-[8px] font-black text-white/10 uppercase tracking-[0.3em] italic">No Records found.</p>
                 </div>
               ) : (
                 timelineData?.content.map((match) => (
-                  <MatchCard key={match.id} match={match} variant="compact" />
+                  <CompactMatchCard key={match.id} match={match} />
                 ))
               )}
             </div>
@@ -211,7 +210,7 @@ export const CompetitionDetailPage = () => {
 
 const CompStat = ({ label, value }: { label: string; value: string | number }) => (
   <div className="text-left">
-    <div className="text-[9px] font-bold text-white/40 uppercase tracking-[0.2em] mb-1">{label}</div>
-    <div className="text-xl font-black text-white/90 uppercase tracking-tighter">{value}</div>
+    <div className="text-[7px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mb-0.5 md:mb-1">{label}</div>
+    <div className="text-lg md:text-xl font-black text-white/90 uppercase tracking-tighter tabular-nums leading-none">{value}</div>
   </div>
 );

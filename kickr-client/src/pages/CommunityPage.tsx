@@ -49,34 +49,34 @@ export const CommunityPage = () => {
     const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-20 md:pt-32 pb-24 md:pb-20 px-4 md:px-6">
+        <main className="min-h-screen bg-[#14181c] pt-20 pb-16 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-6 md:mb-16">
-                    <div className="flex items-center gap-3 mb-2 md:mb-4">
-                        <div className="h-[1px] w-6 bg-kickr opacity-50" />
-                        <span className="text-[8px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Community</span>
+                    <div className="flex items-center gap-2 md:gap-3 mb-1.5 md:mb-4">
+                        <div className="h-[1px] w-4 md:w-6 bg-kickr/40" />
+                        <span className="text-[7px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Intelligence Bureau</span>
                     </div>
-                    <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-2 italic tracking-tighter uppercase display-font leading-none">
+                    <h1 className="text-xl md:text-6xl font-black text-white mb-0.5 md:mb-2 italic tracking-tighter uppercase display-font leading-none">
                         The Global <span className="text-kickr">Tactician</span>
                     </h1>
-                    <p className="text-white/40 uppercase tracking-[0.2em] text-[7px] md:text-[11px] font-bold">
+                    <p className="text-white/20 uppercase tracking-[0.2em] text-[6px] md:text-[11px] font-black italic">
                         Analyze. Track. Connect. Global Intelligence Network.
                     </p>
 
                     <div className="mt-4 md:mt-12">
-                        <div className="flex items-end justify-between border-b border-white/5 pb-4 gap-4">
+                        <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">
                             <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                                 {/* Search */}
                                 <div className="flex flex-col gap-1 w-full md:w-48">
-                                    <span className="text-[7px] uppercase font-black text-white/20 tracking-[1.5px] pl-0.5">Identify</span>
+                                    <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Identify</span>
                                     <div className="relative">
-                                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[9px] opacity-20 italic">🔍</span>
+                                        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                                         <input
                                             type="text"
                                             placeholder="SCAN..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full bg-white/[0.02] border border-white/5 rounded-sm pl-7 pr-3 py-1.5 text-[10px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
+                                            className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                                         />
                                     </div>
                                 </div>
@@ -92,10 +92,13 @@ export const CommunityPage = () => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
                     {/* Main Content */}
                     <div className="lg:col-span-8">
-                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/90 italic mb-8">All Tacticians</h2>
+                        <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
+                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">All Tacticians</h2>
+                            <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+                        </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                             {isLoading ? (
@@ -120,13 +123,13 @@ export const CommunityPage = () => {
                                     [ Prev ]
                                 </button>
 
-                                <div className="flex items-center gap-1.5 md:gap-2">
+                                <div className="flex items-center gap-1">
                                     {[...Array(pageData.totalPages)].map((_, i) => {
                                         if (pageData.totalPages > 5) {
                                             if (i < currentPage - 1 && i !== 0) return null;
                                             if (i > currentPage + 1 && i !== pageData.totalPages - 1) return null;
-                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[8px] text-white/10">..</span>;
-                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[8px] text-white/10">..</span>;
+                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[7px] text-white/10">..</span>;
+                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[7px] text-white/10">..</span>;
                                         }
 
                                         return (
@@ -136,7 +139,7 @@ export const CommunityPage = () => {
                                                     setCurrentPage(i);
                                                     window.scrollTo({ top: 300, behavior: 'smooth' });
                                                 }}
-                                                className={`w-7 h-7 md:w-10 md:h-10 rounded-sm text-[8px] md:text-[10px] font-black transition-all cursor-pointer ${currentPage === i
+                                                className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[7px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
                                                     ? 'bg-kickr text-black'
                                                     : 'bg-white/[0.01] border border-white/5 text-white/20 hover:text-white/40'
                                                     }`}
@@ -171,8 +174,8 @@ export const CommunityPage = () => {
                         )}
                     </div>
 
-                    {/* Sidebar - Hidden on mobile for PWA feel */}
-                    <div className="hidden lg:block lg:col-span-4 space-y-8">
+                    {/* Sidebar - Adapted for Mobile (Bottom placement) */}
+                    <div className="lg:col-span-4 space-y-6 md:space-y-8 mt-12 lg:mt-0">
                         <TopTeamsWidget />
                         <TopReviewsWidget />
                     </div>
@@ -216,18 +219,18 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center md:justify-around w-full mt-auto pt-1.5 border-t border-white/5 gap-3 md:gap-4">
+                <div className="flex items-center justify-center md:justify-around w-full mt-auto pt-1 border-t border-white/5 gap-3 md:gap-4">
                     <div className="flex flex-col items-center">
-                        <span className="text-xs md:text-base font-black text-white/90 italic tracking-tighter leading-none">
+                        <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-1">LOGS</span>
+                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="text-xs md:text-base font-black text-white/90 italic tracking-tighter leading-none">
+                        <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-1">NET</span>
+                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-0.5">NET</span>
                     </div>
                 </div>
             </div>

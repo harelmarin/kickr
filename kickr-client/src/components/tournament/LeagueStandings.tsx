@@ -69,15 +69,15 @@ export const LeagueStandings: React.FC<LeagueStandingsProps> = ({ standingsJson,
             <table className="w-full text-left border-collapse">
                 <thead>
                     <tr className="bg-white/[0.02]">
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Rank</th>
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Squad</th>
-                        <th className="py-3 px-3 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center">P</th>
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">W</th>
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">D</th>
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">L</th>
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">GD</th>
-                        <th className="py-3 px-3 text-[9px] font-black text-white uppercase tracking-[0.2em] text-center bg-kickr/10 border-x border-white/5">PTS</th>
-                        <th className="py-3 px-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden md:table-cell">Form</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">#</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Squad</th>
+                        <th className="py-2 md:py-3 px-2 md:px-3 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center">P</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">W</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">D</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">L</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden sm:table-cell">GD</th>
+                        <th className="py-2 md:py-3 px-2 md:px-3 text-[7px] md:text-[9px] font-black text-white uppercase tracking-[0.2em] text-center bg-kickr/10 border-x border-white/5">PTS</th>
+                        <th className="py-2 md:py-3 px-2 md:px-4 text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center hidden md:table-cell">Form</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,23 +86,23 @@ export const LeagueStandings: React.FC<LeagueStandingsProps> = ({ standingsJson,
                             key={entry.team.id}
                             className="border-b border-white/5 hover:bg-white/[0.02] transition-colors"
                         >
-                            <td className="py-3 px-4">
-                                <span className="text-xs font-black italic text-white">
+                            <td className="py-2 md:py-3 px-2 md:px-4">
+                                <span className="text-[10px] md:text-xs font-black italic text-white/80">
                                     {entry.rank}
                                 </span>
                             </td>
-                            <td className="py-3 px-4">
-                                <Link to={`/teams/${entry.team.id}`} className="flex items-center gap-3 hover:opacity-70 transition-opacity">
-                                    <img src={entry.team.logo} className="w-5 h-5 object-contain" alt="" />
-                                    <span className="text-[11px] font-bold text-white uppercase tracking-tight truncate">{entry.team.name}</span>
+                            <td className="py-2 md:py-3 px-2 md:px-4">
+                                <Link to={`/teams/${entry.team.id}`} className="flex items-center gap-2 md:gap-3 hover:opacity-70 transition-opacity">
+                                    <img src={entry.team.logo} className="w-3.5 h-3.5 md:w-5 md:h-5 object-contain" alt="" />
+                                    <span className="text-[9px] md:text-[11px] font-bold text-white uppercase tracking-tight truncate leading-none">{entry.team.name}</span>
                                 </Link>
                             </td>
-                            <td className="py-3 px-3 text-center text-xs font-bold text-white/60">{entry.all.played}</td>
-                            <td className="py-3 px-4 text-center text-xs font-bold text-white/60 hidden sm:table-cell">{entry.all.win}</td>
-                            <td className="py-3 px-4 text-center text-xs font-bold text-white/60 hidden sm:table-cell">{entry.all.draw}</td>
-                            <td className="py-3 px-4 text-center text-xs font-bold text-white/60 hidden sm:table-cell">{entry.all.lose}</td>
-                            <td className="py-3 px-4 text-center text-xs font-bold text-white/60 hidden sm:table-cell">{entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}</td>
-                            <td className="py-3 px-3 text-center text-sm font-black text-white italic bg-kickr/5 border-x border-white/5">{entry.points}</td>
+                            <td className="py-2 md:py-3 px-2 md:px-3 text-center text-[9px] md:text-xs font-bold text-white/40">{entry.all.played}</td>
+                            <td className="py-2 md:py-3 px-2 md:px-4 text-center text-[9px] md:text-xs font-bold text-white/40 hidden sm:table-cell">{entry.all.win}</td>
+                            <td className="py-2 md:py-3 px-2 md:px-4 text-center text-[9px] md:text-xs font-bold text-white/40 hidden sm:table-cell">{entry.all.draw}</td>
+                            <td className="py-2 md:py-3 px-2 md:px-4 text-center text-[9px] md:text-xs font-bold text-white/40 hidden sm:table-cell">{entry.all.lose}</td>
+                            <td className="py-2 md:py-3 px-2 md:px-4 text-center text-[9px] md:text-xs font-bold text-white/40 hidden sm:table-cell">{entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}</td>
+                            <td className="py-2 md:py-3 px-2 md:px-3 text-center text-[10px] md:text-sm font-black text-white italic bg-kickr/5 border-x border-white/5">{entry.points}</td>
                             <td className="py-3 px-4 text-center hidden md:table-cell">
                                 <div className="flex items-center justify-center gap-1">
                                     {entry.form?.split('').map((char, i) => (

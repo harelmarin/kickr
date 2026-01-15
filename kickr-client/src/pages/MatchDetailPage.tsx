@@ -90,8 +90,8 @@ export const MatchDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#14181c] text-[#99aabb]">
-      <div className="relative h-[450px] md:h-[650px] w-full overflow-hidden">
-        <div className="absolute inset-0 z-0 flex blur-[80px] opacity-20 md:opacity-30">
+      <div className="relative h-[300px] md:h-[650px] w-full overflow-hidden">
+        <div className="absolute inset-0 z-0 flex blur-[60px] md:blur-[80px] opacity-15 md:opacity-30">
           <div className="flex-1 relative overflow-hidden">
             <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" />
           </div>
@@ -104,113 +104,111 @@ export const MatchDetailPage = () => {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.02] md:opacity-[0.03] mix-blend-overlay"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-[380px] md:mt-[-550px] relative z-10 pb-20">
-        <div className="flex items-center gap-3 md:gap-6 mb-8 md:mb-12">
-          <Link to="/" className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-kickr transition-all flex items-center gap-2 md:gap-3 group">
-            <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-[240px] md:mt-[-550px] relative z-10 pb-16">
+        <div className="flex items-center gap-2 md:gap-6 mb-6 md:mb-12">
+          <Link to="/" className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
+            <span className="text-base group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
             <span className="hidden sm:inline">Tactical Feed</span>
-            <span className="sm:hidden">Feed</span>
+            <span className="sm:hidden italic">BACK</span>
           </Link>
-          <div className="h-4 w-[1px] bg-white/5"></div>
-          <div className="flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic truncate">
-            <span className="hidden xs:inline">Systems</span>
-            <span className="text-kickr/20 hidden xs:inline">/</span>
-            <span className="text-white/60 truncate max-w-[150px] xs:max-w-none">{match.homeTeam} VS {match.awayTeam}</span>
+          <div className="h-3 w-[1px] bg-white/5"></div>
+          <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/10 italic truncate">
+            <span className="text-white/40 truncate max-w-[150px] xs:max-w-none">{match.homeTeam} / {match.awayTeam}</span>
           </div>
         </div>
 
-        <header className="mb-8 md:mb-12">
-          <div className="bg-white/[0.01] border border-white/5 rounded-sm p-4 md:p-12 relative overflow-hidden flex items-center justify-center">
+        <header className="mb-6 md:mb-12">
+          <div className="bg-white/[0.01] border border-white/5 rounded-sm p-3 md:p-12 relative overflow-hidden flex items-center justify-center">
             {/* Subtle tech background */}
-            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/5 md:via-white/10 to-transparent"></div>
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-5 md:opacity-10 pointer-events-none"></div>
 
-            <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-6 md:gap-4 text-center md:text-left">
+            <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4 text-center md:text-left">
               {/* Home Team */}
-              <div className="flex flex-col md:flex-row items-center justify-center md:justify-end gap-3 md:gap-6 min-w-0 group/home">
-                <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
-                  <div className="p-2 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
-                    <img src={match.homeLogo} alt={match.homeTeam} className="w-10 h-10 md:w-20 md:h-20 object-contain" />
-                  </div>
-                </Link>
-                <div className="min-w-0 overflow-visible max-w-full md:max-w-[300px]">
+              <div className="flex flex-row md:flex-row items-center justify-center md:justify-end gap-3 md:gap-6 min-w-0 group/home">
+                <div className="min-w-0 flex-1 md:flex-none text-right md:text-right">
                   <Link to={`/teams/${match.homeTeamId}`}>
-                    <h2 className="text-white font-black uppercase italic tracking-tight text-lg md:text-3xl lg:text-4xl leading-tight display-font group-hover/home:text-kickr transition-colors line-clamp-2">
+                    <h2 className="text-white font-black uppercase italic tracking-tighter text-sm md:text-3xl lg:text-4xl leading-tight display-font group-hover/home:text-kickr transition-colors line-clamp-2">
                       {match.homeTeam}
                     </h2>
                   </Link>
-                  <span className="text-kickr/40 text-[7px] md:text-[9px] font-black uppercase tracking-[0.4em] italic leading-none mt-1.5 md:mt-2 block">Home</span>
+                  <span className="text-kickr/40 text-[6px] md:text-[9px] font-black uppercase tracking-[0.4em] italic leading-none mt-1 block">Home</span>
                 </div>
+                <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105">
+                  <div className="p-1.5 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
+                    <img src={match.homeLogo} alt={match.homeTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                  </div>
+                </Link>
               </div>
 
               {/* Score / VS Center */}
-              <div className="flex flex-col items-center justify-center px-2 md:px-12 order-first md:order-none mb-4 md:mb-0">
-                <div className="bg-[#14181c]/60 border border-white/10 px-4 py-3 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
+              <div className="flex flex-col items-center justify-center px-1 md:px-12 mb-2 md:mb-0">
+                <div className="bg-[#14181c]/80 border border-white/10 px-3 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group">
                   <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {isPast ? (
-                    <div className="flex items-center gap-3 md:gap-8 tabular-nums relative z-10">
-                      <span className="text-2xl md:text-7xl font-black text-white italic display-font leading-none">{match.homeScore}</span>
-                      <div className="w-[1px] md:w-[2px] h-6 md:h-12 bg-white/10"></div>
-                      <span className="text-2xl md:text-7xl font-black text-white italic display-font leading-none">{match.awayScore}</span>
+                    <div className="flex items-center gap-2 md:gap-8 tabular-nums relative z-10">
+                      <span className="text-xl md:text-7xl font-black text-white italic display-font leading-none">{match.homeScore}</span>
+                      <div className="w-[1px] md:w-[2px] h-4 md:h-12 bg-white/10"></div>
+                      <span className="text-xl md:text-7xl font-black text-white italic display-font leading-none">{match.awayScore}</span>
                     </div>
                   ) : (
-                    <span className="text-xl md:text-6xl font-black text-kickr italic display-font relative z-10">VS</span>
+                    <span className="text-sm md:text-6xl font-black text-kickr italic display-font relative z-10">VS</span>
                   )}
                 </div>
-                <div className="mt-2 md:mt-4 flex flex-col items-center gap-1 opacity-40 group-hover:opacity-80 transition-opacity">
-                  <div className="w-1 h-1 rounded-full bg-white/20"></div>
-                  <span className="text-[6px] md:text-[8px] font-black uppercase tracking-[0.4em] italic text-white/40">
-                    {isPast ? 'Final Score' : 'Pre-Match Data'}
+                <div className="mt-1.5 md:mt-4 flex flex-col items-center gap-1 opacity-20">
+                  <div className="w-0.5 h-0.5 rounded-full bg-white/20"></div>
+                  <span className="text-[5px] md:text-[8px] font-black uppercase tracking-[0.4em] italic text-white/40">
+                    {isPast ? 'COMPLETE' : 'STANDBY'}
                   </span>
                 </div>
               </div>
 
               {/* Away Team */}
-              <div className="flex flex-col md:flex-row-reverse items-center justify-center md:justify-end gap-3 md:gap-6 min-w-0 group/away">
-                <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
-                  <div className="p-2 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
-                    <img src={match.awayLogo} alt={match.awayTeam} className="w-10 h-10 md:w-20 md:h-20 object-contain" />
-                  </div>
-                </Link>
-                <div className="min-w-0 overflow-visible text-center md:text-right max-w-full md:max-w-[300px]">
+              <div className="flex flex-row md:flex-row-reverse items-center justify-center md:justify-end gap-3 md:gap-6 min-w-0 group/away">
+                <div className="min-w-0 flex-1 md:flex-none text-left md:text-right">
                   <Link to={`/teams/${match.awayTeamId}`}>
-                    <h2 className="text-white font-black uppercase italic tracking-tight text-lg md:text-3xl lg:text-4xl leading-tight display-font group-hover/away:text-kickr transition-colors line-clamp-2">
+                    <h2 className="text-white font-black uppercase italic tracking-tighter text-sm md:text-3xl lg:text-4xl leading-tight display-font group-hover/away:text-kickr transition-colors line-clamp-2">
                       {match.awayTeam}
                     </h2>
                   </Link>
-                  <span className="text-white/20 text-[7px] md:text-[9px] font-black uppercase tracking-[0.4em] italic leading-none mt-1.5 md:mt-2 block md:text-right">Away</span>
+                  <span className="text-white/10 text-[6px] md:text-[9px] font-black uppercase tracking-[0.4em] italic leading-none mt-1 block">Away</span>
                 </div>
+                <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105">
+                  <div className="p-1.5 md:p-3 rounded-sm bg-[#14181c]/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
+                    <img src={match.awayLogo} alt={match.awayTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between border-y border-white/5 py-4 sm:py-8 gap-6 sm:gap-12">
+          <div className="mt-3 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between border-y border-white/5 py-3 sm:py-8 gap-4 sm:gap-12">
             <div className="flex items-center gap-6 md:gap-20 overflow-x-auto no-scrollbar w-full sm:w-auto">
               <div className="flex flex-col flex-shrink-0">
-                <span className="text-[7px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-1.5 md:mb-3 italic">Theater</span>
-                <Link to={match.competitionId ? `/competitions/${match.competitionId}` : '#'} className="flex items-center gap-2 md:gap-4 group">
-                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-sm bg-[#14181c]/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
+                <span className="text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-1 md:mb-3 italic leading-none">Theater</span>
+                <Link to={match.competitionId ? `/competitions/${match.competitionId}` : '#'} className="flex items-center gap-1.5 md:gap-4 group">
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-sm bg-[#14181c]/40 border border-white/5 flex items-center justify-center group-hover:border-kickr/40 transition-all">
                     <img src={match.competitionLogo} alt={match.competition} className="w-3 h-3 md:w-5 md:h-5 object-contain" />
                   </div>
-                  <span className="text-white font-black uppercase italic text-[10px] md:text-xs tracking-widest group-hover:text-kickr transition-colors">
+                  <span className="text-white font-black uppercase italic text-[8px] md:text-xs tracking-widest group-hover:text-kickr transition-colors truncate max-w-[100px] md:max-w-none">
                     {match.competition || 'Classified'}
                   </span>
                 </Link>
               </div>
 
               <div className="flex flex-col flex-shrink-0">
-                <span className="text-[7px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-1.5 md:mb-3 italic">Coordinates</span>
-                <span className="text-white/60 text-[10px] md:text-xs font-black uppercase italic tracking-widest leading-6 sm:leading-8">{match.location || 'Neutral Grounds'}</span>
+                <span className="text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-1 md:mb-3 italic leading-none">Coordinates</span>
+                <span className="text-white/40 text-[8px] md:text-xs font-black uppercase italic tracking-widest leading-normal sm:leading-8 truncate max-w-[100px] md:max-w-none">{match.location || 'Neutral Grounds'}</span>
               </div>
 
               <div className="flex flex-col flex-shrink-0">
-                <span className="text-[7px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-1.5 md:mb-3 italic">Deployment</span>
-                <div className="flex items-center gap-2 md:gap-4 py-1.5 md:py-2">
-                  <span className="text-white/60 text-[10px] md:text-xs font-black uppercase italic tracking-widest">
+                <span className="text-[6px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-1 md:mb-3 italic leading-none">Deployment</span>
+                <div className="flex items-center gap-1.5 md:gap-4 py-1">
+                  <span className="text-white/40 text-[8px] md:text-xs font-black uppercase italic tracking-widest">
                     {matchDate.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })}
                   </span>
-                  <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-kickr"></div>
-                  <span className="text-kickr text-[10px] md:text-xs font-black uppercase italic tracking-widest">
+                  <div className="w-1 h-1 rounded-full bg-kickr/40"></div>
+                  <span className="text-kickr/60 text-[8px] md:text-xs font-black uppercase italic tracking-widest tabular-nums font-mono">
                     {matchDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
                   </span>
                 </div>
@@ -226,33 +224,33 @@ export const MatchDetailPage = () => {
                 <div className="flex flex-col w-full xl:w-auto">
                   {match.averageRating && match.averageRating > 0 ? (
                     <div className="flex flex-col">
-                      <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Community Rating</span>
-                      <div className="flex flex-col xs:flex-row items-center gap-6 md:gap-8">
-                        <div className="flex flex-col items-center justify-center bg-white/[0.02] border border-white/5 w-24 h-24 md:w-28 md:h-28 rounded-sm gallery-card-hover relative overflow-hidden group flex-shrink-0">
+                      <span className="text-[8px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Community Intel</span>
+                      <div className="flex flex-col xs:flex-row items-center gap-4 md:gap-8">
+                        <div className="flex flex-col items-center justify-center bg-white/[0.01] border border-white/5 w-20 h-20 md:w-28 md:h-28 rounded-sm relative overflow-hidden group flex-shrink-0">
                           <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                          <span className="text-3xl md:text-4xl font-black text-white italic leading-none relative z-10 display-font">{match.averageRating.toFixed(1)}</span>
-                          <div className="flex text-kickr text-[7px] md:text-[8px] mt-2 md:mt-3 relative z-10 tracking-[0.2em]">
+                          <span className="text-2xl md:text-4xl font-black text-white italic leading-none relative z-10 display-font tabular-nums">{match.averageRating.toFixed(1)}</span>
+                          <div className="flex text-kickr text-[6px] md:text-[8px] mt-1.5 md:mt-3 relative z-10 tracking-[0.2em]">
                             {'★'.repeat(Math.round(match.averageRating))}
                           </div>
                         </div>
 
                         {/* Rating Distribution */}
-                        <div className="flex flex-col gap-1.5 md:gap-2 w-full max-w-[300px] xs:max-w-none">
+                        <div className="flex flex-col gap-1 md:gap-2 w-full max-w-[200px] md:max-w-none">
                           {[5, 4, 3, 2, 1].map(star => {
                             const count = userMatches?.filter(m => Math.round(m.note) === star).length || 0;
                             const total = userMatches?.length || 1;
                             const percentage = (count / total) * 100;
                             return (
-                              <div key={star} className="flex items-center gap-3 md:gap-4">
-                                <span className="text-[7px] md:text-[8px] font-black text-white/20 w-3 md:w-4 italic">{star}s</span>
-                                <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
+                              <div key={star} className="flex items-center gap-2 md:gap-4">
+                                <span className="text-[6px] md:text-[8px] font-black text-white/10 w-3 md:w-4 italic">{star}s</span>
+                                <div className="flex-1 h-0.5 md:h-1 bg-white/5 rounded-full overflow-hidden">
                                   <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: `${percentage}%` }}
-                                    className="h-full bg-kickr/40 shadow-[0_0_8px_rgba(var(--kickr-rgb),0.3)]"
+                                    className="h-full bg-kickr/20"
                                   />
                                 </div>
-                                <span className="text-[7px] md:text-[8px] font-black text-white/40 w-6 md:w-8 text-right tabular-nums">{count}</span>
+                                <span className="text-[6px] md:text-[8px] font-black text-white/20 w-4 md:w-8 text-right tabular-nums italic font-mono">{count}</span>
                               </div>
                             );
                           })}
@@ -272,24 +270,19 @@ export const MatchDetailPage = () => {
                 {/* User's Tactical History - if logged */}
                 {hasAlreadyLogged && (
                   <div className="flex flex-col w-full xl:w-auto mt-4 xl:mt-0">
-                    <span className="text-[9px] font-black text-[#445566] uppercase tracking-[0.3em] mb-4 italic">Your Tactical History</span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-2 max-h-[300px] overflow-y-auto pr-2 no-scrollbar">
+                    <span className="text-[8px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.3em] mb-4 italic leading-none">Your Records</span>
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1 gap-2 max-h-[300px] overflow-y-auto pr-2 no-scrollbar">
                       {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
-                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-2.5 bg-white/[0.02] border border-white/5 rounded-sm hover:border-kickr/20 transition-all group/entry">
+                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-2 bg-white/[0.01] border border-white/5 rounded-sm group/entry">
                           <div className="flex items-center justify-between mb-1">
-                            <div className="flex text-kickr text-[7px] md:text-[8px]">
+                            <div className="flex text-kickr text-[6px] md:text-[8px]">
                               {'★'.repeat(Math.round(entry.note))}
                               <span className="text-white/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
                             </div>
-                            <span className="text-[7px] md:text-[8px] font-black text-[#445566] uppercase tracking-tighter">
+                            <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tabular-nums">
                               {new Date(entry.watchedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                             </span>
                           </div>
-                          {entry.comment && (
-                            <p className="text-[#8899aa] text-[9px] md:text-[10px] italic leading-tight line-clamp-1 opacity-60 group-hover/entry:opacity-100 transition-opacity">
-                              "{entry.comment}"
-                            </p>
-                          )}
                         </Link>
                       ))}
                     </div>
@@ -300,20 +293,20 @@ export const MatchDetailPage = () => {
 
 
 
-            <div className="mt-8 md:mt-12">
-              <div className="flex items-center gap-6 md:gap-10 border-b border-white/5 mb-6 md:mb-10 overflow-x-auto no-scrollbar">
+            <div className="mt-6 md:mt-12">
+              <div className="flex items-center gap-4 md:gap-10 border-b border-white/5 mb-6 md:mb-10 overflow-x-auto no-scrollbar">
                 {['lineups', 'stats', 'events'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab as any)}
-                    className={`pb-4 md:pb-5 text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] transition-all relative italic whitespace-nowrap ${activeTab === tab ? 'text-kickr' : 'text-white/20 hover:text-white'
+                    className={`pb-3 md:pb-5 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all relative italic whitespace-nowrap ${activeTab === tab ? 'text-kickr' : 'text-white/10 hover:text-white'
                       }`}
                   >
                     {tab}
                     {activeTab === tab && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute bottom-0 left-0 w-full h-[2px] bg-kickr shadow-[0_0_10px_rgba(var(--kickr-rgb),0.5)]"
+                        className="absolute bottom-0 left-0 w-full h-[1.5px] bg-kickr"
                       />
                     )}
                   </button>
@@ -381,38 +374,38 @@ export const MatchDetailPage = () => {
 
           {/* Right: Actions Sidebar */}
           <div className="w-full lg:w-[300px] xl:w-[340px] flex-shrink-0 order-1 lg:order-2">
-            <div className="bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden shadow-2xl sticky top-24">
-              <div className="p-4 md:p-6 bg-white/[0.02] border-b border-white/5 flex items-center justify-between">
+            <div className="bg-white/[0.01] border border-white/5 rounded-sm overflow-hidden shadow-2xl sticky top-24">
+              <div className="p-3 md:p-6 bg-white/[0.01] border-b border-white/5 flex items-center justify-between">
                 <div className="flex flex-col">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[9px] md:text-[10px] font-black text-white/40 uppercase tracking-[0.3em] leading-none italic">
-                      {hasAlreadyLogged ? 'Your History' : 'Rate Match'}
+                  <div className="flex items-center gap-2">
+                    <span className="text-[8px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.2em] leading-none italic">
+                      {hasAlreadyLogged ? 'History Found' : 'Rate Intel'}
                     </span>
-                    <div className="w-1 h-1 rounded-full bg-kickr animate-pulse"></div>
+                    <div className="w-0.5 h-0.5 rounded-full bg-kickr"></div>
                   </div>
                   {hasAlreadyLogged && (
-                    <span className="text-[8px] md:text-[9px] font-black text-kickr uppercase tracking-widest mt-1.5 md:mt-2 italic">
-                      {myMatchEntries.length} Ratings Recorded
+                    <span className="text-[7px] md:text-[9px] font-black text-kickr/40 uppercase tracking-widest mt-1 italic">
+                      {myMatchEntries.length} SESSIONS
                     </span>
                   )}
                 </div>
                 <button
                   onClick={() => setIsLiked(!isLiked)}
-                  className={`text-base md:text-lg transition-all transform hover:scale-110 ${isLiked ? 'text-[#ff4b4b]' : 'text-white/20 hover:text-white'}`}
+                  className={`text-sm md:text-lg transition-all transform hover:scale-110 ${isLiked ? 'text-[#ff4b4b]' : 'text-white/10 hover:text-white'}`}
                 >
                   {isLiked ? '♥' : '♡'}
                 </button>
               </div>
 
-              <div className="p-6 md:p-8 space-y-8 md:space-y-10">
+              <div className="p-4 md:p-8 space-y-6 md:space-y-10">
                 {/* Rating Star Picker */}
                 <div>
-                  <div className="text-center text-[8px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Select Rating</div>
-                  <div className="flex justify-center gap-1.5 md:gap-2 mb-4">
+                  <div className="text-center text-[7px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Protocol Value</div>
+                  <div className="flex justify-center gap-1 md:gap-2 mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-2xl md:text-3xl transition-all duration-300 relative group/star ${star <= (hoveredRating || rating) ? 'text-kickr scale-110' : 'text-white/10'
+                        className={`text-xl md:text-3xl transition-all duration-300 relative group/star ${star <= (hoveredRating || rating) ? 'text-kickr scale-110' : 'text-white/5'
                           }`}
                         onMouseEnter={() => setHoveredRating(star)}
                         onMouseLeave={() => setHoveredRating(0)}
@@ -420,7 +413,7 @@ export const MatchDetailPage = () => {
                       >
                         <span className="relative z-10">★</span>
                         {star <= (hoveredRating || rating) && (
-                          <div className="absolute inset-0 bg-kickr/20 blur-md rounded-full -z-0"></div>
+                          <div className="absolute inset-0 bg-kickr/10 blur-md rounded-full -z-0"></div>
                         )}
                       </button>
                     ))}
@@ -429,21 +422,21 @@ export const MatchDetailPage = () => {
 
                 {/* Review Text Area */}
                 <div className="space-y-2 md:space-y-3">
-                  <span className="text-[8px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] italic">Your Review</span>
+                  <span className="text-[7px] md:text-[9px] font-black text-white/10 uppercase tracking-[0.4em] italic leading-none">Intelligence Notes</span>
                   <textarea
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
-                    placeholder="Write your thoughts..."
-                    className="w-full bg-[#14181c]/40 border border-white/5 rounded-sm p-3 md:p-4 text-[12px] md:text-[13px] text-white/90 placeholder-white/5 focus:outline-none focus:border-kickr/20 h-32 md:h-44 transition-all resize-none italic font-medium leading-relaxed"
+                    placeholder="Input observations..."
+                    className="w-full bg-[#14181c]/40 border border-white/5 rounded-sm p-3 md:p-4 text-[11px] md:text-[13px] text-white/60 placeholder-white/5 focus:outline-none focus:border-kickr/10 h-24 md:h-44 transition-all resize-none italic font-black uppercase tracking-widest leading-relaxed"
                   />
                 </div>
 
                 <button
                   onClick={handleSaveRating}
                   disabled={rating === 0 || createUserMatch.isPending}
-                  className="w-full py-3 md:py-4 rounded-sm text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-20 disabled:cursor-not-allowed transition-all bg-kickr text-black shadow-lg shadow-kickr/10"
+                  className="w-full py-2.5 md:py-4 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-10 disabled:cursor-not-allowed transition-all bg-kickr text-black"
                 >
-                  {createUserMatch.isPending ? 'SAVING...' : hasAlreadyLogged ? 'RATE AGAIN' : 'SAVE RATING'}
+                  {createUserMatch.isPending ? 'TRANSMITTING...' : hasAlreadyLogged ? 'LOG AGAIN' : 'EXECUTE LOG'}
                 </button>
 
               </div>
@@ -536,8 +529,8 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
   };
 
   return (
-    <div className="flex gap-3 md:gap-4 border-b border-white/5 pb-6 md:pb-8 group/review">
-      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#2c3440] flex-shrink-0 flex items-center justify-center text-[9px] md:text-[10px] text-white font-black uppercase overflow-hidden border border-white/5">
+    <div className="flex gap-3 md:gap-4 border-b border-white/5 pb-4 md:pb-8 group/review">
+      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/[0.02] flex-shrink-0 flex items-center justify-center text-[8px] md:text-[10px] text-white/40 font-black uppercase overflow-hidden border border-white/5">
         {review.user.avatarUrl ? (
           <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
         ) : (
@@ -545,44 +538,45 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-          <Link to={`/user/${review.user.id}`} className="text-white text-xs md:text-sm font-bold hover:text-kickr transition-colors truncate">{review.user.name}</Link>
-          <span className="text-kickr font-bold text-[10px] md:text-xs pl-1.5 md:pl-2 border-l border-white/10 ml-1.5 md:ml-2 flex-shrink-0">
+        <div className="flex items-center gap-2 mb-1 md:mb-2">
+          <Link to={`/user/${review.user.id}`} className="text-white/80 text-[11px] md:text-sm font-black hover:text-kickr transition-colors truncate uppercase italic">{review.user.name}</Link>
+          <span className="text-kickr/60 font-black text-[9px] md:text-xs pl-2 border-l border-white/5 ml-1 flex-shrink-0 tabular-nums">
             {'★'.repeat(Math.round(review.note))}
             <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
           </span>
           {review.isLiked === true && (
-            <span className="text-[#ff8000] text-xs md:text-sm ml-1 flex-shrink-0" title="Liked">❤</span>
+            <span className="text-kickr text-[9px] md:text-sm ml-1 flex-shrink-0" title="Liked">❤</span>
           )}
           {review.watchedAt && (
-            <Link to={`/reviews/${review.id}`} className="text-[#667788] text-[7px] md:text-[9px] font-black uppercase tracking-widest ml-auto hover:text-kickr transition-colors flex-shrink-0">
+            <Link to={`/reviews/${review.id}`} className="text-white/10 text-[7px] md:text-[9px] font-black uppercase tracking-widest ml-auto hover:text-white/30 transition-colors flex-shrink-0 italic">
               {new Date(review.watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
             </Link>
           )}
         </div>
         {review.comment && review.comment.trim() !== "" && (
-          <Link to={`/reviews/${review.id}`} className="block group/comment">
-            <p className="text-xs md:text-sm leading-relaxed text-[#99aabb] italic group-hover/comment:text-white transition-colors line-clamp-3">"{review.comment}"</p>
-            <span className="text-[8px] md:text-[10px] font-black text-kickr/40 uppercase tracking-widest mt-1.5 md:mt-2 block group-hover/comment:text-kickr transition-colors">Detailed Log View →</span>
+          <Link to={`/reviews/${review.id}`} className="block group/comment mt-1">
+            <p className="text-[10px] md:text-sm leading-relaxed text-white/40 italic group-hover:text-white/60 transition-colors line-clamp-2 uppercase font-medium">
+              {review.comment}
+            </p>
+            <span className="text-[7px] md:text-[9px] font-black text-kickr/20 uppercase tracking-widest mt-1 block group-hover:text-kickr/40 transition-colors italic">View Recap →</span>
           </Link>
         )}
         <div className="flex items-center justify-between mt-2 md:mt-3">
           <div className="flex items-center gap-3 md:gap-4">
             <button
               onClick={handleLike}
-              className={`flex items-center gap-1 md:gap-1.5 text-[10px] md:text-xs transition-all ${isLikedByMe
+              className={`flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] uppercase font-black tracking-widest transition-all italic ${isLikedByMe
                 ? 'text-kickr'
-                : 'text-[#667788] hover:text-kickr'
+                : 'text-white/10 hover:text-white/30'
                 }`}
               title={isLikedByMe ? 'Unlike' : 'Like this review'}
             >
-              <span className="text-sm md:text-base">{isLikedByMe ? '👍' : '👍'}</span>
+              <span className="text-[10px] md:text-sm">{isLikedByMe ? '❤' : '❤'}</span>
               {review.likesCount && review.likesCount > 0 && (
-                <span className="font-bold">{review.likesCount}</span>
+                <span className="tabular-nums font-black">{review.likesCount}</span>
               )}
             </button>
-
-            <div className="sm:opacity-0 sm:group-hover/review:opacity-100 transition-opacity">
+            <div className="opacity-40 hover:opacity-100 transition-opacity">
               <ShareReviewButton review={review} />
             </div>
           </div>
@@ -591,9 +585,9 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
             <button
               onClick={handleDelete}
               disabled={deleteUserMatch.isPending}
-              className="text-[8px] md:text-[10px] font-bold text-[#445566] hover:text-red-500 transition-colors uppercase tracking-widest"
+              className="text-[7px] md:text-[9px] font-black text-white/5 hover:text-red-900 transition-colors uppercase tracking-[0.2em] italic"
             >
-              {deleteUserMatch.isPending ? '...' : 'Delete'}
+              {deleteUserMatch.isPending ? '...' : 'Remove'}
             </button>
           )}
         </div>
@@ -823,16 +817,16 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
   );
 
   return (
-    <div className="space-y-8 bg-white/[0.02] border border-white/5 rounded-sm p-6 sm:p-12 relative overflow-hidden">
-      <div className="flex justify-between items-center pb-10 border-b border-white/5 mb-6">
-        <Link to={`/teams/${homeTeamId}`} className="flex items-center gap-3 group/team hover:bg-white/[0.03] p-2 -m-2 rounded-sm transition-all">
-          <img src={homeLogo} alt="" className="w-8 h-8 object-contain group-hover/team:scale-110 transition-transform" />
-          <span className="text-white font-black uppercase italic tracking-tighter text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{homeTeam}</span>
+    <div className="space-y-4 md:space-y-8 bg-white/[0.01] border border-white/5 rounded-sm p-4 md:p-12 relative overflow-hidden">
+      <div className="flex justify-between items-center pb-4 md:pb-10 border-b border-white/5 mb-4 md:mb-6">
+        <Link to={`/teams/${homeTeamId}`} className="flex items-center gap-2 md:gap-3 group/team p-1 -m-1 rounded-sm transition-all">
+          <img src={homeLogo} alt="" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
+          <span className="text-white font-black uppercase italic tracking-tighter text-[10px] md:text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{homeTeam}</span>
         </Link>
-        <div className="text-[10px] font-black uppercase tracking-[0.4em] text-kickr/40 italic">Match Intel</div>
-        <Link to={`/teams/${awayTeamId}`} className="flex items-center gap-3 group/team hover:bg-white/[0.03] p-2 -m-2 rounded-sm transition-all">
-          <span className="text-white font-black uppercase italic tracking-tighter text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{awayTeam}</span>
-          <img src={awayLogo} alt="" className="w-8 h-8 object-contain group-hover/team:scale-110 transition-transform" />
+        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/10 italic">Tactical Intel</div>
+        <Link to={`/teams/${awayTeamId}`} className="flex items-center gap-2 md:gap-3 group/team p-1 -m-1 rounded-sm transition-all">
+          <span className="text-white font-black uppercase italic tracking-tighter text-[10px] md:text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{awayTeam}</span>
+          <img src={awayLogo} alt="" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
         </Link>
       </div>
       {availableStats.map((type: string) => {
@@ -852,22 +846,20 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
 
         return (
           <div key={type} className="group">
-            <div className="flex justify-between items-end mb-2.5 px-1">
-              <span className={`text-sm font-black italic tabular-nums ${hNum > aNum ? 'text-kickr' : 'text-white'}`}>{homeVal}</span>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#556677] group-hover:text-[#8899aa] transition-colors">{type}</span>
-              <span className={`text-sm font-black italic tabular-nums ${aNum > hNum ? 'text-kickr' : 'text-white'}`}>{awayVal}</span>
+            <div className="flex justify-between items-end mb-1.5 md:mb-2.5 px-0.5">
+              <span className={`text-[10px] md:text-sm font-black italic tabular-nums ${hNum > aNum ? 'text-kickr' : 'text-white/40'}`}>{homeVal}</span>
+              <span className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/10 group-hover:text-white/20 transition-colors leading-none mb-0.5">{type}</span>
+              <span className={`text-[10px] md:text-sm font-black italic tabular-nums ${aNum > hNum ? 'text-kickr' : 'text-white/40'}`}>{awayVal}</span>
             </div>
-            <div className="h-1.5 w-full flex rounded-full overflow-hidden bg-white/[0.03] relative">
+            <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-white/[0.03] relative">
               <div
                 style={{ width: `${homePercent}%` }}
-                className={`h-full transition-all duration-1000 ease-out ${hNum >= aNum ? 'bg-kickr shadow-[0_0_12px_rgba(0,225,120,0.4)]' : 'bg-[#445566]'}`}
+                className={`h-full transition-all duration-1000 ease-out ${hNum >= aNum ? 'bg-kickr/40' : 'bg-white/5'}`}
               />
               <div
                 style={{ width: `${100 - homePercent}%` }}
-                className={`h-full transition-all duration-1000 ease-out ${aNum > hNum ? 'bg-kickr shadow-[0_0_12px_rgba(0,225,120,0.4)]' : 'bg-[#1b2228]'}`}
+                className={`h-full transition-all duration-1000 ease-out ${aNum > hNum ? 'bg-kickr/40' : 'bg-white/10'}`}
               />
-              {/* Point de rupture discret */}
-              <div className="absolute top-0 bottom-0 w-px bg-white/20 z-10" style={{ left: `${homePercent}%` }} />
             </div>
           </div>
         );
@@ -880,55 +872,49 @@ const EventsSection = ({ events, homeTeamId, homeTeamName }: any) => {
   if (!events || events.length === 0) return <p className="text-[#445566] text-sm italic">Match events not available.</p>;
 
   return (
-    <div className="relative py-10 max-w-3xl mx-auto">
+    <div className="relative py-6 max-w-3xl mx-auto">
       {/* Central Timeline Line */}
       <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/5 -translate-x-1/2" />
 
-      <div className="space-y-4 md:space-y-8 relative">
+      <div className="space-y-3 md:space-y-8 relative">
         {events.map((event: any, idx: number) => {
           // Double check with ID and Name for maximum compatibility
           const isHome = String(event.team.id) === String(homeTeamId) ||
             event.team.name === homeTeamName;
 
           return (
-            <div key={idx} className="relative flex items-center min-h-[60px]">
+            <div key={idx} className="relative flex items-center min-h-[40px] md:min-h-[60px]">
               {/* Event Content - Home Side (Left) */}
-              <div className="flex-1 pr-6 md:pr-12 text-right">
+              <div className="flex-1 pr-3 md:pr-12 text-right">
                 {isHome && (
                   <div className="inline-block group">
-                    <div className="flex items-center justify-end gap-2 md:gap-3 mb-1">
-                      <span className="text-white font-bold text-[11px] md:text-sm tracking-tight group-hover:text-kickr transition-colors leading-tight">
-                        {event.type === 'subst' ? `${event.assist.name.split(' ').pop()} ↔ ${event.player.name.split(' ').pop()}` : event.player.name}
+                    <div className="flex items-center justify-end gap-1.5 md:gap-3 mb-0.5 md:mb-1">
+                      <span className="text-white font-black text-[9px] md:text-sm tracking-tighter italic group-hover:text-kickr transition-colors leading-tight uppercase">
+                        {event.type === 'subst' ? `${event.assist.name.split(' ').pop()} ↔ ${event.player.name.split(' ').pop()}` : event.player.name.split(' ').pop()}
                       </span>
                       <EventIcon type={event.type} detail={event.detail} />
-                    </div>
-                    <div className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-widest">
-                      {event.detail} {event.type === 'Goal' && event.assist.name ? `• Asst: ${event.assist.name.split(' ').pop()}` : ''}
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Minute Badge - Center */}
-              <div className="relative w-8 h-8 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center z-20">
-                <div className={`absolute inset-0 rounded-full border transform rotate-45 transition-transform duration-500 group-hover:rotate-180 ${isHome ? 'border-kickr/30 bg-[#1b2228]' : 'border-white/10 bg-[#14181c]'}`} />
-                <span className="text-[8px] md:text-[11px] font-black text-white italic relative z-10 tabular-nums">
-                  {event.time.elapsed}{event.time.extra ? `+${event.time.extra}` : ''}'
+              <div className="relative w-6 h-6 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center z-20">
+                <div className={`absolute inset-0 rounded-full border transform rotate-45 transition-transform duration-500 ${isHome ? 'border-kickr/20 bg-[#1b2228]' : 'border-white/5 bg-[#14181c]'}`} />
+                <span className="text-[7px] md:text-[11px] font-black text-white italic relative z-10 tabular-nums font-mono leading-none">
+                  {event.time.elapsed}
                 </span>
               </div>
 
               {/* Event Content - Away Side (Right) */}
-              <div className="flex-1 pl-6 md:pl-12 text-left">
+              <div className="flex-1 pl-3 md:pl-12 text-left">
                 {!isHome && (
                   <div className="inline-block group">
-                    <div className="flex items-center justify-start gap-2 md:gap-3 mb-1">
+                    <div className="flex items-center justify-start gap-1.5 md:gap-3 mb-0.5 md:mb-1">
                       <EventIcon type={event.type} detail={event.detail} />
-                      <span className="text-white font-bold text-[11px] md:text-sm tracking-tight group-hover:text-kickr transition-colors leading-tight">
-                        {event.type === 'subst' ? `${event.assist.name.split(' ').pop()} ↔ ${event.player.name.split(' ').pop()}` : event.player.name}
+                      <span className="text-white font-black text-[9px] md:text-sm tracking-tighter italic group-hover:text-kickr transition-colors leading-tight uppercase">
+                        {event.type === 'subst' ? `${event.assist.name.split(' ').pop()} ↔ ${event.player.name.split(' ').pop()}` : event.player.name.split(' ').pop()}
                       </span>
-                    </div>
-                    <div className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-widest">
-                      {event.detail} {event.type === 'Goal' && event.assist.name ? `• Asst: ${event.assist.name.split(' ').pop()}` : ''}
                     </div>
                   </div>
                 )}
@@ -944,14 +930,14 @@ const EventsSection = ({ events, homeTeamId, homeTeamName }: any) => {
 const EventIcon = ({ type, detail }: { type: string, detail?: string }) => {
   switch (type) {
     case 'Goal':
-      if (detail === 'Own Goal') return <span className="text-lg">⚽🚩</span>;
-      return <span className="text-lg">⚽</span>;
+      if (detail === 'Own Goal') return <span className="text-xs md:text-lg leading-none">⚽🚩</span>;
+      return <span className="text-xs md:text-lg leading-none">⚽</span>;
     case 'Card':
-      if (detail === 'Yellow Card') return <div className="w-3 h-4 bg-[#ffcc00] rounded-[2px] shadow-[0_0_8px_rgba(255,204,0,0.4)]" />;
-      return <div className="w-3 h-4 bg-[#ff4444] rounded-[2px] shadow-[0_0_8px_rgba(255,68,68,0.4)]" />;
-    case 'subst': return <span className="text-lg text-kickr">🔄</span>;
-    case 'Var': return <span className="text-xs bg-white/10 px-1.5 py-0.5 rounded-sm font-black text-white border border-white/10">VAR</span>;
-    default: return <span className="text-xs">📍</span>;
+      if (detail === 'Yellow Card') return <div className="w-2 md:w-3 h-3 md:h-4 bg-[#ffcc00] rounded-[1px] md:rounded-[2px]" />;
+      return <div className="w-2 md:w-3 h-3 md:h-4 bg-[#ff4444] rounded-[1px] md:rounded-[2px]" />;
+    case 'subst': return <span className="text-xs md:text-lg text-kickr leading-none">🔄</span>;
+    case 'Var': return <span className="text-[6px] md:text-xs bg-white/10 px-1 md:px-1.5 py-0.5 rounded-sm font-black text-white border border-white/10">VAR</span>;
+    default: return <span className="text-[6px] md:text-xs">📍</span>;
   }
 };
 

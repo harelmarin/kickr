@@ -109,83 +109,89 @@ export const TeamDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-[#14181c] pb-24">
-      <div className="bg-[#14181c] border-b border-white/5 pt-10 pb-16 md:pt-20 md:pb-20 relative overflow-hidden">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] opacity-[0.03] pointer-events-none">
+      <div className="bg-[#14181c] border-b border-white/5 pt-12 pb-4 md:pt-20 md:pb-20 relative overflow-hidden">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] opacity-[0.02] pointer-events-none">
           <img src={team.logoUrl} className="w-full h-full object-contain" alt="" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 relative z-10 text-center md:text-left">
-          <div className="w-24 h-24 md:w-48 md:h-48 bg-[#14181c] rounded-sm shadow-2xl p-4 md:p-8 border border-white/10 relative group flex-shrink-0">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center md:items-end gap-3 md:gap-12 relative z-10 text-center md:text-left">
+          <div className="w-16 h-16 md:w-32 md:h-32 xl:w-48 xl:h-48 bg-[#14181c] rounded-sm shadow-2xl p-3 md:p-6 border border-white/10 relative group flex-shrink-0">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
           <div className="flex-1 min-w-0">
-            <h1 className="text-3xl md:text-8xl font-black text-white mb-2 md:mb-4 tracking-tighter leading-none uppercase italic display-font truncate">
+            <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 mb-1 md:mb-4">
+              <div className="h-[1px] w-4 md:w-6 bg-kickr opacity-50"></div>
+              <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Tactical Deployment</span>
+            </div>
+            <h1 className="text-xl md:text-6xl xl:text-8xl font-black text-white mb-1 md:mb-4 tracking-tighter leading-none uppercase italic display-font truncate">
               {team.name}
             </h1>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-6">
-              <span className="text-[#64748b] uppercase tracking-[0.2em] font-black text-[9px] md:text-xs italic">{team.competition?.country || 'France'}</span>
-              <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-white/10 px-0"></span>
-              <span className="text-[#64748b] uppercase tracking-[0.2em] font-black text-[9px] md:text-xs italic">{team.competition?.name || 'Club International'}</span>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-6">
+              <span className="text-[#64748b] uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic">{team.competition?.country || 'France'}</span>
+              <span className="hidden md:block w-1 h-1 rounded-full bg-white/10 px-0"></span>
+              <span className="text-[#64748b] uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic">{team.competition?.name || 'Club International'}</span>
             </div>
           </div>
 
           <div className="hidden lg:flex items-center gap-12 mb-2">
-            <BigStat label="Tactical Records" value={totalDiaryEntries >= 1000 ? `${(totalDiaryEntries / 1000).toFixed(1)}k` : totalDiaryEntries.toString()} />
+            <BigStat label="Logs Recorded" value={totalDiaryEntries >= 1000 ? `${(totalDiaryEntries / 1000).toFixed(1)}k` : totalDiaryEntries.toString()} />
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-16">
-          <div className="lg:col-span-3 space-y-12 md:space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-16">
+          <div className="lg:col-span-3 space-y-8 md:space-y-16">
             <section>
-              <div className="flex flex-col gap-6 mb-10 border-b border-white/5 pb-6">
-                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-kickr italic">Matchography</span>
+              <div className="flex flex-col gap-4 mb-6 md:mb-10 border-b border-white/5 pb-4 md:pb-6">
+                <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-kickr italic">Matchography</span>
 
-                <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
-                  {/* Status Filter */}
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
-                    <select
-                      value={status}
-                      onChange={(e) => setStatus(e.target.value as any)}
-                      className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                    >
-                      <option value="all" className="bg-[#14181c]">All Matches</option>
-                      <option value="finished" className="bg-[#14181c]">Finished</option>
-                      <option value="upcoming" className="bg-[#14181c]">Upcoming</option>
-                    </select>
-                  </div>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-6 md:gap-12">
+                    {/* Status Filter */}
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[7px] md:text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Status</span>
+                      <select
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value as any)}
+                        className="bg-transparent text-[10px] md:text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
+                      >
+                        <option value="all" className="bg-[#14181c]">All</option>
+                        <option value="finished" className="bg-[#14181c]">Finished</option>
+                        <option value="upcoming" className="bg-[#14181c]">Upcoming</option>
+                      </select>
+                    </div>
 
-                  {/* Sort Filter */}
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Sort by</span>
-                    <select
-                      value={sort}
-                      onChange={(e) => setSort(e.target.value as any)}
-                      className="bg-transparent text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
-                    >
-                      <option value="date" className="bg-[#14181c]">Date</option>
-                      <option value="rating" className="bg-[#14181c]">Highest Rated</option>
-                    </select>
+                    {/* Sort Filter */}
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[7px] md:text-[9px] uppercase font-black text-[#445566] tracking-[0.2em]">Order</span>
+                      <select
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value as any)}
+                        className="bg-transparent text-[10px] md:text-[11px] font-bold text-[#8899aa] focus:text-white outline-none cursor-pointer border-none p-0 m-0"
+                      >
+                        <option value="date" className="bg-[#14181c]">Date</option>
+                        <option value="rating" className="bg-[#14181c]">Stars</option>
+                      </select>
+                    </div>
                   </div>
 
                   {/* Match Count */}
-                  <div className="ml-auto text-[10px] uppercase tracking-widest text-[#445566] font-bold">
-                    {filteredAndSortedMatches.length} {filteredAndSortedMatches.length === 1 ? 'Match' : 'Matches'}
+                  <div className="text-[7px] md:text-[10px] uppercase tracking-[0.3em] text-[#445566] font-black italic">
+                    {filteredAndSortedMatches.length} RECORDS
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
                 {isLoadingMatches ? (
-                  Array.from({ length: 9 }).map((_, i) => (
-                    <div key={i} className="aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
                   ))
                 ) : filteredAndSortedMatches.length === 0 ? (
-                  <div className="col-span-full py-20 text-center">
-                    <p className="text-[#445566] uppercase tracking-widest text-xs font-bold">No matches found for these filters.</p>
+                  <div className="col-span-full py-12 text-center border border-white/5 bg-white/[0.01]">
+                    <p className="text-[#445566] uppercase tracking-[0.3em] text-[8px] font-black italic">No records in database.</p>
                   </div>
                 ) : (
                   filteredAndSortedMatches.map(match => (
@@ -196,35 +202,35 @@ export const TeamDetailPage = () => {
             </section>
           </div>
 
-          <div className="space-y-8">
-            <section className="bg-white/[0.02] border border-white/5 rounded-sm p-8">
-              <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-8 border-b border-white/5 pb-6 italic">Strategic Performance</h3>
+          <div className="space-y-6 md:space-y-8">
+            <section className="bg-white/[0.02] border border-white/5 rounded-sm p-4 md:p-8">
+              <h3 className="text-[9px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Tactical Report</h3>
 
-              <div className="mb-10">
-                <div className="flex justify-between text-[9px] font-black uppercase tracking-widest text-white/40 mb-3 italic">
+              <div className="mb-8">
+                <div className="flex justify-between text-[7px] md:text-[9px] font-black uppercase tracking-widest text-white/40 mb-2 md:mb-3 italic">
                   <span>Battle Records</span>
-                  <span className="text-white/60">{stats.wins}W <span className="text-white/10 mx-1">/</span> {stats.draws}D <span className="text-white/10 mx-1">/</span> {stats.losses}L</span>
+                  <span className="text-white/60">{stats.wins}W <span className="text-white/10 mx-0.5 md:mx-1">/</span> {stats.draws}D <span className="text-white/10 mx-0.5 md:mx-1">/</span> {stats.losses}L</span>
                 </div>
-                <div className="h-1.5 w-full flex rounded-full overflow-hidden bg-white/5">
+                <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-white/5">
                   <div style={{ width: stats.winRate }} className="bg-kickr h-full shadow-[0_0_10px_rgba(var(--kickr-rgb),0.3)]" title={`Wins: ${stats.winRate}`}></div>
                   <div style={{ width: stats.drawRate }} className="bg-white/10 h-full" title={`Draws: ${stats.drawRate}`}></div>
                   <div style={{ width: stats.lossRate }} className="bg-[#ef4444]/40 h-full" title={`Losses: ${stats.lossRate}`}></div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 mb-10 border-y border-white/5 py-8">
-                <MiniStat label="Attack" value={stats.avgScored} description="Avg goals" />
-                <MiniStat label="Community" value={stats.globalAverageRating} description="Avg stars" />
-                <MiniStat label="Defense" value={stats.avgConceded} description="Avg goals" />
+              <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 border-y border-white/5 py-6 md:py-8">
+                <MiniStat label="Attack" value={stats.avgScored} description="Avg" />
+                <MiniStat label="Intel" value={stats.globalAverageRating} description="Avg" />
+                <MiniStat label="Defense" value={stats.avgConceded} description="Avg" />
               </div>
 
-              <div className="mb-10">
-                <h4 className="text-[9px] font-black text-white/40 uppercase tracking-widest mb-4 italic">Recent Form</h4>
-                <div className="flex gap-1.5">
+              <div className="mb-8">
+                <h4 className="text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-widest mb-3 md:mb-4 italic">Operational Form</h4>
+                <div className="flex gap-1">
                   {stats.form.map((res, i) => (
                     <div
                       key={i}
-                      className={`w-6 h-6 rounded-sm flex items-center justify-center text-[9px] font-black ${res === 'W' ? 'bg-kickr text-black' :
+                      className={`w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-[9px] font-black ${res === 'W' ? 'bg-kickr text-black shadow-[0_0_8px_rgba(var(--kickr-rgb),0.2)]' :
                         res === 'D' ? 'bg-white/10 text-white/60' :
                           'bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20'
                         }`}
@@ -235,13 +241,13 @@ export const TeamDetailPage = () => {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/5 space-y-4">
+              <div className="pt-4 md:pt-6 border-t border-white/5 space-y-3 md:space-y-4">
                 <div className="flex items-center justify-between uppercase tracking-widest">
-                  <span className="text-[8px] font-black text-white/20">Clean Sheets</span>
-                  <span className="text-xl font-black text-white italic">{stats.cleanSheets}</span>
+                  <span className="text-[7px] md:text-[8px] font-black text-white/20">Clean Sheets</span>
+                  <span className="text-lg md:text-xl font-black text-white italic leading-none">{stats.cleanSheets}</span>
                 </div>
-                <p className="text-[10px] text-white/20 italic leading-relaxed">
-                  Calculated from {matches?.filter(m => m.homeScore !== null).length || 0} tactical deployments recorded in the system.
+                <p className="text-[7px] md:text-[10px] text-white/10 italic leading-relaxed uppercase tracking-tighter">
+                  Source: {matches?.filter(m => m.homeScore !== null).length || 0} Records analyzed.
                 </p>
               </div>
             </section>
