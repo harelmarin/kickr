@@ -22,7 +22,7 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-[calc(100vh-4rem)] bg-[#14181c] pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
+        <div className="min-h-[calc(100vh-4rem)] bg-kickr-bg-primary pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
             {/* Header */}
             <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                 <div>
@@ -167,7 +167,7 @@ const UsersTab = () => {
     );
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-sm overflow-hidden shadow-xl">
+        <div className="bg-kickr-bg-primary border border-white/5 rounded-sm overflow-hidden shadow-xl">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Tactician Directory</h2>
                 <input
@@ -175,12 +175,12 @@ const UsersTab = () => {
                     placeholder="Search systems..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-[#14181c]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
+                    className="bg-kickr-bg-primary/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
                 />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead className="bg-[#14181c]/10 text-[#445566] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em]">
+                    <thead className="bg-kickr-bg-primary/10 text-[#445566] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em]">
                         <tr>
                             <th className="px-3 md:px-6 py-2 md:py-4">User</th>
                             <th className="px-3 md:px-6 py-2 md:py-4">Status</th>
@@ -234,7 +234,7 @@ const UsersTab = () => {
 
             {/* Pagination */}
             {pageData && pageData.totalPages > 1 && (
-                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#14181c]/10">
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-kickr-bg-primary/10">
                     <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
                         Page {pageData.number + 1} / {pageData.totalPages}
                     </div>
@@ -290,14 +290,14 @@ const ReportsTab = () => {
         <div className="space-y-6">
             <div className="grid grid-cols-1 gap-4">
                 {reports.length === 0 ? (
-                    <div className="bg-[#14181c] border border-white/5 rounded-sm p-32 text-center">
+                    <div className="bg-kickr-bg-primary border border-white/5 rounded-sm p-32 text-center">
                         <p className="text-kickr text-[24px] mb-4">🛡️</p>
                         <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em]">Sector Secured</p>
                         <p className="text-[#667788] text-[11px] font-bold uppercase mt-2 italic">Zero active incidents detected in current buffer</p>
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all">
+                        <div key={report.id} className="bg-kickr-bg-primary border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all">
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 md:gap-8">
                                 <div className="space-y-4 md:space-y-6 flex-1">
                                     <div className="flex items-center gap-2 md:gap-3 flex-wrap">
@@ -331,7 +331,7 @@ const ReportsTab = () => {
 
                                         <div>
                                             <p className="text-[8px] md:text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
-                                            <p className="text-[10px] md:text-[12px] text-[#99aabb] leading-relaxed bg-[#14181c]/40 border border-white/5 p-3 md:p-4 rounded-sm italic h-full">
+                                            <p className="text-[10px] md:text-[12px] text-[#99aabb] leading-relaxed bg-kickr-bg-primary/40 border border-white/5 p-3 md:p-4 rounded-sm italic h-full">
                                                 "{report.description || 'No additional intelligence provided'}"
                                             </p>
                                         </div>
@@ -376,7 +376,7 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-[#14181c] border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
+    <div className={`bg-kickr-bg-primary border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
         <p className="text-[8px] md:text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
         <div className="flex items-end justify-between">
             <h3 className={`text-2xl md:text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
@@ -389,7 +389,7 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
     const maxVal = Math.max(...data.map((d: any) => d.count), 1);
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-sm p-4 md:p-8 shadow-xl">
+        <div className="bg-kickr-bg-primary border border-white/5 rounded-sm p-4 md:p-8 shadow-xl">
             <div className="mb-6 md:mb-10">
                 <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
                 <p className="text-[8px] md:text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
@@ -459,7 +459,7 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     };
 
     return (
-        <div className="bg-[#14181c]/20 border border-white/5 rounded-sm p-4 md:p-6 hover:bg-white/[0.02] transition-all group">
+        <div className="bg-kickr-bg-primary/20 border border-white/5 rounded-sm p-4 md:p-6 hover:bg-white/[0.02] transition-all group">
             <h3 className="text-xs md:text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
             <p className="text-[10px] md:text-[11px] text-[#667788] font-medium mb-4 md:mb-6 leading-relaxed">{description}</p>
             <div className="flex items-center justify-between">

@@ -13,7 +13,7 @@ export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
                 className="relative h-14 md:h-20 overflow-hidden block bg-kickr-bg-primary/20 border-b border-white/5"
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] to-transparent opacity-40 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary to-transparent opacity-40 z-10" />
 
                 {/* Team Logos & Score */}
                 <div className="absolute inset-0 flex items-center justify-center gap-3 md:gap-6 px-4 z-20">

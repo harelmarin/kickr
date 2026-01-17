@@ -85,7 +85,7 @@ export default function HomePage() {
       <section className="relative min-h-[70vh] md:min-h-[90vh] flex flex-col items-center justify-center border-b border-white/5 overflow-hidden pt-12 pb-6 md:py-24">
         {/* Background Atmosphere */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-[#14181c]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-kickr-bg-primary"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#14181c_100%)] opacity-90"></div>
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"

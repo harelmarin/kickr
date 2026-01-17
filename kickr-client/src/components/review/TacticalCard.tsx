@@ -28,11 +28,11 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
     return (
         <div
             ref={cardRef}
-            className="w-[1080px] min-h-[1080px] bg-[#0C0C0C] flex flex-col p-16 relative"
+            className="w-[1080px] min-h-[1080px] bg-[#0F1115] flex flex-col p-16 relative"
             style={{ fontFamily: 'Inter, sans-serif' }}
         >
             {/* Subtle background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0C0C0C] via-[#141414] to-[#0C0C0C]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0F1115] via-[#16191F] to-[#0F1115]"></div>
 
             {/* Subtle grid pattern */}
             <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
@@ -42,7 +42,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                 <span className="text-[#4B7BEC] text-2xl font-black uppercase tracking-[0.2em]">
                     {review.match.competition}
                 </span>
-                <span className="text-white/40 text-2xl font-bold uppercase tracking-widest">
+                <span className="text-main/40 text-2xl font-bold uppercase tracking-widest">
                     {new Date(review.watchedAt).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })}
                 </span>
             </div>
@@ -52,22 +52,22 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                 <div className="flex items-center justify-center gap-20 mb-12">
                     <div className="flex flex-col items-center gap-6 w-[280px]">
                         <img src={getProxyUrl(review.match.homeLogo)} crossOrigin="anonymous" className="w-48 h-48 object-contain" alt="" />
-                        <span className="text-white text-3xl font-black uppercase text-center tracking-tight leading-tight">
+                        <span className="text-main text-3xl font-black uppercase text-center tracking-tight leading-tight">
                             {review.match.homeTeam}
                         </span>
                     </div>
 
                     <div className="flex flex-col items-center gap-6">
                         <div className="flex items-center gap-10 bg-white/[0.03] border border-white/10 px-12 py-8 rounded-sm">
-                            <span className="text-[120px] font-black text-white leading-none tabular-nums">{review.match.homeScore}</span>
+                            <span className="text-[120px] font-black text-main leading-none tabular-nums">{review.match.homeScore}</span>
                             <div className="w-[2px] h-24 bg-[#4B7BEC]/30"></div>
-                            <span className="text-[120px] font-black text-white leading-none tabular-nums">{review.match.awayScore}</span>
+                            <span className="text-[120px] font-black text-main leading-none tabular-nums">{review.match.awayScore}</span>
                         </div>
                     </div>
 
                     <div className="flex flex-col items-center gap-6 w-[280px]">
                         <img src={getProxyUrl(review.match.awayLogo)} crossOrigin="anonymous" className="w-48 h-48 object-contain" alt="" />
-                        <span className="text-white text-3xl font-black uppercase text-center tracking-tight leading-tight">
+                        <span className="text-main text-3xl font-black uppercase text-center tracking-tight leading-tight">
                             {review.match.awayTeam}
                         </span>
                     </div>
@@ -77,7 +77,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                 <div className="flex items-center gap-4 mb-20 bg-[#4B7BEC]/5 px-8 py-4 rounded-full border border-[#4B7BEC]/20">
                     <div className="flex text-[#4B7BEC] text-5xl">
                         {'★'.repeat(Math.round(review.note))}
-                        <span className="text-white/20">{'★'.repeat(5 - Math.round(review.note))}</span>
+                        <span className="text-main/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                     </div>
                     {review.isLiked && (
                         <span className="text-[#ff8000] text-4xl ml-2">❤</span>
@@ -110,24 +110,24 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                             {review.user?.avatarUrl ? (
                                 <img src={getProxyUrl(review.user.avatarUrl)} crossOrigin="anonymous" alt="" className="w-full h-full object-cover" />
                             ) : (
-                                <span className="text-2xl font-black text-white">{review.user?.name[0]}</span>
+                                <span className="text-2xl font-black text-main">{review.user?.name[0]}</span>
                             )}
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-white/60 text-xl font-bold uppercase tracking-widest leading-none mb-2">Tactician</span>
-                        <span className="text-white text-3xl font-black uppercase tracking-tight">{review.user?.name}</span>
+                        <span className="text-main/60 text-xl font-bold uppercase tracking-widest leading-none mb-2">Tactician</span>
+                        <span className="text-main text-3xl font-black uppercase tracking-tight">{review.user?.name}</span>
                     </div>
                 </div>
 
                 <div className="flex flex-col items-end">
                     <div className="flex items-center gap-3 mb-2">
                         <div className="w-10 h-10 bg-[#4B7BEC] flex items-center justify-center rounded-sm">
-                            <span className="font-black text-white text-2xl uppercase">K</span>
+                            <span className="font-black text-main text-2xl uppercase">K</span>
                         </div>
-                        <span className="text-white text-4xl font-black tracking-tighter uppercase">Kickr</span>
+                        <span className="text-main text-4xl font-black tracking-tighter uppercase">Kickr</span>
                     </div>
-                    <span className="text-white/50 text-lg font-bold tracking-[0.3em] uppercase">kickr.app</span>
+                    <span className="text-main/50 text-lg font-bold tracking-[0.3em] uppercase">kickr.app</span>
                 </div>
             </div>
         </div>

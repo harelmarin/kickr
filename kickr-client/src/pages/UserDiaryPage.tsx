@@ -39,7 +39,7 @@ export const UserDiaryPage = () => {
     return (
         <main className="min-h-screen bg-kickr-bg-primary text-main/40">
             <div className="relative h-[250px] md:h-[400px] w-full overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-[#14181c]/80 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-kickr-bg-primary/80 to-transparent z-10"></div>
                 <div className="absolute inset-0 bg-kickr-bg-primary opacity-50">
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
                 </div>
@@ -69,7 +69,7 @@ export const UserDiaryPage = () => {
                                 >
                                     <Link
                                         to="/settings"
-                                        className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-[#14181c] border border-white/5 flex items-center justify-center text-2xl md:text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group/link block"
+                                        className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-kickr-bg-primary border border-white/5 flex items-center justify-center text-2xl md:text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group/link block"
                                         title="Change Profile Picture"
                                     >
                                         {user?.avatarUrl ? (
@@ -86,7 +86,7 @@ export const UserDiaryPage = () => {
                                 <motion.div
                                     initial={{ scale: 0.9, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-[#14181c] border border-white/5 flex items-center justify-center text-2xl md:text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
+                                    className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-kickr-bg-primary border border-white/5 flex items-center justify-center text-2xl md:text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
                                 >
                                     {user?.avatarUrl ? (
                                         <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />

@@ -7,23 +7,28 @@
    ========================================================================== */
 @theme {
   --color-kickr: #4B7BEC;
-  /* Sapphire Slate */
-  --color-kickr-bg-primary: #0C0C0C;
-  --color-kickr-bg-secondary: #141414;
-  --color-kickr-bg-tertiary: #1C1C1C;
+  /* Sapphire Blue */
+  --color-kickr-bg-primary: #0F1115;
+  /* Soft Dark Primary */
+  --color-kickr-bg-secondary: #16191F;
+  /* Soft Dark Secondary */
+  --color-kickr-bg-tertiary: #1C2129;
 }
 
 :root {
   --kickr-primary: #4B7BEC;
   --kickr-primary-rgb: 75, 123, 236;
-  --color-bg-primary: #0C0C0C;
-  --color-bg-secondary: #141414;
-  --color-bg-tertiary: #1C1C1C;
-  --text-main: #FFFFFF;
+  --color-bg-primary: #0F1115;
+  --color-bg-secondary: #16191F;
+  --color-bg-tertiary: #1C2129;
+  --text-main: #E2E8F0;
+  /* Softer Off-White */
   --text-secondary: #94A3B8;
-  --text-muted: #475569;
-  --pitch-green: #0D1A12;
-  --pitch-light: #1A3324;
+  /* Slate-400 */
+  --text-muted: #64748B;
+  /* Slate-500 */
+  --pitch-green: #0D1410;
+  --pitch-light: #16241C;
 }
 
 @layer base {

@@ -100,7 +100,7 @@ export const MatchDetailPage = () => {
           </div>
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#14181c] via-[#14181c]/90 md:via-[#14181c]/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-kickr-bg-primary/90 md:via-kickr-bg-primary/80 to-transparent"></div>
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.02] md:opacity-[0.03] mix-blend-overlay"></div>
       </div>
 
@@ -767,7 +767,7 @@ const renderTacticalPlayers = (players: any[]) => {
           <div key={p.player.id} className="flex flex-col items-center gap-1 group/player w-12 md:w-16">
             <div className="relative">
               <div className="w-7 h-7 md:w-9 md:h-9 rounded-full bg-kickr-bg-primary/60 border border-kickr flex items-center justify-center group-hover/player:scale-110 group-hover/player:bg-kickr transition-all duration-300">
-                <span className="text-[9px] md:text-[11px] font-black text-main flex items-center justify-center leading-none group-hover/player:text-[#14181c] tabular-nums">
+                <span className="text-[9px] md:text-[11px] font-black text-main flex items-center justify-center leading-none group-hover/player:text-kickr-bg-primary tabular-nums">
                   {p.player.number}
                 </span>
               </div>

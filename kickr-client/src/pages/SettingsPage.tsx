@@ -199,7 +199,7 @@ export const SettingsPage = () => {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="absolute -bottom-1 -right-1 md:-bottom-3 md:-right-3 bg-kickr text-black w-6 h-6 md:w-10 md:h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[3px] md:border-[6px] border-[#14181c] shadow-xl shadow-kickr/20"
+                                className="absolute -bottom-1 -right-1 md:-bottom-3 md:-right-3 bg-kickr text-black w-6 h-6 md:w-10 md:h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[3px] md:border-[6px] border-kickr-bg-primary shadow-xl shadow-kickr/20"
                                 title="Upload Signal"
                             >
                                 <span className="text-xs md:text-sm">⚡</span>
