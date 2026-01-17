@@ -55,7 +55,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <main className="flex-1 flex flex-col lg:flex-row min-h-[calc(100vh-52px)] md:h-[calc(100vh-64px)] bg-[#14181c] overflow-hidden">
+        <main className="flex-1 flex flex-col lg:flex-row min-h-[calc(100vh-52px)] md:h-[calc(100vh-64px)] bg-kickr-bg-primary overflow-hidden">
 
             {/* Visual / Marketing Side (Left) */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 border-r border-white/5">
@@ -73,11 +73,11 @@ export const RegisterPage = () => {
 
                 {/* Content */}
                 <div className="relative z-10 max-w-lg">
-                    <div className="mb-8 inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-sm backdrop-blur-md">
+                    <div className="mb-8 inline-flex items-center gap-3 bg-black/5 border border-white/10 px-4 py-2 rounded-sm backdrop-blur-md">
                         <span className="text-[10px] font-black text-kickr uppercase tracking-[0.3em]">Season 2025/26 Live</span>
                     </div>
 
-                    <h1 className="text-4xl xl:text-5xl font-black text-white italic tracking-tighter uppercase leading-[0.9] mb-6">
+                    <h1 className="text-4xl xl:text-5xl font-black text-main italic tracking-tighter uppercase leading-[0.9] mb-6">
                         The Pitch <br />
                         Is Yours <br />
                         To <span className="text-kickr">Analyze.</span>
@@ -94,7 +94,7 @@ export const RegisterPage = () => {
             {/* Form Side (Right) */}
             <div className="flex-1 flex items-start lg:items-center justify-center p-4 md:p-12 lg:p-16 relative overflow-hidden overflow-y-auto">
                 {/* Mobile-only background elements */}
-                <div className="lg:hidden absolute inset-0 -z-10 bg-[#14181c]">
+                <div className="lg:hidden absolute inset-0 -z-10 bg-kickr-bg-primary">
                     <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-kickr/20 to-transparent"></div>
                     <div className="absolute inset-0 pitch-pattern opacity-[0.03]"></div>
                 </div>
@@ -102,13 +102,13 @@ export const RegisterPage = () => {
                 <div className="w-full max-w-md animate-fade-in-up mt-4 md:mt-8 lg:mt-0 relative z-10 px-4 lg:px-0">
                     <div className="lg:hidden mb-8 relative">
                         {/* Background stylized text */}
-                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-8xl font-black text-white/[0.02] select-none pointer-events-none tracking-tighter italic uppercase display-font">
+                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-8xl font-black text-main/[0.02] select-none pointer-events-none tracking-tighter italic uppercase display-font">
                             KICKR
                         </div>
 
                         <Link to="/" className="flex flex-col items-center gap-2 text-center relative z-10">
                             <img src="/favicon.png" alt="Kickr" className="w-12 h-12 md:w-14 md:h-14 mb-2 drop-shadow-[0_0_15px_rgba(68,102,255,0.3)]" />
-                            <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase display-font text-white leading-none">
+                            <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase display-font text-main leading-none">
                                 KICKR<span className="text-kickr">.</span><span className="hidden md:inline">AI</span>
                             </h1>
                             <p className="hidden md:block text-[11px] font-black text-kickr/60 uppercase tracking-[0.5em] italic mt-2 font-mono">
@@ -118,7 +118,7 @@ export const RegisterPage = () => {
                     </div>
 
                     <div className="mb-6">
-                        <h2 className="text-2xl font-black text-white tracking-tight mb-1 italic uppercase display-font">ACCESS ENROLLMENT</h2>
+                        <h2 className="text-2xl font-black text-main tracking-tight mb-1 italic uppercase display-font">ACCESS ENROLLMENT</h2>
                         <p className="text-[#667788] text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure analyst identifier.</p>
                     </div>
 
@@ -130,7 +130,7 @@ export const RegisterPage = () => {
                                     type="text"
                                     placeholder="Your analyst name"
                                     {...register("name")}
-                                    className={`w-full bg-[#1b2228]/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                    className={`w-full bg-kickr-bg-secondary/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                 />
                                 {errors.name && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
@@ -143,7 +143,7 @@ export const RegisterPage = () => {
                                     type="email"
                                     placeholder="name@example.com"
                                     {...register("email")}
-                                    className={`w-full bg-[#1b2228]/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                    className={`w-full bg-kickr-bg-secondary/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                 />
                                 {errors.email && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
@@ -157,7 +157,7 @@ export const RegisterPage = () => {
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("password")}
-                                        className={`w-full bg-[#1b2228]/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] focus:border-kickr/40 focus:bg-[#1b2228] transition-all outline-none`}
+                                        className={`w-full bg-kickr-bg-secondary/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                     />
                                     {errors.password && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.password.message}</p>
@@ -170,7 +170,7 @@ export const RegisterPage = () => {
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("confirmPassword")}
-                                        className={`w-full bg-[#1b2228]/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-white placeholder-[#445566] outline-none`}
+                                        className={`w-full bg-kickr-bg-secondary/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] outline-none`}
                                     />
                                     {errors.confirmPassword && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.confirmPassword.message}</p>
@@ -180,10 +180,10 @@ export const RegisterPage = () => {
                                 {/* Password Checker with labels */}
                                 <div className="space-y-2">
                                     <div className="grid grid-cols-4 gap-2">
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasMinLength ? 'bg-kickr' : 'bg-white/5'}`}></div>
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasUppercase ? 'bg-kickr' : 'bg-white/5'}`}></div>
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasLowercase ? 'bg-kickr' : 'bg-white/5'}`}></div>
-                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasNumber ? 'bg-kickr' : 'bg-white/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasMinLength ? 'bg-kickr' : 'bg-black/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasUppercase ? 'bg-kickr' : 'bg-black/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasLowercase ? 'bg-kickr' : 'bg-black/5'}`}></div>
+                                        <div className={`h-1.5 rounded-full transition-all duration-300 ${hasNumber ? 'bg-kickr' : 'bg-black/5'}`}></div>
                                     </div>
                                     <div className="flex justify-between px-1">
                                         <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasMinLength ? 'text-kickr' : 'text-[#445566]'}`}>8+ Chars</span>
@@ -209,7 +209,7 @@ export const RegisterPage = () => {
                             Found your credentials?{' '}
                             <button
                                 onClick={() => openAuthModal('login')}
-                                className="text-kickr hover:text-white transition-colors underline decoration-kickr/20 underline-offset-8 ml-1"
+                                className="text-kickr hover:text-main transition-colors underline decoration-kickr/20 underline-offset-8 ml-1"
                             >
                                 Sign In
                             </button>
@@ -223,11 +223,11 @@ export const RegisterPage = () => {
 
 const FeatureItem = ({ icon, title, description }: { icon: string; title: string; description: string }) => (
     <div className="flex gap-4 group">
-        <div className="w-9 h-9 rounded-sm bg-white/5 flex-shrink-0 flex items-center justify-center text-base border border-white/10 group-hover:border-kickr/30 group-hover:bg-kickr/5 transition-all">
+        <div className="w-9 h-9 rounded-sm bg-black/5 flex-shrink-0 flex items-center justify-center text-base border border-white/10 group-hover:border-kickr/30 group-hover:bg-kickr/5 transition-all">
             {icon}
         </div>
         <div>
-            <h3 className="text-white text-sm font-black uppercase tracking-wider mb-1 group-hover:text-kickr transition-colors">{title}</h3>
+            <h3 className="text-main text-sm font-black uppercase tracking-wider mb-1 group-hover:text-kickr transition-colors">{title}</h3>
             <p className="text-[#667788] text-xs leading-relaxed max-w-xs">{description}</p>
         </div>
     </div>

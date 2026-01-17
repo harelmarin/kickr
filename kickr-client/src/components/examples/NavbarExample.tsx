@@ -30,13 +30,13 @@ export const NavbarExample: FC = () => {
                     <h1 className="text-2xl font-bold text-secondary">Kickr</h1>
 
                     <div className="flex gap-4">
-                        <a href="/" className="text-gray-300 hover:text-white transition">
+                        <a href="/" className="text-gray-300 hover:text-main transition">
                             Home
                         </a>
-                        <a href="/matches" className="text-gray-300 hover:text-white transition">
+                        <a href="/matches" className="text-gray-300 hover:text-main transition">
                             Matches
                         </a>
-                        <a href="/competitions" className="text-gray-300 hover:text-white transition">
+                        <a href="/competitions" className="text-gray-300 hover:text-main transition">
                             Competitions
                         </a>
                     </div>
@@ -53,7 +53,7 @@ export const NavbarExample: FC = () => {
                                         setShowLogin(!showLogin);
                                         setShowRegister(false);
                                     }}
-                                    className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition"
+                                    className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-main transition"
                                 >
                                     Log in
                                 </button>

@@ -122,7 +122,7 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                     onClick={handleDownload}
                     disabled={isGenerating}
                     className={`flex items-center gap-2 rounded-sm transition-all duration-300 group overflow-hidden cursor-pointer ${variant === 'full'
-                        ? 'px-5 py-3 bg-[#4466ff] text-white font-black uppercase text-xs hover:brightness-110 active:scale-95'
+                        ? 'px-5 py-3 bg-[#4466ff] text-main font-black uppercase text-xs hover:brightness-110 active:scale-95'
                         : 'p-1 text-[#445566] hover:text-[#4466ff] active:scale-90'
                         }`}
                     title="Download PNG Card"

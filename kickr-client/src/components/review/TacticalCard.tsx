@@ -28,18 +28,18 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
     return (
         <div
             ref={cardRef}
-            className="w-[1080px] min-h-[1080px] bg-[#0d1117] flex flex-col p-16 relative"
+            className="w-[1080px] min-h-[1080px] bg-[#0C0C0C] flex flex-col p-16 relative"
             style={{ fontFamily: 'Inter, sans-serif' }}
         >
             {/* Subtle background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0d1117]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0C0C0C] via-[#141414] to-[#0C0C0C]"></div>
 
             {/* Subtle grid pattern */}
             <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
             {/* Header: Competition & Date */}
             <div className="flex justify-between items-center mb-16 z-10">
-                <span className="text-[#4466ff] text-2xl font-black uppercase tracking-[0.2em]">
+                <span className="text-[#4B7BEC] text-2xl font-black uppercase tracking-[0.2em]">
                     {review.match.competition}
                 </span>
                 <span className="text-white/40 text-2xl font-bold uppercase tracking-widest">
@@ -60,7 +60,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                     <div className="flex flex-col items-center gap-6">
                         <div className="flex items-center gap-10 bg-white/[0.03] border border-white/10 px-12 py-8 rounded-sm">
                             <span className="text-[120px] font-black text-white leading-none tabular-nums">{review.match.homeScore}</span>
-                            <div className="w-[2px] h-24 bg-[#4466ff]/30"></div>
+                            <div className="w-[2px] h-24 bg-[#4B7BEC]/30"></div>
                             <span className="text-[120px] font-black text-white leading-none tabular-nums">{review.match.awayScore}</span>
                         </div>
                     </div>
@@ -74,8 +74,8 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                 </div>
 
                 {/* Stars/Rating */}
-                <div className="flex items-center gap-4 mb-20 bg-[#4466ff]/5 px-8 py-4 rounded-full border border-[#4466ff]/20">
-                    <div className="flex text-[#4466ff] text-5xl">
+                <div className="flex items-center gap-4 mb-20 bg-[#4B7BEC]/5 px-8 py-4 rounded-full border border-[#4B7BEC]/20">
+                    <div className="flex text-[#4B7BEC] text-5xl">
                         {'★'.repeat(Math.round(review.note))}
                         <span className="text-white/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                     </div>
@@ -94,7 +94,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                             }
                         </p>
                         {review.comment.length > 1000 && (
-                            <p className="text-[#4466ff] text-[24px] font-bold uppercase tracking-wider mt-8">
+                            <p className="text-[#4B7BEC] text-[24px] font-bold uppercase tracking-wider mt-8">
                                 Read full review on kickr.app
                             </p>
                         )}
@@ -105,7 +105,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
             {/* Footer: User & Branding */}
             <div className="flex justify-between items-end mt-16 z-10">
                 <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 rounded-full border-2 border-[#4466ff]/30 p-1">
+                    <div className="w-20 h-20 rounded-full border-2 border-[#4B7BEC]/30 p-1">
                         <div className="w-full h-full rounded-full overflow-hidden bg-white/10 flex items-center justify-center">
                             {review.user?.avatarUrl ? (
                                 <img src={getProxyUrl(review.user.avatarUrl)} crossOrigin="anonymous" alt="" className="w-full h-full object-cover" />
@@ -122,7 +122,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
 
                 <div className="flex flex-col items-end">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 bg-[#4466ff] flex items-center justify-center rounded-sm">
+                        <div className="w-10 h-10 bg-[#4B7BEC] flex items-center justify-center rounded-sm">
                             <span className="font-black text-white text-2xl uppercase">K</span>
                         </div>
                         <span className="text-white text-4xl font-black tracking-tighter uppercase">Kickr</span>

@@ -49,17 +49,17 @@ export const CommunityPage = () => {
     const statsTotalLogs = pageData?.totalElements ? Math.round((pageData.content.reduce((acc: number, u: any) => acc + (u.matchesCount || 0), 0) / (pageData.content.length || 1)) * pageData.totalElements) : 0;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
+        <main className="min-h-screen bg-kickr-bg-primary pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-6 md:mb-16">
                     <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
                         <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
                         <span className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Network</span>
                     </div>
-                    <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
+                    <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
                         The <span className="text-kickr/80">Tacticians</span>
                     </h1>
-                    <p className="text-white/30 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[11px] font-black italic">
+                    <p className="text-main/30 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[11px] font-black italic">
                         Analyze. Track. Connect. Global Football Network.
                     </p>
 
@@ -68,7 +68,7 @@ export const CommunityPage = () => {
                             <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                                 {/* Search */}
                                 <div className="flex flex-col gap-1 w-full md:w-48">
-                                    <span className="text-[10px] uppercase font-black text-white/30 tracking-widest pl-0.5 italic">Identify</span>
+                                    <span className="text-[10px] uppercase font-black text-main/30 tracking-widest pl-0.5 italic">Identify</span>
                                     <div className="relative">
                                         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                                         <input
@@ -76,17 +76,17 @@ export const CommunityPage = () => {
                                             placeholder="SCAN..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
+                                            className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-main placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                                         />
                                     </div>
                                 </div>
                             </div>
 
                             <div className="hidden lg:flex flex-col items-end">
-                                <span className="text-xl font-black text-white italic leading-none tracking-tighter">
+                                <span className="text-xl font-black text-main italic leading-none tracking-tighter">
                                     {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
                                 </span>
-                                <span className="text-[11px] uppercase tracking-widest text-white/40 font-bold mt-1">Global Logs</span>
+                                <span className="text-[11px] uppercase tracking-widest text-main/40 font-bold mt-1">Global Logs</span>
                             </div>
                         </div>
                     </div>
@@ -96,13 +96,13 @@ export const CommunityPage = () => {
                     {/* Main Content */}
                     <div className="lg:col-span-8">
                         <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-                            <h2 className="text-[11px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">All Tacticians</h2>
-                            <span className="text-[10px] md:text-[8px] font-black text-white/20 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+                            <h2 className="text-[11px] md:text-[10px] font-black uppercase tracking-[0.4em] text-main/80 italic">All Tacticians</h2>
+                            <span className="text-[10px] md:text-[8px] font-black text-main/20 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                             {isLoading ? (
-                                Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-[1.5/1] bg-white/5 animate-pulse rounded-sm" />)
+                                Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-[1.5/1] bg-black/5 animate-pulse rounded-sm" />)
                             ) : (
                                 filteredUsers?.map((user) => (
                                     <UserCard key={user.id} user={user} isMe={user.id === currentUser?.id} />
@@ -118,7 +118,7 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-main/40 hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
                                     [ Prev ]
                                 </button>
@@ -128,8 +128,8 @@ export const CommunityPage = () => {
                                         if (pageData.totalPages > 5) {
                                             if (i < currentPage - 1 && i !== 0) return null;
                                             if (i > currentPage + 1 && i !== pageData.totalPages - 1) return null;
-                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[10px] text-white/20">..</span>;
-                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[10px] text-white/20">..</span>;
+                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[10px] text-main/20">..</span>;
+                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[10px] text-main/20">..</span>;
                                         }
 
                                         return (
@@ -141,7 +141,7 @@ export const CommunityPage = () => {
                                                 }}
                                                 className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[11px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
                                                     ? 'bg-kickr text-black'
-                                                    : 'bg-white/[0.01] border border-white/5 text-white/20 hover:text-white/40'
+                                                    : 'bg-white/[0.01] border border-white/5 text-main/20 hover:text-main/40'
                                                     }`}
                                             >
                                                 {i + 1}
@@ -156,7 +156,7 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-main/40 hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
                                     [ Next ]
                                 </button>
@@ -189,7 +189,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
     return (
         <Link
             to={`/user/${user.id}`}
-            className="group relative bg-white/[0.01] border border-white/5 rounded-sm overflow-hidden hover:border-kickr/30 hover:bg-white/[0.03] transition-all flex flex-col"
+            className="group relative bg-white/[0.01] border border-white/5 rounded-sm overflow-hidden hover:border-kickr/30 hover:bg-black/[0.03] transition-all flex flex-col"
         >
             <div className="p-2 md:p-4 flex flex-col items-center md:items-start text-center md:text-left h-full">
                 {isMe && (
@@ -201,7 +201,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                 )}
 
                 <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-3 mb-1.5 md:mb-3 w-full">
-                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-sm bg-white/[0.02] border border-white/5 flex items-center justify-center text-xs md:text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/30 transition-all overflow-hidden flex-shrink-0">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-sm bg-black/[0.02] border border-white/5 flex items-center justify-center text-xs md:text-lg font-black text-main group-hover:text-kickr group-hover:border-kickr/30 transition-all overflow-hidden flex-shrink-0">
                         {user.avatarUrl ? (
                             <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                         ) : (
@@ -210,10 +210,10 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
 
                     <div className="flex-1 min-w-0 w-full">
-                        <h3 className="text-[11px] md:text-sm font-black text-white/80 uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                        <h3 className="text-[11px] md:text-sm font-black text-main/80 uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
                             {user.name}
                         </h3>
-                        <p className="hidden md:block text-[11px] text-white/40 font-bold uppercase tracking-wide mt-0.5">
+                        <p className="hidden md:block text-[11px] text-main/40 font-bold uppercase tracking-wide mt-0.5">
                             {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                         </p>
                     </div>
@@ -221,16 +221,16 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 
                 <div className="flex items-center justify-center md:justify-around w-full mt-auto pt-1 border-t border-white/5 gap-3 md:gap-4">
                     <div className="flex flex-col items-center">
-                        <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
+                        <span className="text-[10px] md:text-base font-black text-main/90 italic tracking-tighter leading-none tabular-nums">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[10px] md:text-[7px] font-bold text-white/40 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
+                        <span className="text-[10px] md:text-[7px] font-bold text-main/40 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
+                        <span className="text-[10px] md:text-base font-black text-main/90 italic tracking-tighter leading-none tabular-nums">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[10px] md:text-[7px] font-bold text-white/40 uppercase tracking-widest leading-none mt-0.5">NET</span>
+                        <span className="text-[10px] md:text-[7px] font-bold text-main/40 uppercase tracking-widest leading-none mt-0.5">NET</span>
                     </div>
                 </div>
             </div>

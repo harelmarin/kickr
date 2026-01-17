@@ -56,7 +56,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
     };
 
     return (
-        <div className="w-full sm:w-[350px] bg-[#14181c] border-x border-b sm:border border-white/10 rounded-b-sm sm:rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="w-full sm:w-[350px] bg-kickr-bg-primary border-x border-b sm:border border-white/10 rounded-b-sm sm:rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
             <AnimatePresence mode="wait">
                 {!isForgot ? (
@@ -70,7 +70,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                     >
                         <div>
                             <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">Kickr Access</h3>
-                            <p className="text-white text-2xl font-black tracking-tighter italic uppercase leading-none display-font">Authorization</p>
+                            <p className="text-main text-2xl font-black tracking-tighter italic uppercase leading-none display-font">Authorization</p>
                         </div>
 
                         <div className="space-y-4">
@@ -79,7 +79,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                     type="text"
                                     placeholder="Username"
                                     {...register("username")}
-                                    className={`w-full bg-white/[0.02] border ${errors.username ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
+                                    className={`w-full bg-black/[0.02] border ${errors.username ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                                 />
                             </div>
                             {errors.username && <p className="text-[11px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.username.message}</p>}
@@ -89,7 +89,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Password"
                                     {...register("password")}
-                                    className={`w-full bg-white/[0.02] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 pr-12 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
+                                    className={`w-full bg-black/[0.02] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 pr-12 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                                 />
                                 <button
                                     type="button"
@@ -117,7 +117,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                         <button
                             type="button"
                             onClick={() => setIsForgot(true)}
-                            className="text-[11px] font-black text-white/40 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 italic"
+                            className="text-[11px] font-black text-main/40 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 italic"
                         >
                             [ FORGOT DETAILS? ]
                         </button>
@@ -132,20 +132,20 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                     >
                         <div>
                             <h3 className="text-[12px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">Forgot Password</h3>
-                            <p className="text-white text-xl font-black tracking-tighter italic uppercase leading-none">Reset Access</p>
+                            <p className="text-main text-xl font-black tracking-tighter italic uppercase leading-none">Reset Access</p>
                         </div>
 
                         {!isForgotSent ? (
                             <form onSubmit={handleForgotSubmit} className="space-y-6">
                                 <div className="space-y-3">
-                                    <label className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em] pl-1 block italic">Email Adress</label>
+                                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.3em] pl-1 block italic">Email Adress</label>
                                     <input
                                         type="email"
                                         required
                                         value={forgotEmail}
                                         onChange={(e) => setForgotEmail(e.target.value)}
                                         placeholder="Enter your email"
-                                        className="w-full bg-white/[0.02] border border-white/5 rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic"
+                                        className="w-full bg-black/[0.02] border border-white/5 rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic"
                                     />
                                 </div>
 
@@ -172,7 +172,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                 setIsForgot(false);
                                 setIsForgotSent(false);
                             }}
-                            className="text-[11px] font-black text-white/40 hover:text-kickr uppercase tracking-[0.3em] transition-all italic"
+                            className="text-[11px] font-black text-main/40 hover:text-kickr uppercase tracking-[0.3em] transition-all italic"
                         >
                             [ BACK TO LOGIN ]
                         </button>
@@ -234,82 +234,82 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full sm:w-[450px] p-6 sm:p-10 flex flex-col gap-8 bg-[#14181c] border-x border-b sm:border border-white/10 rounded-b-sm sm:rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full sm:w-[450px] p-6 sm:p-10 flex flex-col gap-8 bg-kickr-bg-primary border-x border-b sm:border border-white/10 rounded-b-sm sm:rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
 
             <div className="mb-4">
                 <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">System Enrollment</h3>
-                <p className="text-white text-3xl font-black tracking-tighter italic uppercase leading-none display-font">New Tactician</p>
+                <p className="text-main text-3xl font-black tracking-tighter italic uppercase leading-none display-font">New Tactician</p>
             </div>
 
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-white/40 uppercase tracking-[0.4em] pl-1 italic">Tactician Callsign</label>
+                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.4em] pl-1 italic">Tactician Callsign</label>
                     <input
                         type="text"
                         placeholder="CHOOSE_IDENTITY"
                         {...register("name")}
-                        className={`bg-white/[0.02] border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
+                        className={`bg-black/[0.02] border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
                     {errors.name && <p className="text-[11px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.name.message}</p>}
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-white/40 uppercase tracking-[0.4em] pl-1 italic">Communication Link</label>
+                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.4em] pl-1 italic">Communication Link</label>
                     <input
                         type="email"
                         placeholder="ENCRYPTED@SIGNAL.MAIL"
                         {...register("email")}
-                        className={`bg-white/[0.02] border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
+                        className={`bg-black/[0.02] border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
                     {errors.email && <p className="text-[11px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.email.message}</p>}
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-white/40 uppercase tracking-[0.4em] pl-1 italic">Security Pass</label>
+                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.4em] pl-1 italic">Security Pass</label>
                     <input
                         type="password"
                         placeholder="CREATE_ENCRYPTION_PASS"
                         {...register("password")}
-                        className={`bg-white/[0.02] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
+                        className={`bg-black/[0.02] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
                     {errors.password && <p className="text-[11px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.password.message}</p>}
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-white/40 uppercase tracking-[0.4em] pl-1 italic">Confirm Security</label>
+                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.4em] pl-1 italic">Confirm Security</label>
                     <input
                         type="password"
                         placeholder="VERIFY_ENCRYPTION_PASS"
                         {...register("confirmPassword")}
-                        className={`bg-white/[0.02] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-white placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
+                        className={`bg-black/[0.02] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
                     {errors.confirmPassword && <p className="text-[11px] text-red-500 font-black pl-1 uppercase tracking-tighter italic">{errors.confirmPassword.message}</p>}
 
                     {password.length > 0 && (
                         <div className="bg-white/[0.01] border border-white/5 rounded-sm p-6 space-y-3 mt-2">
-                            <div className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2 italic">Security Checklist</div>
+                            <div className="text-[10px] font-black text-main/30 uppercase tracking-[0.3em] mb-2 italic">Security Checklist</div>
                             <div className="flex items-center gap-3">
-                                <div className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-kickr' : 'bg-white/10'}`}></div>
-                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasMinLength ? 'text-white/60' : 'text-white/20'}`}>
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-kickr' : 'bg-black/10'}`}></div>
+                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasMinLength ? 'text-main/60' : 'text-main/20'}`}>
                                     Minimum 8 Characters
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className={`w-1.5 h-1.5 rounded-full ${hasUppercase ? 'bg-kickr' : 'bg-white/10'}`}></div>
-                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasUppercase ? 'text-white/60' : 'text-white/20'}`}>
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasUppercase ? 'bg-kickr' : 'bg-black/10'}`}></div>
+                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasUppercase ? 'text-main/60' : 'text-main/20'}`}>
                                     Alpha-Upper Requirement
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className={`w-1.5 h-1.5 rounded-full ${hasLowercase ? 'bg-kickr' : 'bg-white/10'}`}></div>
-                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasLowercase ? 'text-white/60' : 'text-white/20'}`}>
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasLowercase ? 'bg-kickr' : 'bg-black/10'}`}></div>
+                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasLowercase ? 'text-main/60' : 'text-main/20'}`}>
                                     Alpha-Lower Requirement
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className={`w-1.5 h-1.5 rounded-full ${hasNumber ? 'bg-kickr' : 'bg-white/10'}`}></div>
-                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasNumber ? 'text-white/60' : 'text-white/20'}`}>
+                                <div className={`w-1.5 h-1.5 rounded-full ${hasNumber ? 'bg-kickr' : 'bg-black/10'}`}></div>
+                                <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasNumber ? 'text-main/60' : 'text-main/20'}`}>
                                     Numeric Requirement
                                 </span>
                             </div>
@@ -330,7 +330,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 <button
                     type="button"
                     onClick={onSwitchToLogin}
-                    className="text-[11px] font-black text-white/40 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 mx-auto italic"
+                    className="text-[11px] font-black text-main/40 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 mx-auto italic"
                 >
                     [ ALREADY AUTHORIZED? LOGIN ]
                 </button>

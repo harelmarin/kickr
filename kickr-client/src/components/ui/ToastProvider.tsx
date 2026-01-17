@@ -18,7 +18,7 @@ export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
                 toastOptions={{
                     duration: 4000,
                     style: {
-                        background: 'rgba(27, 34, 40, 0.9)',
+                        background: 'rgba(12, 12, 12, 0.95)',
                         backdropFilter: 'blur(12px)',
                         color: '#fff',
                         border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -32,11 +32,11 @@ export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
                     success: {
                         duration: 3000,
                         iconTheme: {
-                            primary: '#4466ff',
+                            primary: '#4B7BEC',
                             secondary: '#fff',
                         },
                         style: {
-                            border: '1px solid rgba(68, 102, 255, 0.2)',
+                            border: '1px solid rgba(75, 123, 236, 0.2)',
                         },
                     },
                     error: {

@@ -35,7 +35,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
     };
 
     return (
-        <div className={`relative bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden group/review transition-all duration-500 hover:border-white/10 flex flex-col ${review.isModerated ? 'opacity-60' : ''}`}>
+        <div className={`relative bg-black/[0.02] border border-white/5 rounded-sm overflow-hidden group/review transition-all duration-500 hover:border-white/10 flex flex-col ${review.isModerated ? 'opacity-60' : ''}`}>
             {/* Full Card Link Overlay - ONLY if we have a valid target */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
@@ -51,16 +51,16 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
 
             <div className="relative z-10 flex flex-col h-full pointer-events-none">
                 {/* Header Section */}
-                <div className="relative w-full h-16 sm:h-20 bg-white/[0.02] border-b border-white/5 flex items-center justify-between px-4 sm:px-6 transition-all duration-300 group-hover/review:bg-white/[0.04]">
+                <div className="relative w-full h-16 sm:h-20 bg-black/[0.02] border-b border-white/5 flex items-center justify-between px-4 sm:px-6 transition-all duration-300 group-hover/review:bg-white/[0.04]">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                         <img src={review.match.homeLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt="" />
                     </div>
 
                     <div className="flex flex-col items-center px-4 sm:px-8">
                         <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="text-xl sm:text-2xl font-black text-white italic tabular-nums">{review.match.homeScore}</span>
-                            <div className="w-[1px] h-4 bg-white/10"></div>
-                            <span className="text-xl sm:text-2xl font-black text-white italic tabular-nums">{review.match.awayScore}</span>
+                            <span className="text-xl sm:text-2xl font-black text-main italic tabular-nums">{review.match.homeScore}</span>
+                            <div className="w-[1px] h-4 bg-black/10"></div>
+                            <span className="text-xl sm:text-2xl font-black text-main italic tabular-nums">{review.match.awayScore}</span>
                         </div>
                     </div>
 
@@ -74,12 +74,12 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                         <div className="flex items-center gap-3">
                             <div className="flex text-kickr text-[11px]">
                                 {'★'.repeat(Math.round(review.note))}
-                                <span className="text-white/20">{'★'.repeat(5 - Math.round(review.note))}</span>
+                                <span className="text-main/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                             </div>
                             {review.isLiked && (
                                 <span className="text-[#ff8000] text-[10px] sm:text-xs" title="Liked">❤</span>
                             )}
-                            <span className="text-[11px] font-bold text-white/60 uppercase tracking-widest">
+                            <span className="text-[11px] font-bold text-main/60 uppercase tracking-widest">
                                 {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                             </span>
                         </div>
@@ -103,13 +103,13 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
 
                     {review.comment && review.comment.trim() !== "" && (
                         <div className="mb-6">
-                            <p className={`text-[11px] sm:text-[13px] leading-relaxed italic border-l-2 pl-4 transition-colors ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20 group-hover/review:text-white'}`}>
+                            <p className={`text-[11px] sm:text-[13px] leading-relaxed italic border-l-2 pl-4 transition-colors ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20 group-hover/review:text-main'}`}>
                                 {review.comment}
                             </p>
                         </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/[0.03]">
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-black/[0.03]">
                         <div className="flex items-center gap-3 min-w-0 pointer-events-auto relative z-20">
                             <Link
                                 to={`/user/${review.user?.id}`}
@@ -124,7 +124,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                             </Link>
                             <Link
                                 to={`/user/${review.user?.id}`}
-                                className="text-white/80 text-[11px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate"
+                                className="text-main/80 text-[11px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {review.user?.name}

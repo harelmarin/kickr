@@ -91,18 +91,18 @@ const DashboardTab = () => {
                     title="User Acquisition"
                     subtitle="New registrations last 30 days"
                     data={stats.userGrowth}
-                    color="#4466ff"
+                    color="#4B7BEC"
                 />
                 <ChartSection
                     title="Review Activity"
                     subtitle="Match logs volume per day"
                     data={stats.reviewVolume}
-                    color="#ff8000"
+                    color="#00D1FF"
                 />
             </div>
 
             {/* Existing Data Management */}
-            <section className="bg-[#14181c] border border-white/5 rounded-sm p-8">
+            <section className="bg-kickr-bg-primary border border-white/5 rounded-sm p-8">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-8">System Sync Utilities</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <DataSyncCard
@@ -308,7 +308,7 @@ const ReportsTab = () => {
                                             {report.status}
                                         </span>
                                         <span className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.2em] italic">{report.targetType}</span>
-                                        <span className="text-[9px] md:text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
+                                        <span className="text-[9px] md:text-[10px] font-black text-main/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -323,7 +323,7 @@ const ReportsTab = () => {
                                                     View Source ↗
                                                 </Link>
                                             </div>
-                                            <div className="text-[10px] md:text-[12px] text-white/80 leading-relaxed bg-white/[0.02] border border-white/5 p-3 md:p-4 rounded-sm italic">
+                                            <div className="text-[10px] md:text-[12px] text-main/80 leading-relaxed bg-white/[0.02] border border-white/5 p-3 md:p-4 rounded-sm italic">
                                                 {report.targetType === 'MATCH_REVIEW' ? 'Review content encrypted in external node...' : 'Target comment trace found...'}
                                                 <p className="mt-2 text-[8px] md:text-[10px] text-[#445566] non-italic font-medium">// ID: {report.targetId}</p>
                                             </div>

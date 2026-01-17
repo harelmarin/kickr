@@ -161,7 +161,7 @@ export const SettingsPage = () => {
         >
             <div className="mb-6 md:mb-12 border-b border-white/5 pb-4 md:pb-8 relative">
                 <div className="absolute top-0 left-0 w-8 h-[1px] bg-kickr"></div>
-                <h1 className="text-2xl md:text-3xl font-black text-white italic tracking-tighter uppercase mb-1 md:mb-2">
+                <h1 className="text-2xl md:text-3xl font-black text-main italic tracking-tighter uppercase mb-1 md:mb-2">
                     Tactical <span className="text-kickr">Parameters</span>
                 </h1>
                 <p className="text-[#445566] font-black uppercase tracking-[0.4em] text-[7px] md:text-[9px] italic">
@@ -171,11 +171,11 @@ export const SettingsPage = () => {
 
             <div className="space-y-4 md:space-y-8">
                 {/* 1. Identity & Avatar Section */}
-                <section className="bg-white/[0.02] border border-white/5 rounded-sm p-4 md:p-10 relative overflow-hidden group">
+                <section className="bg-black/[0.02] border border-white/5 rounded-sm p-4 md:p-10 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-kickr/[0.01] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div className="flex flex-row items-center gap-4 md:gap-10 relative z-10">
                         <div className="relative">
-                            <div className="w-16 h-16 md:w-32 md:h-32 rounded-sm overflow-hidden border border-white/10 p-1 bg-[#14181c]/40">
+                            <div className="w-16 h-16 md:w-32 md:h-32 rounded-sm overflow-hidden border border-white/10 p-1 bg-kickr-bg-primary/40">
                                 <div className="w-full h-full rounded-sm overflow-hidden relative">
                                     {user.avatarUrl ? (
                                         <img
@@ -185,12 +185,12 @@ export const SettingsPage = () => {
                                             className="w-full h-full object-cover"
                                         />
                                     ) : (
-                                        <div className="w-full h-full bg-white/5 flex items-center justify-center">
+                                        <div className="w-full h-full bg-black/5 flex items-center justify-center">
                                             <span className="text-xl md:text-4xl font-black text-kickr italic italic">{user.name[0].toUpperCase()}</span>
                                         </div>
                                     )}
                                     {isUploading && (
-                                        <div className="absolute inset-0 bg-[#14181c]/80 backdrop-blur-sm flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-kickr-bg-primary/80 backdrop-blur-sm flex items-center justify-center">
                                             <div className="w-4 h-4 md:w-5 md:h-5 border border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
                                         </div>
                                     )}
@@ -199,7 +199,7 @@ export const SettingsPage = () => {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="absolute -bottom-1 -right-1 md:-bottom-3 md:-right-3 bg-kickr text-black w-6 h-6 md:w-10 md:h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[3px] md:border-[6px] border-[#14181c] shadow-xl shadow-kickr/10"
+                                className="absolute -bottom-1 -right-1 md:-bottom-3 md:-right-3 bg-kickr text-black w-6 h-6 md:w-10 md:h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[3px] md:border-[6px] border-[#14181c] shadow-xl shadow-kickr/20"
                                 title="Upload Signal"
                             >
                                 <span className="text-xs md:text-sm">⚡</span>
@@ -215,17 +215,17 @@ export const SettingsPage = () => {
 
                         <div className="flex-1 text-left space-y-2 md:space-y-4">
                             <div>
-                                <h2 className="text-white font-black text-base md:text-xl italic uppercase tracking-tighter leading-none mb-0.5 md:mb-1">
+                                <h2 className="text-main font-black text-base md:text-xl italic uppercase tracking-tighter leading-none mb-0.5 md:mb-1">
                                     Visual ID
                                 </h2>
-                                <p className="text-white/20 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic">
+                                <p className="text-main/20 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic">
                                     Biometric recognition signature
                                 </p>
                             </div>
                             <div className="flex flex-wrap justify-start gap-4 md:gap-6 pt-1 md:pt-2">
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="text-[7px] md:text-[9px] font-black text-white/40 hover:text-kickr uppercase tracking-[0.4em] transition-all italic"
+                                    className="text-[7px] md:text-[9px] font-black text-main/40 hover:text-kickr uppercase tracking-[0.4em] transition-all italic"
                                 >
                                     [ UPDATE RECORD ]
                                 </button>
@@ -243,26 +243,26 @@ export const SettingsPage = () => {
                 </section>
 
                 {/* 2. Credentials Form */}
-                <section className="bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden">
+                <section className="bg-black/[0.02] border border-white/5 rounded-sm overflow-hidden">
                     <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-10 space-y-4 md:space-y-8">
                         <div className="space-y-4 md:space-y-6">
                             <div className="space-y-2 md:space-y-3">
-                                <label className="text-[7px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] px-1 italic">Tactician Callsign</label>
+                                <label className="text-[7px] md:text-[9px] font-black text-main/20 uppercase tracking-[0.4em] px-1 italic">Tactician Callsign</label>
                                 <input
                                     type="text"
                                     {...register("name")}
-                                    className={`w-full bg-[#14181c]/40 border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-3 py-3 md:px-5 md:py-4 text-xs md:text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
+                                    className={`w-full bg-kickr-bg-primary/40 border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-3 py-3 md:px-5 md:py-4 text-xs md:text-sm text-main focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
                                 />
                                 {errors.name && (
                                     <p className="text-[8px] md:text-[9px] text-red-500 font-black mt-1 md:mt-2 pl-1 uppercase tracking-tighter italic">{errors.name.message}</p>
                                 )}
                             </div>
                             <div className="space-y-2 md:space-y-3">
-                                <label className="text-[7px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.4em] px-1 italic">Communication Link</label>
+                                <label className="text-[7px] md:text-[9px] font-black text-main/20 uppercase tracking-[0.4em] px-1 italic">Communication Link</label>
                                 <input
                                     type="email"
                                     {...register("email")}
-                                    className={`w-full bg-[#14181c]/40 border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-3 py-3 md:px-5 md:py-4 text-xs md:text-sm text-white focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
+                                    className={`w-full bg-kickr-bg-primary/40 border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-3 py-3 md:px-5 md:py-4 text-xs md:text-sm text-main focus:border-kickr/30 outline-none transition-all italic font-medium tracking-tight`}
                                 />
                                 {errors.email && (
                                     <p className="text-[8px] md:text-[9px] text-red-500 font-black mt-1 md:mt-2 pl-1 uppercase tracking-tighter italic">{errors.email.message}</p>
@@ -272,8 +272,8 @@ export const SettingsPage = () => {
 
                         <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5">
                             <div className="flex items-center gap-2 md:gap-3">
-                                <div className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full ${isSaving ? 'bg-kickr animate-pulse shadow-[0_0_8px_rgba(var(--kickr-rgb),0.5)]' : (isDirty ? 'bg-kickr/40' : 'bg-white/10')}`}></div>
-                                <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-[0.4em] italic">
+                                <div className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full ${isSaving ? 'bg-kickr animate-pulse shadow-[0_0_8px_rgba(var(--kickr-rgb),0.5)]' : (isDirty ? 'bg-kickr/40' : 'bg-black/10')}`}></div>
+                                <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tracking-[0.4em] italic">
                                     {isDirty ? 'Awaiting Commit' : 'System Synced'}
                                 </span>
                             </div>
@@ -292,9 +292,9 @@ export const SettingsPage = () => {
                 <section className="p-4 md:p-10 flex items-center justify-between opacity-10 hover:opacity-100 transition-opacity border border-dashed border-red-500/20 rounded-sm bg-red-500/[0.01]">
                     <div className="flex flex-col gap-0.5 md:gap-1">
                         <h4 className="text-red-500 font-black text-[8px] md:text-[10px] uppercase tracking-[0.4em] italic">System Decommission</h4>
-                        <p className="text-white/20 text-[6px] md:text-[8px] font-black uppercase tracking-widest leading-none italic">Irreversible authentication purge</p>
+                        <p className="text-main/20 text-[6px] md:text-[8px] font-black uppercase tracking-widest leading-none italic">Irreversible authentication purge</p>
                     </div>
-                    <button className="text-[7px] md:text-[9px] font-black text-white/40 hover:text-red-500 uppercase tracking-[0.4em] transition-all italic">
+                    <button className="text-[7px] md:text-[9px] font-black text-main/40 hover:text-red-500 uppercase tracking-[0.4em] transition-all italic">
                         [ EXECUTE ]
                     </button>
                 </section>

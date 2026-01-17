@@ -6,25 +6,24 @@
    KICKR GLOBAL THEME - CHANGE THE RAW HEX BELOW TO CHANGE THE ENTIRE SITE
    ========================================================================== */
 @theme {
-  --color-kickr: #4466ff;
+  --color-kickr: #4B7BEC;
+  /* Sapphire Slate */
+  --color-kickr-bg-primary: #0C0C0C;
+  --color-kickr-bg-secondary: #141414;
+  --color-kickr-bg-tertiary: #1C1C1C;
 }
 
 :root {
-  --kickr-primary: #4466ff;
-  --kickr-primary-rgb: 68, 102, 255;
-  --color-bg-primary: #14181c;
-  /* Dark gray from Leagues/Teams */
-  --color-bg-secondary: #1b2228;
-  /* Slightly lighter for cards/headers */
-  --color-bg-tertiary: #242c33;
-  /* Lighter accents */
-  --text-main: #e2e8f0;
-  /* White/90 equivalent - Softer white */
-  --text-secondary: #94a3b8;
-  /* Cleaner blue-gray */
-  --text-muted: #64748b;
-  --pitch-green: #1a4d2e;
-  --pitch-light: #2d6a4f;
+  --kickr-primary: #4B7BEC;
+  --kickr-primary-rgb: 75, 123, 236;
+  --color-bg-primary: #0C0C0C;
+  --color-bg-secondary: #141414;
+  --color-bg-tertiary: #1C1C1C;
+  --text-main: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+  --pitch-green: #0D1A12;
+  --pitch-light: #1A3324;
 }
 
 @layer base {
@@ -146,7 +145,7 @@
 }
 
 .text-gradient-kickr {
-  background: linear-gradient(to right, var(--kickr-primary), #6688ff);
+  background: linear-gradient(to right, #4B7BEC, #D1D8FF);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -154,7 +153,7 @@
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(to right, transparent, rgba(75, 123, 236, 0.2), transparent);
 }
 
 .pitch-pattern {

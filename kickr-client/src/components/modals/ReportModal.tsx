@@ -52,22 +52,22 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-[#14181c]/80 backdrop-blur-sm"
+                    className="absolute inset-0 bg-kickr-bg-primary/80 backdrop-blur-sm"
                 />
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    className="relative w-full max-w-lg bg-[#14181c] border border-white/10 rounded-sm overflow-hidden shadow-2xl"
+                    className="relative w-full max-w-lg bg-kickr-bg-primary border border-white/10 rounded-sm overflow-hidden shadow-2xl"
                 >
                     <div className="p-8">
                         <div className="flex items-center justify-between mb-8">
                             <div>
-                                <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">Report Content</h2>
+                                <h2 className="text-2xl font-black text-main uppercase italic tracking-tighter">Report Content</h2>
                                 <p className="text-[10px] text-[#667788] uppercase tracking-[0.2em] font-bold mt-1">Help us keep Kickr safe</p>
                             </div>
-                            <button onClick={onClose} className="text-[#667788] hover:text-white transition-colors">
+                            <button onClick={onClose} className="text-[#667788] hover:text-main transition-colors">
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -85,7 +85,7 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                                             onClick={() => setReason(r.value)}
                                             className={`py-3 px-4 rounded-sm border text-[11px] font-bold uppercase tracking-wider transition-all text-left ${reason === r.value
                                                 ? 'bg-kickr/15 border-kickr/30 text-kickr'
-                                                : 'bg-[#14181c]/20 border-white/5 text-[#667788] hover:border-white/10'
+                                                : 'bg-kickr-bg-primary/20 border-white/5 text-[#667788] hover:border-white/10'
                                                 }`}
                                         >
                                             {r.label}
@@ -100,7 +100,7 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     placeholder="Provide more context..."
-                                    className="w-full bg-[#14181c]/20 border border-white/5 rounded-sm p-4 text-[13px] text-white focus:outline-none focus:border-kickr/30 min-h-[120px] transition-all resize-none"
+                                    className="w-full bg-kickr-bg-primary/20 border border-white/5 rounded-sm p-4 text-[13px] text-main focus:outline-none focus:border-kickr/30 min-h-[120px] transition-all resize-none"
                                 />
                             </div>
 
@@ -108,7 +108,7 @@ export const ReportModal = ({ isOpen, onClose, targetType, targetId }: ReportMod
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="flex-1 py-4 text-[11px] font-black uppercase tracking-widest text-[#667788] hover:text-white transition-colors"
+                                    className="flex-1 py-4 text-[11px] font-black uppercase tracking-widest text-[#667788] hover:text-main transition-colors"
                                 >
                                     Cancel
                                 </button>

@@ -14,7 +14,7 @@ export const MatchCardPosterSkeleton = () => (
 );
 
 export const MatchCardSkeleton = () => (
-    <div className="flex items-center gap-4 p-4 bg-[#14181c] border border-white/5 rounded-sm">
+    <div className="flex items-center gap-4 p-4 bg-kickr-bg-primary border border-white/5 rounded-sm">
         <div className="flex flex-col gap-1 w-[65px]">
             <Skeleton width={40} height={12} baseColor="#1b2228" highlightColor="#252a31" />
             <Skeleton width={30} height={8} baseColor="#1b2228" highlightColor="#252a31" />
@@ -52,7 +52,7 @@ export const ReviewCardSkeleton = () => (
 );
 
 export const UserCardSkeleton = () => (
-    <div className="bg-[#14181c]/60 backdrop-blur-xl border border-white/5 rounded-sm p-8 flex flex-col items-center gap-6">
+    <div className="bg-kickr-bg-primary/60 backdrop-blur-xl border border-white/5 rounded-sm p-8 flex flex-col items-center gap-6">
         <div className="w-24 h-24 rounded-sm overflow-hidden">
             <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
         </div>
@@ -60,7 +60,7 @@ export const UserCardSkeleton = () => (
             <Skeleton width="70%" height={24} baseColor="#1b2228" highlightColor="#252a31" />
             <Skeleton width="40%" height={10} baseColor="#1b2228" highlightColor="#252a31" />
         </div>
-        <div className="w-full h-px bg-white/5 mt-4"></div>
+        <div className="w-full h-px bg-black/5 mt-4"></div>
         <div className="grid grid-cols-2 gap-8 w-full">
             <div className="flex flex-col items-center gap-2">
                 <Skeleton width={30} height={20} baseColor="#1b2228" highlightColor="#252a31" />
@@ -76,7 +76,7 @@ export const UserCardSkeleton = () => (
 
 export const LeagueCardSkeleton = () => (
     <div className="flex flex-col gap-4">
-        <div className="aspect-square bg-[#14181c] rounded-sm border border-white/5 p-8 flex items-center justify-center relative overflow-hidden">
+        <div className="aspect-square bg-kickr-bg-primary rounded-sm border border-white/5 p-8 flex items-center justify-center relative overflow-hidden">
             <div className="w-full h-full rounded-sm overflow-hidden">
                 <Skeleton height="100%" baseColor="#1b2228" highlightColor="#252a31" />
             </div>

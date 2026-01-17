@@ -43,7 +43,7 @@ export const UserDetailPage = () => {
     if (!user) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-20 pb-16">
+        <main className="min-h-screen bg-kickr-bg-primary pt-20 pb-16">
             <div className="max-w-6xl mx-auto px-4 md:px-6">
 
                 <header className="mb-6 md:mb-16">
@@ -55,7 +55,7 @@ export const UserDetailPage = () => {
                                     className="relative group/avatar w-16 h-16 md:w-20 md:h-20 rounded-sm overflow-hidden shadow-2xl transition-transform hover:scale-105"
                                     title="Change Profile Picture"
                                 >
-                                    <div className="w-full h-full bg-[#1b2228] border border-white/5 flex items-center justify-center text-xl md:text-3xl font-black text-kickr">
+                                    <div className="w-full h-full bg-kickr-bg-secondary border border-white/5 flex items-center justify-center text-xl md:text-3xl font-black text-kickr">
                                         {user.avatarUrl ? (
                                             <img
                                                 key={user.avatarUrl}
@@ -67,12 +67,12 @@ export const UserDetailPage = () => {
                                             user.name[0].toUpperCase()
                                         )}
                                     </div>
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-[#14181c]/40">
-                                        <span className="text-[8px] font-black text-white uppercase tracking-widest">Edit</span>
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-kickr-bg-primary/40">
+                                        <span className="text-[8px] font-black text-main uppercase tracking-widest">Edit</span>
                                     </div>
                                 </Link>
                             ) : (
-                                <div className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-[#1b2228] border border-white/5 flex items-center justify-center text-xl md:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
+                                <div className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-kickr-bg-secondary border border-white/5 flex items-center justify-center text-xl md:text-3xl font-black text-kickr overflow-hidden shadow-2xl">
                                     {user.avatarUrl ? (
                                         <img
                                             key={user.avatarUrl}
@@ -88,7 +88,7 @@ export const UserDetailPage = () => {
 
                             <div>
                                 <div className="flex items-center gap-2 mb-1 justify-center md:justify-start">
-                                    <h1 className="text-xl md:text-4xl font-black text-white tracking-tight italic uppercase">{user.name}</h1>
+                                    <h1 className="text-xl md:text-4xl font-black text-main tracking-tight italic uppercase">{user.name}</h1>
                                     {isOwnProfile && (
                                         <span className="bg-kickr/10 text-kickr text-[7px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-sm border border-kickr/20">
                                             SELF
@@ -104,7 +104,7 @@ export const UserDetailPage = () => {
                         <div className="w-full md:w-auto flex justify-center gap-2 md:gap-3">
                             <Link
                                 to={`/user/${id}/diary`}
-                                className="bg-white/[0.03] border border-white/5 hover:border-kickr/40 text-white/40 hover:text-white text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 justify-center italic"
+                                className="bg-black/[0.03] border border-white/5 hover:border-kickr/40 text-main/40 hover:text-main text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 justify-center italic"
                             >
                                 DIARY
                             </Link>
@@ -120,12 +120,12 @@ export const UserDetailPage = () => {
                                     onClick={handleFollowToggle}
                                     disabled={followAction.isPending}
                                     className={`group flex items-center justify-center gap-3 px-6 py-2 rounded-sm transition-all w-full md:w-auto italic ${isFollowing
-                                        ? 'bg-white/5 border border-white/10 hover:border-red-500/50'
+                                        ? 'bg-black/5 border border-white/10 hover:border-red-500/50'
                                         : 'bg-kickr hover:brightness-110 text-black'
                                         } disabled:opacity-50`}
                                 >
                                     <span className={`text-[9px] font-black uppercase tracking-[0.2em] transition-colors ${isFollowing
-                                        ? 'text-white/40 group-hover:text-red-500'
+                                        ? 'text-main/40 group-hover:text-red-500'
                                         : 'text-black'
                                         }`}>
                                         {followAction.isPending ? '...' : isFollowing ? 'Unfollow' : 'Follow'}
@@ -142,13 +142,13 @@ export const UserDetailPage = () => {
                             value={user.matchesCount.toString()}
                             onClick={() => navigate(`/user/${id}/diary`)}
                         />
-                        <div className="w-[1px] h-6 md:h-8 bg-white/5" />
+                        <div className="w-[1px] h-6 md:h-8 bg-black/5" />
                         <StatHorizontal
                             label="Following"
                             value={user.followingCount.toString()}
                             onClick={() => navigate(`/user/${id}/following`)}
                         />
-                        <div className="w-[1px] h-6 md:h-8 bg-white/5" />
+                        <div className="w-[1px] h-6 md:h-8 bg-black/5" />
                         <StatHorizontal
                             label="Followers"
                             value={user.followersCount.toString()}
@@ -161,15 +161,15 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-8 md:space-y-12">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-white/[0.02] border border-white/5 p-4 md:p-6 rounded-sm">
+                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm">
                             <div className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
-                                <Link to={`/user/${id}/diary`} className="text-[10px] md:text-sm font-black text-white/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Diary</Link>
-                                <span className="text-[8px] md:text-[10px] font-black text-white/20 uppercase tracking-widest leading-none">DATABASE: {pageData?.totalElements || 0}</span>
+                                <Link to={`/user/${id}/diary`} className="text-[10px] md:text-sm font-black text-main/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Diary</Link>
+                                <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest leading-none">DATABASE: {pageData?.totalElements || 0}</span>
                             </div>
 
                             {isReviewsLoading ? (
                                 <div className="grid grid-cols-2 gap-3 animate-pulse">
-                                    {[1, 2, 3, 4].map(i => <div key={i} className="aspect-[1.5/1] bg-white/5 rounded-sm"></div>)}
+                                    {[1, 2, 3, 4].map(i => <div key={i} className="aspect-[1.5/1] bg-black/5 rounded-sm"></div>)}
                                 </div>
                             ) : pageData?.content && pageData.content.length > 0 ? (
                                 <div className="grid grid-cols-2 gap-3 md:gap-4">
@@ -189,12 +189,12 @@ export const UserDetailPage = () => {
 
                         {/* Top Teams & Leagues Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                            <section className="bg-white/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
+                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
                                 <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Squads</h3>
                                 <MostWatchedTeams reviews={pageData?.content || []} />
                             </section>
 
-                            <section className="bg-white/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
+                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
                                 <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Theaters</h3>
                                 <MostWatchedLeagues reviews={pageData?.content || []} />
                             </section>
@@ -204,16 +204,16 @@ export const UserDetailPage = () => {
                     {/* Sidebar: Stats & Favorites */}
                     <div className="space-y-6 md:space-y-8">
                         {/* Network Section (Followers/Following) */}
-                        <section className="bg-white/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
+                        <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
                             <div className="space-y-6 md:space-y-8 relative z-10">
                                 {/* Following */}
                                 <div className="space-y-3 md:space-y-4">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <h4 className="text-[8px] md:text-[10px] font-black text-white/80 uppercase tracking-widest">Following</h4>
+                                            <h4 className="text-[8px] md:text-[10px] font-black text-main/80 uppercase tracking-widest">Following</h4>
                                             <span className="text-[7px] md:text-[8px] font-black px-1.5 py-0.5 bg-kickr/10 rounded-sm text-kickr italic">{following?.totalElements ?? user.followingCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/following`} className="text-[7px] md:text-[8px] font-black text-white/20 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
+                                        <Link to={`/user/${id}/following`} className="text-[7px] md:text-[8px] font-black text-main/20 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
                                     </div>
                                     {following?.content && following.content.length > 0 ? (
                                         <div className="grid grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
@@ -235,7 +235,7 @@ export const UserDetailPage = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-[7px] md:text-[9px] text-white/10 italic font-bold uppercase tracking-tighter">Silence.</p>
+                                        <p className="text-[7px] md:text-[9px] text-main/10 italic font-bold uppercase tracking-tighter">Silence.</p>
                                     )}
                                 </div>
 
@@ -243,10 +243,10 @@ export const UserDetailPage = () => {
                                 <div className="space-y-3 md:space-y-4 pt-4 md:pt-6 border-t border-white/5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <h4 className="text-[8px] md:text-[10px] font-black text-white/80 uppercase tracking-widest">Followers</h4>
+                                            <h4 className="text-[8px] md:text-[10px] font-black text-main/80 uppercase tracking-widest">Followers</h4>
                                             <span className="text-[7px] md:text-[8px] font-black px-1.5 py-0.5 bg-kickr/10 rounded-sm text-kickr italic">{followers?.totalElements ?? user.followersCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/followers`} className="text-[7px] md:text-[8px] font-black text-white/20 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
+                                        <Link to={`/user/${id}/followers`} className="text-[7px] md:text-[8px] font-black text-main/20 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
                                     </div>
                                     {followers?.content && followers.content.length > 0 ? (
                                         <div className="grid grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
@@ -268,23 +268,23 @@ export const UserDetailPage = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-[7px] md:text-[9px] text-white/10 italic font-bold uppercase tracking-tighter">Isolated.</p>
+                                        <p className="text-[7px] md:text-[9px] text-main/10 italic font-bold uppercase tracking-tighter">Isolated.</p>
                                     )}
                                 </div>
                             </div>
                         </section>
 
-                        <section className="bg-white/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
+                        <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
                             <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Rating Spread</h3>
                             <RatingsChart reviews={pageData?.content || []} />
 
                             <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center tabular-nums">
                                 <div className="flex flex-col">
-                                    <span className="text-[6px] md:text-[7px] font-black text-white/10 uppercase tracking-widest leading-none mb-1 md:mb-2 italic">DEPLOYMENTS</span>
-                                    <span className="text-base md:text-xl font-black text-white/90 italic">{pageData?.totalElements || 0}</span>
+                                    <span className="text-[6px] md:text-[7px] font-black text-main/10 uppercase tracking-widest leading-none mb-1 md:mb-2 italic">DEPLOYMENTS</span>
+                                    <span className="text-base md:text-xl font-black text-main/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                    <span className="text-[6px] md:text-[7px] font-black text-white/10 uppercase tracking-widest leading-none mb-1 md:mb-2 italic">INTEL AVG</span>
+                                    <span className="text-[6px] md:text-[7px] font-black text-main/10 uppercase tracking-widest leading-none mb-1 md:mb-2 italic">INTEL AVG</span>
                                     <span className="text-base md:text-xl font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -294,15 +294,15 @@ export const UserDetailPage = () => {
                             </div>
                         </section>
 
-                        <section className="bg-white/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
+                        <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
                             <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Operational Data</h3>
                             <div className="space-y-4 md:space-y-6 tabular-nums">
                                 <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
-                                    <span className="text-[8px] md:text-[10px] font-black text-white/20 uppercase tracking-widest">Total Logs</span>
-                                    <span className="text-xs md:text-base font-black text-white/90 italic">{pageData?.totalElements || 0}</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest">Total Logs</span>
+                                    <span className="text-xs md:text-base font-black text-main/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
-                                    <span className="text-[8px] md:text-[10px] font-black text-white/20 uppercase tracking-widest">Avg Stars</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest">Avg Stars</span>
                                     <span className="text-xs md:text-base font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -310,8 +310,8 @@ export const UserDetailPage = () => {
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[8px] md:text-[10px] font-black text-white/20 uppercase tracking-widest">Marked Favorites</span>
-                                    <span className="text-xs md:text-base font-black text-white/90 italic">
+                                    <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest">Marked Favorites</span>
+                                    <span className="text-xs md:text-base font-black text-main/90 italic">
                                         {pageData?.content.filter((r: any) => r.isLiked).length || 0}
                                     </span>
                                 </div>
@@ -350,7 +350,7 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                         className="flex-1 h-full flex flex-col items-center group cursor-pointer"
                         title={`View ${rating}-star reviews`}
                     >
-                        <div className="w-full flex-1 bg-white/[0.02] rounded-t-md relative flex items-end overflow-hidden border-x border-t border-white/[0.05] hover:border-kickr/30 transition-all">
+                        <div className="w-full flex-1 bg-black/[0.02] rounded-t-md relative flex items-end overflow-hidden border-x border-t border-black/[0.05] hover:border-kickr/30 transition-all">
                             <div
                                 className="w-full bg-gradient-to-t from-kickr/40 to-kickr group-hover:brightness-125 transition-all duration-300 ease-out relative rounded-t-sm"
                                 style={{ height: `${heightPercentage}%`, minHeight: count > 0 ? '2px' : '0' }}
@@ -359,14 +359,14 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                             </div>
 
                             <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none text-center">
-                                <span className="text-[11px] font-black text-white italic leading-none">{count}</span>
-                                <span className="text-[8px] font-bold text-white/70 uppercase tracking-tighter">{percentageOfTotal}%</span>
+                                <span className="text-[11px] font-black text-main italic leading-none">{count}</span>
+                                <span className="text-[8px] font-bold text-main/70 uppercase tracking-tighter">{percentageOfTotal}%</span>
                             </div>
                         </div>
 
                         <div className="mt-3 flex flex-col items-center">
                             <span className="text-[10px] font-black text-[#445566] group-hover:text-kickr transition-colors">{rating}★</span>
-                            <div className="w-1 h-1 rounded-full bg-white/5 mt-1 group-hover:bg-kickr transition-colors"></div>
+                            <div className="w-1 h-1 rounded-full bg-black/5 mt-1 group-hover:bg-kickr transition-colors"></div>
                         </div>
                     </Link>
                 );
@@ -415,17 +415,17 @@ const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
                 >
                     <div className="flex items-center justify-between mb-1.5 md:mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
-                            <span className="text-[7px] md:text-[9px] font-mono text-white/10 uppercase leading-none">{index + 1}</span>
+                            <span className="text-[7px] md:text-[9px] font-mono text-main/10 uppercase leading-none">{index + 1}</span>
                             {team.logo && (
                                 <img src={team.logo} alt="" className="w-3.5 h-3.5 md:w-4 md:h-4 object-contain" />
                             )}
-                            <span className="text-[9px] md:text-[10px] font-black text-white uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{team.name}</span>
+                            <span className="text-[9px] md:text-[10px] font-black text-main uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{team.name}</span>
                         </div>
                         <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{team.count}</span>
                     </div>
-                    <div className="flex justify-between pt-1 border-t border-white/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-white/5 uppercase tracking-widest italic">DEPLOYED</span>
-                        <span className="text-[6px] md:text-[7px] font-black text-white/5 uppercase tracking-widest italic">{team.count} MATCHES</span>
+                    <div className="flex justify-between pt-1 border-t border-black/[0.02]">
+                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">DEPLOYED</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">{team.count} MATCHES</span>
                     </div>
                 </Link>
             ))}
@@ -479,17 +479,17 @@ const MostWatchedLeagues = ({ reviews }: { reviews: UserMatch[] }) => {
                 >
                     <div className="flex items-center justify-between mb-1.5 md:mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
-                            <span className="text-[7px] md:text-[9px] font-mono text-white/10 uppercase leading-none">{index + 1}</span>
+                            <span className="text-[7px] md:text-[9px] font-mono text-main/10 uppercase leading-none">{index + 1}</span>
                             {league.logo && (
                                 <img src={league.logo} alt="" className="w-3.5 h-3.5 md:w-4 md:h-4 object-contain" />
                             )}
-                            <span className="text-[9px] md:text-[10px] font-black text-white uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{league.name}</span>
+                            <span className="text-[9px] md:text-[10px] font-black text-main uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{league.name}</span>
                         </div>
                         <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{league.rating.toFixed(1)}</span>
                     </div>
-                    <div className="flex justify-between pt-1 border-t border-white/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-white/5 uppercase tracking-widest italic">THEATER</span>
-                        <span className="text-[6px] md:text-[7px] font-black text-white/5 uppercase tracking-widest italic">{league.count} RECS</span>
+                    <div className="flex justify-between pt-1 border-t border-black/[0.02]">
+                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">THEATER</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">{league.count} RECS</span>
                     </div>
                 </Link>
             ))}
@@ -502,22 +502,22 @@ const StatHorizontal = ({ label, value, onClick }: { label: string; value: strin
         onClick={onClick}
         className="flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer group"
     >
-        <span className="text-xl md:text-2xl font-black text-white/90 group-hover:text-kickr transition-colors italic tabular-nums leading-none">{value}</span>
-        <span className="text-[7px] md:text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] italic">{label}</span>
+        <span className="text-xl md:text-2xl font-black text-main/90 group-hover:text-kickr transition-colors italic tabular-nums leading-none">{value}</span>
+        <span className="text-[7px] md:text-[10px] font-bold text-main/20 uppercase tracking-[0.2em] italic">{label}</span>
     </button>
 );
 
 const LoadingState = () => (
-    <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
+    <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
     </div>
 );
 
 const NotFoundState = () => (
-    <div className="min-h-screen bg-[#14181c] flex items-center justify-center text-center">
+    <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center text-center">
         <div>
-            <h2 className="text-4xl font-black text-white/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
-            <p className="text-white/40 mb-8">This tactician hasn't joined Kickr yet.</p>
+            <h2 className="text-4xl font-black text-main/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
+            <p className="text-main/40 mb-8">This tactician hasn't joined Kickr yet.</p>
             <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Go Home</Link>
         </div>
     </div>
