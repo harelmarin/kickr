@@ -11,7 +11,7 @@ export const Footer = () => {
             <Link to="/" className="flex items-center group mb-2 md:mb-4">
               <span className="text-lg md:text-xl font-black italic tracking-tighter text-white/90 display-font group-hover:text-kickr transition-colors">KICKR</span>
             </Link>
-            <p className="text-white/20 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed text-center md:text-left">
+            <p className="text-white/40 text-[11px] font-black uppercase tracking-[0.3em] leading-relaxed text-center md:text-left">
               The Sound of Modern Football Culture
             </p>
           </div>
@@ -48,7 +48,7 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
-          <p className="text-white/20 text-[7px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-center md:text-left">
+          <p className="text-white/40 text-[11px] font-bold uppercase tracking-[0.2em] text-center md:text-left">
             © {new Date().getFullYear()} Kickr. Intelligence by Football API.
           </p>
 
@@ -66,7 +66,7 @@ export const Footer = () => {
 const FooterLink = ({ label, to }: { label: string; to: string }) => (
   <Link
     to={to}
-    className="text-white/20 hover:text-white/80 transition-all duration-300 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] relative group"
+    className="text-white/40 hover:text-white/80 transition-all duration-300 text-[11px] font-black uppercase tracking-[0.2em] relative group"
   >
     {label}
     <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-kickr group-hover:w-full transition-all duration-300"></span>

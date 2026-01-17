@@ -54,12 +54,12 @@ export const CommunityPage = () => {
                 <header className="mb-6 md:mb-16">
                     <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
                         <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
-                        <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Network</span>
+                        <span className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Network</span>
                     </div>
                     <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
                         The <span className="text-kickr/80">Tacticians</span>
                     </h1>
-                    <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+                    <p className="text-white/30 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[11px] font-black italic">
                         Analyze. Track. Connect. Global Football Network.
                     </p>
 
@@ -68,7 +68,7 @@ export const CommunityPage = () => {
                             <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                                 {/* Search */}
                                 <div className="flex flex-col gap-1 w-full md:w-48">
-                                    <span className="text-[6px] md:text-[7px] uppercase font-black text-white/10 tracking-widest pl-0.5 italic">Identify</span>
+                                    <span className="text-[10px] uppercase font-black text-white/30 tracking-widest pl-0.5 italic">Identify</span>
                                     <div className="relative">
                                         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                                         <input
@@ -86,7 +86,7 @@ export const CommunityPage = () => {
                                 <span className="text-xl font-black text-white italic leading-none tracking-tighter">
                                     {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
                                 </span>
-                                <span className="text-[8px] uppercase tracking-widest text-white/20 font-bold mt-1">Global Logs</span>
+                                <span className="text-[11px] uppercase tracking-widest text-white/40 font-bold mt-1">Global Logs</span>
                             </div>
                         </div>
                     </div>
@@ -96,8 +96,8 @@ export const CommunityPage = () => {
                     {/* Main Content */}
                     <div className="lg:col-span-8">
                         <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">All Tacticians</h2>
-                            <span className="text-[6px] md:text-[8px] font-black text-white/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+                            <h2 className="text-[11px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80 italic">All Tacticians</h2>
+                            <span className="text-[10px] md:text-[8px] font-black text-white/20 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
@@ -118,7 +118,7 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
                                     [ Prev ]
                                 </button>
@@ -128,8 +128,8 @@ export const CommunityPage = () => {
                                         if (pageData.totalPages > 5) {
                                             if (i < currentPage - 1 && i !== 0) return null;
                                             if (i > currentPage + 1 && i !== pageData.totalPages - 1) return null;
-                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[7px] text-white/10">..</span>;
-                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[7px] text-white/10">..</span>;
+                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[10px] text-white/20">..</span>;
+                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[10px] text-white/20">..</span>;
                                         }
 
                                         return (
@@ -139,7 +139,7 @@ export const CommunityPage = () => {
                                                     setCurrentPage(i);
                                                     window.scrollTo({ top: 300, behavior: 'smooth' });
                                                 }}
-                                                className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[7px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
+                                                className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[11px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
                                                     ? 'bg-kickr text-black'
                                                     : 'bg-white/[0.01] border border-white/5 text-white/20 hover:text-white/40'
                                                     }`}
@@ -156,7 +156,7 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-white/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
                                     [ Next ]
                                 </button>
@@ -194,7 +194,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
             <div className="p-2 md:p-4 flex flex-col items-center md:items-start text-center md:text-left h-full">
                 {isMe && (
                     <div className="absolute top-1 right-1">
-                        <span className="bg-kickr text-black text-[5px] md:text-[7px] font-black uppercase tracking-tight px-1 py-0.5 rounded-sm">
+                        <span className="bg-kickr text-black text-[9px] md:text-[7px] font-black uppercase tracking-tight px-1 py-0.5 rounded-sm">
                             YOU
                         </span>
                     </div>
@@ -210,10 +210,10 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
 
                     <div className="flex-1 min-w-0 w-full">
-                        <h3 className="text-[9px] md:text-sm font-black text-white/80 uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                        <h3 className="text-[11px] md:text-sm font-black text-white/80 uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
                             {user.name}
                         </h3>
-                        <p className="hidden md:block text-[8px] text-white/20 font-bold uppercase tracking-wide mt-0.5">
+                        <p className="hidden md:block text-[11px] text-white/40 font-bold uppercase tracking-wide mt-0.5">
                             {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                         </p>
                     </div>
@@ -224,13 +224,13 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                         <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
+                        <span className="text-[10px] md:text-[7px] font-bold text-white/40 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
                     </div>
                     <div className="flex flex-col items-center">
                         <span className="text-[10px] md:text-base font-black text-white/90 italic tracking-tighter leading-none tabular-nums">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[5px] md:text-[7px] font-bold text-white/20 uppercase tracking-widest leading-none mt-0.5">NET</span>
+                        <span className="text-[10px] md:text-[7px] font-bold text-white/40 uppercase tracking-widest leading-none mt-0.5">NET</span>
                     </div>
                 </div>
             </div>

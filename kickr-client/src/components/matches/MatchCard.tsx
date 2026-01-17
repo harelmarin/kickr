@@ -40,7 +40,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     <div className="absolute inset-0 flex items-center justify-between px-3 py-2 sm:px-6 sm:py-4">
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
                             <img src={match.homeLogo} alt="" className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
-                            <span className="text-[7.5px] sm:text-[9px] font-black text-[#5c6470] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-white transition-colors w-full px-1">{match.homeTeam}</span>
+                            <span className="text-[10px] sm:text-[11px] font-black text-[#8fa1b8] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-white transition-colors w-full px-1">{match.homeTeam}</span>
                         </div>
 
                         <div className="flex items-center gap-2 sm:gap-6 px-1 sm:px-4">
@@ -59,7 +59,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
 
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
                             <img src={match.awayLogo} alt="" className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
-                            <span className="text-[7.5px] sm:text-[9px] font-black text-[#5c6470] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-white transition-colors w-full px-1">{match.awayTeam}</span>
+                            <span className="text-[10px] sm:text-[11px] font-black text-[#8fa1b8] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-white transition-colors w-full px-1">{match.awayTeam}</span>
                         </div>
                     </div>
 
@@ -72,11 +72,11 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
 
                 <div className="flex items-center justify-between px-1">
                     <div className="flex items-center gap-1 sm:gap-2">
-                        <span className="text-kickr/70 text-[8px] sm:text-[9px] font-black uppercase tracking-widest mr-1 truncate max-w-[100px]">
+                        <span className="text-kickr text-[11px] font-black uppercase tracking-widest mr-1 truncate max-w-[100px]">
                             {match.competition}
                         </span>
                         <span className="text-white/10 text-[8px]">●</span>
-                        <span className="text-white/40 text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em]">
+                        <span className="text-white/60 text-[11px] font-bold uppercase tracking-[0.2em]">
                             {dateStr}
                         </span>
                         {!isFinished && (
@@ -122,7 +122,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                                 {match.awayTeam}
                             </span>
                         </div>
-                        <span className="hidden md:block text-[8px] font-black text-white/20 uppercase tracking-[0.2em] ml-auto pl-4">{match.competition}</span>
+                        <span className="hidden md:block text-[10px] font-black text-white/40 uppercase tracking-[0.2em] ml-auto pl-4">{match.competition}</span>
                     </div>
                 </div>
 
@@ -141,7 +141,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                                 {match.homeScore}-{match.awayScore}
                             </span>
                         ) : (
-                            <span className="text-[9px] font-black text-[#445566] uppercase tracking-widest">{dateStr}</span>
+                            <span className="text-[11px] font-black text-[#64748b] uppercase tracking-widest">{dateStr}</span>
                         )}
                     </div>
                 </div>

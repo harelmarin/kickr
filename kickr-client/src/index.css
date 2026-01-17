@@ -77,10 +77,14 @@
     color: #000;
   }
 
-  /* Global Focus Reset */
-  *:focus {
-    outline: none !important;
-    box-shadow: none !important;
+  /* Global Focus Reset - Improved Accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--kickr-primary);
+    outline-offset: 2px;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
   }
 }
 
@@ -134,9 +138,9 @@
 }
 
 .card-glass {
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.125rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }

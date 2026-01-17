@@ -72,14 +72,14 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                 <div className="p-4 sm:p-6 flex flex-col flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                            <div className="flex text-kickr text-[8px] sm:text-[9px]">
+                            <div className="flex text-kickr text-[11px]">
                                 {'★'.repeat(Math.round(review.note))}
-                                <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+                                <span className="text-white/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                             </div>
                             {review.isLiked && (
                                 <span className="text-[#ff8000] text-[10px] sm:text-xs" title="Liked">❤</span>
                             )}
-                            <span className="text-[9px] font-bold text-white/60 uppercase tracking-widest">
+                            <span className="text-[11px] font-bold text-white/60 uppercase tracking-widest">
                                 {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                             </span>
                         </div>
@@ -88,7 +88,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                             {isAdmin && !review.isModerated && (
                                 <button
                                     onClick={handleModerate}
-                                    className="text-[9px] font-black text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
+                                    className="text-[11px] font-black text-[#ff4444] opacity-0 group-hover/review:opacity-100 transition-opacity uppercase tracking-widest hover:underline"
                                 >
                                     Moderate
                                 </button>
@@ -124,7 +124,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                             </Link>
                             <Link
                                 to={`/user/${review.user?.id}`}
-                                className="text-white/60 text-[9px] sm:text-[10px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate"
+                                className="text-white/80 text-[11px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {review.user?.name}

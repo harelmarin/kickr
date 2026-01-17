@@ -77,7 +77,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                 <div className="flex items-center gap-4 mb-20 bg-[#4466ff]/5 px-8 py-4 rounded-full border border-[#4466ff]/20">
                     <div className="flex text-[#4466ff] text-5xl">
                         {'★'.repeat(Math.round(review.note))}
-                        <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+                        <span className="text-white/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                     </div>
                     {review.isLiked && (
                         <span className="text-[#ff8000] text-4xl ml-2">❤</span>
@@ -115,7 +115,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-white/40 text-xl font-bold uppercase tracking-widest leading-none mb-2">Tactician</span>
+                        <span className="text-white/60 text-xl font-bold uppercase tracking-widest leading-none mb-2">Tactician</span>
                         <span className="text-white text-3xl font-black uppercase tracking-tight">{review.user?.name}</span>
                     </div>
                 </div>
@@ -127,7 +127,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                         </div>
                         <span className="text-white text-4xl font-black tracking-tighter uppercase">Kickr</span>
                     </div>
-                    <span className="text-white/30 text-lg font-bold tracking-[0.3em] uppercase">kickr.app</span>
+                    <span className="text-white/50 text-lg font-bold tracking-[0.3em] uppercase">kickr.app</span>
                 </div>
             </div>
         </div>

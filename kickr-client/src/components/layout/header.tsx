@@ -48,7 +48,7 @@ export const Header = () => {
           <NavSlot to="/matches" label="Matches" />
           <NavSlot to="/competitions" label="Leagues" />
           <NavSlot to="/teams" label="Teams" />
-          <NavSlot to="/community" label="Community" />
+          <NavSlot to="/community" label="Tacticians" />
         </nav>
 
         <div className="flex items-center gap-2 md:gap-5 flex-shrink-0 ml-auto">
@@ -65,14 +65,14 @@ export const Header = () => {
           ) : (
             <div className="flex items-center gap-1.5 md:gap-4 border-l border-white/5 pl-3 md:pl-5 relative" ref={dropdownRef}>
               <button
-                className="text-white/30 hover:text-white/80 font-black uppercase tracking-[0.2em] text-[8px] md:text-[9px] transition-colors"
+                className="text-white/50 hover:text-white/80 font-black uppercase tracking-[0.2em] text-[11px] transition-colors"
                 onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
               >
                 Sign In
               </button>
               <Link
                 to="/register"
-                className="bg-kickr hover:brightness-110 text-black px-3 py-1 md:py-1.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-[0.1em] transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-kickr/10 italic"
+                className="bg-kickr hover:brightness-110 text-black px-3 py-1 md:py-1.5 rounded-sm text-[11px] font-black uppercase tracking-[0.1em] transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-kickr/10 italic"
               >
                 Sign Up
               </Link>
@@ -113,7 +113,7 @@ const NavSlot = ({ to, label }: { to: string; label: string }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `uppercase tracking-[0.25em] text-[10px] font-bold transition-colors ${isActive ? 'text-white' : 'text-white/40 hover:text-white/60'
+      `uppercase tracking-[0.25em] text-[12px] font-bold transition-colors ${isActive ? 'text-white' : 'text-white/60 hover:text-white/80'
       }`
     }
   >

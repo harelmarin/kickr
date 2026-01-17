@@ -16,11 +16,11 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
         >
             {/* Minimal Header: Competition - Floating or tiny */}
             <div className="flex items-center justify-between px-2 py-1 border-b border-white/5 bg-white/[0.01] flex-shrink-0">
-                <span className="text-[5.5px] md:text-[8px] font-black text-white/30 md:text-white/60 uppercase tracking-[0.1em] md:tracking-[0.3em] truncate italic">
+                <span className="text-[10px] md:text-[8px] font-black text-white/50 md:text-white/60 uppercase tracking-[0.1em] md:tracking-[0.3em] truncate italic">
                     {match.competition}
                 </span>
                 {!isFinished && (
-                    <span className="md:hidden text-[5.5px] font-mono text-white/20 uppercase font-bold">
+                    <span className="md:hidden text-[9px] font-mono text-white/20 uppercase font-bold">
                         {new Date(match.matchDate).toLocaleDateString('en-US', { day: '2-digit', month: 'short' }).toUpperCase()}
                     </span>
                 )}
@@ -38,17 +38,17 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
                         <div className="flex flex-col items-center">
                             <div className="flex items-center gap-1 md:gap-2">
                                 <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.homeScore}</span>
-                                <span className="text-[6px] md:text-[10px] text-white/10 font-black">-</span>
+                                <span className="text-[11px] md:text-[10px] text-white/20 font-black">-</span>
                                 <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.awayScore}</span>
                             </div>
-                            <span className="text-[5px] md:text-[7px] font-mono text-white/20 uppercase tracking-widest font-bold mt-0.5">FT</span>
+                            <span className="text-[9px] md:text-[7px] font-mono text-white/40 uppercase tracking-widest font-bold mt-0.5">FT</span>
                         </div>
                     ) : (
                         <div className="flex flex-col items-center">
                             <span className="text-[10px] md:text-xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">
                                 {new Date(match.matchDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
                             </span>
-                            <span className="hidden md:block text-[7px] font-mono text-white/30 uppercase tracking-[0.2em] mt-1.5 font-bold">
+                            <span className="hidden md:block text-[7px] font-mono text-white/50 uppercase tracking-[0.2em] mt-1.5 font-bold">
                                 {new Date(match.matchDate).toLocaleDateString('en-US', { day: '2-digit', month: 'short' }).toUpperCase()}
                             </span>
                         </div>
