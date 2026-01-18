@@ -135,7 +135,7 @@ export const UserDiaryPage = () => {
                                 placeholder="..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="bg-transparent text-[9px] md:text-[11px] font-black text-main/40 placeholder-white/5 outline-none w-full uppercase italic tracking-widest"
+                                className="bg-transparent text-[8px] md:text-[11px] font-black text-main/40 placeholder-white/5 outline-none w-full uppercase italic tracking-widest"
                             />
                         </div>
                     </div>
