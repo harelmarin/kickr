@@ -51,7 +51,7 @@ export const UserMenu: FC = () => {
             </button>
 
             {/* Premium Dropdown */}
-            <div className={`absolute top-[calc(100%+0.75rem)] right-0 sm:left-0 w-44 bg-kickr-bg-secondary border border-white/10 rounded-sm shadow-2xl transition-all duration-200 z-[100] ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+            <div className={`absolute top-[calc(100%+0.75rem)] right-0 sm:left-0 w-44 bg-[#16191F] border border-white/10 rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-all duration-200 z-[100] ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
                 }`}>
                 <div className="px-4 py-3 border-b border-white/5 bg-kickr-bg-primary/10">
                     <p className="text-[9px] font-black text-main uppercase tracking-widest truncate">{user.name}</p>
