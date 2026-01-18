@@ -37,7 +37,7 @@ export default function AdminPage() {
                             onClick={() => setActiveTab(tab)}
                             className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-sm text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
                                 ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
-                                : 'text-[#667788] hover:text-white'
+                                : 'text-secondary hover:text-white'
                                 }`}
                         >
                             {tab}
@@ -212,7 +212,7 @@ const UsersTab = () => {
                                     </span>
                                 </td>
                                 <td className="px-3 md:px-6 py-2 md:py-4 hidden md:table-cell">
-                                    <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-[#667788]'}`}>
+                                    <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-secondary'}`}>
                                         {user.role}
                                     </span>
                                 </td>
@@ -242,14 +242,14 @@ const UsersTab = () => {
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
                             disabled={pageData.first}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             Previous
                         </button>
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
                             disabled={pageData.last}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             Next
                         </button>
@@ -293,7 +293,7 @@ const ReportsTab = () => {
                     <div className="bg-kickr-bg-primary border border-white/5 rounded-sm p-32 text-center">
                         <p className="text-kickr text-[24px] mb-4">🛡️</p>
                         <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em]">Sector Secured</p>
-                        <p className="text-[#667788] text-[11px] font-bold uppercase mt-2 italic">Zero active incidents detected in current buffer</p>
+                        <p className="text-secondary text-[11px] font-bold uppercase mt-2 italic">Zero active incidents detected in current buffer</p>
                     </div>
                 ) : (
                     reports.map(report => (
@@ -338,9 +338,9 @@ const ReportsTab = () => {
                                     </div>
 
                                     <div className="flex items-center gap-3 md:gap-4 text-[9px] md:text-[10px] pt-3 md:pt-4 border-t border-white/5">
-                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[7px] md:text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
+                                        <span className="text-secondary font-bold uppercase tracking-widest text-[7px] md:text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
                                         <span className="text-[#445566]">●</span>
-                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[7px] md:text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
+                                        <span className="text-secondary font-bold uppercase tracking-widest text-[7px] md:text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
                                     </div>
                                 </div>
 
@@ -353,7 +353,7 @@ const ReportsTab = () => {
                                     </button>
                                     <button
                                         onClick={() => handleAction(report.id, 'REJECTED')}
-                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-white/5 border border-white/10 text-[#667788] text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
+                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-white/5 border border-white/10 text-secondary text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
                                     >
                                         Reject
                                     </button>
@@ -377,7 +377,7 @@ const ReportsTab = () => {
 
 const StatCard = ({ label, value, trend, warning }: any) => (
     <div className={`bg-kickr-bg-primary border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
-        <p className="text-[8px] md:text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
+        <p className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
         <div className="flex items-end justify-between">
             <h3 className={`text-2xl md:text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
             {trend && <span className="text-emerald-500 text-[8px] md:text-[10px] font-black mb-1">{trend}</span>}
@@ -461,7 +461,7 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     return (
         <div className="bg-kickr-bg-primary/20 border border-white/5 rounded-sm p-4 md:p-6 hover:bg-white/[0.02] transition-all group">
             <h3 className="text-xs md:text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
-            <p className="text-[10px] md:text-[11px] text-[#667788] font-medium mb-4 md:mb-6 leading-relaxed">{description}</p>
+            <p className="text-[10px] md:text-[11px] text-secondary font-medium mb-4 md:mb-6 leading-relaxed">{description}</p>
             <div className="flex items-center justify-between">
                 <span className="text-[8px] md:text-[9px] text-[#445566] font-black uppercase tracking-widest">{estimatedTime}</span>
                 <button

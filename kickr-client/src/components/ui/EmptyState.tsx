@@ -24,7 +24,7 @@ export const EmptyState = ({ icon = '📡', title, description, actionLabel, onA
                 {title}
             </h3>
 
-            <p className="text-[#667788] text-sm font-medium tracking-tight mb-8 leading-relaxed">
+            <p className="text-secondary text-sm font-medium tracking-tight mb-8 leading-relaxed">
                 {description}
             </p>
 

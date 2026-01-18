@@ -260,14 +260,14 @@ export const TeamDetailPage = () => {
 
 const BigStat = ({ label, value }: { label: string; value: string }) => (
   <div className="text-right">
-    <div className="text-[10px] font-bold text-[#667788] uppercase tracking-widest mb-1">{label}</div>
+    <div className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1">{label}</div>
     <div className="text-2xl font-black text-main italic">{value}</div>
   </div>
 );
 
 const MiniStat = ({ label, value, description }: { label: string; value: string; description: string }) => (
   <div>
-    <div className="text-[9px] font-bold text-[#667788] uppercase tracking-widest mb-1">{label}</div>
+    <div className="text-[9px] font-bold text-secondary uppercase tracking-widest mb-1">{label}</div>
     <div className="text-2xl font-black text-kickr font-display italic">{value}</div>
     <div className="text-[9px] text-[#445566] uppercase font-bold tracking-tighter mt-1">{description}</div>
   </div>

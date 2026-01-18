@@ -332,12 +332,12 @@ export const MatchDetailPage = () => {
             {/* Community Reviews Section */}
             <section className="mt-16 pt-8 border-t border-white/10">
               <div className="flex items-center justify-between mb-10">
-                <h2 className="text-xs font-bold text-[#667788] uppercase tracking-[0.2em]">
+                <h2 className="text-xs font-bold text-secondary uppercase tracking-[0.2em]">
                   COMMUNITY REVIEWS ({userMatches?.length || 0})
                 </h2>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 bg-kickr-bg-secondary border border-white/10 rounded-sm px-3 py-2">
-                    <span className="text-[10px] font-bold text-[#667788] uppercase tracking-wider">Sort:</span>
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-wider">Sort:</span>
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as 'watchedAt' | 'likesCount')}
@@ -366,7 +366,7 @@ export const MatchDetailPage = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-[#667788] text-sm italic">No reviews yet. Be the first to review this match!</p>
+                <p className="text-secondary text-sm italic">No reviews yet. Be the first to review this match!</p>
               )}
             </section>
           </div>

@@ -38,7 +38,7 @@ export const NotificationBell: FC = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-[#667788] hover:text-main transition-all active:scale-90"
+                className="relative p-2 text-secondary hover:text-main transition-all active:scale-90"
                 aria-label="Notifications"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">

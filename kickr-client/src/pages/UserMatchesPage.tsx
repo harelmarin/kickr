@@ -270,7 +270,7 @@ const ErrorState = () => (
     <div className="min-h-screen flex items-center justify-center text-center p-12 bg-kickr-bg-primary">
         <div className="max-w-md">
             <h2 className="text-2xl font-black text-main mb-4 uppercase tracking-tighter italic">Scouting Report Error</h2>
-            <p className="text-[#667788] text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
+            <p className="text-secondary text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
             <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Try Again</button>
         </div>
     </div>

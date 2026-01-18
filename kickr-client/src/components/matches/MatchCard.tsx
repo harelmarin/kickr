@@ -40,7 +40,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     <div className="absolute inset-0 flex items-center justify-between px-3 py-2 sm:px-6 sm:py-4">
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
                             <img src={match.homeLogo} alt="" className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
-                            <span className="text-[10px] sm:text-[11px] font-black text-[#8fa1b8] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.homeTeam}</span>
+                            <span className="text-[10px] sm:text-[11px] font-black text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.homeTeam}</span>
                         </div>
 
                         <div className="flex items-center gap-2 sm:gap-6 px-1 sm:px-4">
@@ -59,7 +59,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
 
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
                             <img src={match.awayLogo} alt="" className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
-                            <span className="text-[10px] sm:text-[11px] font-black text-[#8fa1b8] uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.awayTeam}</span>
+                            <span className="text-[10px] sm:text-[11px] font-black text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.awayTeam}</span>
                         </div>
                     </div>
 

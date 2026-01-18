@@ -9,10 +9,12 @@
   --color-kickr: #4B7BEC;
   /* Sapphire Blue */
   --color-kickr-bg-primary: #0F1115;
-  /* Soft Dark Primary */
   --color-kickr-bg-secondary: #16191F;
-  /* Soft Dark Secondary */
   --color-kickr-bg-tertiary: #1C2129;
+
+  --color-main: #E2E8F0;
+  --color-secondary: #94A3B8;
+  --color-muted: #64748B;
 }
 
 :root {

@@ -9,41 +9,98 @@ import { motion } from 'framer-motion';
 import type { UserMatch } from '../types/userMatch';
 import { LandingMatchPreview } from '../components/landing/LandingMatchPreview';
 
-const MinifiedReviewCard = ({ review }: { review: any }) => (
-  <Link to={`/reviews/${review.id}`} className="group block bg-kickr-bg-secondary border border-white/5 p-2.5 md:p-6 rounded-sm hover:border-kickr/30 transition-all">
-    <div className="flex items-center justify-between mb-2 md:mb-4">
-      <div className="flex items-center gap-1.5 md:gap-3">
-        <div className="w-4 h-4 md:w-8 md:h-8 rounded-full bg-black/5 border border-white/10 flex items-center justify-center overflow-hidden">
-          {review.user?.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <span className="text-[10px] text-main/40">{review.user?.name[0]}</span>}
+const StarRating = ({ note }: { note: number }) => {
+  const rating = note; // 1:1 mapping as requested (assuming note is on 5)
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
+  const emptyStars = Math.max(0, 5 - fullStars - (hasHalfStar ? 1 : 0));
+
+  return (
+    <div className="flex items-center gap-0.5">
+      {/* Full Stars */}
+      {[...Array(fullStars)].map((_, i) => (
+        <svg key={`full-${i}`} xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" className="text-kickr md:w-2.5 md:h-2.5">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+      ))}
+
+      {/* Half Star (Corrected to Left Side) */}
+      {hasHalfStar && (
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" className="text-kickr md:w-2.5 md:h-2.5">
+          <path d="M12 2V17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+        </svg>
+      )}
+
+      {/* Empty Stars (Subtle background) */}
+      {[...Array(emptyStars)].map((_, i) => (
+        <svg key={`empty-${i}`} xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" className="text-white/5 md:w-2.5 md:h-2.5">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+      ))}
+    </div>
+  );
+};
+
+const ReviewPosterCard = ({ review }: { review: any }) => (
+  <Link to={`/reviews/${review.id}`} className="group block">
+    {/* Match Poster Component */}
+    <div className="relative aspect-[3/4] bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden transition-all duration-300 group-hover:border-kickr/40 group-hover:shadow-2xl group-hover:shadow-kickr/10 active:scale-[0.97]">
+      {/* Background Gradient & Pattern */}
+      <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-transparent to-transparent z-10" />
+      <div className="absolute inset-0 opacity-[0.03] z-0" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
+
+      {/* Team Logos (Balanced) */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-2 gap-3 md:gap-4 group-hover:scale-105 transition-transform duration-500">
+        <img src={review.match.homeLogo} className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" alt="Home" />
+        <img src={review.match.awayLogo} className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" alt="Away" />
+      </div>
+
+      <div className="absolute bottom-1 md:bottom-2 inset-x-0 z-20 flex flex-col items-center">
+        <span className="text-[11px] md:text-[13px] font-black text-main italic tabular-nums tracking-tighter leading-none mb-0.5 md:mb-1">
+          {review.match.homeScore}-{review.match.awayScore}
+        </span>
+        <StarRating note={review.note} />
+      </div>
+
+      {/* Review Indicator */}
+      {review.comment && (
+        <div className="absolute top-1.5 right-1.5 z-20 text-kickr/40 group-hover:text-kickr transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="md:w-3.5 md:h-3.5">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
         </div>
-        <span className="text-[10px] md:text-[12px] font-black text-main/40 group-hover:text-main/60 transition-colors uppercase italic truncate max-w-[50px] md:max-w-[120px]">{review.user?.name}</span>
-      </div>
-      <div className="flex items-center justify-center bg-kickr/5 px-1.5 md:px-2 py-0.5 md:py-1 border border-kickr/10">
-        <span className="text-kickr text-[11px] md:text-[13px] font-black italic tabular-nums">{review.note.toFixed(1)}</span>
-      </div>
+      )}
     </div>
 
-    <div className="flex items-center justify-center gap-4 md:gap-8 py-3 md:py-6 border-y border-black/[0.03] mb-3 md:mb-5">
-      <img src={review.match.homeLogo} className="w-4 h-4 md:w-10 md:h-10 object-contain drop-shadow-xl" alt="" />
-      <div className="flex flex-col items-center">
-        <span className="text-[10px] md:text-[20px] font-black text-main italic tabular-nums tracking-tighter">{review.match.homeScore}-{review.match.awayScore}</span>
-        <span className="text-[9px] md:text-[8px] font-black text-main/20 uppercase tracking-widest mt-0.5 md:mt-1 italic">{review.match.competition}</span>
+    {/* Metadata Under Poster */}
+    <div className="mt-1.5 md:mt-2 flex flex-col gap-0.5 md:gap-1">
+      <div className="flex items-center gap-1 md:gap-1.5">
+        <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-white/[0.03] border border-white/5 flex items-center justify-center overflow-hidden flex-shrink-0">
+          {review.user?.avatarUrl ? (
+            <img src={review.user.avatarUrl} className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-[6px] md:text-[7px] font-black text-kickr">{review.user?.name[0]}</span>
+          )}
+        </div>
+        <span className="text-[7px] md:text-[9px] font-black text-secondary uppercase italic tracking-wider truncate group-hover:text-main transition-colors">
+          {review.user?.name}
+        </span>
       </div>
-      <img src={review.match.awayLogo} className="w-4 h-4 md:w-10 md:h-10 object-contain drop-shadow-xl" alt="" />
+      <div className="flex items-center justify-between">
+        <span className="text-[6px] md:text-[7px] font-mono text-muted uppercase tracking-[0.2em] leading-none">
+          {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
+        </span>
+      </div>
     </div>
-
-    <p className="text-[10px] md:text-[11px] text-main/30 italic line-clamp-1 md:line-clamp-2 group-hover:text-main/40 transition-colors leading-tight uppercase font-medium">
-      {review.comment || 'NO MATCH LOG FOUND'}
-    </p>
   </Link>
 );
 
 export default function HomePage() {
   const { user } = useAuth();
-  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(4);
-  const { data: popularReviews } = usePopularReviews(4);
-  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 4);
-  const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(4);
+  const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(5);
+  const { data: popularReviews } = usePopularReviews(5);
+  const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 10);
+  const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(5);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
   const { data: communityScouts } = useUsers();
 
@@ -68,8 +125,8 @@ export default function HomePage() {
       .slice(0, 5);
   }, [popularReviews]);
 
-  const activeFollowing = followingReviews?.content || [];
-  const activeGlobal = globalFeed || latestReviews || [];
+  const activeFollowing = (followingReviews?.content || []).slice(0, 10);
+  const activeGlobal = (globalFeed || latestReviews || []).slice(0, 5);
 
   const sortedUserReviews = (userReviews?.content || [])
     .sort((a: any, b: any) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
@@ -157,8 +214,35 @@ export default function HomePage() {
 
           {/* PRIMARY FEED COLUMN */}
           <div className="lg:col-span-8 space-y-8 md:space-y-20">
+            {/* NETWORK */}
+            {user && (
+              <section>
+                <div className="flex items-center justify-between mb-3 md:mb-12">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <div className="h-3 md:h-5 w-[1.5px] bg-kickr opacity-60"></div>
+                    <h2 className="text-[11px] md:text-[14px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Network activity</h2>
+                  </div>
+                  <Link to="/feed" className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-main/20 hover:text-kickr transition-colors">View all →</Link>
+                </div>
+
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-6">
+                  {isFollowingLoading ? (
+                    <div className="h-24 bg-black/5 animate-pulse rounded-sm col-span-2"></div>
+                  ) : activeFollowing.length > 0 ? (
+                    activeFollowing.map((review: any) => (
+                      <ReviewPosterCard key={review.id} review={review} />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center col-span-2 border border-white/5 bg-white/[0.01]">
+                      <p className="text-[#445566] text-[8px] font-black uppercase tracking-[0.2em]">Empty Network</p>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
             {/* FIXTURES */}
-            <section>
+            <section className={`${user ? 'pt-6 border-t border-white/5' : ''}`}>
               <div className="flex items-center justify-between mb-3 md:mb-12">
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="h-3 md:h-4 w-[1px] bg-kickr opacity-40"></div>
@@ -170,33 +254,6 @@ export default function HomePage() {
                 <NextMatchesHomePage />
               </div>
             </section>
-
-            {/* NETWORK */}
-            {user && (
-              <section className="pt-6 border-t border-white/5">
-                <div className="flex items-center justify-between mb-3 md:mb-12">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="h-3 md:h-5 w-[1.5px] bg-kickr opacity-60"></div>
-                    <h2 className="text-[11px] md:text-[14px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Network activity</h2>
-                  </div>
-                  <Link to="/feed" className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-main/20 hover:text-kickr transition-colors">View all →</Link>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 md:gap-8">
-                  {isFollowingLoading ? (
-                    <div className="h-24 bg-black/5 animate-pulse rounded-sm col-span-2"></div>
-                  ) : activeFollowing.length > 0 ? (
-                    activeFollowing.map((review: any) => (
-                      <MinifiedReviewCard key={review.id} review={review} />
-                    ))
-                  ) : (
-                    <div className="py-8 text-center col-span-2 border border-white/5 bg-white/[0.01]">
-                      <p className="text-[#445566] text-[8px] font-black uppercase tracking-[0.2em]">Empty Network</p>
-                    </div>
-                  )}
-                </div>
-              </section>
-            )}
 
             {/* GLOBAL LIVE */}
             <section className="pt-6 border-t border-white/5">
@@ -216,42 +273,9 @@ export default function HomePage() {
                   {[1, 2, 3, 4].map(i => <div key={i} className="h-8 bg-black/5 animate-pulse rounded-sm"></div>)}
                 </div>
               ) : (
-                <div className="space-y-1 md:space-y-3">
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-4">
                   {activeGlobal.map((review: UserMatch) => (
-                    <div
-                      key={review.id}
-                      className="group relative flex items-center justify-between px-2 md:px-4 py-1.5 md:py-2 bg-white/[0.01] border border-white/5 hover:border-kickr/20 transition-all rounded-sm gap-2"
-                    >
-                      <Link to={`/reviews/${review.id}`} className="absolute inset-0 z-0" />
-
-                      <div className="flex items-center gap-2 md:gap-6 flex-1 min-w-0 relative z-10 pointer-events-none">
-                        <Link to={`/user/${review.user?.id}`} className="flex items-center gap-1 w-12 md:w-32 flex-shrink-0 pointer-events-auto">
-                          <div className="w-3.5 h-3.5 md:w-6 md:h-6 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center overflow-hidden">
-                            {review.user?.avatarUrl ? <img src={review.user.avatarUrl} className="w-full h-full object-cover" /> : <span className="text-kickr text-[10px] font-black">{review.user?.name[0]}</span>}
-                          </div>
-                          <span className="text-[10px] font-black text-main/40 hover:text-main truncate uppercase italic transition-colors leading-none">{review.user?.name}</span>
-                        </Link>
-
-                        <div className="flex items-center gap-1.5 md:gap-4 flex-1 min-w-0 border-l border-white/5 pl-2 md:pl-6">
-                          <div className="flex items-center justify-center gap-1.5 flex-shrink-0">
-                            <img src={review.match.homeLogo} className="w-2.5 h-2.5 md:w-5 md:h-5 object-contain" alt="" />
-                            <img src={review.match.awayLogo} className="w-2.5 h-2.5 md:w-5 md:h-5 object-contain" alt="" />
-                          </div>
-                          <span className="text-[10px] md:text-[8px] font-black text-main/20 uppercase tracking-[0.05em] md:tracking-[0.3em] ml-auto italic truncate max-w-[50px] md:max-w-none">{review.match.competition}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2 md:gap-6 flex-shrink-0 relative z-10 pointer-events-none">
-                        <div className="flex items-center justify-center bg-black/[0.03] w-7 h-4 md:w-16 md:h-6 border border-white/5">
-                          <span className="text-main font-black text-[9px] md:text-[14px] italic tabular-nums leading-none">
-                            {review.match.homeScore}-{review.match.awayScore}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-center bg-kickr/5 w-6 h-4 md:w-10 md:h-6 border border-kickr/10">
-                          <span className="text-kickr text-[11px] md:text-[10px] font-black italic tabular-nums">{review.note.toFixed(1)}</span>
-                        </div>
-                      </div>
-                    </div>
+                    <ReviewPosterCard key={review.id} review={review} />
                   ))}
                 </div>
               )}
@@ -263,26 +287,41 @@ export default function HomePage() {
             {/* DIARY */}
             {user && (
               <section className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm relative overflow-hidden group col-span-1 lg:col-auto">
-                <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] mb-3 md:mb-10 border-b border-white/5 pb-2 md:pb-6 italic">My Log</h3>
-                <div className="space-y-2 md:space-y-8">
+                <div className="flex items-center justify-between mb-3 md:mb-10 border-b border-white/5 pb-2 md:pb-6">
+                  <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic">My Log</h3>
+                  <Link to={`/user/${user.id}/diary`} className="text-[9px] font-black uppercase text-main/20 hover:text-kickr transition-colors">Files →</Link>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2.5">
                   {sortedUserReviews.length > 0 ? (
                     sortedUserReviews.map((review: any) => (
-                      <Link key={review.id} to={`/reviews/${review.id}`} className="flex items-center gap-2 md:gap-6 group/item">
-                        <div className="w-5 h-5 md:w-11 md:h-11 flex-shrink-0 bg-black/[0.02] border border-white/5 flex items-center justify-center text-[11px] md:text-[10px] font-mono font-black italic text-kickr group-hover/item:border-kickr transition-all tabular-nums">
-                          {review.note.toFixed(1)}
-                        </div>
-                        <div className="flex flex-col flex-1 min-w-0">
-                          <div className="text-[11px] md:text-[10px] font-black text-main/20 italic leading-none tabular-nums">
-                            {review.match.homeScore}-{review.match.awayScore}
+                      <Link key={review.id} to={`/reviews/${review.id}`} className="group/log block">
+                        <div className="relative aspect-[3/4] bg-kickr-bg-secondary border border-white/5 rounded-[1px] overflow-hidden transition-all duration-300 group-hover/log:border-kickr/40 group-hover/log:shadow-lg group-hover/log:shadow-kickr/5">
+                          {/* Background Gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-transparent to-transparent z-10" />
+
+                          {/* Logos (Ultra-Micro Dense) */}
+                          <div className="absolute inset-0 flex flex-col items-center justify-center p-0.5 gap-2 group-hover/log:scale-105 transition-transform duration-500">
+                            <img src={review.match.homeLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain" alt="" />
+                            <img src={review.match.awayLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain" alt="" />
                           </div>
-                          <span className="text-[9px] md:text-[7px] font-mono text-main/20 uppercase tracking-[0.05em] leading-none mt-0.5 italic">
+
+                          {/* Info Overlay (Micro) */}
+                          <div className="absolute bottom-0.5 inset-x-0 z-20 flex flex-col items-center scale-[0.8]">
+                            <StarRating note={review.note} />
+                          </div>
+                        </div>
+                        <div className="mt-1 flex flex-col items-center">
+                          <span className="text-[7px] font-mono text-muted uppercase tracking-tighter">
                             {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                           </span>
                         </div>
                       </Link>
                     ))
                   ) : (
-                    <p className="text-[11px] text-[#445566] italic font-black">Empty</p>
+                    <div className="col-span-3 py-4 text-center">
+                      <p className="text-[11px] text-main/20 italic font-black uppercase tracking-widest">Empty log</p>
+                    </div>
                   )}
                 </div>
               </section>

@@ -119,7 +119,7 @@ export const RegisterPage = () => {
 
                     <div className="mb-6">
                         <h2 className="text-2xl font-black text-main tracking-tight mb-1 italic uppercase display-font">ACCESS ENROLLMENT</h2>
-                        <p className="text-[#667788] text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure analyst identifier.</p>
+                        <p className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure analyst identifier.</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -228,7 +228,7 @@ const FeatureItem = ({ icon, title, description }: { icon: string; title: string
         </div>
         <div>
             <h3 className="text-main text-sm font-black uppercase tracking-wider mb-1 group-hover:text-kickr transition-colors">{title}</h3>
-            <p className="text-[#667788] text-xs leading-relaxed max-w-xs">{description}</p>
+            <p className="text-secondary text-xs leading-relaxed max-w-xs">{description}</p>
         </div>
     </div>
 );

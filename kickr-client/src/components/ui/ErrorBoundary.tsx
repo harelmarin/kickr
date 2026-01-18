@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         <h1 className="display-font text-3xl text-main uppercase italic tracking-tighter mb-4">
                             Pitch Disruption
                         </h1>
-                        <p className="text-[#667788] text-sm leading-relaxed mb-10">
+                        <p className="text-secondary text-sm leading-relaxed mb-10">
                             Something went wrong on the field. Our tactical team has been notified.
                             <br />
                             <span className="text-[10px] mt-4 block opacity-50 font-mono italic">
