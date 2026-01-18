@@ -102,7 +102,7 @@ export const AboutPage: FC = () => {
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                             {[
-                                { title: 'Watch', desc: 'Experience the game across all theaters of operation.', icon: '⚽️' },
+                                { title: 'Watch', desc: 'Experience the game across all competitions.', icon: '⚽️' },
                                 { title: 'Log', desc: 'Rate performances, note tactical shifts, and log intel.', icon: '✍️' },
                                 { title: 'Share', desc: 'Connect with members and compare intel cards.', icon: '🔄' },
                             ].map((step, i) => (

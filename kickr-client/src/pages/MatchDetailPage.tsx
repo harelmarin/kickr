@@ -196,13 +196,13 @@ export const MatchDetailPage = () => {
             {/* Metadata Bar - Integrated into poster bottom */}
             <div className="w-full border-t border-white/5 bg-kickr-bg-primary/20">
               <div className="grid grid-cols-3 divide-x divide-white/5">
-                <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center group hover:bg-black/[0.02] transition-colors">
-                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Theater</span>
+                <Link to={`/competitions/${match.competitionId}`} className="flex flex-col items-center justify-center p-3 md:p-6 text-center group hover:bg-black/[0.02] transition-colors">
+                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Competitions</span>
                   <div className="flex items-center gap-1.5 md:gap-2 justify-center">
                     <img src={match.competitionLogo} className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
-                    <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none">{match.competition || 'Theater'}</span>
+                    <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none group-hover:text-kickr transition-colors">{match.competition || 'Competitions'}</span>
                   </div>
-                </div>
+                </Link>
                 <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-black/[0.02] transition-colors">
                   <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Date</span>
                   <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>

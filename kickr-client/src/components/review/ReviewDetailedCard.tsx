@@ -48,7 +48,9 @@ export const ReviewDetailedCard: FC<ReviewDetailedCardProps> = ({ review, showUs
                         </Link>
                     </h3>
                     <div className="flex items-center gap-2 text-[8px] md:text-[10px] font-bold text-muted uppercase tracking-widest italic opacity-60">
-                        <span>{review.match.competition}</span>
+                        <Link to={`/competitions/${review.match.competitionId}`} className="hover:text-kickr transition-colors">
+                            {review.match.competition}
+                        </Link>
                         <span className="opacity-20">•</span>
                         <span>{new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}</span>
                     </div>

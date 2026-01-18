@@ -101,11 +101,11 @@ export const CompetitionDetailPage = () => {
           <div className="flex-1 text-center md:text-left min-w-0">
             <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 mb-1 md:mb-4">
               <div className="h-[1px] w-4 md:w-6 bg-kickr opacity-50"></div>
-              <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Theater of Operations</span>
+              <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Competition Hub</span>
             </div>
             <h1 className="text-xl md:text-6xl xl:text-8xl font-black text-main/90 mb-1 md:mb-4 tracking-tighter leading-none uppercase italic truncate">{competition.name}</h1>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-8">
-              <CompStat label="Theater" value={competition.country || 'Global'} />
+              <CompStat label="Region" value={competition.country || 'Global'} />
               <CompStat label="Format" value={competition.type || (isTournament ? 'CUP' : 'LEAGUE')} />
               <CompStat label="ID" value={competition.externalId || 'AUTH'} />
             </div>

@@ -95,7 +95,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                         </p>
                         {review.comment.length > 1000 && (
                             <p className="text-[#4B7BEC] text-[24px] font-bold uppercase tracking-wider mt-8">
-                                Read full review on kickr.app
+                                Read full review on kickrhq.com
                             </p>
                         )}
                     </div>
@@ -127,7 +127,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                         </div>
                         <span className="text-main text-4xl font-black tracking-tighter uppercase">Kickr</span>
                     </div>
-                    <span className="text-main/50 text-lg font-bold tracking-[0.3em] uppercase">kickr.app</span>
+                    <span className="text-main/50 text-lg font-bold tracking-[0.3em] uppercase">kickrhq.com</span>
                 </div>
             </div>
         </div>
