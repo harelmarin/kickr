@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 export const NotFoundPage: FC = () => {
     return (
-        <div className="min-h-[calc(100vh-4rem)] bg-[#14181c] flex items-center justify-center relative overflow-hidden">
+        <div className="min-h-[calc(100vh-4rem)] bg-kickr-bg-primary flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] mix-blend-overlay"></div>
 
             <div className="text-center px-8 flex flex-col items-center relative z-10">
                 <div className="relative mb-8">
-                    <h1 className="text-[140px] font-black text-white leading-none opacity-5 tracking-tighter italic">
+                    <h1 className="text-[140px] font-black text-main leading-none opacity-5 tracking-tighter italic">
                         404
                     </h1>
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -16,10 +16,10 @@ export const NotFoundPage: FC = () => {
                     </div>
                 </div>
 
-                <h2 className="text-white text-2xl font-black italic uppercase tracking-tighter mb-2">
+                <h2 className="text-main text-2xl font-black italic uppercase tracking-tighter mb-2">
                     Sector <span className="text-kickr">Offline</span>
                 </h2>
-                <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.4em] mb-12 italic">
+                <p className="text-main/20 text-[10px] font-black uppercase tracking-[0.4em] mb-12 italic">
                     The requested data node does not exist
                 </p>
 

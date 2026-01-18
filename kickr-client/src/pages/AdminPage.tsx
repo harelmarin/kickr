@@ -22,7 +22,7 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-[calc(100vh-4rem)] bg-[#14181c] pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
+        <div className="min-h-[calc(100vh-4rem)] bg-kickr-bg-primary pt-12 px-4 sm:px-8 pb-8 max-w-[1400px] mx-auto">
             {/* Header */}
             <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                 <div>
@@ -37,7 +37,7 @@ export default function AdminPage() {
                             onClick={() => setActiveTab(tab)}
                             className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-sm text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
                                 ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
-                                : 'text-[#667788] hover:text-white'
+                                : 'text-secondary hover:text-white'
                                 }`}
                         >
                             {tab}
@@ -91,18 +91,18 @@ const DashboardTab = () => {
                     title="User Acquisition"
                     subtitle="New registrations last 30 days"
                     data={stats.userGrowth}
-                    color="#4466ff"
+                    color="#4B7BEC"
                 />
                 <ChartSection
                     title="Review Activity"
                     subtitle="Match logs volume per day"
                     data={stats.reviewVolume}
-                    color="#ff8000"
+                    color="#00D1FF"
                 />
             </div>
 
             {/* Existing Data Management */}
-            <section className="bg-[#14181c] border border-white/5 rounded-sm p-8">
+            <section className="bg-kickr-bg-primary border border-white/5 rounded-sm p-8">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-8">System Sync Utilities</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <DataSyncCard
@@ -167,20 +167,20 @@ const UsersTab = () => {
     );
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-sm overflow-hidden shadow-xl">
+        <div className="bg-kickr-bg-primary border border-white/5 rounded-sm overflow-hidden shadow-xl">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Tactician Directory</h2>
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Member Directory</h2>
                 <input
                     type="text"
                     placeholder="Search systems..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-[#14181c]/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
+                    className="bg-kickr-bg-primary/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
                 />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead className="bg-[#14181c]/10 text-[#445566] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em]">
+                    <thead className="bg-kickr-bg-primary/10 text-[#445566] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em]">
                         <tr>
                             <th className="px-3 md:px-6 py-2 md:py-4">User</th>
                             <th className="px-3 md:px-6 py-2 md:py-4">Status</th>
@@ -212,7 +212,7 @@ const UsersTab = () => {
                                     </span>
                                 </td>
                                 <td className="px-3 md:px-6 py-2 md:py-4 hidden md:table-cell">
-                                    <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-[#667788]'}`}>
+                                    <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${user.role === 'ADMIN' ? 'text-kickr' : 'text-secondary'}`}>
                                         {user.role}
                                     </span>
                                 </td>
@@ -234,7 +234,7 @@ const UsersTab = () => {
 
             {/* Pagination */}
             {pageData && pageData.totalPages > 1 && (
-                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-[#14181c]/10">
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-kickr-bg-primary/10">
                     <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
                         Page {pageData.number + 1} / {pageData.totalPages}
                     </div>
@@ -242,14 +242,14 @@ const UsersTab = () => {
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
                             disabled={pageData.first}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             Previous
                         </button>
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
                             disabled={pageData.last}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-[#667788] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             Next
                         </button>
@@ -290,14 +290,14 @@ const ReportsTab = () => {
         <div className="space-y-6">
             <div className="grid grid-cols-1 gap-4">
                 {reports.length === 0 ? (
-                    <div className="bg-[#14181c] border border-white/5 rounded-sm p-32 text-center">
+                    <div className="bg-kickr-bg-primary border border-white/5 rounded-sm p-32 text-center">
                         <p className="text-kickr text-[24px] mb-4">🛡️</p>
                         <p className="text-[#445566] text-[10px] font-black uppercase tracking-[0.4em]">Sector Secured</p>
-                        <p className="text-[#667788] text-[11px] font-bold uppercase mt-2 italic">Zero active incidents detected in current buffer</p>
+                        <p className="text-secondary text-[11px] font-bold uppercase mt-2 italic">Zero active incidents detected in current buffer</p>
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-[#14181c] border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all">
+                        <div key={report.id} className="bg-kickr-bg-primary border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all">
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 md:gap-8">
                                 <div className="space-y-4 md:space-y-6 flex-1">
                                     <div className="flex items-center gap-2 md:gap-3 flex-wrap">
@@ -308,7 +308,7 @@ const ReportsTab = () => {
                                             {report.status}
                                         </span>
                                         <span className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.2em] italic">{report.targetType}</span>
-                                        <span className="text-[9px] md:text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
+                                        <span className="text-[9px] md:text-[10px] font-black text-main/40 uppercase tracking-[0.2em]">REASON: <span className="text-white">{report.reason}</span></span>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -323,7 +323,7 @@ const ReportsTab = () => {
                                                     View Source ↗
                                                 </Link>
                                             </div>
-                                            <div className="text-[10px] md:text-[12px] text-white/80 leading-relaxed bg-white/[0.02] border border-white/5 p-3 md:p-4 rounded-sm italic">
+                                            <div className="text-[10px] md:text-[12px] text-main/80 leading-relaxed bg-white/[0.02] border border-white/5 p-3 md:p-4 rounded-sm italic">
                                                 {report.targetType === 'MATCH_REVIEW' ? 'Review content encrypted in external node...' : 'Target comment trace found...'}
                                                 <p className="mt-2 text-[8px] md:text-[10px] text-[#445566] non-italic font-medium">// ID: {report.targetId}</p>
                                             </div>
@@ -331,16 +331,16 @@ const ReportsTab = () => {
 
                                         <div>
                                             <p className="text-[8px] md:text-[9px] text-[#445566] uppercase tracking-[0.3em] font-black italic mb-2">REPORTER JUSTIFICATION</p>
-                                            <p className="text-[10px] md:text-[12px] text-[#99aabb] leading-relaxed bg-[#14181c]/40 border border-white/5 p-3 md:p-4 rounded-sm italic h-full">
+                                            <p className="text-[10px] md:text-[12px] text-[#99aabb] leading-relaxed bg-kickr-bg-primary/40 border border-white/5 p-3 md:p-4 rounded-sm italic h-full">
                                                 "{report.description || 'No additional intelligence provided'}"
                                             </p>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3 md:gap-4 text-[9px] md:text-[10px] pt-3 md:pt-4 border-t border-white/5">
-                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[7px] md:text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
+                                        <span className="text-secondary font-bold uppercase tracking-widest text-[7px] md:text-[8px]">Origin: <span className="text-white italic">{report.reporter.name}</span></span>
                                         <span className="text-[#445566]">●</span>
-                                        <span className="text-[#667788] font-bold uppercase tracking-widest text-[7px] md:text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
+                                        <span className="text-secondary font-bold uppercase tracking-widest text-[7px] md:text-[8px]">{new Date(report.createdAt).toLocaleString().toUpperCase()}</span>
                                     </div>
                                 </div>
 
@@ -353,7 +353,7 @@ const ReportsTab = () => {
                                     </button>
                                     <button
                                         onClick={() => handleAction(report.id, 'REJECTED')}
-                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-white/5 border border-white/10 text-[#667788] text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
+                                        className="flex-1 sm:w-32 py-2 md:py-3 bg-white/5 border border-white/10 text-secondary text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-sm hover:bg-white/10 transition-all italic"
                                     >
                                         Reject
                                     </button>
@@ -376,8 +376,8 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-[#14181c] border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
-        <p className="text-[8px] md:text-[10px] font-black text-[#667788] uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
+    <div className={`bg-kickr-bg-primary border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
+        <p className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
         <div className="flex items-end justify-between">
             <h3 className={`text-2xl md:text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
             {trend && <span className="text-emerald-500 text-[8px] md:text-[10px] font-black mb-1">{trend}</span>}
@@ -389,7 +389,7 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
     const maxVal = Math.max(...data.map((d: any) => d.count), 1);
 
     return (
-        <div className="bg-[#14181c] border border-white/5 rounded-sm p-4 md:p-8 shadow-xl">
+        <div className="bg-kickr-bg-primary border border-white/5 rounded-sm p-4 md:p-8 shadow-xl">
             <div className="mb-6 md:mb-10">
                 <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
                 <p className="text-[8px] md:text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
@@ -459,9 +459,9 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
     };
 
     return (
-        <div className="bg-[#14181c]/20 border border-white/5 rounded-sm p-4 md:p-6 hover:bg-white/[0.02] transition-all group">
+        <div className="bg-kickr-bg-primary/20 border border-white/5 rounded-sm p-4 md:p-6 hover:bg-white/[0.02] transition-all group">
             <h3 className="text-xs md:text-sm font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-kickr transition-colors">{title}</h3>
-            <p className="text-[10px] md:text-[11px] text-[#667788] font-medium mb-4 md:mb-6 leading-relaxed">{description}</p>
+            <p className="text-[10px] md:text-[11px] text-secondary font-medium mb-4 md:mb-6 leading-relaxed">{description}</p>
             <div className="flex items-center justify-between">
                 <span className="text-[8px] md:text-[9px] text-[#445566] font-black uppercase tracking-widest">{estimatedTime}</span>
                 <button

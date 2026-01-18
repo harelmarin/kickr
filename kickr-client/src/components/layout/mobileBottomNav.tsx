@@ -4,13 +4,13 @@ import { motion } from 'framer-motion';
 
 export const MobileBottomNav = () => {
     return (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#14181c]/80 backdrop-blur-xl border-t border-white/5 z-50 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-kickr-bg-primary/80 backdrop-blur-xl border-t border-white/5 z-50 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
             <div className="flex items-center justify-around h-14 px-2">
                 <NavItem to="/feed" icon={<FeedIcon />} label="Feed" />
                 <NavItem to="/matches" icon={<MatchesIcon />} label="Fixtures" />
                 <NavItem to="/" icon={<HomeIcon />} label="Hub" />
                 <NavItem to="/competitions" icon={<TrophyIcon />} label="Leagues" />
-                <NavItem to="/community" icon={<CommunityIcon />} label="Tacticians" />
+                <NavItem to="/community" icon={<CommunityIcon />} label="Community" />
             </div>
         </nav>
     );
@@ -23,8 +23,8 @@ const NavItem = ({ to, icon, label }: { to: string; icon: ReactNode; label: stri
         : location.pathname.startsWith(to);
 
     return (
-        <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all active:scale-90 active:bg-white/5 group rounded-lg">
-            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-[#94a3b8] group-hover:text-white'}`}>
+        <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all active:scale-90 active:bg-black/5 group rounded-lg">
+            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-[#94a3b8] group-hover:text-main'}`}>
                 {icon}
             </div>
             <span className={`relative z-10 text-[9px] font-black uppercase tracking-[0.1em] transition-all duration-300 ${isActive ? 'text-kickr' : 'text-[#64748b]'}`}>

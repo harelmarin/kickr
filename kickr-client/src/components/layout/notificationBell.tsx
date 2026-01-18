@@ -38,7 +38,7 @@ export const NotificationBell: FC = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-[#667788] hover:text-white transition-all active:scale-90"
+                className="relative p-2 text-secondary hover:text-main transition-all active:scale-90"
                 aria-label="Notifications"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
@@ -52,9 +52,9 @@ export const NotificationBell: FC = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute top-[calc(100%+0.75rem)] right-0 w-[280px] sm:w-[320px] bg-[#14181c] border border-white/10 rounded-sm shadow-[0_10px_50px_rgba(0,0,0,0.8)] z-[100] overflow-hidden animate-fade-in">
-                    <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-                        <span className="text-[9px] font-black text-white uppercase tracking-[0.3em] italic">Notifications</span>
+                <div className="absolute top-[calc(100%+0.75rem)] right-0 w-[280px] sm:w-[320px] bg-kickr-bg-primary border border-white/10 rounded-sm shadow-[0_10px_50px_rgba(0,0,0,0.8)] z-[100] overflow-hidden animate-fade-in">
+                    <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between bg-black/[0.02]">
+                        <span className="text-[9px] font-black text-main uppercase tracking-[0.3em] italic">Notifications</span>
                         <div className="flex items-center gap-4">
                             {Number(unreadCount) > 0 && (
                                 <button
@@ -67,7 +67,7 @@ export const NotificationBell: FC = () => {
                             {notifications && notifications.length > 0 && (
                                 <button
                                     onClick={handleClearAll}
-                                    className="text-[8px] font-black text-white/20 hover:text-white/40 uppercase tracking-widest transition-all italic"
+                                    className="text-[8px] font-black text-main/20 hover:text-main/40 uppercase tracking-widest transition-all italic"
                                 >
                                     Clear all
                                 </button>
@@ -89,7 +89,7 @@ export const NotificationBell: FC = () => {
                             </div>
                         ) : (
                             <div className="py-20 text-center flex flex-col items-center gap-4">
-                                <div className="w-8 h-[1px] bg-white/5 mx-auto"></div>
+                                <div className="w-8 h-[1px] bg-black/5 mx-auto"></div>
                                 <p className="text-[#445566] text-[9px] font-black uppercase tracking-[0.4em] italic">No notifications</p>
                                 <p className="text-[#445566] text-[7px] font-black uppercase tracking-[0.2em] opacity-30">// You're all caught up</p>
                             </div>
@@ -126,9 +126,9 @@ const NotificationItem = ({ notification, onRead, onClose }: { notification: any
         <Link
             to={getTargetUrl()}
             onClick={handleClick}
-            className={`flex items-start gap-4 p-5 hover:bg-white/[0.03] transition-all group/item relative ${!notification.isRead ? 'bg-kickr/[0.02]' : ''}`}
+            className={`flex items-start gap-4 p-5 hover:bg-black/[0.03] transition-all group/item relative ${!notification.isRead ? 'bg-kickr/[0.02]' : ''}`}
         >
-            <div className={`w-9 h-9 flex-shrink-0 flex items-center justify-center border rounded-sm transition-all group-hover/item:border-white/20 ${getTypeColor()}`}>
+            <div className={`w-9 h-9 flex-shrink-0 flex items-center justify-center border rounded-sm transition-all group-hover/item:border-black/20 ${getTypeColor()}`}>
                 <span className="text-xs filter grayscale opacity-80 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all">
                     {isFollow ? '👤' : isComment ? '💬' : '⚽'}
                 </span>
@@ -136,22 +136,22 @@ const NotificationItem = ({ notification, onRead, onClose }: { notification: any
 
             <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                    <span className={`text-[8px] font-black uppercase tracking-[0.2em] italic ${!notification.isRead ? 'text-kickr' : 'text-white/20'}`}>
+                    <span className={`text-[8px] font-black uppercase tracking-[0.2em] italic ${!notification.isRead ? 'text-kickr' : 'text-main/20'}`}>
                         {notification.type}
                     </span>
-                    <span className="text-[8px] font-black text-white/20 uppercase tracking-widest italic group-hover/item:text-white/40 transition-colors">
+                    <span className="text-[8px] font-black text-main/20 uppercase tracking-widest italic group-hover/item:text-main/40 transition-colors">
                         {new Date(notification.createdAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                     </span>
                 </div>
 
-                <p className="text-[11px] text-white/50 leading-[1.4] italic">
-                    <span className="text-white font-black not-italic group-hover/item:text-kickr transition-colors tracking-tight uppercase">{notification.actorName}</span>{' '}
+                <p className="text-[11px] text-main/50 leading-[1.4] italic">
+                    <span className="text-main font-black not-italic group-hover/item:text-kickr transition-colors tracking-tight uppercase">{notification.actorName}</span>{' '}
                     {isFollow ? 'started following you' : isComment ? 'commented on your review' : 'posted a new match review'}
                 </p>
 
                 <div className="mt-2 flex items-center gap-2">
-                    <div className={`h-[1px] bg-white/5 transition-all group-hover/item:bg-kickr/20 ${!notification.isRead ? 'w-8' : 'w-4'}`}></div>
-                    <span className="text-[7px] font-black text-white/10 uppercase tracking-[0.3em]">View details</span>
+                    <div className={`h-[1px] bg-black/5 transition-all group-hover/item:bg-kickr/20 ${!notification.isRead ? 'w-8' : 'w-4'}`}></div>
+                    <span className="text-[7px] font-black text-main/10 uppercase tracking-[0.3em]">View details</span>
                 </div>
             </div>
 

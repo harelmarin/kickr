@@ -38,7 +38,7 @@ export const SearchBar = () => {
             <div className={`bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 rounded-sm flex items-center transition-all duration-300 h-7 md:h-9 pr-2 overflow-hidden shadow-2xl ${isOpen ? 'border-kickr/40 bg-white/[0.08]' : ''}`}>
                 <div className="pl-2.5 pr-1 md:pr-2">
                     <svg
-                        className={`w-3 h-3 md:w-3.5 md:h-3.5 transition-colors ${isOpen ? 'text-kickr' : 'text-white/20 group-hover:text-white/40'}`}
+                        className={`w-3 h-3 md:w-3.5 md:h-3.5 transition-colors ${isOpen ? 'text-kickr' : 'text-main/20 group-hover:text-main/40'}`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -52,7 +52,7 @@ export const SearchBar = () => {
                     value={query}
                     onChange={handleInputChange}
                     onFocus={() => setIsOpen(true)}
-                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[10px] font-black uppercase tracking-[0.2em] text-white placeholder-white/10 py-0 w-12 focus:w-28 sm:w-40 sm:focus:w-72 transition-all duration-500 italic"
+                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main placeholder-white/10 py-0 w-12 focus:w-28 sm:w-40 sm:focus:w-72 transition-all duration-500 italic"
                 />
             </div>
 

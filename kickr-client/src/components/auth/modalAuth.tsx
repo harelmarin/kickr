@@ -11,7 +11,7 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
     return (
         <div
-            className="fixed inset-0 bg-[#14181c]/50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-kickr-bg-primary/50 flex items-center justify-center z-50"
             onClick={onClose}
         >
             <div
@@ -19,7 +19,7 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                    className="absolute top-2 right-2 text-gray-400 hover:text-main"
                     onClick={onClose}
                 >
                     ✕

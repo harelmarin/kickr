@@ -22,7 +22,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({
 
     return (
         <div
-            className="fixed inset-0 bg-[#14181c]/60 flex items-center justify-center z-50 backdrop-blur-sm"
+            className="fixed inset-0 bg-kickr-bg-primary/60 flex items-center justify-center z-50 backdrop-blur-sm"
             onClick={onClose}
         >
             <div
@@ -35,7 +35,7 @@ export const SuccessModal: FC<SuccessModalProps> = ({
                 </div>
 
                 {/* Titre */}
-                <h2 className="text-2xl font-bold text-center mb-3 text-white">
+                <h2 className="text-2xl font-bold text-center mb-3 text-main">
                     {title}
                 </h2>
 
@@ -47,14 +47,14 @@ export const SuccessModal: FC<SuccessModalProps> = ({
                 {/* Bouton de fermeture */}
                 <button
                     onClick={onClose}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-sm transition-colors"
+                    className="w-full bg-green-500 hover:bg-green-600 text-main font-medium py-3 px-4 rounded-sm transition-colors"
                 >
                     Compris !
                 </button>
 
                 {/* Close Button */}
                 <button
-                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                    className="absolute top-4 right-4 text-gray-400 hover:text-main transition-colors"
                     onClick={onClose}
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

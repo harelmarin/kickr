@@ -20,18 +20,18 @@ export const EmptyState = ({ icon = '📡', title, description, actionLabel, onA
                 <div className="absolute inset-0 bg-kickr/20 blur-3xl rounded-full -z-10 animate-pulse"></div>
             </div>
 
-            <h3 className="text-xl font-black text-white italic uppercase tracking-tighter mb-4 display-font">
+            <h3 className="text-xl font-black text-main italic uppercase tracking-tighter mb-4 display-font">
                 {title}
             </h3>
 
-            <p className="text-[#667788] text-sm font-medium tracking-tight mb-8 leading-relaxed">
+            <p className="text-secondary text-sm font-medium tracking-tight mb-8 leading-relaxed">
                 {description}
             </p>
 
             {actionLabel && onAction && (
                 <button
                     onClick={onAction}
-                    className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-all border border-kickr/20 px-6 py-2.5 rounded-sm hover:bg-kickr/5"
+                    className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] hover:text-main transition-all border border-kickr/20 px-6 py-2.5 rounded-sm hover:bg-kickr/5"
                 >
                     {actionLabel}
                 </button>

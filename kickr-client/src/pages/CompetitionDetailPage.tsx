@@ -36,7 +36,7 @@ export const CompetitionDetailPage = () => {
 
   if (isLoadingComp) {
     return (
-      <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
+      <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-kickr border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -44,10 +44,10 @@ export const CompetitionDetailPage = () => {
 
   if (!competition) {
     return (
-      <div className="min-h-screen bg-[#14181c] flex flex-col items-center justify-center p-6 text-center">
-        <h1 className="text-2xl font-black text-white/90 uppercase italic mb-4">Competition Not Found</h1>
-        <p className="text-white/40 mb-8">The requested sequence does not exist in our database.</p>
-        <Link to="/" className="px-8 py-4 bg-kickr text-white font-black uppercase italic tracking-widest hover:bg-kickr/90 transition-all rounded-sm">
+      <div className="min-h-screen bg-kickr-bg-primary flex flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-2xl font-black text-main/90 uppercase italic mb-4">Competition Not Found</h1>
+        <p className="text-main/40 mb-8">The requested sequence does not exist in our database.</p>
+        <Link to="/" className="px-8 py-4 bg-kickr text-main font-black uppercase italic tracking-widest hover:bg-kickr/90 transition-all rounded-sm">
           Back to base
         </Link>
       </div>
@@ -87,14 +87,14 @@ export const CompetitionDetailPage = () => {
     competition.name.toLowerCase().includes('fa cup');
 
   return (
-    <main className="min-h-screen bg-[#14181c]">
-      <div className="bg-white/[0.02] border-b border-white/5 pt-20 pb-6 md:py-24 relative overflow-hidden">
+    <main className="min-h-screen bg-kickr-bg-primary">
+      <div className="bg-black/[0.02] border-b border-white/5 pt-20 pb-6 md:py-24 relative overflow-hidden">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] opacity-[0.02] pointer-events-none">
           <img src={competition.logoUrl} className="w-full h-full object-contain" alt="" />
         </div>
 
         <div className="max-w-[1400px] mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-3 md:gap-12 relative z-10">
-          <div className="w-16 h-16 md:w-32 md:h-32 bg-[#14181c] rounded-sm p-3 md:p-6 border border-white/10 shadow-2xl flex-shrink-0">
+          <div className="w-16 h-16 md:w-32 md:h-32 bg-kickr-bg-primary rounded-sm p-3 md:p-6 border border-white/10 shadow-2xl flex-shrink-0">
             <img src={competition.logoUrl} alt={competition.name} className="w-full h-full object-contain filter drop-shadow-xl" />
           </div>
 
@@ -103,7 +103,7 @@ export const CompetitionDetailPage = () => {
               <div className="h-[1px] w-4 md:w-6 bg-kickr opacity-50"></div>
               <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Theater of Operations</span>
             </div>
-            <h1 className="text-xl md:text-6xl xl:text-8xl font-black text-white/90 mb-1 md:mb-4 tracking-tighter leading-none uppercase italic truncate">{competition.name}</h1>
+            <h1 className="text-xl md:text-6xl xl:text-8xl font-black text-main/90 mb-1 md:mb-4 tracking-tighter leading-none uppercase italic truncate">{competition.name}</h1>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-8">
               <CompStat label="Theater" value={competition.country || 'Global'} />
               <CompStat label="Format" value={competition.type || (isTournament ? 'CUP' : 'LEAGUE')} />
@@ -133,7 +133,7 @@ export const CompetitionDetailPage = () => {
               <header className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
                 <div>
                   <h2 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">League Standings</h2>
-                  <p className="text-[7px] md:text-[10px] text-white/20 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Live hierarchy</p>
+                  <p className="text-[7px] md:text-[10px] text-main/20 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Live hierarchy</p>
                 </div>
               </header>
               <LeagueStandings standingsJson={competition.standingsJson} maxEntries={20} />
@@ -144,7 +144,7 @@ export const CompetitionDetailPage = () => {
             <header className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
               <div>
                 <h2 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">{showFinished ? 'Completed' : 'Upcoming'}</h2>
-                <p className="text-[7px] md:text-[10px] text-white/20 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Season Timeline</p>
+                <p className="text-[7px] md:text-[10px] text-main/20 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Season Timeline</p>
               </div>
 
               <div className="flex items-center gap-4">
@@ -153,7 +153,7 @@ export const CompetitionDetailPage = () => {
                     <button
                       disabled={matchPage === 0}
                       onClick={() => setMatchPage(p => p - 1)}
-                      className="text-[10px] font-black uppercase text-white/40 hover:text-white disabled:opacity-20 transition-all font-mono"
+                      className="text-[10px] font-black uppercase text-main/40 hover:text-main disabled:opacity-20 transition-all font-mono"
                     >
                       ←
                     </button>
@@ -161,7 +161,7 @@ export const CompetitionDetailPage = () => {
                     <button
                       disabled={matchPage >= totalMatchPages - 1}
                       onClick={() => setMatchPage(p => p + 1)}
-                      className="text-[10px] font-black uppercase text-white/40 hover:text-white disabled:opacity-20 transition-all font-mono"
+                      className="text-[10px] font-black uppercase text-main/40 hover:text-main disabled:opacity-20 transition-all font-mono"
                     >
                       →
                     </button>
@@ -170,16 +170,16 @@ export const CompetitionDetailPage = () => {
               </div>
             </header>
 
-            <div className="flex gap-1 p-1 bg-white/[0.02] border border-white/5 rounded-sm w-fit mb-6 md:mb-8">
+            <div className="flex gap-1 p-1 bg-black/[0.02] border border-white/5 rounded-sm w-fit mb-6 md:mb-8">
               <button
                 onClick={() => handleFilterChange(false)}
-                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-white/20 hover:text-white/40'}`}
+                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-main/20 hover:text-main/40'}`}
               >
                 Upcoming
               </button>
               <button
                 onClick={() => handleFilterChange(true)}
-                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-white/20 hover:text-white/40'}`}
+                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-main/20 hover:text-main/40'}`}
               >
                 Finished
               </button>
@@ -188,11 +188,11 @@ export const CompetitionDetailPage = () => {
             <div className="space-y-4">
               {isLoadingMatches ? (
                 Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="h-24 bg-white/[0.02] animate-pulse rounded-sm border border-white/5" />
+                  <div key={i} className="h-24 bg-black/[0.02] animate-pulse rounded-sm border border-white/5" />
                 ))
               ) : timelineData?.content.length === 0 ? (
                 <div className="py-12 border border-white/5 rounded-sm bg-white/[0.01] text-center">
-                  <p className="text-[8px] font-black text-white/10 uppercase tracking-[0.3em] italic">No Records found.</p>
+                  <p className="text-[8px] font-black text-main/10 uppercase tracking-[0.3em] italic">No Records found.</p>
                 </div>
               ) : (
                 timelineData?.content.map((match) => (
@@ -210,7 +210,7 @@ export const CompetitionDetailPage = () => {
 
 const CompStat = ({ label, value }: { label: string; value: string | number }) => (
   <div className="text-left">
-    <div className="text-[7px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mb-0.5 md:mb-1">{label}</div>
-    <div className="text-lg md:text-xl font-black text-white/90 uppercase tracking-tighter tabular-nums leading-none">{value}</div>
+    <div className="text-[7px] md:text-[9px] font-bold text-main/20 uppercase tracking-[0.2em] mb-0.5 md:mb-1">{label}</div>
+    <div className="text-lg md:text-xl font-black text-main/90 uppercase tracking-tighter tabular-nums leading-none">{value}</div>
   </div>
 );

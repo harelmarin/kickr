@@ -121,25 +121,20 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 <button
                     onClick={handleDownload}
                     disabled={isGenerating}
-                    className={`flex items-center gap-2 rounded-sm transition-all duration-300 group overflow-hidden cursor-pointer ${variant === 'full'
-                        ? 'px-5 py-3 bg-[#4466ff] text-white font-black uppercase text-xs hover:brightness-110 active:scale-95'
-                        : 'p-1 text-[#445566] hover:text-[#4466ff] active:scale-90'
+                    className={`flex items-center justify-center rounded-sm transition-all duration-300 group overflow-hidden cursor-pointer ${variant === 'full'
+                        ? 'w-10 h-10 bg-white/[0.03] border border-white/5 text-main/40 hover:text-kickr hover:border-kickr/40 active:scale-95'
+                        : 'p-1 text-[#445566] hover:text-kickr active:scale-90'
                         }`}
                     title="Download PNG Card"
                 >
                     {isGenerating ? (
                         <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                     ) : (
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className={`${variant === 'full' ? 'w-4 h-4' : 'w-3 h-3'} group-hover:translate-y-[-1px] transition-transform`}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className={`${variant === 'full' ? 'w-4 h-4' : 'w-3.5 h-3.5'} group-hover:translate-y-[-1px] transition-transform`}>
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                             <polyline points="7 10 12 15 17 10" />
                             <line x1="12" y1="15" x2="12" y2="3" />
                         </svg>
-                    )}
-                    {variant === 'full' && (
-                        <span className="truncate hidden sm:block">
-                            Export Review Poster
-                        </span>
                     )}
                 </button>
 

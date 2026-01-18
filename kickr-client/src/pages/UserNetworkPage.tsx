@@ -27,7 +27,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
     if (!profileUser) return <NotFoundState />;
 
     return (
-        <main className="min-h-screen bg-[#14181c] pt-32 pb-20">
+        <main className="min-h-screen bg-kickr-bg-primary pt-32 pb-20">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header Context */}
@@ -39,24 +39,24 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
 
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
                         <div>
-                            <h1 className="text-3xl md:text-5xl font-black text-white italic tracking-tighter uppercase mb-2">
+                            <h1 className="text-3xl md:text-5xl font-black text-main italic tracking-tighter uppercase mb-2">
                                 {type === 'followers' ? 'Followers' : 'Following'}
                             </h1>
-                            <p className="text-white/40 uppercase tracking-[0.25em] text-[10px] font-black italic">
+                            <p className="text-main/40 uppercase tracking-[0.25em] text-[10px] font-black italic">
                                 Connections for <span className="text-kickr">{profileUser.name}</span>
                             </p>
                         </div>
 
-                        <nav className="flex items-center gap-2 bg-[#14181c]/20 p-1 rounded-sm border border-white/5">
+                        <nav className="flex items-center gap-2 bg-kickr-bg-primary/20 p-1 rounded-sm border border-white/5">
                             <Link
                                 to={`/user/${id}/following`}
-                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-black' : 'text-white/40 hover:text-white'}`}
+                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-black' : 'text-main/40 hover:text-main'}`}
                             >
                                 Following [{profileUser.followingCount}]
                             </Link>
                             <Link
                                 to={`/user/${id}/followers`}
-                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'followers' ? 'bg-kickr text-black' : 'text-white/40 hover:text-white'}`}
+                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'followers' ? 'bg-kickr text-black' : 'text-main/40 hover:text-main'}`}
                             >
                                 Followers [{profileUser.followersCount}]
                             </Link>
@@ -90,7 +90,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                             window.scrollTo({ top: 300, behavior: 'smooth' });
                                         }}
                                         disabled={pageData.first}
-                                        className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                        className="px-6 py-3 bg-black/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-main/60 hover:text-main hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                                     >
                                         Previous
                                     </button>
@@ -100,8 +100,8 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                             if (pageData.totalPages > 5) {
                                                 if (i < currentPage - 2 && i !== 0) return null;
                                                 if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                                if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-white/20">...</span>;
-                                                if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-white/20">...</span>;
+                                                if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-main/20">...</span>;
+                                                if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-main/20">...</span>;
                                             }
 
                                             return (
@@ -113,7 +113,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                                     }}
                                                     className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
                                                         ? 'bg-kickr text-black'
-                                                        : 'bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:border-white/10'
+                                                        : 'bg-black/[0.02] border border-white/5 text-main/40 hover:text-main hover:border-white/10'
                                                         }`}
                                                 >
                                                     {i + 1}
@@ -128,7 +128,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                             window.scrollTo({ top: 300, behavior: 'smooth' });
                                         }}
                                         disabled={pageData.last}
-                                        className="px-6 py-3 bg-white/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+                                        className="px-6 py-3 bg-black/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-main/60 hover:text-main hover:border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                                     >
                                         Next
                                     </button>
@@ -137,7 +137,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                         </>
                     ) : (
                         <div className="py-20 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-sm">
-                            <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.4em] italic leading-none">
+                            <p className="text-main/20 text-[10px] font-black uppercase tracking-[0.4em] italic leading-none">
                                 {type === 'followers' ? "No followers yet." : "Not following anyone yet."}
                             </p>
                         </div>
@@ -152,7 +152,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
     return (
         <Link
             to={`/user/${user.id}`}
-            className="group relative bg-white/[0.02] border border-white/5 rounded-sm overflow-hidden hover:border-white/10 transition-all flex flex-col"
+            className="group relative bg-black/[0.02] border border-white/5 rounded-sm overflow-hidden hover:border-white/10 transition-all flex flex-col"
         >
             <div className="p-5 flex flex-col">
                 {isMe && (
@@ -164,7 +164,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                 )}
 
                 <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-sm bg-[#14181c]/40 border border-white/5 flex items-center justify-center text-lg font-black text-white group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
+                    <div className="w-14 h-14 rounded-sm bg-kickr-bg-primary/40 border border-white/5 flex items-center justify-center text-lg font-black text-main group-hover:text-kickr group-hover:border-kickr/20 transition-all overflow-hidden flex-shrink-0">
                         {user.avatarUrl ? (
                             <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
                         ) : (
@@ -173,10 +173,10 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <h3 className="text-[13px] font-black text-white uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                        <h3 className="text-[13px] font-black text-main uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
                             {user.name}
                         </h3>
-                        <p className="text-[8px] text-white/30 font-bold uppercase tracking-widest mt-1">
+                        <p className="text-[8px] text-main/30 font-bold uppercase tracking-widest mt-1">
                             Joined {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                         </p>
                     </div>
@@ -184,17 +184,17 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 
                 <div className="flex items-center justify-around pt-4 border-t border-white/5 gap-2">
                     <div className="flex flex-col items-center">
-                        <span className="text-base font-black text-white italic tracking-tighter leading-none">
+                        <span className="text-base font-black text-main italic tracking-tighter leading-none">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[7px] font-bold text-white/30 uppercase tracking-[0.2em] leading-none mt-1">Logs</span>
+                        <span className="text-[7px] font-bold text-main/30 uppercase tracking-[0.2em] leading-none mt-1">Logs</span>
                     </div>
-                    <div className="w-px h-6 bg-white/5"></div>
+                    <div className="w-px h-6 bg-black/5"></div>
                     <div className="flex flex-col items-center">
-                        <span className="text-base font-black text-white italic tracking-tighter leading-none">
+                        <span className="text-base font-black text-main italic tracking-tighter leading-none">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[7px] font-bold text-white/30 uppercase tracking-[0.2em] leading-none mt-1">Followers</span>
+                        <span className="text-[7px] font-bold text-main/30 uppercase tracking-[0.2em] leading-none mt-1">Followers</span>
                     </div>
                 </div>
             </div>
@@ -203,7 +203,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 };
 
 const LoadingState = () => (
-    <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
+    <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 border-4 border-kickr/20 border-t-kickr rounded-full animate-spin"></div>
             <p className="text-kickr font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Scanning Network</p>
@@ -212,9 +212,9 @@ const LoadingState = () => (
 );
 
 const NotFoundState = () => (
-    <div className="min-h-screen bg-[#14181c] flex items-center justify-center text-center">
+    <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center text-center">
         <div>
-            <h2 className="text-4xl font-black text-white mb-8 italic tracking-tighter uppercase">Signal Lost</h2>
+            <h2 className="text-4xl font-black text-main mb-8 italic tracking-tighter uppercase">Signal Lost</h2>
             <Link to="/" className="text-black bg-kickr font-black uppercase tracking-widest text-[10px] px-8 py-4 rounded-sm hover:brightness-110 transition-all italic">Restore Feed</Link>
         </div>
     </div>

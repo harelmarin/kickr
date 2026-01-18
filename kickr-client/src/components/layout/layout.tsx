@@ -13,7 +13,7 @@ export const Layout = ({ children }: RootLayoutProps) => {
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (
-    <div className="bg-[#14181c] min-h-screen flex flex-col pb-20 md:pb-0">
+    <div className="bg-kickr-bg-primary min-h-screen flex flex-col pb-20 md:pb-0">
       <Header />
       <div className="flex-1 animate-fade-in">{children}</div>
       {!shouldHideFooter && <Footer />}

@@ -31,7 +31,7 @@ const AboutPage = lazy(() => import('./AboutPage').then(module => ({ default: mo
 const TermsPage = lazy(() => import('./TermsPage').then(module => ({ default: module.TermsPage })));
 
 const PageLoader = () => (
-  <div className="min-h-screen bg-[#14181c] flex items-center justify-center">
+  <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center">
     <div className="flex flex-col items-center gap-6">
       <div className="w-12 h-12 border-2 border-kickr/10 border-t-kickr rounded-full animate-spin"></div>
       <p className="text-kickr font-black uppercase tracking-[0.4em] text-[10px] animate-pulse">Establishing Connection</p>

@@ -44,17 +44,17 @@ export const MatchesPage = () => {
   if (isError) return <ErrorState />;
 
   return (
-    <main className="min-h-screen bg-[#14181c] pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
+    <main className="min-h-screen bg-kickr-bg-primary pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         <header className="mb-6 md:mb-16">
           <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
             <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
             <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Match Feed</span>
           </div>
-          <h1 className="text-2xl md:text-6xl font-black text-white mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
+          <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
             Center <span className="text-kickr/80">Circle</span>
           </h1>
-          <p className="text-white/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+          <p className="text-main/20 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
             Global Match Database
           </p>
 
@@ -62,8 +62,8 @@ export const MatchesPage = () => {
             <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
               <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-x-8 flex-1">
                 {/* Search */}
-                <div className="flex flex-col gap-0.5 w-full md:w-48">
-                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/5 tracking-widest pl-0.5 italic">Find Clubs</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-56">
+                  <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">Find Clubs</span>
                   <div className="relative">
                     <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                     <input
@@ -71,14 +71,14 @@ export const MatchesPage = () => {
                       placeholder="SCAN..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[9px] md:text-[11px] font-black text-white placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[8px] md:text-[11px] font-black text-main placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                     />
                   </div>
                 </div>
 
                 {/* League Filter */}
-                <div className="flex flex-col gap-0.5 w-full md:w-40">
-                  <span className="text-[6px] md:text-[7px] uppercase font-black text-white/5 tracking-widest pl-0.5 italic">League</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-48">
+                  <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">League</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -86,14 +86,14 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-[9px] font-black text-white/20 focus:text-white focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-white/[0.03] transition-all italic"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-[9px] font-black text-main/20 focus:text-main focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-black/[0.03] transition-all italic"
                     >
-                      <option value="" className="bg-[#14181c]">ALL</option>
+                      <option value="" className="bg-kickr-bg-primary">ALL</option>
                       {competitions?.map(c => (
-                        <option key={c.id} value={c.id} className="bg-[#14181c]">{c.name}</option>
+                        <option key={c.id} value={c.id} className="bg-kickr-bg-primary">{c.name}</option>
                       ))}
                     </select>
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[6px] text-white/10 italic">▼</div>
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[6px] text-main/10 italic">▼</div>
                   </div>
                 </div>
 
@@ -103,7 +103,7 @@ export const MatchesPage = () => {
                     <button
                       key={s}
                       onClick={() => { setStatus(s as any); setPage(0); }}
-                      className={`px-2 md:px-3 flex items-center rounded-sm text-[6px] md:text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-white/10 hover:text-white/20'}`}
+                      className={`px-2 md:px-3 flex items-center rounded-sm text-[6px] md:text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-main/10 hover:text-main/20'}`}
                     >
                       {s}
                     </button>
@@ -117,15 +117,15 @@ export const MatchesPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
           {/* Main Content */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-1.5 md:pb-4">
-              <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/20 italic">Match Feed</h2>
-              <span className="text-[5px] md:text-[8px] font-black text-white/5 uppercase tracking-widest italic font-mono">STATUS: LIVE</span>
+            <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
+              <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-main/20 italic">Match Feed</h2>
+              <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {isLoading ? (
                 Array.from({ length: 9 }).map((_, i) => (
-                  <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-white/5 animate-pulse rounded-sm" />
+                  <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-black/5 animate-pulse rounded-sm" />
                 ))
               ) : (
                 <AnimatePresence mode="popLayout">
@@ -164,14 +164,14 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
-                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/20 disabled:opacity-5 hover:text-main transition-all italic"
                 >
                   <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
                   PREV
                 </button>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[8px] md:text-[10px] font-black text-white/10 uppercase tracking-widest italic tabular-nums font-mono">
+                  <span className="text-[8px] md:text-[10px] font-black text-main/10 uppercase tracking-widest italic tabular-nums font-mono">
                     PAGE {page + 1} / {data.totalPages}
                   </span>
                 </div>
@@ -182,7 +182,7 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
-                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 disabled:opacity-5 hover:text-white transition-all italic"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/20 disabled:opacity-5 hover:text-main transition-all italic"
                 >
                   NEXT
                   <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
@@ -203,12 +203,12 @@ export const MatchesPage = () => {
 };
 
 const ErrorState = () => (
-  <div className="min-h-screen flex items-center justify-center text-center p-12 bg-[#14181c]">
+  <div className="min-h-screen flex items-center justify-center text-center p-12 bg-kickr-bg-primary">
     <div className="max-w-md">
       <div className="text-4xl mb-6 opacity-10">📡</div>
-      <h2 className="text-lg font-black text-white/90 mb-2 uppercase tracking-tighter italic">Match Feed Lost</h2>
-      <p className="text-white/20 text-xs mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
-      <button onClick={() => window.location.reload()} className="px-8 py-3 bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-sm hover:bg-white/10 hover:border-kickr/30 transition-all">
+      <h2 className="text-lg font-black text-main/90 mb-2 uppercase tracking-tighter italic">Match Feed Lost</h2>
+      <p className="text-main/20 text-xs mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
+      <button onClick={() => window.location.reload()} className="px-8 py-3 bg-black/5 border border-white/10 text-main font-black uppercase tracking-widest text-[10px] rounded-sm hover:bg-black/10 hover:border-kickr/30 transition-all">
         Reconnect
       </button>
     </div>
