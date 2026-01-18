@@ -5,6 +5,8 @@ import { useUserMatchesByUser } from '../hooks/useUserMatch';
 import { useUser } from '../hooks/useUser';
 import { useAuth } from '../hooks/useAuth';
 import { EmptyState } from '../components/ui/EmptyState';
+import { ReviewPosterCard } from '../components/review/ReviewPosterCard';
+
 
 export const UserDiaryPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -158,59 +160,9 @@ export const UserDiaryPage = () => {
                                     {monthYear}
                                 </h2>
 
-                                <div className="space-y-3 md:space-y-4">
+                                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-6">
                                     {monthReviews.map((review: any) => (
-                                        <div key={review.id} className="group relative">
-                                            <div className="flex gap-3 md:gap-6 p-2 md:p-4 rounded-sm border border-white/5 bg-white/[0.01] hover:bg-black/[0.03] hover:border-kickr/20 transition-all duration-300 items-center">
-                                                <div className="w-7 md:w-12 text-center border-r border-white/5 md:pr-6 flex-shrink-0">
-                                                    <div className="text-xs md:text-xl font-black text-main italic leading-none tabular-nums">{new Date(review.watchedAt).getDate()}</div>
-                                                    <div className="text-[5px] md:text-[8px] font-black uppercase tracking-widest text-main/5 mt-0.5 md:mt-1 italic">
-                                                        {new Date(review.watchedAt).toLocaleDateString('en', { weekday: 'short' })}
-                                                    </div>
-                                                </div>
-
-                                                <Link to={`/matches/${review.match.id}`} className="w-16 md:w-32 h-8 md:h-16 bg-white/[0.01] rounded-sm border border-white/5 overflow-hidden flex-shrink-0 flex items-center justify-center gap-1.5 md:gap-3 relative group/poster">
-                                                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/poster:opacity-100 transition-opacity"></div>
-                                                    <img src={review.match.homeLogo} className="w-3.5 h-3.5 md:w-7 md:h-7 object-contain drop-shadow-lg z-10" alt="" />
-                                                    <div className="flex flex-col items-center z-10">
-                                                        <span className="text-[8px] md:text-xs font-black text-main italic leading-none tabular-nums opacity-60">{review.match.homeScore}</span>
-                                                        <div className="w-1.5 md:w-4 h-[1px] bg-black/10 my-0.5 md:my-1"></div>
-                                                        <span className="text-[8px] md:text-xs font-black text-main italic leading-none tabular-nums opacity-60">{review.match.awayScore}</span>
-                                                    </div>
-                                                    <img src={review.match.awayLogo} className="w-3.5 h-3.5 md:w-7 md:h-7 object-contain drop-shadow-lg z-10" alt="" />
-                                                </Link>
-
-                                                <div className="flex-1 min-w-0 pr-2">
-                                                    <div className="flex flex-col md:flex-row md:items-center gap-0.5 md:gap-3 mb-0.5">
-                                                        <Link to={`/matches/${review.match.id}`} className="text-main/80 text-[10px] md:text-base font-black uppercase italic tracking-tighter hover:text-kickr transition-colors leading-none truncate block max-w-[100px] md:max-w-none">
-                                                            {review.match.homeTeam} VS {review.match.awayTeam}
-                                                        </Link>
-                                                        <span className="text-[5px] md:text-[9px] font-black uppercase tracking-widest text-main/5 px-1 md:px-2 py-0.5 rounded-sm border border-black/[0.03] bg-white/[0.01] w-fit italic">
-                                                            {review.match.competition}
-                                                        </span>
-                                                    </div>
-                                                    {review.comment && (
-                                                        <p className="text-main/10 text-[8px] md:text-xs italic line-clamp-1 group-hover:text-main/20 transition-colors uppercase font-medium">
-                                                            {review.comment}
-                                                        </p>
-                                                    )}
-                                                </div>
-
-                                                <div className="flex items-center gap-3 md:gap-6">
-                                                    {review.isLiked && (
-                                                        <div className="flex flex-col items-center">
-                                                            <span className="text-kickr text-[10px] md:text-sm">❤</span>
-                                                        </div>
-                                                    )}
-                                                    <div className="flex flex-col items-end leading-none">
-                                                        <div className="flex text-kickr/80 text-[7px] md:text-[10px] tabular-nums leading-none">
-                                                            {'★'.repeat(Math.round(review.note))}
-                                                            <span className="text-main/5">{'★'.repeat(5 - Math.round(review.note))}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <ReviewPosterCard key={review.id} review={review} />
                                     ))}
                                 </div>
                             </section>

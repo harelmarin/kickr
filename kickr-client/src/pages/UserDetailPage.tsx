@@ -1,7 +1,8 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/useUser';
 import { useUserMatchesByUser } from '../hooks/useUserMatch';
-import { ReviewCard } from '../components/review/ReviewCard';
+import { ReviewPosterCard } from '../components/review/ReviewPosterCard';
+
 import { useAuth } from '../hooks/useAuth';
 import { useFollowStatus, useFollowAction, useFollowers, useFollowing } from '../hooks/useFollow';
 import type { UserMatch } from '../types/userMatch';
@@ -168,16 +169,16 @@ export const UserDetailPage = () => {
                             </div>
 
                             {isReviewsLoading ? (
-                                <div className="grid grid-cols-2 gap-3 animate-pulse">
-                                    {[1, 2, 3, 4].map(i => <div key={i} className="aspect-[1.5/1] bg-black/5 rounded-sm"></div>)}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-pulse">
+                                    {[1, 2, 3, 4].map(i => <div key={i} className="aspect-[3/4] bg-black/5 rounded-sm"></div>)}
                                 </div>
                             ) : pageData?.content && pageData.content.length > 0 ? (
-                                <div className="grid grid-cols-2 gap-3 md:gap-4">
+                                <div className="grid grid-cols-3 md:grid-cols-4 gap-2.5 md:gap-4">
                                     {(pageData.content)
                                         .sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime())
                                         .slice(0, 4)
                                         .map((review: any) => (
-                                            <ReviewCard key={review.id} review={review} />
+                                            <ReviewPosterCard key={review.id} review={review} />
                                         ))}
                                 </div>
                             ) : (
@@ -195,7 +196,7 @@ export const UserDetailPage = () => {
                             </section>
 
                             <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                                <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Theaters</h3>
+                                <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Leagues</h3>
                                 <MostWatchedLeagues reviews={pageData?.content || []} />
                             </section>
                         </div>
@@ -488,7 +489,7 @@ const MostWatchedLeagues = ({ reviews }: { reviews: UserMatch[] }) => {
                         <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{league.rating.toFixed(1)}</span>
                     </div>
                     <div className="flex justify-between pt-1 border-t border-black/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">THEATER</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">LEAGUE</span>
                         <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">{league.count} RECS</span>
                     </div>
                 </Link>
