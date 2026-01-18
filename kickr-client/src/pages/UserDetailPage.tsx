@@ -518,7 +518,7 @@ const NotFoundState = () => (
     <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center text-center">
         <div>
             <h2 className="text-4xl font-black text-main/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
-            <p className="text-main/40 mb-8">This tactician hasn't joined Kickr yet.</p>
+            <p className="text-main/40 mb-8">This member hasn't joined Kickr yet.</p>
             <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Go Home</Link>
         </div>
     </div>

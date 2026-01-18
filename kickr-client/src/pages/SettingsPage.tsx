@@ -247,7 +247,7 @@ export const SettingsPage = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-10 space-y-4 md:space-y-8">
                         <div className="space-y-4 md:space-y-6">
                             <div className="space-y-2 md:space-y-3">
-                                <label className="text-[7px] md:text-[9px] font-black text-main/20 uppercase tracking-[0.4em] px-1 italic">Tactician Callsign</label>
+                                <label className="text-[7px] md:text-[9px] font-black text-main/20 uppercase tracking-[0.4em] px-1 italic">Username</label>
                                 <input
                                     type="text"
                                     {...register("name")}

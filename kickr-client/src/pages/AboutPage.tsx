@@ -15,7 +15,7 @@ export const AboutPage: FC = () => {
                         <span className="text-kickr">Tactical Intel.</span>
                     </h1>
                     <p className="text-xs md:text-xl text-main/40 md:text-main/60 leading-relaxed max-w-2xl font-bold uppercase tracking-tight italic">
-                        The ultimate platform for football analysis, where fans become tacticians and every opinion is backed by intel.
+                        The ultimate platform for football analysis, where fans belong to a global community and every opinion is backed by intel.
                     </p>
                 </header>
 
@@ -59,7 +59,7 @@ export const AboutPage: FC = () => {
                                         'Rate matches from 0 to 5',
                                         'Log key tactical shifts',
                                         'Share intel instantly',
-                                        'Build your tactician rating'
+                                        'Build your member rating'
                                     ].map((feature, i) => (
                                         <li key={i} className="flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest italic">
                                             <div className="w-1 h-1 rounded-full bg-kickr" />
@@ -104,7 +104,7 @@ export const AboutPage: FC = () => {
                             {[
                                 { title: 'Watch', desc: 'Experience the game across all theaters of operation.', icon: '⚽️' },
                                 { title: 'Log', desc: 'Rate performances, note tactical shifts, and log intel.', icon: '✍️' },
-                                { title: 'Share', desc: 'Connect with tacticians and compare intel cards.', icon: '🔄' },
+                                { title: 'Share', desc: 'Connect with members and compare intel cards.', icon: '🔄' },
                             ].map((step, i) => (
                                 <div key={i} className="bg-white/[0.01] border border-white/5 p-6 md:p-8 rounded-sm hover:border-kickr/20 transition-all text-center sm:text-left">
                                     <div className="text-2xl md:text-3xl mb-4 md:mb-6 block">{step.icon}</div>
@@ -131,7 +131,7 @@ export const AboutPage: FC = () => {
                     <span className="text-main/40 text-[10px] font-black uppercase tracking-widest">© 2026 KICKR. ALL INTEL RESERVED.</span>
                     <div className="flex gap-8">
                         <Link to="/terms" className="text-main/40 hover:text-kickr text-[10px] font-black uppercase tracking-widest transition-colors">Terms</Link>
-                        <Link to="/community" className="text-main/40 hover:text-kickr text-[10px] font-black uppercase tracking-widest transition-colors">Tacticians</Link>
+                        <Link to="/community" className="text-main/40 hover:text-kickr text-[10px] font-black uppercase tracking-widest transition-colors">Community</Link>
                     </div>
                 </footer>
             </div>

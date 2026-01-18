@@ -85,7 +85,7 @@ export const RegisterPage = () => {
 
                     <div className="space-y-6 mt-8">
                         <FeatureItem icon="📝" title="Tactical Diary" description="Log every match you watch with precise ratings and tactical notes." />
-                        <FeatureItem icon="🤝" title="Tacticians Network" description="Follow analysts worldwide and discover their vision of the beautiful game." />
+                        <FeatureItem icon="🤝" title="Community Network" description="Follow members worldwide and discover their vision of the beautiful game." />
                         <FeatureItem icon="📊" title="Personal Stats" description="Visualize your watching habits and favorite teams across the leagues." />
                     </div>
                 </div>
@@ -119,7 +119,7 @@ export const RegisterPage = () => {
 
                     <div className="mb-6">
                         <h2 className="text-2xl font-black text-main tracking-tight mb-1 italic uppercase display-font">ACCESS ENROLLMENT</h2>
-                        <p className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure analyst identifier.</p>
+                        <p className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure member identifier.</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -128,7 +128,7 @@ export const RegisterPage = () => {
                                 <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Identity</label>
                                 <input
                                     type="text"
-                                    placeholder="Your analyst name"
+                                    placeholder="Your username"
                                     {...register("name")}
                                     className={`w-full bg-kickr-bg-secondary/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                 />

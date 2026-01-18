@@ -169,7 +169,7 @@ const UsersTab = () => {
     return (
         <div className="bg-kickr-bg-primary border border-white/5 rounded-sm overflow-hidden shadow-xl">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Tactician Directory</h2>
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Member Directory</h2>
                 <input
                     type="text"
                     placeholder="Search systems..."

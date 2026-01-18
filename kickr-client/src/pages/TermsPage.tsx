@@ -47,7 +47,7 @@ export const TermsPage: FC = () => {
                     </section>
 
                     <section className="bg-black/[0.02] border border-white/5 p-8 rounded-sm">
-                        <h2 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 border-b border-white/5 pb-4 italic">2. Tactician Conduct</h2>
+                        <h2 className="text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 border-b border-white/5 pb-4 italic">2. Community Conduct</h2>
                         <p className="text-main/60 leading-relaxed text-sm mb-4">
                             Users are responsible for the content they post. Kickr promotes a culture of respectful tactical debate. The following behaviors are prohibited:
                         </p>

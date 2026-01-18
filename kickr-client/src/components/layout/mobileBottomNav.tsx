@@ -10,7 +10,7 @@ export const MobileBottomNav = () => {
                 <NavItem to="/matches" icon={<MatchesIcon />} label="Fixtures" />
                 <NavItem to="/" icon={<HomeIcon />} label="Hub" />
                 <NavItem to="/competitions" icon={<TrophyIcon />} label="Leagues" />
-                <NavItem to="/community" icon={<CommunityIcon />} label="Tacticians" />
+                <NavItem to="/community" icon={<CommunityIcon />} label="Community" />
             </div>
         </nav>
     );

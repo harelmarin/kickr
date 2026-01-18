@@ -241,7 +241,7 @@ export default function HomePage() {
 
             {/* COMMUNITY - Hidden on very small mobile if grid is crowded, or just kept small */}
             <section className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm col-span-2 lg:col-auto">
-              <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic mb-3 md:mb-8 border-b border-white/5 pb-2 md:pb-6">Tacticians</h3>
+              <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic mb-3 md:mb-8 border-b border-white/5 pb-2 md:pb-6">Community</h3>
               <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 md:gap-6">
                 {communityScouts?.content?.filter((s: any) => s.id !== user?.id).slice(0, 6).map((scout: any) => (
                   <Link key={scout.id} to={`/user/${scout.id}`} className="flex items-center gap-1.5 md:gap-4 group">

@@ -145,16 +145,16 @@ export const MatchDetailPage = () => {
 
                 {/* Score / VS Center */}
                 <div className="flex flex-col items-center justify-center relative">
-                  <div className="bg-white/[0.01] border border-white/5 px-4 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group min-w-[70px] md:min-w-0 text-center z-10">
+                  <div className="bg-white/[0.01] border border-white/5 px-4 py-2 md:px-10 md:py-6 rounded-sm shadow-2xl relative group min-w-[70px] md:min-w-[180px] flex items-center justify-center z-10">
                     <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     {isPast ? (
-                      <div className="flex items-center justify-center gap-2 md:gap-8 tabular-nums relative z-10">
-                        <span className="text-2xl md:text-7xl font-black text-main italic display-font leading-none">{match.homeScore}</span>
+                      <div className="flex items-center justify-center gap-2 md:gap-8 tabular-nums relative z-10 w-full min-w-[80px] md:min-w-[200px]">
+                        <span className="flex-1 text-right text-2xl md:text-7xl font-black text-main italic display-font leading-none">{match.homeScore}</span>
                         <div className="w-[1px] md:w-[2px] h-4 md:h-12 bg-black/10"></div>
-                        <span className="text-2xl md:text-7xl font-black text-main italic display-font leading-none">{match.awayScore}</span>
+                        <span className="flex-1 text-left text-2xl md:text-7xl font-black text-main italic display-font leading-none">{match.awayScore}</span>
                       </div>
                     ) : (
-                      <span className="text-xl md:text-6xl font-black text-kickr italic display-font relative z-10">VS</span>
+                      <span className="text-xl md:text-6xl font-black text-kickr italic display-font relative z-10 leading-none">VS</span>
                     )}
                   </div>
                   <div className="absolute -bottom-5 md:-bottom-8 left-1/2 -translate-x-1/2 w-full flex flex-col items-center gap-1 opacity-40 md:opacity-20 whitespace-nowrap">
@@ -200,7 +200,7 @@ export const MatchDetailPage = () => {
                   <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Theater</span>
                   <div className="flex items-center gap-1.5 md:gap-2 justify-center">
                     <img src={match.competitionLogo} className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
-                    <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none">{match.competition || 'League'}</span>
+                    <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none">{match.competition || 'Theater'}</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-black/[0.02] transition-colors">

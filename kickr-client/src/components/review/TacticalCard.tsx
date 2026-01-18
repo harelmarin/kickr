@@ -115,7 +115,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-main/60 text-xl font-bold uppercase tracking-widest leading-none mb-2">Tactician</span>
+                        <span className="text-main/60 text-xl font-bold uppercase tracking-widest leading-none mb-2">Member</span>
                         <span className="text-main text-3xl font-black uppercase tracking-tight">{review.user?.name}</span>
                     </div>
                 </div>

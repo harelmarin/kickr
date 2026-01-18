@@ -48,7 +48,7 @@ export const Header = () => {
           <NavSlot to="/matches" label="Matches" />
           <NavSlot to="/competitions" label="Leagues" />
           <NavSlot to="/teams" label="Teams" />
-          <NavSlot to="/community" label="Tacticians" />
+          <NavSlot to="/community" label="Community" />
         </nav>
 
         <div className="flex items-center gap-2 md:gap-5 flex-shrink-0 ml-auto">

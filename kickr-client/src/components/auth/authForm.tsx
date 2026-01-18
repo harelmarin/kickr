@@ -239,12 +239,12 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
 
             <div className="mb-4">
                 <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">System Enrollment</h3>
-                <p className="text-main text-3xl font-black tracking-tighter italic uppercase leading-none display-font">New Tactician</p>
+                <p className="text-main text-3xl font-black tracking-tighter italic uppercase leading-none display-font">New Member</p>
             </div>
 
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.4em] pl-1 italic">Tactician Callsign</label>
+                    <label className="text-[11px] font-black text-main/40 uppercase tracking-[0.4em] pl-1 italic">Username</label>
                     <input
                         type="text"
                         placeholder="CHOOSE_IDENTITY"

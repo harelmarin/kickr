@@ -15,7 +15,7 @@ export const SearchResults = ({ results, isLoading, query }: SearchResultsProps)
     const getTypeLabel = (type: string) => {
         switch (type) {
             case 'user':
-                return 'TACTICIAN';
+                return 'MEMBER';
             case 'team':
                 return 'CLUB';
             case 'competition':

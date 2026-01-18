@@ -20,7 +20,7 @@ export const Footer = () => {
           <nav className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-3">
             <FooterLink label="Matches" to="/matches" />
             <FooterLink label="Leagues" to="/competitions" />
-            <FooterLink label="Tacticians" to="/community" />
+            <FooterLink label="Community" to="/community" />
             <FooterLink label="About" to="/about" />
             <FooterLink label="Terms" to="/terms" />
           </nav>

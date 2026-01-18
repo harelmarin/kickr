@@ -54,7 +54,7 @@ export const MatchesPage = () => {
           <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
             Center <span className="text-kickr/80">Circle</span>
           </h1>
-          <p className="text-main/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+          <p className="text-main/20 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
             Global Match Database
           </p>
 
@@ -62,8 +62,8 @@ export const MatchesPage = () => {
             <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
               <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-x-8 flex-1">
                 {/* Search */}
-                <div className="flex flex-col gap-0.5 w-full md:w-48">
-                  <span className="text-[6px] md:text-[7px] uppercase font-black text-main/5 tracking-widest pl-0.5 italic">Find Clubs</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-56">
+                  <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">Find Clubs</span>
                   <div className="relative">
                     <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
                     <input
@@ -77,8 +77,8 @@ export const MatchesPage = () => {
                 </div>
 
                 {/* League Filter */}
-                <div className="flex flex-col gap-0.5 w-full md:w-40">
-                  <span className="text-[6px] md:text-[7px] uppercase font-black text-main/5 tracking-widest pl-0.5 italic">League</span>
+                <div className="flex flex-col gap-0.5 w-full md:w-48">
+                  <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">League</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -117,9 +117,9 @@ export const MatchesPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
           {/* Main Content */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-1.5 md:pb-4">
-              <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-main/20 italic">Match Feed</h2>
-              <span className="text-[5px] md:text-[8px] font-black text-main/5 uppercase tracking-widest italic font-mono">STATUS: LIVE</span>
+            <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
+              <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-main/20 italic">Match Feed</h2>
+              <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
