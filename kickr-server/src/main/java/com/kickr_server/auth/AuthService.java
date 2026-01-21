@@ -101,13 +101,10 @@ public class AuthService {
                 .map(refreshTokenService::verifyExpiration)
                 .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
 
-        // Créer le nouveau refresh token AVANT de supprimer l'ancien (rotation
-        // sécurisée)
         User user = oldRefreshToken.getUser();
         String newAccessToken = jwtService.generateToken(user.getEmail());
         RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user);
 
-        // Supprimer l'ancien refresh token seulement après la création du nouveau
         refreshTokenRepository.delete(oldRefreshToken);
 
         return new RefreshTokenResponse(newAccessToken, newRefreshToken.getToken());
@@ -138,7 +135,6 @@ public class AuthService {
         User user = userRepository.findByEmail(email).orElse(null);
 
         if (user == null) {
-            // For security, don't reveal if email exists.
             log.info("Password reset requested for non-existent email: {}", email);
             return;
         }
@@ -154,8 +150,6 @@ public class AuthService {
             emailService.sendPasswordResetEmail(user.getEmail(), resetLink);
         } catch (Exception e) {
             log.error("Failed to send password reset email to {}: {}", email, e.getMessage());
-            // We don't rethrow here to allow the transaction (token save) to commit
-            // and keep the API response clean, while logging the real cause.
         }
     }
 
@@ -175,7 +169,6 @@ public class AuthService {
         if (user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("Reset token has expired");
         }
-
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetToken(null);
         user.setResetTokenExpiry(null);

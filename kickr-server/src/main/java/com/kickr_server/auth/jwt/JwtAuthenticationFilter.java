@@ -1,7 +1,6 @@
 package com.kickr_server.auth.jwt;
 
 import com.kickr_server.auth.CustomUserDetailsService;
-import com.kickr_server.exception.auth.JwtTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -70,14 +69,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
-            } catch (JwtTokenException e) {
-                // Si le token est invalide, on ne définit pas l'authentification
+            } catch (Exception e) {
+                // Si le token est invalide ou l'utilisateur introuvable, on ne définit pas
+                // l'authentification
                 // mais on laisse la requête continuer pour que SecurityFilterChain
                 // décide si l'accès est autorisé ou non (cas des routes publiques).
+                logger.debug("Authentication failed: " + e.getMessage());
             }
         }
 
         filterChain.doFilter(request, response);
+
     }
 
     @Override

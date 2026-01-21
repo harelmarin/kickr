@@ -28,7 +28,6 @@ public class AdminDashboardService {
                         long totalUsers = userRepository.count();
                         long totalReviews = userMatchRepository.count();
 
-                        // Defensive count for reports in case table is missing
                         long totalReports = 0;
                         long pendingReports = 0;
                         try {
@@ -44,7 +43,6 @@ public class AdminDashboardService {
                         LocalDateTime fourteenDaysAgo = now.minusDays(14);
                         LocalDateTime thirtyDaysAgo = now.minusDays(30);
 
-                        // Calculate trends (weekly growth)
                         long newUsersThisWeek = userRepository.countByCreatedAtBetween(sevenDaysAgo, now);
                         long newUsersLastWeek = userRepository.countByCreatedAtBetween(fourteenDaysAgo, sevenDaysAgo);
                         String userTrend = calculateWeeklyTrend(newUsersThisWeek, newUsersLastWeek);

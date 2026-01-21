@@ -81,7 +81,8 @@ public class SecurityConfig {
                                                                 "/api/feed/global",
                                                                 "/api/users/**",
                                                                 "/api/follows/following/**",
-                                                                "/api/follows/followers/**")
+                                                                "/api/follows/followers/**",
+                                                                "/api/notifications/unread-count/**")
                                                 .permitAll()
                                                 // Admin endpoints - require ADMIN role
                                                 .requestMatchers("/api/admin/**", "/api/matchs/save",
