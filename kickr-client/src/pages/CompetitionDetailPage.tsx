@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { useCompetition } from '../hooks/useCompetitions';
 import { useSearchMatches } from '../hooks/useNextMatches';
 import { LeagueStandings } from '../components/tournament/LeagueStandings';
@@ -10,6 +11,7 @@ import toast from 'react-hot-toast';
 
 export const CompetitionDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const queryClient = useQueryClient();
   const [matchPage, setMatchPage] = useState(0);
   const MATCHES_PER_PAGE = 5;
   const { user } = useAuth();
@@ -65,8 +67,12 @@ export const CompetitionDetailPage = () => {
           season: 2025
         }
       });
+
+      // Invalidate queries to refresh data without full page reload
+      queryClient.invalidateQueries({ queryKey: ['competition', id] });
+      queryClient.invalidateQueries({ queryKey: ['matches'] });
+
       toast.success('Synchronization complete!', { id: toastId });
-      window.location.reload();
     } catch (err) {
       console.error('Sync error:', err);
       toast.error('Sync failed. Check console for details.', { id: toastId });

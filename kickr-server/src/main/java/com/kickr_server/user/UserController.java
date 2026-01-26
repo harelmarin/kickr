@@ -70,12 +70,23 @@ public class UserController {
         @Operation(summary = "Delete a user by ID")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "204", description = "User deleted"),
+                        @ApiResponse(responseCode = "403", description = "Not authorized"),
                         @ApiResponse(responseCode = "404", description = "User not found")
         })
         @RateLimiter(name = "userRateLimiter")
         @DeleteMapping("/{id}")
         @ResponseStatus(HttpStatus.NO_CONTENT)
-        public ApiResponseDto<Void> deleteUser(@PathVariable UUID id) {
+        public ApiResponseDto<Void> deleteUser(@PathVariable UUID id, Authentication authentication) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                com.kickr_server.user.User currentUser = userService.getUserByEmail(userDetails.getUsername());
+
+                // Seul l'utilisateur lui-même ou un admin peut supprimer le compte
+                if (!currentUser.getId().equals(id)
+                                && !currentUser.getRole().equals(com.kickr_server.user.Role.ADMIN)) {
+                        throw new org.springframework.security.access.AccessDeniedException(
+                                        "You are not authorized to delete this user");
+                }
+
                 userService.deleteById(id);
                 return new ApiResponseDto<>("SUCCESS", "User deleted successfully", null, null);
         }

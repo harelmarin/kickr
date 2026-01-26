@@ -95,7 +95,7 @@ public class SecurityConfig {
                                                                 org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.DISABLED))
                                                 .contentSecurityPolicy(csp -> csp
                                                                 .policyDirectives(
-                                                                                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com https://media.api-sports.io *;"))
+                                                                                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com https://media.api-sports.io;"))
                                                 .frameOptions(frame -> frame.deny())
                                                 .httpStrictTransportSecurity(hsts -> hsts
                                                                 .includeSubDomains(true)
@@ -114,10 +114,13 @@ public class SecurityConfig {
 
                 java.util.List<String> origins = new java.util.ArrayList<>();
                 if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
-                        origins.addAll(java.util.Arrays.asList(allowedOrigins.split(",")));
+                        origins.addAll(java.util.Arrays.stream(allowedOrigins.split(","))
+                                        .map(String::trim)
+                                        .filter(s -> !s.isEmpty())
+                                        .collect(java.util.stream.Collectors.toList()));
                 }
 
-                // Domains must be exact and without trailing slash
+                // Add default production/dev domains if not already present in environment
                 if (!origins.contains("https://kickrhq.com"))
                         origins.add("https://kickrhq.com");
                 if (!origins.contains("https://www.kickrhq.com"))
