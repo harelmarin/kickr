@@ -39,7 +39,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
 
                     <div className="absolute inset-0 flex items-center justify-between px-3 py-2 sm:px-6 sm:py-4">
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
-                            <img src={match.homeLogo} alt="" className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
+                            <img src={match.homeLogo} alt={`${match.homeTeam} logo`} className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
                             <span className="text-[10px] sm:text-[11px] font-black text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.homeTeam}</span>
                         </div>
 
@@ -58,7 +58,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                         </div>
 
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
-                            <img src={match.awayLogo} alt="" className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
+                            <img src={match.awayLogo} alt={`${match.awayTeam} logo`} className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
                             <span className="text-[10px] sm:text-[11px] font-black text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.awayTeam}</span>
                         </div>
                     </div>
@@ -110,8 +110,8 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     {/* Combatants Info */}
                     <div className="flex items-center gap-3 flex-1 min-w-0 border-l border-white/5 pl-6">
                         <div className="flex -space-x-1.5 flex-shrink-0">
-                            <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt="" />
-                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-kickr-bg-primary" alt="" />
+                            <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt={`${match.homeTeam} logo`} />
+                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-kickr-bg-primary" alt={`${match.awayTeam} logo`} />
                         </div>
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                             <span className="text-[10px] sm:text-[11px] font-black text-main/80 uppercase italic truncate max-w-[45%]">
@@ -141,7 +141,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                                 {match.homeScore}-{match.awayScore}
                             </span>
                         ) : (
-                            <span className="text-[11px] font-black text-[#64748b] uppercase tracking-widest">{dateStr}</span>
+                            <span className="text-[11px] font-black text-muted uppercase tracking-widest">{dateStr}</span>
                         )}
                     </div>
                 </div>

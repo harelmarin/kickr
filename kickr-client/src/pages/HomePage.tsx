@@ -78,7 +78,7 @@ export default function HomePage() {
                 The Tactical Network.
               </span>
               <div className="flex flex-col md:flex-row items-center justify-center gap-y-1 mt-6 md:mt-12 md:gap-x-10">
-                <span className="text-base md:text-4xl text-main/30 italic">Track football.</span>
+                <span className="text-base md:text-4xl text-muted italic">Track football.</span>
                 <span className="text-base md:text-4xl text-kickr/60 italic">Rate matchdays.</span>
               </div>
             </motion.h1>
@@ -107,7 +107,7 @@ export default function HomePage() {
                     </div>
                     <div className="flex flex-col items-start min-w-0">
                       <span className="text-[10px] md:text-[11px] font-black text-main uppercase italic tracking-[0.1em]">Dashboard</span>
-                      <span className="text-[9px] md:text-[7px] font-mono text-main/30 uppercase tracking-[0.1em] truncate w-full max-w-[80px] md:max-w-none">{user.name}</span>
+                      <span className="text-[9px] md:text-[7px] font-mono text-muted uppercase tracking-[0.1em] truncate w-full max-w-[80px] md:max-w-none">{user.name}</span>
                     </div>
                   </Link>
                 )}
@@ -137,7 +137,7 @@ export default function HomePage() {
                     <div className="h-3 md:h-5 w-[1.5px] bg-kickr opacity-60"></div>
                     <h2 className="text-[11px] md:text-[14px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Network activity</h2>
                   </div>
-                  <Link to="/feed" className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-main/20 hover:text-kickr transition-colors">View all →</Link>
+                  <Link to="/feed" className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors">View all →</Link>
                 </div>
 
                 <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-6">
@@ -149,7 +149,7 @@ export default function HomePage() {
                     ))
                   ) : (
                     <div className="py-8 text-center col-span-2 border border-white/5 bg-white/[0.01]">
-                      <p className="text-[#445566] text-[8px] font-black uppercase tracking-[0.2em]">Empty Network</p>
+                      <p className="text-secondary text-[8px] font-black uppercase tracking-[0.2em]">Empty Network</p>
                     </div>
                   )}
                 </div>
@@ -163,7 +163,7 @@ export default function HomePage() {
                   <div className="h-3 md:h-4 w-[1px] bg-kickr opacity-40"></div>
                   <h2 className="text-[11px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Fixtures</h2>
                 </div>
-                <Link to="/matches" className="text-[10px] md:text-[10px] font-black uppercase tracking-widest text-main/20 hover:text-kickr transition-colors">See all →</Link>
+                <Link to="/matches" className="text-[10px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors">See all →</Link>
               </div>
               <div className="bg-white/[0.01] border border-white/5 p-2 md:p-8 rounded-sm">
                 <NextMatchesHomePage />
@@ -179,7 +179,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-1 h-1 rounded-full bg-kickr animate-pulse opacity-50"></div>
-                  <span className="text-[10px] font-black text-main/20 uppercase tracking-widest italic">ACTIVE</span>
+                  <span className="text-[10px] font-black text-muted uppercase tracking-widest italic">ACTIVE</span>
                 </div>
               </div>
 
@@ -204,7 +204,7 @@ export default function HomePage() {
               <section className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm relative overflow-hidden group col-span-1 lg:col-auto">
                 <div className="flex items-center justify-between mb-3 md:mb-10 border-b border-white/5 pb-2 md:pb-6">
                   <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic">My Log</h3>
-                  <Link to={`/user/${user.id}/diary`} className="text-[9px] font-black uppercase text-main/20 hover:text-kickr transition-colors">Files →</Link>
+                  <Link to={`/user/${user.id}/diary`} className="text-[9px] font-black uppercase text-secondary hover:text-kickr transition-colors">Files →</Link>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2.5">
@@ -214,7 +214,7 @@ export default function HomePage() {
                     ))
                   ) : (
                     <div className="col-span-3 py-4 text-center">
-                      <p className="text-[11px] text-main/20 italic font-black uppercase tracking-widest">Empty log</p>
+                      <p className="text-[11px] text-muted italic font-black uppercase tracking-widest">Empty log</p>
                     </div>
                   )}
                 </div>
@@ -229,8 +229,8 @@ export default function HomePage() {
                   <Link key={sector.name} to={sector.id ? `/competitions/${sector.id}` : `/matches`} className="group block">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono text-main/10">0{i + 1}</span>
-                        <span className="text-[10px] md:text-[10px] font-black text-main/50 uppercase italic tracking-widest group-hover:text-kickr transition-colors truncate max-w-[50px] md:max-w-none">{sector.name}</span>
+                        <span className="text-[10px] font-mono text-muted/30">0{i + 1}</span>
+                        <span className="text-[10px] md:text-[10px] font-black text-secondary uppercase italic tracking-widest group-hover:text-kickr transition-colors truncate max-w-[50px] md:max-w-none">{sector.name}</span>
                       </div>
                       <span className="text-[11px] font-mono text-kickr italic tabular-nums">{sector.rating.toFixed(1)}</span>
                     </div>
@@ -248,7 +248,7 @@ export default function HomePage() {
                     <div className="w-4 h-4 md:w-8 md:h-8 rounded-sm bg-white/[0.01] border border-white/5 flex items-center justify-center text-[10px] text-kickr/40 font-black italic group-hover:border-kickr group-hover:text-kickr transition-all overflow-hidden">
                       {scout.avatarUrl ? <img src={scout.avatarUrl} className="w-full h-full object-cover" /> : scout.name[0]}
                     </div>
-                    <p className="text-[10px] md:text-[10px] font-black text-main/20 group-hover:text-kickr uppercase italic transition-all truncate leading-none">{scout.name}</p>
+                    <p className="text-[10px] md:text-[10px] font-black text-muted group-hover:text-kickr uppercase italic transition-all truncate leading-none">{scout.name}</p>
                   </Link>
                 ))}
               </div>

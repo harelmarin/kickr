@@ -96,7 +96,7 @@ export const UserDetailPage = () => {
                                         </span>
                                     )}
                                 </div>
-                                <p className="text-[#64748b] text-[8px] md:text-xs uppercase tracking-widest italic font-bold">
+                                <p className="text-muted text-[8px] md:text-xs uppercase tracking-widest italic font-bold">
                                     DEPLOYED {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
@@ -105,7 +105,7 @@ export const UserDetailPage = () => {
                         <div className="w-full md:w-auto flex justify-center gap-2 md:gap-3">
                             <Link
                                 to={`/user/${id}/diary`}
-                                className="bg-black/[0.03] border border-white/5 hover:border-kickr/40 text-main/40 hover:text-main text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 justify-center italic"
+                                className="bg-black/[0.03] border border-white/5 hover:border-kickr/40 text-secondary hover:text-main text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 justify-center italic"
                             >
                                 DIARY
                             </Link>
@@ -126,7 +126,7 @@ export const UserDetailPage = () => {
                                         } disabled:opacity-50`}
                                 >
                                     <span className={`text-[9px] font-black uppercase tracking-[0.2em] transition-colors ${isFollowing
-                                        ? 'text-main/40 group-hover:text-red-500'
+                                        ? 'text-secondary group-hover:text-red-500'
                                         : 'text-black'
                                         }`}>
                                         {followAction.isPending ? '...' : isFollowing ? 'Unfollow' : 'Follow'}
@@ -165,7 +165,7 @@ export const UserDetailPage = () => {
                         <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm">
                             <div className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
                                 <Link to={`/user/${id}/diary`} className="text-[10px] md:text-sm font-black text-main/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Diary</Link>
-                                <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest leading-none">DATABASE: {pageData?.totalElements || 0}</span>
+                                <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest leading-none">DATABASE: {pageData?.totalElements || 0}</span>
                             </div>
 
                             {isReviewsLoading ? (
@@ -183,7 +183,7 @@ export const UserDetailPage = () => {
                                 </div>
                             ) : (
                                 <div className="py-12 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-sm">
-                                    <p className="text-[#445566] text-[8px] font-bold uppercase tracking-widest">No match entries detected.</p>
+                                    <p className="text-secondary text-[8px] font-bold uppercase tracking-widest">No match entries detected.</p>
                                 </div>
                             )}
                         </section>
@@ -211,10 +211,10 @@ export const UserDetailPage = () => {
                                 <div className="space-y-3 md:space-y-4">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <h4 className="text-[8px] md:text-[10px] font-black text-main/80 uppercase tracking-widest">Following</h4>
+                                            <h4 className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-widest">Following</h4>
                                             <span className="text-[7px] md:text-[8px] font-black px-1.5 py-0.5 bg-kickr/10 rounded-sm text-kickr italic">{following?.totalElements ?? user.followingCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/following`} className="text-[7px] md:text-[8px] font-black text-main/20 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
+                                        <Link to={`/user/${id}/following`} className="text-[7px] md:text-[8px] font-black text-muted hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
                                     </div>
                                     {following?.content && following.content.length > 0 ? (
                                         <div className="grid grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
@@ -236,7 +236,7 @@ export const UserDetailPage = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-[7px] md:text-[9px] text-main/10 italic font-bold uppercase tracking-tighter">Silence.</p>
+                                        <p className="text-muted italic font-bold uppercase tracking-tighter">Silence.</p>
                                     )}
                                 </div>
 
@@ -244,10 +244,10 @@ export const UserDetailPage = () => {
                                 <div className="space-y-3 md:space-y-4 pt-4 md:pt-6 border-t border-white/5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <h4 className="text-[8px] md:text-[10px] font-black text-main/80 uppercase tracking-widest">Followers</h4>
+                                            <h4 className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-widest">Followers</h4>
                                             <span className="text-[7px] md:text-[8px] font-black px-1.5 py-0.5 bg-kickr/10 rounded-sm text-kickr italic">{followers?.totalElements ?? user.followersCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/followers`} className="text-[7px] md:text-[8px] font-black text-main/20 hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
+                                        <Link to={`/user/${id}/followers`} className="text-[7px] md:text-[8px] font-black text-muted hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
                                     </div>
                                     {followers?.content && followers.content.length > 0 ? (
                                         <div className="grid grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
@@ -269,7 +269,7 @@ export const UserDetailPage = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-[7px] md:text-[9px] text-main/10 italic font-bold uppercase tracking-tighter">Isolated.</p>
+                                        <p className="text-muted italic font-bold uppercase tracking-tighter">Isolated.</p>
                                     )}
                                 </div>
                             </div>
@@ -281,11 +281,11 @@ export const UserDetailPage = () => {
 
                             <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center tabular-nums">
                                 <div className="flex flex-col">
-                                    <span className="text-[6px] md:text-[7px] font-black text-main/10 uppercase tracking-widest leading-none mb-1 md:mb-2 italic">DEPLOYMENTS</span>
+                                    <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest leading-none mb-1 md:mb-2 italic">DEPLOYMENTS</span>
                                     <span className="text-base md:text-xl font-black text-main/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                    <span className="text-[6px] md:text-[7px] font-black text-main/10 uppercase tracking-widest leading-none mb-1 md:mb-2 italic">INTEL AVG</span>
+                                    <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest leading-none mb-1 md:mb-2 italic">INTEL AVG</span>
                                     <span className="text-base md:text-xl font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -299,11 +299,11 @@ export const UserDetailPage = () => {
                             <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Operational Data</h3>
                             <div className="space-y-4 md:space-y-6 tabular-nums">
                                 <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
-                                    <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest">Total Logs</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Total Logs</span>
                                     <span className="text-xs md:text-base font-black text-main/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
-                                    <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest">Avg Stars</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Avg Stars</span>
                                     <span className="text-xs md:text-base font-black text-kickr italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -311,7 +311,7 @@ export const UserDetailPage = () => {
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-widest">Marked Favorites</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Marked Favorites</span>
                                     <span className="text-xs md:text-base font-black text-main/90 italic">
                                         {pageData?.content.filter((r: any) => r.isLiked).length || 0}
                                     </span>
@@ -366,7 +366,7 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                         </div>
 
                         <div className="mt-3 flex flex-col items-center">
-                            <span className="text-[10px] font-black text-[#445566] group-hover:text-kickr transition-colors">{rating}★</span>
+                            <span className="text-[10px] font-black text-secondary group-hover:text-kickr transition-colors">{rating}★</span>
                             <div className="w-1 h-1 rounded-full bg-black/5 mt-1 group-hover:bg-kickr transition-colors"></div>
                         </div>
                     </Link>
@@ -400,7 +400,7 @@ const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
 
     if (topTeams.length === 0) {
         return (
-            <p className="text-[10px] text-[#445566] italic font-bold">
+            <p className="text-[10px] text-muted italic font-bold">
                 No teams watched yet.
             </p>
         );
@@ -425,8 +425,8 @@ const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
                         <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{team.count}</span>
                     </div>
                     <div className="flex justify-between pt-1 border-t border-black/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">DEPLOYED</span>
-                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">{team.count} MATCHES</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">DEPLOYED</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">{team.count} MATCHES</span>
                     </div>
                 </Link>
             ))}
@@ -464,7 +464,7 @@ const MostWatchedLeagues = ({ reviews }: { reviews: UserMatch[] }) => {
 
     if (topLeagues.length === 0) {
         return (
-            <p className="text-[10px] text-[#445566] italic font-bold">
+            <p className="text-[10px] text-muted italic font-bold">
                 No leagues watched yet.
             </p>
         );
@@ -489,8 +489,8 @@ const MostWatchedLeagues = ({ reviews }: { reviews: UserMatch[] }) => {
                         <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{league.rating.toFixed(1)}</span>
                     </div>
                     <div className="flex justify-between pt-1 border-t border-black/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">LEAGUE</span>
-                        <span className="text-[6px] md:text-[7px] font-black text-main/5 uppercase tracking-widest italic">{league.count} RECS</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">LEAGUE</span>
+                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">{league.count} RECS</span>
                     </div>
                 </Link>
             ))}
@@ -504,7 +504,7 @@ const StatHorizontal = ({ label, value, onClick }: { label: string; value: strin
         className="flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer group"
     >
         <span className="text-xl md:text-2xl font-black text-main/90 group-hover:text-kickr transition-colors italic tabular-nums leading-none">{value}</span>
-        <span className="text-[7px] md:text-[10px] font-bold text-main/20 uppercase tracking-[0.2em] italic">{label}</span>
+        <span className="text-[7px] md:text-[10px] font-bold text-muted uppercase tracking-[0.2em] italic">{label}</span>
     </button>
 );
 
@@ -518,7 +518,7 @@ const NotFoundState = () => (
     <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center text-center">
         <div>
             <h2 className="text-4xl font-black text-main/90 mb-4 italic tracking-tighter uppercase">User Not Found</h2>
-            <p className="text-main/40 mb-8">This member hasn't joined Kickr yet.</p>
+            <p className="text-muted mb-8">This member hasn't joined Kickr yet.</p>
             <Link to="/" className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Go Home</Link>
         </div>
     </div>

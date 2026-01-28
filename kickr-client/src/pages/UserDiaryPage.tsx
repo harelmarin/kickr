@@ -39,7 +39,7 @@ export const UserDiaryPage = () => {
     }, {} as Record<string, typeof filteredReviews>);
 
     return (
-        <main className="min-h-screen bg-kickr-bg-primary text-main/40">
+        <main className="min-h-screen bg-kickr-bg-primary text-secondary">
             <div className="relative h-[250px] md:h-[400px] w-full overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-kickr-bg-primary/80 to-transparent z-10"></div>
                 <div className="absolute inset-0 bg-kickr-bg-primary opacity-50">
@@ -53,12 +53,12 @@ export const UserDiaryPage = () => {
             <div className="max-w-5xl mx-auto px-4 md:px-6 -mt-[180px] md:-mt-[300px] relative z-20 pb-16 md:pb-20">
                 <header className="mb-8 md:mb-16">
                     <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-8">
-                        <Link to={`/user/${id}`} className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-main/20 hover:text-kickr transition-colors flex items-center gap-1.5 group italic">
+                        <Link to={`/user/${id}`} className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors flex items-center gap-1.5 group italic">
                             <span className="text-sm md:text-lg group-hover:-translate-x-1 transition-transform mb-0.5">←</span>
                             Profile
                         </Link>
                         <div className="h-3 md:h-4 w-px bg-black/5"></div>
-                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-main/10 italic">Match Records</span>
+                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-muted italic">Match Records</span>
                     </div>
 
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-8 md:mb-12">
@@ -106,7 +106,7 @@ export const UserDiaryPage = () => {
                                 >
                                     {user?.name}<span className="text-kickr/80">'s</span> Match Log
                                 </motion.h1>
-                                <p className="text-main/10 uppercase tracking-[0.2em] md:tracking-[0.3em] text-[7px] md:text-[9px] font-black italic">
+                                <p className="text-muted uppercase tracking-[0.2em] md:tracking-[0.3em] text-[7px] md:text-[9px] font-black italic">
                                     Personal History & Football Analysis
                                 </p>
                             </div>
@@ -115,27 +115,27 @@ export const UserDiaryPage = () => {
                         <div className="flex gap-6 md:gap-10 md:border-l border-white/5 md:pl-10">
                             <div className="flex flex-col items-center md:items-end">
                                 <span className="text-base md:text-2xl font-black text-main italic leading-none tracking-tighter tabular-nums">{pageData?.totalElements || 0}</span>
-                                <span className="text-[6px] md:text-[8px] uppercase tracking-widest text-main/20 font-black mt-1">LOGS</span>
+                                <span className="text-[6px] md:text-[8px] uppercase tracking-widest text-muted font-black mt-1">LOGS</span>
                             </div>
                             <div className="flex flex-col items-center md:items-end">
                                 <span className="text-base md:text-2xl font-black text-kickr italic leading-none tracking-tighter tabular-nums">
                                     {reviews.filter((r: any) => r.isLiked).length}
                                 </span>
-                                <span className="text-[6px] md:text-[8px] uppercase tracking-widest text-main/20 font-black mt-1">SAVES</span>
+                                <span className="text-[6px] md:text-[8px] uppercase tracking-widest text-muted font-black mt-1">SAVES</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="flex items-center bg-white/[0.01] border border-white/5 p-2 md:p-4 rounded-sm gap-2 md:gap-4">
-                        <span className="text-xs md:text-lg opacity-10">🔍</span>
+                        <span className="text-xs md:text-lg opacity-40">🔍</span>
                         <div className="flex flex-col gap-0 flex-1">
-                            <span className="text-[6px] md:text-[8px] uppercase font-black text-main/5 tracking-[0.2em] italic">FIND TEAMS</span>
+                            <span className="text-[6px] md:text-[8px] uppercase font-black text-muted tracking-[0.2em] italic">FIND TEAMS</span>
                             <input
                                 type="text"
                                 placeholder="..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="bg-transparent text-[8px] md:text-[11px] font-black text-main/40 placeholder-white/5 outline-none w-full uppercase italic tracking-widest"
+                                className="bg-transparent text-[8px] md:text-[11px] font-black text-secondary placeholder-white/10 outline-none w-full uppercase italic tracking-widest"
                             />
                         </div>
                     </div>
@@ -156,7 +156,7 @@ export const UserDiaryPage = () => {
                     <div className="space-y-8 md:space-y-16">
                         {Object.entries(groupedReviews).map(([monthYear, monthReviews]: [string, any]) => (
                             <section key={monthYear} className="bg-white/[0.01] p-4 md:p-6 rounded-sm border border-white/5">
-                                <h2 className="text-[8px] md:text-[10px] font-black text-main/20 uppercase tracking-[0.3em] mb-4 md:mb-6 border-b border-white/5 pb-1.5 italic">
+                                <h2 className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-4 md:mb-6 border-b border-white/5 pb-1.5 italic">
                                     {monthYear}
                                 </h2>
 
@@ -177,7 +177,7 @@ export const UserDiaryPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-3 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-main/20 hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
+                                    className="px-3 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
                                 >
                                     Prev
                                 </button>
@@ -200,7 +200,7 @@ export const UserDiaryPage = () => {
                                                 }}
                                                 className={`w-7 h-7 md:w-10 md:h-10 rounded-sm text-[8px] md:text-[10px] font-black transition-all cursor-pointer tabular-nums ${currentPage === i
                                                     ? 'bg-kickr text-black'
-                                                    : 'bg-white/[0.01] border border-white/5 text-main/10 hover:text-main hover:border-white/10'
+                                                    : 'bg-white/[0.01] border border-white/5 text-muted hover:text-main hover:border-white/10'
                                                     }`}
                                             >
                                                 {i + 1}
@@ -215,7 +215,7 @@ export const UserDiaryPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-3 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-main/20 hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
+                                    className="px-3 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
                                 >
                                     Next
                                 </button>

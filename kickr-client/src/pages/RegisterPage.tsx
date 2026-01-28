@@ -125,12 +125,12 @@ export const RegisterPage = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div className="space-y-3">
                             <div className="space-y-1">
-                                <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Identity</label>
+                                <label className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] pl-1">Identity</label>
                                 <input
                                     type="text"
                                     placeholder="Your username"
                                     {...register("name")}
-                                    className={`w-full bg-kickr-bg-secondary/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
+                                    className={`w-full bg-kickr-bg-secondary/50 border ${errors.name ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-white/20 focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                 />
                                 {errors.name && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.name.message}</p>
@@ -138,12 +138,12 @@ export const RegisterPage = () => {
                             </div>
 
                             <div className="space-y-1">
-                                <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Email</label>
+                                <label className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] pl-1">Email</label>
                                 <input
                                     type="email"
                                     placeholder="name@example.com"
                                     {...register("email")}
-                                    className={`w-full bg-kickr-bg-secondary/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
+                                    className={`w-full bg-kickr-bg-secondary/50 border ${errors.email ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-white/20 focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                 />
                                 {errors.email && (
                                     <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.email.message}</p>
@@ -152,12 +152,12 @@ export const RegisterPage = () => {
 
                             <div className="space-y-3">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Secure Pass</label>
+                                    <label className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] pl-1">Secure Pass</label>
                                     <input
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("password")}
-                                        className={`w-full bg-kickr-bg-secondary/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
+                                        className={`w-full bg-kickr-bg-secondary/50 border ${errors.password ? 'border-red-500/50' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-white/20 focus:border-kickr/40 focus:bg-kickr-bg-secondary transition-all outline-none`}
                                     />
                                     {errors.password && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.password.message}</p>
@@ -165,12 +165,12 @@ export const RegisterPage = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-[#5c6470] uppercase tracking-[0.2em] pl-1">Confirm Identity</label>
+                                    <label className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] pl-1">Confirm Identity</label>
                                     <input
                                         type="password"
                                         placeholder="••••••••"
                                         {...register("confirmPassword")}
-                                        className={`w-full bg-kickr-bg-secondary/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-[#445566] outline-none`}
+                                        className={`w-full bg-kickr-bg-secondary/50 border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-4 py-3 text-base sm:text-sm font-medium text-main placeholder-white/20 outline-none`}
                                     />
                                     {errors.confirmPassword && (
                                         <p className="text-[10px] text-red-500 font-bold mt-1 pl-1 uppercase tracking-tighter">{errors.confirmPassword.message}</p>
@@ -186,10 +186,10 @@ export const RegisterPage = () => {
                                         <div className={`h-1.5 rounded-full transition-all duration-300 ${hasNumber ? 'bg-kickr' : 'bg-black/5'}`}></div>
                                     </div>
                                     <div className="flex justify-between px-1">
-                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasMinLength ? 'text-kickr' : 'text-[#445566]'}`}>8+ Chars</span>
-                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasUppercase ? 'text-kickr' : 'text-[#445566]'}`}>Upper</span>
-                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasLowercase ? 'text-kickr' : 'text-[#445566]'}`}>Lower</span>
-                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasNumber ? 'text-kickr' : 'text-[#445566]'}`}>Number</span>
+                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasMinLength ? 'text-kickr' : 'text-muted'}`}>8+ Chars</span>
+                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasUppercase ? 'text-kickr' : 'text-muted'}`}>Upper</span>
+                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasLowercase ? 'text-kickr' : 'text-muted'}`}>Lower</span>
+                                        <span className={`text-[7px] font-bold uppercase tracking-tighter ${hasNumber ? 'text-kickr' : 'text-muted'}`}>Number</span>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@ export const RegisterPage = () => {
                     </form>
 
                     <div className="mt-6 pt-4 border-t border-white/5 text-center">
-                        <p className="text-[#5c6470] text-[11px] font-bold uppercase tracking-widest">
+                        <p className="text-secondary text-[11px] font-bold uppercase tracking-widest">
                             Found your credentials?{' '}
                             <button
                                 onClick={() => openAuthModal('login')}

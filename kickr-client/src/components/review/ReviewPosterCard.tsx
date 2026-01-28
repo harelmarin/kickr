@@ -44,8 +44,8 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
                 <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/5 rounded-[1px] overflow-hidden transition-all duration-300 group-hover/log:border-kickr/40 group-hover/log:shadow-lg group-hover/log:shadow-kickr/5">
                     <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-transparent to-transparent z-10" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-0.5 gap-2 group-hover/log:scale-105 transition-transform duration-500">
-                        <img src={review.match.homeLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain" alt="" />
-                        <img src={review.match.awayLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain" alt="" />
+                        <img src={review.match.homeLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain" alt={`${review.match.homeTeam} logo`} />
+                        <img src={review.match.awayLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain" alt={`${review.match.awayTeam} logo`} />
                     </div>
                     <div className="absolute bottom-0.5 inset-x-0 z-20 flex flex-col items-center scale-[0.8]">
                         <StarRating note={review.note} />
@@ -67,8 +67,8 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
                 <div className="absolute inset-0 opacity-[0.03] z-0" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-2 gap-3 md:gap-4 group-hover:scale-105 transition-transform duration-500">
-                    <img src={review.match.homeLogo} className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" alt="Home" />
-                    <img src={review.match.awayLogo} className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" alt="Away" />
+                    <img src={review.match.homeLogo} className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" alt={`${review.match.homeTeam} logo`} />
+                    <img src={review.match.awayLogo} className="w-8 h-8 md:w-12 md:h-12 object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]" alt={`${review.match.awayTeam} logo`} />
                 </div>
 
                 <div className="absolute bottom-1 md:bottom-2 inset-x-0 z-20 flex flex-col items-center">

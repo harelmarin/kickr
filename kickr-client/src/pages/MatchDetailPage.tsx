@@ -89,7 +89,7 @@ export const MatchDetailPage = () => {
   const isPast = match.homeScore !== null;
 
   return (
-    <main className="min-h-screen bg-kickr-bg-primary text-[#99aabb]">
+    <main className="min-h-screen bg-kickr-bg-primary text-secondary">
       <div className="relative h-[260px] md:h-[650px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex blur-[60px] md:blur-[80px] opacity-15 md:opacity-30">
           <div className="flex-1 relative overflow-hidden">
@@ -106,13 +106,13 @@ export const MatchDetailPage = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-[140px] md:mt-[-550px] relative z-10 pb-16">
         <div className="flex items-center gap-2 md:gap-6 mb-6 md:mb-12">
-          <Link to="/" className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/20 hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
+          <Link to="/" className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
             <span className="text-base group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
             <span className="hidden sm:inline">Tactical Feed</span>
             <span className="sm:hidden italic">BACK</span>
           </Link>
           <div className="h-3 w-[1px] bg-black/5"></div>
-          <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/10 italic truncate">
+          <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted italic truncate">
             <span className="text-main/40 truncate max-w-[150px] xs:max-w-none">{match.homeTeam} / {match.awayTeam}</span>
           </div>
         </div>
@@ -159,7 +159,7 @@ export const MatchDetailPage = () => {
                   </div>
                   <div className="absolute -bottom-5 md:-bottom-8 left-1/2 -translate-x-1/2 w-full flex flex-col items-center gap-1 opacity-40 md:opacity-20 whitespace-nowrap">
                     <div className="w-0.5 h-0.5 rounded-full bg-white/20 hidden md:block"></div>
-                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em] italic text-main/60 md:text-main/40">
+                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em] italic text-muted">
                       {isPast ? 'FT' : 'Upcoming'}
                     </span>
                   </div>
@@ -178,7 +178,7 @@ export const MatchDetailPage = () => {
                         {match.awayTeam}
                       </h2>
                     </Link>
-                    <span className="text-main/10 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Away</span>
+                    <span className="text-muted text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Away</span>
                   </div>
                 </div>
               </div>
@@ -197,18 +197,18 @@ export const MatchDetailPage = () => {
             <div className="w-full border-t border-white/5 bg-kickr-bg-primary/20">
               <div className="grid grid-cols-3 divide-x divide-white/5">
                 <Link to={`/competitions/${match.competitionId}`} className="flex flex-col items-center justify-center p-3 md:p-6 text-center group hover:bg-black/[0.02] transition-colors">
-                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Competitions</span>
+                  <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Competitions</span>
                   <div className="flex items-center gap-1.5 md:gap-2 justify-center">
                     <img src={match.competitionLogo} className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
                     <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none group-hover:text-kickr transition-colors">{match.competition || 'Competitions'}</span>
                   </div>
                 </Link>
                 <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-black/[0.02] transition-colors">
-                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Date</span>
+                  <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Date</span>
                   <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
                 </div>
                 <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-black/[0.02] transition-colors">
-                  <span className="text-[6px] md:text-[9px] font-black text-kickr/40 md:text-main/10 uppercase tracking-[0.2em] mb-1 italic">Time</span>
+                  <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Time</span>
                   <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
                 </div>
               </div>
@@ -223,7 +223,7 @@ export const MatchDetailPage = () => {
                 <div className="flex flex-col w-full xl:w-auto">
                   {match.averageRating && match.averageRating > 0 ? (
                     <div className="flex flex-col">
-                      <span className="text-[8px] md:text-[9px] font-black text-main/10 uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Community Intel</span>
+                      <span className="text-[8px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Community Intel</span>
                       <div className="flex flex-col xs:flex-row items-center gap-4 md:gap-8">
                         <div className="flex flex-col items-center justify-center bg-white/[0.01] border border-white/5 w-20 h-20 md:w-28 md:h-28 rounded-sm relative overflow-hidden group flex-shrink-0">
                           <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -249,7 +249,7 @@ export const MatchDetailPage = () => {
                                     className="h-full bg-kickr/20"
                                   />
                                 </div>
-                                <span className="text-[6px] md:text-[8px] font-black text-main/20 w-4 md:w-8 text-right tabular-nums italic font-mono">{count}</span>
+                                <span className="text-[6px] md:text-[8px] font-black text-secondary w-4 md:w-8 text-right tabular-nums italic font-mono">{count}</span>
                               </div>
                             );
                           })}
@@ -260,7 +260,7 @@ export const MatchDetailPage = () => {
                     <div className="flex flex-col">
                       <span className="text-[9px] font-black text-main/20 uppercase tracking-[0.4em] mb-4 italic">Community Rating</span>
                       <div className="bg-black/[0.02] border border-white/5 px-6 py-4 rounded-sm border-dashed">
-                        <span className="text-[10px] font-black text-main/20 uppercase tracking-widest italic">No ratings yet. Be the first to rate!</span>
+                        <span className="text-[10px] font-black text-muted uppercase tracking-widest italic">No ratings yet. Be the first to rate!</span>
                       </div>
                     </div>
                   )}
@@ -269,7 +269,7 @@ export const MatchDetailPage = () => {
                 {/* User's Tactical History - if logged */}
                 {hasAlreadyLogged && (
                   <div className="flex flex-col w-full xl:w-auto mt-4 xl:mt-0">
-                    <span className="text-[8px] md:text-[9px] font-black text-main/10 uppercase tracking-[0.3em] mb-4 italic leading-none">Your Records</span>
+                    <span className="text-[8px] md:text-[9px] font-black text-muted uppercase tracking-[0.3em] mb-4 italic leading-none">Your Records</span>
                     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1 gap-2 max-h-[300px] overflow-y-auto pr-2 no-scrollbar">
                       {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
                         <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-2 bg-white/[0.01] border border-white/5 rounded-sm group/entry">
@@ -278,7 +278,7 @@ export const MatchDetailPage = () => {
                               {'★'.repeat(Math.round(entry.note))}
                               <span className="text-main/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
                             </div>
-                            <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tabular-nums">
+                            <span className="text-[6px] md:text-[8px] font-black text-muted uppercase tabular-nums">
                               {new Date(entry.watchedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                             </span>
                           </div>
@@ -298,7 +298,7 @@ export const MatchDetailPage = () => {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab as any)}
-                    className={`pb-3 md:pb-5 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all relative italic whitespace-nowrap active:scale-95 ${activeTab === tab ? 'text-kickr' : 'text-main/10 hover:text-main'
+                    className={`pb-3 md:pb-5 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all relative italic whitespace-nowrap active:scale-95 ${activeTab === tab ? 'text-kickr' : 'text-secondary hover:text-main'
                       }`}
                   >
                     {tab}
@@ -377,7 +377,7 @@ export const MatchDetailPage = () => {
               <div className="p-2 md:p-6 bg-white/[0.01] border-b border-white/5 flex items-center justify-between">
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
-                    <span className="text-[7px] md:text-[10px] font-black text-main/20 uppercase tracking-[0.2em] leading-none italic">
+                    <span className="text-[7px] md:text-[10px] font-black text-muted uppercase tracking-[0.2em] leading-none italic">
                       {hasAlreadyLogged ? 'History Found' : 'Rate Intel'}
                     </span>
                     <div className="w-0.5 h-0.5 rounded-full bg-kickr"></div>
@@ -399,7 +399,7 @@ export const MatchDetailPage = () => {
               <div className="p-2 md:p-8 space-y-2 md:space-y-10">
                 {/* Rating Star Picker */}
                 <div>
-                  <div className="hidden md:block text-center text-[6px] md:text-[9px] font-black text-main/10 uppercase tracking-[0.4em] mb-2 md:mb-6 italic">Protocol Value</div>
+                  <div className="hidden md:block text-center text-[6px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] mb-2 md:mb-6 italic">Protocol Value</div>
                   <div className="flex justify-center gap-1 md:gap-2 mb-0 md:mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
@@ -421,12 +421,12 @@ export const MatchDetailPage = () => {
 
                 {/* Review Text Area */}
                 <div className="space-y-1 md:space-y-3">
-                  <span className="hidden md:block text-[6px] md:text-[9px] font-black text-main/10 uppercase tracking-[0.4em] italic leading-none">Intelligence Notes</span>
+                  <span className="hidden md:block text-[6px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] italic leading-none">Intelligence Notes</span>
                   <textarea
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                     placeholder="Input observations..."
-                    className="w-full bg-kickr-bg-primary/40 border border-white/5 rounded-sm p-2 md:p-4 text-[9px] md:text-[13px] text-main/60 placeholder-white/5 focus:outline-none focus:border-kickr/10 h-10 md:h-44 transition-all resize-none italic font-black uppercase tracking-widest leading-relaxed"
+                    className="w-full bg-kickr-bg-primary/40 border border-white/5 rounded-sm p-2 md:p-4 text-[9px] md:text-[13px] text-main/80 placeholder-white/20 focus:outline-none focus:border-kickr/10 h-10 md:h-44 transition-all resize-none italic font-black uppercase tracking-widest leading-relaxed"
                   />
                 </div>
 
@@ -462,7 +462,7 @@ export const MatchDetailPage = () => {
               <div className="absolute top-0 left-0 w-full h-1 bg-kickr"></div>
               <button
                 onClick={() => setJustLoggedReview(null)}
-                className="absolute top-6 right-6 text-[#445566] hover:text-main transition-colors text-xl font-bold"
+                className="absolute top-6 right-6 text-muted hover:text-main transition-colors text-xl font-bold"
               >
                 ✕
               </button>
@@ -472,7 +472,7 @@ export const MatchDetailPage = () => {
                   <span className="text-4xl">⚽</span>
                 </div>
                 <h3 className="text-3xl font-black text-main uppercase italic tracking-tighter mb-3 leading-none">Match Logged</h3>
-                <p className="text-[#99aabb] text-[13px] mb-10 leading-relaxed font-medium">
+                <p className="text-muted text-[13px] mb-10 leading-relaxed font-medium">
                   Your tactical report is now part of the Kickr network. Export your Review Poster to share your session on social media!
                 </p>
 
@@ -529,7 +529,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
 
   return (
     <div className="flex gap-3 md:gap-4 border-b border-white/5 pb-4 md:pb-8 group/review hover:bg-white/[0.01] transition-colors rounded-sm px-2 -mx-2 active:bg-black/[0.02]">
-      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/[0.02] flex-shrink-0 flex items-center justify-center text-[8px] md:text-[10px] text-main/40 font-black uppercase overflow-hidden border border-white/5">
+      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/[0.02] flex-shrink-0 flex items-center justify-center text-[8px] md:text-[10px] text-muted font-black uppercase overflow-hidden border border-white/5">
         {review.user.avatarUrl ? (
           <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
         ) : (
@@ -538,7 +538,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1 md:mb-2">
-          <Link to={`/user/${review.user.id}`} className="text-main/80 text-[11px] md:text-sm font-black hover:text-kickr transition-colors truncate uppercase italic">{review.user.name}</Link>
+          <Link to={`/user/${review.user.id}`} className="text-secondary text-[11px] md:text-sm font-black hover:text-kickr transition-colors truncate uppercase italic">{review.user.name}</Link>
           <span className="text-kickr/60 font-black text-[9px] md:text-xs pl-2 border-l border-white/5 ml-1 flex-shrink-0 tabular-nums">
             {'★'.repeat(Math.round(review.note))}
             <span className="text-main/5">{'★'.repeat(5 - Math.round(review.note))}</span>
@@ -547,14 +547,14 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
             <span className="text-kickr text-[9px] md:text-sm ml-1 flex-shrink-0" title="Liked">❤</span>
           )}
           {review.watchedAt && (
-            <Link to={`/reviews/${review.id}`} className="text-main/10 text-[7px] md:text-[9px] font-black uppercase tracking-widest ml-auto hover:text-main/30 transition-colors flex-shrink-0 italic">
+            <Link to={`/reviews/${review.id}`} className="text-muted text-[7px] md:text-[9px] font-black uppercase tracking-widest ml-auto hover:text-main transition-colors flex-shrink-0 italic">
               {new Date(review.watchedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
             </Link>
           )}
         </div>
         {review.comment && review.comment.trim() !== "" && (
           <Link to={`/reviews/${review.id}`} className="block group/comment mt-1">
-            <p className="text-[10px] md:text-sm leading-relaxed text-main/40 italic group-hover:text-main/60 transition-colors line-clamp-2 uppercase font-medium">
+            <p className="text-[10px] md:text-sm leading-relaxed text-secondary italic group-hover:text-main transition-colors line-clamp-2 uppercase font-medium">
               {review.comment}
             </p>
             <span className="text-[7px] md:text-[9px] font-black text-kickr/20 uppercase tracking-widest mt-1 block group-hover:text-kickr/40 transition-colors italic">View Recap →</span>
@@ -566,7 +566,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
               onClick={handleLike}
               className={`flex items-center gap-1 md:gap-1.5 text-[8px] md:text-[10px] uppercase font-black tracking-widest transition-all italic ${isLikedByMe
                 ? 'text-kickr'
-                : 'text-main/10 hover:text-main/30'
+                : 'text-muted hover:text-main'
                 }`}
               title={isLikedByMe ? 'Unlike' : 'Like this review'}
             >
@@ -584,7 +584,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
             <button
               onClick={handleDelete}
               disabled={deleteUserMatch.isPending}
-              className="text-[7px] md:text-[9px] font-black text-main/5 hover:text-red-900 transition-colors uppercase tracking-[0.2em] italic"
+              className="text-[7px] md:text-[9px] font-black text-muted hover:text-red-900 transition-colors uppercase tracking-[0.2em] italic"
             >
               {deleteUserMatch.isPending ? '...' : 'Remove'}
             </button>
@@ -596,7 +596,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
 };
 
 const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
-  if (!lineups || lineups.length === 0) return <p className="text-[#445566] text-sm italic">Lineups not available for this match.</p>;
+  if (!lineups || lineups.length === 0) return <p className="text-secondary text-sm italic">Lineups not available for this match.</p>;
 
   return (
     <div className="space-y-8">
@@ -605,13 +605,13 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
         <div className="bg-black/[0.02] p-1 rounded-sm border border-white/5 flex gap-1">
           <button
             onClick={() => onToggleView('visual')}
-            className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all italic ${viewMode === 'visual' ? 'bg-kickr text-black' : 'text-main/20 hover:text-main'}`}
+            className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all italic ${viewMode === 'visual' ? 'bg-kickr text-black' : 'text-muted hover:text-main'}`}
           >
             Tactical
           </button>
           <button
             onClick={() => onToggleView('list')}
-            className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all italic ${viewMode === 'list' ? 'bg-kickr text-black' : 'text-main/20 hover:text-main'}`}
+            className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all italic ${viewMode === 'list' ? 'bg-kickr text-black' : 'text-muted hover:text-main'}`}
           >
             List
           </button>
@@ -631,10 +631,10 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
                       <p className="text-kickr text-[10px] font-bold uppercase tracking-[0.2em]">{teamLineup.formation}</p>
                       {teamLineup.coach && (
                         <>
-                          <span className="text-[#445566] text-[8px]">•</span>
+                          <span className="text-muted text-[8px]">•</span>
                           <div className="flex items-center gap-1">
                             <span className="text-lg leading-none">👔</span>
-                            <span className="text-[#8899aa] text-[9px] font-bold uppercase tracking-wider">{teamLineup.coach.name}</span>
+                            <span className="text-secondary text-[9px] font-bold uppercase tracking-wider">{teamLineup.coach.name}</span>
                           </div>
                         </>
                       )}
@@ -647,10 +647,10 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
               {/* Subs below the pitch in visual mode but compact */}
               {teamLineup.substitutes && (
                 <div className="bg-kickr-bg-secondary/30 rounded-sm p-4 border border-white/5">
-                  <span className="text-[9px] font-black text-[#556677] uppercase tracking-[0.2em] mb-3 block">Available Subs</span>
+                  <span className="text-[9px] font-black text-secondary uppercase tracking-[0.2em] mb-3 block">Available Subs</span>
                   <div className="flex flex-wrap gap-2">
                     {teamLineup.substitutes.map((player: any) => (
-                      <div key={player.player.id} className="bg-black/[0.03] px-2 py-1 rounded-sm text-[10px] text-[#8899aa] border border-white/5">
+                      <div key={player.player.id} className="bg-black/[0.03] px-2 py-1 rounded-sm text-[10px] text-muted border border-white/5">
                         <span className="text-kickr font-bold mr-1">{player.player.number}</span> {player.player.name}
                       </div>
                     ))}
@@ -672,8 +672,8 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
                     <p className="text-kickr text-[9px] font-black uppercase tracking-[0.2em] italic">{teamLineup.formation}</p>
                     {teamLineup.coach && (
                       <>
-                        <span className="text-main/10 text-[8px]">•</span>
-                        <span className="text-main/40 text-[9px] font-black uppercase tracking-widest italic">{teamLineup.coach.name}</span>
+                        <span className="text-muted/20 text-[8px]">•</span>
+                        <span className="text-muted text-[9px] font-black uppercase tracking-widest italic">{teamLineup.coach.name}</span>
                       </>
                     )}
                   </div>
@@ -682,15 +682,15 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
 
               <div className="space-y-6">
                 <div>
-                  <div className="text-[9px] font-black text-[#556677] uppercase tracking-[0.2em] mb-3 border-b border-white/5 pb-1">Starting XI</div>
+                  <div className="text-[9px] font-black text-secondary uppercase tracking-[0.2em] mb-3 border-b border-white/5 pb-1">Starting XI</div>
                   <div className="grid grid-cols-1 gap-1">
                     {teamLineup.startXI.map((player: any) => (
                       <div key={player.player.id} className="flex items-center justify-between text-xs py-1.5 transition-colors hover:bg-black/[0.02] px-2 rounded">
                         <div className="flex items-center gap-3">
                           <span className="w-5 text-kickr font-bold text-[10px] tabular-nums">{player.player.number}</span>
-                          <span className="text-[#99aabb] font-medium">{player.player.name}</span>
+                          <span className="text-secondary font-medium">{player.player.name}</span>
                         </div>
-                        <span className="text-[#445566] text-[9px] uppercase font-black tracking-tighter bg-black/5 px-1.5 rounded">{player.player.pos}</span>
+                        <span className="text-muted text-[9px] uppercase font-black tracking-tighter bg-black/5 px-1.5 rounded">{player.player.pos}</span>
                       </div>
                     ))}
                   </div>
@@ -698,15 +698,15 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
 
                 {teamLineup.substitutes && teamLineup.substitutes.length > 0 && (
                   <div>
-                    <div className="text-[9px] font-black text-[#556677] uppercase tracking-[0.2em] mb-3 border-b border-white/5 pb-1">Substitutes</div>
+                    <div className="text-[9px] font-black text-secondary uppercase tracking-[0.2em] mb-3 border-b border-white/5 pb-1">Substitutes</div>
                     <div className="grid grid-cols-1 gap-1 opacity-70">
                       {teamLineup.substitutes.map((player: any) => (
                         <div key={player.player.id} className="flex items-center justify-between text-xs py-1.5 transition-colors hover:bg-black/[0.02] px-2 rounded">
                           <div className="flex items-center gap-3">
-                            <span className="w-5 text-[#556677] font-bold text-[10px] tabular-nums">{player.player.number}</span>
-                            <span className="text-[#8899aa]">{player.player.name}</span>
+                            <span className="w-5 text-secondary font-bold text-[10px] tabular-nums">{player.player.number}</span>
+                            <span className="text-muted">{player.player.name}</span>
                           </div>
-                          <span className="text-[#445566] text-[9px] uppercase font-black tracking-tighter">{player.player.pos}</span>
+                          <span className="text-muted text-[9px] uppercase font-black tracking-tighter">{player.player.pos}</span>
                         </div>
                       ))}
                     </div>
@@ -785,7 +785,7 @@ const renderTacticalPlayers = (players: any[]) => {
 };
 
 const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLogo, awayTeamId }: any) => {
-  if (!stats || stats.length === 0) return <p className="text-[#445566] text-sm italic">Statistics not available.</p>;
+  if (!stats || stats.length === 0) return <p className="text-secondary text-sm italic">Statistics not available.</p>;
 
   // Display priority for statistics
   const prioritizedStats = [
@@ -822,7 +822,7 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
           <img src={homeLogo} alt="" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
           <span className="text-main font-black uppercase italic tracking-tighter text-[10px] md:text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{homeTeam}</span>
         </Link>
-        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-main/10 italic">Tactical Intel</div>
+        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-muted italic">Tactical Intel</div>
         <Link to={`/teams/${awayTeamId}`} className="flex items-center gap-2 md:gap-3 group/team p-1 -m-1 rounded-sm transition-all">
           <span className="text-main font-black uppercase italic tracking-tighter text-[10px] md:text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{awayTeam}</span>
           <img src={awayLogo} alt="" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
@@ -846,9 +846,9 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
         return (
           <div key={type} className="group">
             <div className="flex justify-between items-end mb-1.5 md:mb-2.5 px-0.5">
-              <span className={`text-[10px] md:text-sm font-black italic tabular-nums ${hNum > aNum ? 'text-kickr' : 'text-main/40'}`}>{homeVal}</span>
-              <span className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/10 group-hover:text-main/20 transition-colors leading-none mb-0.5">{type}</span>
-              <span className={`text-[10px] md:text-sm font-black italic tabular-nums ${aNum > hNum ? 'text-kickr' : 'text-main/40'}`}>{awayVal}</span>
+              <span className={`text-[10px] md:text-sm font-black italic tabular-nums ${hNum > aNum ? 'text-kickr' : 'text-secondary'}`}>{homeVal}</span>
+              <span className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted group-hover:text-main transition-colors leading-none mb-0.5">{type}</span>
+              <span className={`text-[10px] md:text-sm font-black italic tabular-nums ${aNum > hNum ? 'text-kickr' : 'text-secondary'}`}>{awayVal}</span>
             </div>
             <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-black/[0.03] relative">
               <div
@@ -868,7 +868,7 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
 };
 
 const EventsSection = ({ events, homeTeamId, homeTeamName }: any) => {
-  if (!events || events.length === 0) return <p className="text-[#445566] text-sm italic">Match events not available.</p>;
+  if (!events || events.length === 0) return <p className="text-secondary text-sm italic">Match events not available.</p>;
 
   return (
     <div className="relative py-6 max-w-3xl mx-auto">
@@ -957,7 +957,7 @@ const ErrorState = () => (
       </div>
       <div className="space-y-3">
         <h1 className="text-2xl text-main font-black uppercase italic tracking-tighter">Sector Offline</h1>
-        <p className="text-main/40 text-sm italic">The requested combat data could not be retrieved from the central database.</p>
+        <p className="text-muted text-sm italic">The requested combat data could not be retrieved from the central database.</p>
       </div>
       <Link to="/matches" className="inline-block px-8 py-3 bg-black/[0.02] border border-white/5 text-kickr hover:bg-black/[0.05] uppercase tracking-widest text-[10px] font-black transition-all rounded-sm italic">
         Return to War Room

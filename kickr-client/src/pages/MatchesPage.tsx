@@ -54,7 +54,7 @@ export const MatchesPage = () => {
           <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
             Center <span className="text-kickr/80">Circle</span>
           </h1>
-          <p className="text-main/20 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
+          <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
             Global Match Database
           </p>
 
@@ -62,23 +62,24 @@ export const MatchesPage = () => {
             <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
               <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-x-8 flex-1">
                 {/* Search */}
-                <div className="flex flex-col gap-0.5 w-full md:w-56">
-                  <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">Find Clubs</span>
+                <div className="flex flex-col gap-1 w-full md:w-60">
+                  <span className="text-[7px] md:text-[8px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Clubs</span>
                   <div className="relative">
-                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
+                    <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted">🔍</span>
                     <input
                       type="text"
                       placeholder="SCAN..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[8px] md:text-[11px] font-black text-main placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
+                      aria-label="Search clubs"
+                      className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[8px] md:text-[11px] font-black text-main placeholder-white/20 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                     />
                   </div>
                 </div>
 
                 {/* League Filter */}
                 <div className="flex flex-col gap-0.5 w-full md:w-48">
-                  <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">League</span>
+                  <span className="text-[7px] md:text-[8px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">League</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -86,14 +87,14 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-[9px] font-black text-main/20 focus:text-main focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-black/[0.03] transition-all italic"
+                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-[9px] font-black text-secondary focus:text-main focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-black/[0.03] transition-all italic"
                     >
                       <option value="" className="bg-kickr-bg-primary">ALL</option>
                       {competitions?.map(c => (
                         <option key={c.id} value={c.id} className="bg-kickr-bg-primary">{c.name}</option>
                       ))}
                     </select>
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[6px] text-main/10 italic">▼</div>
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[6px] text-muted italic">▼</div>
                   </div>
                 </div>
 
@@ -103,7 +104,7 @@ export const MatchesPage = () => {
                     <button
                       key={s}
                       onClick={() => { setStatus(s as any); setPage(0); }}
-                      className={`px-2 md:px-3 flex items-center rounded-sm text-[6px] md:text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-main/10 hover:text-main/20'}`}
+                      className={`px-2 md:px-3 flex items-center rounded-sm text-[6px] md:text-[7px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-secondary hover:text-main/50'}`}
                     >
                       {s}
                     </button>
@@ -118,8 +119,8 @@ export const MatchesPage = () => {
           {/* Main Content */}
           <div className="lg:col-span-8">
             <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-              <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-main/20 italic">Match Feed</h2>
-              <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+              <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">Match Feed</h2>
+              <span className="text-[6px] md:text-[8px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
@@ -164,14 +165,14 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
-                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/20 disabled:opacity-5 hover:text-main transition-all italic"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
                 >
                   <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
                   PREV
                 </button>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[8px] md:text-[10px] font-black text-main/10 uppercase tracking-widest italic tabular-nums font-mono">
+                  <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
                     PAGE {page + 1} / {data.totalPages}
                   </span>
                 </div>
@@ -182,7 +183,7 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
-                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main/20 disabled:opacity-5 hover:text-main transition-all italic"
+                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
                 >
                   NEXT
                   <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
@@ -207,7 +208,7 @@ const ErrorState = () => (
     <div className="max-w-md">
       <div className="text-4xl mb-6 opacity-10">📡</div>
       <h2 className="text-lg font-black text-main/90 mb-2 uppercase tracking-tighter italic">Match Feed Lost</h2>
-      <p className="text-main/20 text-xs mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
+      <p className="text-muted text-xs mb-8 leading-relaxed font-medium">The stadium feed is temporarily down.</p>
       <button onClick={() => window.location.reload()} className="px-8 py-3 bg-black/5 border border-white/10 text-main font-black uppercase tracking-widest text-[10px] rounded-sm hover:bg-black/10 hover:border-kickr/30 transition-all">
         Reconnect
       </button>

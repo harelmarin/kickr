@@ -14,7 +14,7 @@
 
   --color-main: #E2E8F0;
   --color-secondary: #94A3B8;
-  --color-muted: #64748B;
+  --color-muted: #8292A8;
 }
 
 :root {
@@ -27,8 +27,8 @@
   /* Softer Off-White */
   --text-secondary: #94A3B8;
   /* Slate-400 */
-  --text-muted: #64748B;
-  /* Slate-500 */
+  --text-muted: #8292A8;
+  /* Slate-450 (Accessible) */
   --pitch-green: #0D1410;
   --pitch-light: #16241C;
 }

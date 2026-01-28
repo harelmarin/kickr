@@ -33,7 +33,7 @@ export const TopTeamsWidget = () => {
         <section className="bg-black/[0.02] border border-white/5 p-8 rounded-sm">
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
                 <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Trending Clubs</h3>
-                <span className="text-[8px] font-mono text-main/20 uppercase tracking-widest">Global Hype</span>
+                <span className="text-[8px] font-mono text-muted uppercase tracking-widest">Global Hype</span>
             </div>
             <div className="space-y-6">
                 {isLoading ? (
@@ -47,11 +47,11 @@ export const TopTeamsWidget = () => {
                     trendingTeams.map((team, i) => (
                         <Link key={team.name} to={`/matches?search=${encodeURIComponent(team.name)}`} className="flex items-center justify-between group">
                             <div className="flex items-center gap-4">
-                                <span className="text-[9px] font-mono text-main/20 w-3">0{i + 1}</span>
+                                <span className="text-[9px] font-mono text-muted w-3">0{i + 1}</span>
                                 <div className="w-8 h-8 flex items-center justify-center bg-black/[0.02] rounded-full border border-white/5 p-1.5 group-hover:border-kickr/50 transition-colors">
-                                    <img src={team.logo} alt={team.name} className="w-full h-full object-contain" />
+                                    <img src={team.logo} alt={`${team.name} logo`} className="w-full h-full object-contain" />
                                 </div>
-                                <span className="text-[10px] font-black text-main/80 uppercase italic tracking-wider group-hover:text-kickr transition-colors max-w-[120px] truncate">
+                                <span className="text-[10px] font-black text-main uppercase italic tracking-wider group-hover:text-kickr transition-colors max-w-[120px] truncate">
                                     {team.name}
                                 </span>
                             </div>
@@ -59,7 +59,7 @@ export const TopTeamsWidget = () => {
                         </Link>
                     ))
                 ) : (
-                    <p className="text-[10px] text-main/20 italic">No trending data.</p>
+                    <p className="text-[10px] text-muted italic">No trending data.</p>
                 )}
             </div>
         </section>

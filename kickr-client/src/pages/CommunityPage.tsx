@@ -59,7 +59,7 @@ export const CommunityPage = () => {
                     <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
                         The <span className="text-kickr/80">Community</span>
                     </h1>
-                    <p className="text-main/20 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
+                    <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
                         Analyze. Track. Connect. Global Football Network.
                     </p>
 
@@ -67,16 +67,17 @@ export const CommunityPage = () => {
                         <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">
                             <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                                 {/* Search */}
-                                <div className="flex flex-col gap-1 w-full md:w-48">
-                                    <span className="text-[7px] md:text-[8px] uppercase font-black text-main/10 tracking-[0.2em] pl-0.5 italic">Find Users</span>
+                                <div className="flex flex-col gap-1 w-full md:w-60">
+                                    <span className="text-[7px] md:text-[8px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Users</span>
                                     <div className="relative">
-                                        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[8px] opacity-10">🔍</span>
+                                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted">🔍</span>
                                         <input
                                             type="text"
                                             placeholder="SCAN..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-6 pr-3 py-1 text-[8px] md:text-[11px] font-black text-main placeholder-white/5 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
+                                            aria-label="Search members"
+                                            className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[8px] md:text-[11px] font-black text-main placeholder-white/20 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
                                         />
                                     </div>
                                 </div>
@@ -86,7 +87,7 @@ export const CommunityPage = () => {
                                 <span className="text-base md:text-xl font-black text-main italic leading-none tracking-tighter">
                                     {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
                                 </span>
-                                <span className="text-[7px] md:text-[8px] uppercase tracking-widest text-main/10 font-bold mt-1">Global Logs</span>
+                                <span className="text-[7px] md:text-[8px] uppercase tracking-widest text-muted font-bold mt-1">Global Logs</span>
                             </div>
                         </div>
                     </div>
@@ -96,8 +97,8 @@ export const CommunityPage = () => {
                     {/* Main Content */}
                     <div className="lg:col-span-8">
                         <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-main/20 italic">All Members</h2>
-                            <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">All Members</h2>
+                            <span className="text-[6px] md:text-[8px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
@@ -118,7 +119,8 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-main/40 hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    aria-label="Previous page"
+                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
                                     [ Prev ]
                                 </button>
@@ -128,8 +130,8 @@ export const CommunityPage = () => {
                                         if (pageData.totalPages > 5) {
                                             if (i < currentPage - 1 && i !== 0) return null;
                                             if (i > currentPage + 1 && i !== pageData.totalPages - 1) return null;
-                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[10px] text-main/20">..</span>;
-                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[10px] text-main/20">..</span>;
+                                            if (i === currentPage - 1 && i !== 0) return <span key={i} className="text-[10px] text-muted/30">..</span>;
+                                            if (i === currentPage + 1 && i !== pageData.totalPages - 1) return <span key={i} className="text-[10px] text-muted/30">..</span>;
                                         }
 
                                         return (
@@ -141,7 +143,7 @@ export const CommunityPage = () => {
                                                 }}
                                                 className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[11px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
                                                     ? 'bg-kickr text-black'
-                                                    : 'bg-white/[0.01] border border-white/5 text-main/20 hover:text-main/40'
+                                                    : 'bg-white/[0.01] border border-white/5 text-muted hover:text-secondary'
                                                     }`}
                                             >
                                                 {i + 1}
@@ -156,7 +158,8 @@ export const CommunityPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-main/40 hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    aria-label="Next page"
+                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
                                 >
                                     [ Next ]
                                 </button>
@@ -203,17 +206,17 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                 <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-3 mb-1.5 md:mb-3 w-full">
                     <div className="w-8 h-8 md:w-12 md:h-12 rounded-sm bg-black/[0.02] border border-white/5 flex items-center justify-center text-xs md:text-lg font-black text-main group-hover:text-kickr group-hover:border-kickr/30 transition-all overflow-hidden flex-shrink-0">
                         {user.avatarUrl ? (
-                            <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+                            <img src={user.avatarUrl} alt={`${user.name} avatar`} className="w-full h-full object-cover" />
                         ) : (
                             user.name[0]
                         )}
                     </div>
 
                     <div className="flex-1 min-w-0 w-full">
-                        <h3 className="text-[11px] md:text-sm font-black text-main/80 uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                        <h3 className="text-[11px] md:text-sm font-black text-main uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
                             {user.name}
                         </h3>
-                        <p className="hidden md:block text-[11px] text-main/40 font-bold uppercase tracking-wide mt-0.5">
+                        <p className="hidden md:block text-[11px] text-muted font-bold uppercase tracking-wide mt-0.5">
                             {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                         </p>
                     </div>
@@ -221,16 +224,16 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 
                 <div className="flex items-center justify-center md:justify-around w-full mt-auto pt-1 border-t border-white/5 gap-3 md:gap-4">
                     <div className="flex flex-col items-center">
-                        <span className="text-[10px] md:text-base font-black text-main/90 italic tracking-tighter leading-none tabular-nums">
+                        <span className="text-[10px] md:text-base font-black text-main italic tracking-tighter leading-none tabular-nums">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[10px] md:text-[7px] font-bold text-main/40 uppercase tracking-widest leading-none mt-0.5">LOGS</span>
+                        <span className="text-[10px] md:text-[7px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">LOGS</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="text-[10px] md:text-base font-black text-main/90 italic tracking-tighter leading-none tabular-nums">
+                        <span className="text-[10px] md:text-base font-black text-main italic tracking-tighter leading-none tabular-nums">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[10px] md:text-[7px] font-bold text-main/40 uppercase tracking-widest leading-none mt-0.5">NET</span>
+                        <span className="text-[10px] md:text-[7px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">NET</span>
                     </div>
                 </div>
             </div>
