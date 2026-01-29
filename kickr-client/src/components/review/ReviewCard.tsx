@@ -53,31 +53,31 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                 {/* Header Section */}
                 <div className="relative w-full h-16 sm:h-20 bg-black/[0.02] border-b border-white/5 flex items-center justify-between px-4 sm:px-6 transition-all duration-300 group-hover/review:bg-white/[0.04]">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <img src={review.match.homeLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt="" />
+                        <img src={review.match.homeLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt={`${review.match.homeTeam} crest`} loading="lazy" decoding="async" />
                     </div>
 
                     <div className="flex flex-col items-center px-4 sm:px-8">
                         <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="text-xl sm:text-2xl font-black text-main italic tabular-nums">{review.match.homeScore}</span>
-                            <div className="w-[1px] h-4 bg-black/10"></div>
-                            <span className="text-xl sm:text-2xl font-black text-main italic tabular-nums">{review.match.awayScore}</span>
+                            <span className="text-xl sm:text-2xl font-bold text-main tabular-nums">{review.match.homeScore}</span>
+                            <div className="w-[1px] h-4 bg-white/10"></div>
+                            <span className="text-xl sm:text-2xl font-bold text-main tabular-nums">{review.match.awayScore}</span>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-3 flex-1 min-w-0 justify-end">
-                        <img src={review.match.awayLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt="" />
+                        <img src={review.match.awayLogo} className="w-5 h-5 sm:w-8 sm:h-8 object-contain" alt={`${review.match.awayTeam} crest`} loading="lazy" decoding="async" />
                     </div>
                 </div>
 
                 <div className="p-4 sm:p-6 flex flex-col flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                            <div className="flex text-kickr text-[11px]">
+                            <div className="flex text-rating text-[11px]">
                                 {'★'.repeat(Math.round(review.note))}
                                 <span className="text-main/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                             </div>
                             {review.isLiked && (
-                                <span className="text-[#ff8000] text-[10px] sm:text-xs" title="Liked">❤</span>
+                                <span className="text-kickr text-[10px] sm:text-xs" title="Liked">❤</span>
                             )}
                             <span className="text-[11px] font-bold text-main/60 uppercase tracking-widest">
                                 {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
@@ -103,7 +103,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
 
                     {review.comment && review.comment.trim() !== "" && (
                         <div className="mb-6">
-                            <p className={`text-[11px] sm:text-[13px] leading-relaxed italic border-l-2 pl-4 transition-colors ${review.isModerated ? 'text-[#ff4444]/60 border-[#ff4444]/20' : 'text-[#99aabb] border-kickr/20 group-hover/review:text-main'}`}>
+                            <p className={`text-[11px] sm:text-[13px] leading-relaxed italic border-l-2 pl-4 transition-colors ${review.isModerated ? 'text-red-500/60 border-red-500/20' : 'text-secondary border-kickr/20 group-hover/review:text-main'}`}>
                                 {review.comment}
                             </p>
                         </div>
@@ -113,18 +113,18 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                         <div className="flex items-center gap-3 min-w-0 pointer-events-auto relative z-20">
                             <Link
                                 to={`/user/${review.user?.id}`}
-                                className="w-6 h-6 rounded-sm bg-white/[0.04] border border-white/5 flex items-center justify-center text-[10px] text-kickr font-black italic uppercase overflow-hidden transition-colors hover:border-kickr/40"
+                                className="w-6 h-6 rounded-md bg-white/[0.04] border border-white/5 flex items-center justify-center text-[10px] text-kickr font-bold uppercase overflow-hidden transition-colors hover:border-kickr"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {review.user?.avatarUrl ? (
-                                    <img src={review.user.avatarUrl} alt={review.user.name} className="w-full h-full object-cover" />
+                                    <img src={review.user.avatarUrl} alt={`${review.user.name}'s profile`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                 ) : (
                                     <span>{review.user ? review.user.name[0] : '?'}</span>
                                 )}
                             </Link>
                             <Link
                                 to={`/user/${review.user?.id}`}
-                                className="text-main/80 text-[11px] font-black uppercase tracking-widest hover:text-kickr transition-colors truncate"
+                                className="text-main/80 text-[11px] font-bold uppercase tracking-widest hover:text-kickr transition-colors truncate"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {review.user?.name}

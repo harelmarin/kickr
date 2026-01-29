@@ -108,8 +108,8 @@ export const LeagueStandings: React.FC<LeagueStandingsProps> = ({ standingsJson,
                                     {entry.form?.split('').map((char, i) => (
                                         <span
                                             key={i}
-                                            className={`w-4 h-4 rounded-sm text-[8px] flex items-center justify-center font-black ${char === 'W' ? 'bg-green-500/20 text-green-500' :
-                                                char === 'L' ? 'bg-red-500/20 text-red-500' :
+                                            className={`w-4 h-4 rounded-sm text-[8px] flex items-center justify-center font-black ${char === 'W' ? 'bg-rating/20 text-rating' :
+                                                char === 'L' ? 'bg-[#EF4444]/20 text-[#EF4444]' :
                                                     'bg-black/10 text-main/40'
                                                 }`}
                                         >

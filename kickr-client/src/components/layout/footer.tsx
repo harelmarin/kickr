@@ -7,12 +7,12 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10">
 
           {/* Brand & Mission (Minimal) */}
-          <div className="flex flex-col items-center md:items-start">
-            <Link to="/" className="flex items-center group mb-2 md:mb-4">
-              <span className="text-lg md:text-xl font-black italic tracking-tighter text-main/90 display-font group-hover:text-kickr transition-colors">KICKR</span>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <Link to="/" className="flex items-center group mb-2 md:mb-3">
+              <span className="text-xl md:text-2xl font-bold tracking-tight text-main group-hover:text-kickr transition-colors">KICKR</span>
             </Link>
-            <p className="text-main/40 text-[11px] font-black uppercase tracking-[0.3em] leading-relaxed text-center md:text-left">
-              The Sound of Modern Football Culture
+            <p className="text-secondary text-[11px] font-bold uppercase tracking-widest leading-relaxed">
+              Log, rate, and review football.
             </p>
           </div>
 
@@ -48,8 +48,8 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
-          <p className="text-main/40 text-[11px] font-bold uppercase tracking-[0.2em] text-center md:text-left">
-            © {new Date().getFullYear()} Kickr. Intelligence by Football API.
+          <p className="text-secondary/40 text-[11px] font-bold uppercase tracking-widest text-center md:text-left">
+            © {new Date().getFullYear()} Kickr. Social football review app.
           </p>
 
           <div className="flex items-center gap-6 md:gap-8">
@@ -66,10 +66,9 @@ export const Footer = () => {
 const FooterLink = ({ label, to }: { label: string; to: string }) => (
   <Link
     to={to}
-    className="text-main/40 hover:text-main/80 transition-all duration-300 text-[11px] font-black uppercase tracking-[0.2em] relative group"
+    className="text-secondary hover:text-white transition-all duration-300 text-[11px] font-bold uppercase tracking-widest relative group"
   >
     {label}
-    <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-kickr group-hover:w-full transition-all duration-300"></span>
   </Link>
 );
 

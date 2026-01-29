@@ -50,13 +50,13 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                         <nav className="flex items-center gap-2 bg-kickr-bg-primary/20 p-1 rounded-sm border border-white/5">
                             <Link
                                 to={`/user/${id}/following`}
-                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-black' : 'text-secondary hover:text-main'}`}
+                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'following' ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.2)]' : 'text-secondary hover:text-main'}`}
                             >
                                 Following [{profileUser.followingCount}]
                             </Link>
                             <Link
                                 to={`/user/${id}/followers`}
-                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'followers' ? 'bg-kickr text-black' : 'text-secondary hover:text-main'}`}
+                                className={`px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all ${type === 'followers' ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.2)]' : 'text-secondary hover:text-main'}`}
                             >
                                 Followers [{profileUser.followersCount}]
                             </Link>
@@ -112,7 +112,7 @@ export const UserNetworkPage: React.FC<UserNetworkPageProps> = ({ type }) => {
                                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                                     }}
                                                     className={`w-10 h-10 rounded-sm text-[10px] font-black transition-all cursor-pointer ${currentPage === i
-                                                        ? 'bg-kickr text-black'
+                                                        ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.3)]'
                                                         : 'bg-black/[0.02] border border-white/5 text-muted hover:text-main hover:border-white/10'
                                                         }`}
                                                 >
@@ -157,7 +157,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
             <div className="p-5 flex flex-col">
                 {isMe && (
                     <div className="absolute top-2 right-2">
-                        <span className="bg-kickr text-black text-[7px] font-black uppercase tracking-tight px-1.5 py-0.5 rounded-sm">
+                        <span className="bg-kickr text-white text-[7px] font-black uppercase tracking-tight px-1.5 py-0.5 rounded-sm shadow-sm">
                             You
                         </span>
                     </div>
@@ -215,7 +215,7 @@ const NotFoundState = () => (
     <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center text-center">
         <div>
             <h2 className="text-4xl font-black text-main mb-8 italic tracking-tighter uppercase">Signal Lost</h2>
-            <Link to="/" className="text-black bg-kickr font-black uppercase tracking-widest text-[10px] px-8 py-4 rounded-sm hover:brightness-110 transition-all italic">Restore Feed</Link>
+            <Link to="/" className="text-white bg-kickr font-black uppercase tracking-widest text-[10px] px-8 py-4 rounded-sm hover:brightness-110 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)]">Restore Feed</Link>
         </div>
     </div>
 );

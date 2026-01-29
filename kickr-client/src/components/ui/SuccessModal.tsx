@@ -22,39 +22,39 @@ export const SuccessModal: FC<SuccessModalProps> = ({
 
     return (
         <div
-            className="fixed inset-0 bg-kickr-bg-primary/60 flex items-center justify-center z-50 backdrop-blur-sm"
+            className="fixed inset-0 bg-kickr-bg-primary/80 flex items-center justify-center z-50 backdrop-blur-md"
             onClick={onClose}
         >
             <div
-                className="bg-primary p-8 rounded-sm shadow-2xl w-96 relative border border-green-500/30 animate-scale-in"
+                className="bg-kickr-bg-secondary p-8 md:p-12 rounded-md shadow-2xl w-[90%] max-w-sm relative border border-white/5 animate-scale-in"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Success Icon */}
-                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-500">
-                    <span className="text-3xl text-green-500">{icon}</span>
+                <div className="w-20 h-20 bg-rating/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-rating/20">
+                    <span className="text-4xl text-rating">{icon}</span>
                 </div>
 
                 {/* Titre */}
-                <h2 className="text-2xl font-bold text-center mb-3 text-main">
+                <h2 className="text-2xl font-bold text-center mb-3 text-main uppercase tracking-tight">
                     {title}
                 </h2>
 
                 {/* Message */}
-                <p className="text-gray-300 text-center mb-6 leading-relaxed">
+                <p className="text-secondary text-center mb-8 leading-relaxed font-medium">
                     {message}
                 </p>
 
                 {/* Bouton de fermeture */}
                 <button
                     onClick={onClose}
-                    className="w-full bg-green-500 hover:bg-green-600 text-main font-medium py-3 px-4 rounded-sm transition-colors"
+                    className="w-full bg-kickr hover:brightness-110 text-white font-bold py-4 px-6 rounded-md transition-all uppercase tracking-widest text-xs shadow-[0_0_20px_rgba(93,139,255,0.2)]"
                 >
-                    Compris !
+                    Continuer
                 </button>
 
                 {/* Close Button */}
                 <button
-                    className="absolute top-4 right-4 text-gray-400 hover:text-main transition-colors"
+                    className="absolute top-4 right-4 text-muted hover:text-main transition-colors"
                     onClick={onClose}
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

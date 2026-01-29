@@ -30,8 +30,8 @@ export const TopLeaguesWidget = () => {
     return (
         <section className="bg-black/[0.02] border border-white/5 p-8 rounded-sm">
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
-                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Top Leagues</h3>
-                <span className="text-[8px] font-mono text-kickr uppercase tracking-widest animate-pulse">Live Stats</span>
+                <h3 className="text-[10px] font-bold text-kickr uppercase tracking-[0.4em]">Top Leagues</h3>
+                <span className="text-[8px] font-mono text-secondary/40 uppercase tracking-widest">Active Data</span>
             </div>
             <div className="space-y-8">
                 {isLoading ? (
@@ -49,9 +49,9 @@ export const TopLeaguesWidget = () => {
                                     {sector.logo && (
                                         <img src={sector.logo} alt="" className="w-4 h-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity" />
                                     )}
-                                    <span className="text-[10px] font-black text-main/80 uppercase italic tracking-widest group-hover:text-kickr transition-colors max-w-[120px] truncate">{sector.name}</span>
+                                    <span className="text-[10px] font-bold text-main uppercase tracking-widest transition-colors max-w-[120px] truncate">{sector.name}</span>
                                 </div>
-                                <span className="text-[10px] font-mono text-kickr italic">{sector.rating.toFixed(1)}</span>
+                                <span className="text-[10px] font-bold text-rating tabular-nums">{sector.rating.toFixed(1)}</span>
                             </div>
                             <div className="flex justify-between mt-1 pt-1 border-t border-white/5">
                                 <span className="text-[7px] font-mono text-main/10 uppercase tracking-widest">Popularity</span>

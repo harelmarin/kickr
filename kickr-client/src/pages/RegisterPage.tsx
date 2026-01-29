@@ -6,8 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const registerSchema = z.object({
-    name: z.string().min(3, "Name must be at least 3 characters").max(10, "Name must be less than 10 characters"),
-    email: z.string().email("Please enter a valid tactical email"),
+    name: z.string().min(3, "Name must be at least 3 characters").max(15, "Name must be less than 15 characters"),
+    email: z.string().email("Please enter a valid email"),
     password: z.string()
         .min(8, "Min 8 chars")
         .regex(/[A-Z]/, "One uppercase")
@@ -73,20 +73,20 @@ export const RegisterPage = () => {
 
                 {/* Content */}
                 <div className="relative z-10 max-w-lg">
-                    <div className="mb-8 inline-flex items-center gap-3 bg-black/5 border border-white/10 px-4 py-2 rounded-sm backdrop-blur-md">
-                        <span className="text-[10px] font-black text-kickr uppercase tracking-[0.3em]">Season 2025/26 Live</span>
+                    <div className="mb-8 inline-flex items-center gap-3 bg-kickr/10 border border-kickr/20 px-4 py-2 rounded-md backdrop-blur-md">
+                        <span className="text-[10px] font-bold text-kickr uppercase tracking-widest">Season 2025/26 Active</span>
                     </div>
 
-                    <h1 className="text-4xl xl:text-5xl font-black text-main italic tracking-tighter uppercase leading-[0.9] mb-6">
-                        The Pitch <br />
-                        Is Yours <br />
-                        To <span className="text-kickr">Analyze.</span>
+                    <h1 className="text-4xl xl:text-5xl font-bold text-main tracking-tight uppercase leading-tight mb-6">
+                        Log every <br />
+                        game you <br />
+                        ever <span className="text-kickr">watch.</span>
                     </h1>
 
-                    <div className="space-y-6 mt-8">
-                        <FeatureItem icon="📝" title="Tactical Diary" description="Log every match you watch with precise ratings and tactical notes." />
-                        <FeatureItem icon="🤝" title="Community Network" description="Follow members worldwide and discover their vision of the beautiful game." />
-                        <FeatureItem icon="📊" title="Personal Stats" description="Visualize your watching habits and favorite teams across the leagues." />
+                    <div className="space-y-6 mt-12">
+                        <FeatureItem icon="📝" title="Match Diary" description="Log every match you watch with personal ratings and reviews." />
+                        <FeatureItem icon="🤝" title="Social Feed" description="Follow football fans worldwide and see what games they're watching." />
+                        <FeatureItem icon="📊" title="Watch History" description="Visualize your stats and favorite teams across all leagues." />
                     </div>
                 </div>
             </div>
@@ -100,26 +100,16 @@ export const RegisterPage = () => {
                 </div>
 
                 <div className="w-full max-w-md animate-fade-in-up mt-4 md:mt-8 lg:mt-0 relative z-10 px-4 lg:px-0">
-                    <div className="lg:hidden mb-8 relative">
-                        {/* Background stylized text */}
-                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-8xl font-black text-main/[0.02] select-none pointer-events-none tracking-tighter italic uppercase display-font">
-                            KICKR
-                        </div>
+                    <Link to="/" className="flex flex-col items-center gap-2 text-center relative z-10">
+                        <img src="/favicon.png" alt="Kickr" className="w-12 h-12 md:w-16 md:h-16 mb-2" />
+                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight uppercase display-font text-main leading-none">
+                            KICKR<span className="text-kickr">.</span>
+                        </h1>
+                    </Link>
 
-                        <Link to="/" className="flex flex-col items-center gap-2 text-center relative z-10">
-                            <img src="/favicon.png" alt="Kickr" className="w-12 h-12 md:w-14 md:h-14 mb-2 drop-shadow-[0_0_15px_rgba(68,102,255,0.3)]" />
-                            <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase display-font text-main leading-none">
-                                KICKR<span className="text-kickr">.</span><span className="hidden md:inline">AI</span>
-                            </h1>
-                            <p className="hidden md:block text-[11px] font-black text-kickr/60 uppercase tracking-[0.5em] italic mt-2 font-mono">
-                                Tactical Intelligence Link
-                            </p>
-                        </Link>
-                    </div>
-
-                    <div className="mb-6">
-                        <h2 className="text-2xl font-black text-main tracking-tight mb-1 italic uppercase display-font">ACCESS ENROLLMENT</h2>
-                        <p className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] italic">Establish your secure member identifier.</p>
+                    <div className="mb-8 text-center lg:text-left">
+                        <h2 className="text-2xl font-bold text-main tracking-tight mb-2 uppercase display-font">Create Account</h2>
+                        <p className="text-secondary text-xs font-bold uppercase tracking-widest opacity-60">Join the football community.</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -198,9 +188,9 @@ export const RegisterPage = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full btn-primary-kickr py-3.5 rounded-sm text-[11px] font-black uppercase tracking-[0.2em] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-50 mt-2"
+                            className="w-full bg-kickr text-white py-4 rounded-md text-[11px] font-bold uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
                         >
-                            {isLoading ? 'Processing...' : 'Access the Field'}
+                            {isLoading ? 'Processing...' : 'Create Account'}
                         </button>
                     </form>
 

@@ -24,10 +24,10 @@ const NavItem = ({ to, icon, label }: { to: string; icon: ReactNode; label: stri
 
     return (
         <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all active:scale-90 active:bg-black/5 group rounded-lg">
-            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-[#94a3b8] group-hover:text-main'}`}>
+            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-secondary group-hover:text-white'}`}>
                 {icon}
             </div>
-            <span className={`relative z-10 text-[9px] font-black uppercase tracking-[0.1em] transition-all duration-300 ${isActive ? 'text-kickr' : 'text-[#64748b]'}`}>
+            <span className={`relative z-10 text-[9px] font-black uppercase tracking-[0.1em] transition-all duration-300 ${isActive ? 'text-kickr' : 'text-muted'}`}>
                 {label}
             </span>
             {isActive && (

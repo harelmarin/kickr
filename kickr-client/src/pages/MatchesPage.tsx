@@ -50,21 +50,21 @@ export const MatchesPage = () => {
         <header className="mb-6 md:mb-16">
           <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
             <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
-            <span className="text-xs md:text-sm font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Match Feed</span>
+            <span className="text-[10px] md:text-xs font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Fixtures</span>
           </div>
           <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
-            Center <span className="text-kickr/80">Circle</span>
+            Browse <span className="text-kickr/80">Matches</span>
           </h1>
-          <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-xs md:text-sm font-black italic">
-            Global Match Database
+          <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-[10px] md:text-[12px] font-black italic">
+            Monitoring the global database of football fixtures.
           </p>
 
           <div className="mt-4 md:mt-12">
             <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
-              <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-x-8 flex-1">
+              <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                 {/* Search */}
                 <div className="flex flex-col gap-1 w-full md:w-60">
-                  <span className="text-xs md:text-sm uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Clubs</span>
+                  <span className="text-[10px] md:text-[11px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Teams</span>
                   <div className="relative">
                     <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted">🔍</span>
                     <input
@@ -73,14 +73,14 @@ export const MatchesPage = () => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       aria-label="Search clubs"
-                      className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-xs md:text-sm font-black text-main placeholder-white/20 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
+                      className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[11px] md:text-[12px] font-black text-main placeholder-white/20 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
                     />
                   </div>
                 </div>
 
                 {/* League Filter */}
-                <div className="flex flex-col gap-0.5 w-full md:w-48">
-                  <span className="text-xs md:text-sm uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">League</span>
+                <div className="flex flex-col gap-1 w-full md:w-56">
+                  <span className="text-[10px] md:text-[11px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Select League</span>
                   <div className="relative">
                     <select
                       value={competitionId || ''}
@@ -88,24 +88,23 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-1.5 pr-6 py-1 text-xs font-black text-secondary focus:text-main focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-black/[0.03] transition-all italic"
+                      className="w-full bg-white/[0.02] border border-white/10 rounded-sm px-3 py-1.5 text-[11px] md:text-[12px] font-black text-main focus:border-kickr/40 outline-none cursor-pointer appearance-none hover:bg-white/[0.04] transition-all uppercase italic tracking-widest"
                     >
-                      <option value="" className="bg-kickr-bg-primary">ALL</option>
+                      <option value="" className="bg-kickr-bg-primary">All Leagues</option>
                       {competitions?.map(c => (
                         <option key={c.id} value={c.id} className="bg-kickr-bg-primary">{c.name}</option>
                       ))}
                     </select>
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-muted italic">▼</div>
                   </div>
                 </div>
 
                 {/* Status Filter */}
-                <div className="flex bg-white/[0.01] p-0.5 rounded-sm border border-white/5 w-full md:w-auto h-7 md:h-8">
+                <div className="flex bg-black/[0.05] p-1 rounded-sm border border-white/5 w-full md:w-auto h-[32px] md:h-[34px] items-center self-end">
                   {['all', 'upcoming', 'finished'].map((s) => (
                     <button
                       key={s}
                       onClick={() => { setStatus(s as any); setPage(0); }}
-                      className={`px-2 md:px-3 flex items-center rounded-sm text-xs md:text-sm font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-black' : 'text-secondary hover:text-main/50'}`}
+                      className={`px-4 py-1.5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.2)]' : 'text-muted hover:text-main'}`}
                     >
                       {s}
                     </button>
@@ -120,8 +119,8 @@ export const MatchesPage = () => {
           {/* Main Content */}
           <div className="lg:col-span-8">
             <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-              <h2 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">Match Feed</h2>
-              <span className="text-xs md:text-sm font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+              <h2 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">Live Feed</h2>
+              <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
@@ -166,14 +165,14 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
-                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
+                  className="group flex items-center gap-2 text-[11px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
                 >
                   <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
                   PREV
                 </button>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs md:text-sm font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
+                  <span className="text-[11px] md:text-sm font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
                     PAGE {page + 1} / {data.totalPages}
                   </span>
                 </div>
@@ -184,7 +183,7 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
-                  className="group flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
+                  className="group flex items-center gap-2 text-[11px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
                 >
                   NEXT
                   <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>

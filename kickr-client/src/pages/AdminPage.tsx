@@ -26,8 +26,8 @@ export default function AdminPage() {
             {/* Header */}
             <header className="mb-10 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                 <div>
-                    <h1 className="display-font text-[28px] text-white mb-2 uppercase italic tracking-tighter">Admin Control Center</h1>
-                    <p className="text-[10px] text-kickr uppercase tracking-[0.2em] font-black">System Terminal · Authorization Level 4</p>
+                    <h1 className="display-font text-[28px] text-white mb-2 uppercase tracking-tight">Admin Dashboard</h1>
+                    <p className="text-[10px] text-kickr uppercase tracking-widest font-bold">System Dashboard · Authorization Level 4</p>
                 </div>
 
                 <div className="flex p-1 bg-white/5 rounded-sm w-full md:w-auto overflow-x-auto no-scrollbar">
@@ -35,8 +35,8 @@ export default function AdminPage() {
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-sm text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
-                                ? 'bg-kickr text-black shadow-lg shadow-kickr/20'
+                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-md text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
+                                ? 'bg-kickr text-white'
                                 : 'text-secondary hover:text-white'
                                 }`}
                         >
@@ -167,15 +167,15 @@ const UsersTab = () => {
     );
 
     return (
-        <div className="bg-kickr-bg-primary border border-white/5 rounded-sm overflow-hidden shadow-xl">
+        <div className="bg-kickr-bg-primary border border-white/5 rounded-md overflow-hidden shadow-xl">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr italic">Member Directory</h2>
+                <h2 className="text-[11px] font-bold uppercase tracking-widest text-kickr">User Directory</h2>
                 <input
                     type="text"
-                    placeholder="Search systems..."
+                    placeholder="Search users..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-kickr-bg-primary/20 border border-white/5 rounded-sm px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr/30 w-full sm:w-64 uppercase italic"
+                    className="bg-kickr-bg-primary/20 border border-white/10 rounded-md px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr w-full sm:w-64 uppercase"
                 />
             </div>
             <div className="overflow-x-auto">
@@ -207,7 +207,7 @@ const UsersTab = () => {
                                     </Link>
                                 </td>
                                 <td className="px-3 md:px-6 py-2 md:py-4">
-                                    <span className="inline-flex items-center px-1.5 md:px-2 py-0.5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-tighter bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                    <span className="inline-flex items-center px-1.5 md:px-2 py-0.5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-tighter bg-rating/10 text-rating border border-rating/20">
                                         Active
                                     </span>
                                 </td>
@@ -221,7 +221,7 @@ const UsersTab = () => {
                                         {user.role === 'USER' ? (
                                             <button onClick={() => adminService.promoteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-kickr/10 rounded-sm text-kickr transition-all">↑</button>
                                         ) : (
-                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-orange-500/10 rounded-sm text-orange-500 transition-all">↓</button>
+                                            <button onClick={() => adminService.demoteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-kickr/10 rounded-sm text-kickr transition-all">↓</button>
                                         )}
                                         <button onClick={() => adminService.deleteUser(user.id).then(() => loadUsers(currentPage))} className="p-1.5 md:p-2 hover:bg-red-500/10 rounded-sm text-red-500 transition-all">×</button>
                                     </div>
@@ -301,7 +301,7 @@ const ReportsTab = () => {
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 md:gap-8">
                                 <div className="space-y-4 md:space-y-6 flex-1">
                                     <div className="flex items-center gap-2 md:gap-3 flex-wrap">
-                                        <span className={`px-2 py-0.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
+                                        <span className={`px-2 py-0.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'bg-kickr/10 text-kickr border border-kickr/20' :
                                             report.status === 'RESOLVED' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
                                                 'bg-white/5 text-[#445566] border border-white/10'
                                             }`}>
@@ -376,11 +376,11 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-kickr-bg-primary border rounded-sm p-3 md:p-6 shadow-xl ${warning ? 'border-orange-500/20' : 'border-white/5'}`}>
-        <p className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-[0.2em] mb-2 md:mb-4">{label}</p>
+    <div className={`bg-kickr-bg-primary border rounded-md p-3 md:p-6 shadow-xl ${warning ? 'border-kickr/40' : 'border-white/5'}`}>
+        <p className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">{label}</p>
         <div className="flex items-end justify-between">
-            <h3 className={`text-2xl md:text-4xl font-black italic tracking-tighter ${warning ? 'text-orange-500' : 'text-white'}`}>{value}</h3>
-            {trend && <span className="text-emerald-500 text-[8px] md:text-[10px] font-black mb-1">{trend}</span>}
+            <h3 className={`text-2xl md:text-4xl font-bold tracking-tight ${warning ? 'text-kickr' : 'text-white'}`}>{value}</h3>
+            {trend && <span className="text-emerald-500 text-[10px] font-bold mb-1">{trend}</span>}
         </div>
     </div>
 );
@@ -426,7 +426,7 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
 const LoadingSpinner = () => (
     <div className="py-20 flex flex-col items-center justify-center gap-4">
         <div className="w-10 h-10 border-2 border-white/5 border-t-kickr rounded-full animate-spin" />
-        <p className="text-[10px] text-kickr/40 font-black uppercase tracking-[0.4em] animate-pulse">Syncing Admin Buffer</p>
+        <p className="text-[10px] text-kickr/40 font-bold uppercase tracking-widest animate-pulse">Loading Admin Data</p>
     </div>
 );
 
@@ -468,7 +468,7 @@ const DataSyncCard = ({ title, description, endpoint, params, buttonLabel, estim
                     onClick={handleSync}
                     disabled={syncing}
                     className={`py-1.5 md:py-2 px-3 md:px-5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all ${warning
-                        ? 'bg-orange-500/10 border border-orange-500/20 text-orange-500 hover:bg-orange-500/20'
+                        ? 'bg-kickr/10 border border-kickr/20 text-kickr hover:bg-kickr/20'
                         : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                         }`}
                 >

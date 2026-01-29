@@ -48,11 +48,12 @@ export const SearchBar = () => {
                 </div>
                 <input
                     type="text"
-                    placeholder="SEARCH"
+                    placeholder="Search matches/teams..."
                     value={query}
                     onChange={handleInputChange}
                     onFocus={() => setIsOpen(true)}
-                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-main placeholder-white/10 py-0 w-12 focus:w-28 sm:w-40 sm:focus:w-72 transition-all duration-500 italic"
+                    aria-label="Search matches, leagues, or teams"
+                    className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 ring-0 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.1em] text-main placeholder-secondary/30 py-0 w-12 focus:w-28 sm:w-40 sm:focus:w-72 transition-all duration-500"
                 />
             </div>
 

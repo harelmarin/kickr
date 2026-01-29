@@ -39,27 +39,39 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
 
                     <div className="absolute inset-0 flex items-center justify-between px-3 py-2 sm:px-6 sm:py-4">
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
-                            <img src={match.homeLogo} alt={`${match.homeTeam} logo`} className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
-                            <span className="text-[10px] sm:text-[11px] font-black text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.homeTeam}</span>
+                            <img
+                                src={match.homeLogo}
+                                alt={`${match.homeTeam} official crest`}
+                                loading="lazy"
+                                decoding="async"
+                                className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110"
+                            />
+                            <span className="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.homeTeam}</span>
                         </div>
 
                         <div className="flex items-center gap-2 sm:gap-6 px-1 sm:px-4">
                             {isFinished ? (
                                 <div className="flex items-center gap-2 sm:gap-3">
-                                    <span className="text-lg sm:text-3xl font-black text-main italic leading-none drop-shadow-lg">{match.homeScore}</span>
-                                    <div className="w-[1px] sm:w-[2px] h-4 sm:h-8 bg-kickr/40 rounded-full"></div>
-                                    <span className="text-lg sm:text-3xl font-black text-main italic leading-none drop-shadow-lg">{match.awayScore}</span>
+                                    <span className="text-lg sm:text-3xl font-bold text-main leading-none drop-shadow-lg">{match.homeScore}</span>
+                                    <div className="w-[1px] sm:w-[2px] h-4 sm:h-8 bg-white/10 rounded-full"></div>
+                                    <span className="text-lg sm:text-3xl font-bold text-main leading-none drop-shadow-lg">{match.awayScore}</span>
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center">
-                                    <div className="text-xl sm:text-3xl font-black text-main italic tracking-tighter tabular-nums drop-shadow-lg">{timeStr}</div>
+                                    <div className="text-xl sm:text-3xl font-bold text-main tracking-tight tabular-nums drop-shadow-lg">{timeStr}</div>
                                 </div>
                             )}
                         </div>
 
                         <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
-                            <img src={match.awayLogo} alt={`${match.awayTeam} logo`} className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110" />
-                            <span className="text-[10px] sm:text-[11px] font-black text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.awayTeam}</span>
+                            <img
+                                src={match.awayLogo}
+                                alt={`${match.awayTeam} official crest`}
+                                loading="lazy"
+                                decoding="async"
+                                className="w-8 h-8 sm:w-12 sm:h-12 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/poster:scale-110"
+                            />
+                            <span className="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-widest text-center line-clamp-1 group-hover/poster:text-main transition-colors w-full px-1">{match.awayTeam}</span>
                         </div>
                     </div>
 
@@ -102,7 +114,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                 <div className="flex items-center gap-6 flex-1 min-w-0">
                     {/* Time / Status info */}
                     <div className="flex items-center gap-3 w-16 sm:w-20 flex-shrink-0">
-                        <span className={`text-[10px] font-black uppercase italic ${isFinished ? 'text-kickr/60' : 'text-kickr animate-pulse'}`}>
+                        <span className={`text-[10px] font-bold uppercase ${isFinished ? 'text-secondary opacity-40' : 'text-kickr'}`}>
                             {isFinished ? 'FT' : timeStr}
                         </span>
                     </div>
@@ -110,38 +122,38 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'default'
                     {/* Combatants Info */}
                     <div className="flex items-center gap-3 flex-1 min-w-0 border-l border-white/5 pl-6">
                         <div className="flex -space-x-1.5 flex-shrink-0">
-                            <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt={`${match.homeTeam} logo`} />
-                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-kickr-bg-primary" alt={`${match.awayTeam} logo`} />
+                            <img src={match.homeLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain z-10" alt={`${match.homeTeam} crest`} loading="lazy" decoding="async" />
+                            <img src={match.awayLogo} className="w-5 h-5 sm:w-6 sm:h-6 object-contain border-l border-kickr-bg-primary" alt={`${match.awayTeam} crest`} loading="lazy" decoding="async" />
                         </div>
                         <div className="flex items-center gap-2 flex-1 min-w-0">
-                            <span className="text-[10px] sm:text-[11px] font-black text-main/80 uppercase italic truncate max-w-[45%]">
+                            <span className="text-[10px] sm:text-[11px] font-bold text-main/80 uppercase truncate max-w-[45%]">
                                 {match.homeTeam}
                             </span>
-                            <span className="text-[8px] font-bold text-kickr/20 italic flex-shrink-0">vs</span>
-                            <span className="text-[10px] sm:text-[11px] font-black text-main/80 uppercase italic truncate max-w-[45%]">
+                            <span className="text-[8px] font-bold text-secondary/20 flex-shrink-0">vs</span>
+                            <span className="text-[10px] sm:text-[11px] font-bold text-main/80 uppercase truncate max-w-[45%]">
                                 {match.awayTeam}
                             </span>
                         </div>
-                        <span className="hidden md:block text-[10px] font-black text-main/40 uppercase tracking-[0.2em] ml-auto pl-4">{match.competition}</span>
+                        <span className="hidden md:block text-[10px] font-bold text-main/30 uppercase tracking-widest ml-auto pl-4">{match.competition}</span>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-6 flex-shrink-0">
                     {/* Average Rating (if exists) */}
                     {match.averageRating !== undefined && match.averageRating !== null && !isCompact && (
-                        <div className="hidden sm:flex items-center gap-1.5 bg-kickr/5 px-2 py-0.5 border border-kickr/10">
-                            <span className="text-kickr text-[9px] font-black italic">{match.averageRating.toFixed(1)}</span>
+                        <div className="hidden sm:flex items-center gap-1.5 bg-rating/10 px-2 py-0.5 border border-rating/20 rounded-sm">
+                            <span className="text-rating text-[9px] font-bold">{match.averageRating.toFixed(1)}</span>
                         </div>
                     )}
 
                     {/* Final Score or Date */}
                     <div className="w-20 text-right">
                         {isFinished ? (
-                            <span className="text-[14px] sm:text-[16px] font-black text-main/90 italic font-mono group-hover:text-kickr transition-colors tracking-tighter">
+                            <span className="text-[14px] sm:text-[16px] font-bold text-main/90 font-mono group-hover:text-kickr transition-colors tracking-tight">
                                 {match.homeScore}-{match.awayScore}
                             </span>
                         ) : (
-                            <span className="text-[11px] font-black text-muted uppercase tracking-widest">{dateStr}</span>
+                            <span className="text-[11px] font-bold text-secondary/40 uppercase tracking-widest">{dateStr}</span>
                         )}
                     </div>
                 </div>

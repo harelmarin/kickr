@@ -210,15 +210,15 @@ export const TeamDetailPage = () => {
                   <span className="text-muted">{stats.wins}W <span className="text-muted/30 mx-0.5 md:mx-1">/</span> {stats.draws}D <span className="text-muted/30 mx-0.5 md:mx-1">/</span> {stats.losses}L</span>
                 </div>
                 <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-black/5">
-                  <div style={{ width: stats.winRate }} className="bg-kickr h-full shadow-[0_0_10px_rgba(var(--kickr-rgb),0.3)]" title={`Wins: ${stats.winRate}`}></div>
+                  <div style={{ width: stats.winRate }} className="bg-rating h-full shadow-[0_0_10px_rgba(0,224,84,0.3)]" title={`Wins: ${stats.winRate}`}></div>
                   <div style={{ width: stats.drawRate }} className="bg-black/10 h-full" title={`Draws: ${stats.drawRate}`}></div>
-                  <div style={{ width: stats.lossRate }} className="bg-[#ef4444]/40 h-full" title={`Losses: ${stats.lossRate}`}></div>
+                  <div style={{ width: stats.lossRate }} className="bg-[#EF4444]/40 h-full" title={`Losses: ${stats.lossRate}`}></div>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 border-y border-white/5 py-6 md:py-8">
                 <MiniStat label="Attack" value={stats.avgScored} description="Avg" />
-                <MiniStat label="Intel" value={stats.globalAverageRating} description="Avg" />
+                <MiniStat label="Intel" value={stats.globalAverageRating} description="Avg" isRating />
                 <MiniStat label="Defense" value={stats.avgConceded} description="Avg" />
               </div>
 
@@ -228,9 +228,9 @@ export const TeamDetailPage = () => {
                   {stats.form.map((res, i) => (
                     <div
                       key={i}
-                      className={`w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-[9px] font-black ${res === 'W' ? 'bg-kickr text-black shadow-[0_0_8px_rgba(var(--kickr-rgb),0.2)]' :
+                      className={`w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-[9px] font-black ${res === 'W' ? 'bg-rating text-black shadow-[0_0_8px_rgba(0,224,84,0.2)]' :
                         res === 'D' ? 'bg-black/10 text-secondary' :
-                          'bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20'
+                          'bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20'
                         }`}
                     >
                       {res}
@@ -263,10 +263,10 @@ const BigStat = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-const MiniStat = ({ label, value, description }: { label: string; value: string; description: string }) => (
+const MiniStat = ({ label, value, description, isRating }: { label: string; value: string; description: string; isRating?: boolean }) => (
   <div>
     <div className="text-[9px] font-bold text-secondary uppercase tracking-widest mb-1">{label}</div>
-    <div className="text-2xl font-black text-kickr font-display italic">{value}</div>
+    <div className={`text-2xl font-black font-display italic ${isRating ? 'text-rating' : 'text-kickr'}`}>{value}</div>
     <div className="text-[9px] text-muted uppercase font-bold tracking-tighter mt-1">{description}</div>
   </div>
 );
