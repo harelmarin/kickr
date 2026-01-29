@@ -112,49 +112,58 @@ export const UserMatchesPage = () => {
                         </div>
                     </div>
 
-                    <div className="mt-6 md:mt-12 border border-white/5 bg-white/[0.01] p-2.5 md:p-6 rounded-sm">
-                        <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-x-10 w-full">
-                            <div className="relative flex-1">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] opacity-10 italic">🔍</span>
-                                <input
-                                    type="text"
-                                    placeholder="SCAN DIARY..."
-                                    value={search}
-                                    aria-label="Search match diary"
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-8 pr-4 py-1.5 text-[9px] md:text-[11px] font-black text-main placeholder-white/40 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
-                                />
+                    <div className="mt-6 md:mt-12 bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-x-12 w-full">
+                            <div className="flex flex-col gap-1.5 flex-1">
+                                <span className="text-[7px] md:text-[9px] uppercase font-black text-muted tracking-[0.4em] pl-1 italic">Scan Diary</span>
+                                <div className="relative">
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] opacity-10 italic">🔍</span>
+                                    <input
+                                        type="text"
+                                        placeholder="..."
+                                        value={search}
+                                        aria-label="Search match diary"
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="w-full bg-kickr-bg-primary/40 border border-white/10 rounded-sm pl-8 pr-4 py-2.5 text-[9px] md:text-[11px] font-black text-main placeholder-white/20 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="relative w-full md:w-48">
-                                <select
-                                    value={status}
-                                    aria-label="Filter by match status"
-                                    onChange={(e) => setStatus(e.target.value as any)}
-                                    className="w-full bg-white/[0.03] border border-white/10 rounded-md px-3 py-2.5 text-xs font-medium text-main focus:border-kickr transition-all outline-none cursor-pointer appearance-none uppercase"
-                                >
-                                    <option value="all" className="bg-kickr-bg-primary">All Status</option>
-                                    <option value="finished" className="bg-kickr-bg-primary">Completed</option>
-                                    <option value="upcoming" className="bg-kickr-bg-primary">Upcoming</option>
-                                </select>
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-main/40 italic">▼</div>
+                            <div className="flex flex-col gap-1.5 w-full md:w-56">
+                                <span className="text-[7px] md:text-[9px] uppercase font-black text-muted tracking-[0.4em] pl-1 italic">Status</span>
+                                <div className="relative">
+                                    <select
+                                        value={status}
+                                        aria-label="Filter by match status"
+                                        onChange={(e) => setStatus(e.target.value as any)}
+                                        className="w-full bg-kickr-bg-primary/40 border border-white/10 rounded-sm px-4 py-2.5 text-[9px] md:text-[11px] font-black text-main focus:border-kickr/40 outline-none cursor-pointer appearance-none hover:bg-white/[0.04] transition-all uppercase italic tracking-widest"
+                                    >
+                                        <option value="all" className="bg-kickr-bg-secondary">All Records</option>
+                                        <option value="finished" className="bg-kickr-bg-secondary">Completed</option>
+                                        <option value="upcoming" className="bg-kickr-bg-secondary">Upcoming</option>
+                                    </select>
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-main/20 italic">▼</div>
+                                </div>
                             </div>
 
-                            <div className="relative w-full md:w-48">
-                                <select
-                                    value={minRating}
-                                    aria-label="Filter by minimum rating"
-                                    onChange={(e) => setMinRating(Number(e.target.value))}
-                                    className="w-full bg-white/[0.03] border border-white/10 rounded-md px-3 py-2.5 text-xs font-medium text-main focus:border-kickr transition-all outline-none cursor-pointer appearance-none uppercase"
-                                >
-                                    <option value="0" className="bg-kickr-bg-primary">No Rating Filter</option>
-                                    <option value="5" className="bg-kickr-bg-primary">5 Stars Only</option>
-                                    <option value="4" className="bg-kickr-bg-primary">4+ Stars</option>
-                                    <option value="3" className="bg-kickr-bg-primary">3+ Stars</option>
-                                    <option value="2" className="bg-kickr-bg-primary">2+ Stars</option>
-                                    <option value="1" className="bg-kickr-bg-primary">1+ Star</option>
-                                </select>
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-main/40 italic">▼</div>
+                            <div className="flex flex-col gap-1.5 w-full md:w-56">
+                                <span className="text-[7px] md:text-[9px] uppercase font-black text-muted tracking-[0.4em] pl-1 italic">Rating Filter</span>
+                                <div className="relative">
+                                    <select
+                                        value={minRating}
+                                        aria-label="Filter by minimum rating"
+                                        onChange={(e) => setMinRating(Number(e.target.value))}
+                                        className="w-full bg-kickr-bg-primary/40 border border-white/10 rounded-sm px-4 py-2.5 text-[9px] md:text-[11px] font-black text-main focus:border-kickr/40 outline-none cursor-pointer appearance-none hover:bg-white/[0.04] transition-all uppercase italic tracking-widest"
+                                    >
+                                        <option value="0" className="bg-kickr-bg-secondary">Any Rating</option>
+                                        <option value="5" className="bg-kickr-bg-secondary">5 Stars</option>
+                                        <option value="4" className="bg-kickr-bg-secondary">4+ Stars</option>
+                                        <option value="3" className="bg-kickr-bg-secondary">3+ Stars</option>
+                                        <option value="2" className="bg-kickr-bg-secondary">2+ Stars</option>
+                                        <option value="1" className="bg-kickr-bg-secondary">1+ Star</option>
+                                    </select>
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-main/20 italic">▼</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -206,46 +215,23 @@ export const UserMatchesPage = () => {
 
                 {/* Pagination Controls */}
                 {!isLoading && pageData && pageData.totalPages > 1 && (
-                    <div className="mt-12 md:mt-16 flex items-center justify-center gap-3 md:gap-4">
+                    <div className="mt-12 md:mt-16 flex items-center justify-center gap-2 md:gap-8 border-t border-white/[0.03] pt-12">
                         <button
                             onClick={() => {
                                 setCurrentPage(prev => Math.max(0, prev - 1));
                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                             }}
                             disabled={pageData.first}
-                            aria-label="Previous page"
-                            className="px-4 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
+                            className="group flex items-center gap-2 px-6 py-2.5 bg-kickr-bg-secondary border border-white/5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr hover:border-kickr/40 disabled:opacity-5 transition-all italic active:scale-95"
                         >
-                            Prev
+                            <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
+                            PREV
                         </button>
 
-                        <div className="flex items-center gap-1.5 md:gap-2">
-                            {[...Array(pageData.totalPages)].map((_, i) => {
-                                if (pageData.totalPages > 5) {
-                                    if (i < currentPage - 2 && i !== 0) return null;
-                                    if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                    if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-main/5 text-[8px]">...</span>;
-                                    if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-main/5 text-[8px]">...</span>;
-                                }
-
-                                return (
-                                    <button
-                                        key={i}
-                                        onClick={() => {
-                                            setCurrentPage(i);
-                                            window.scrollTo({ top: 300, behavior: 'smooth' });
-                                        }}
-                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-sm text-[8px] md:text-[10px] font-black transition-all cursor-pointer tabular-nums ${currentPage === i
-                                            ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.3)]'
-                                            : 'bg-white/[0.01] border border-white/5 text-muted hover:text-main hover:border-white/10'
-                                            }`}
-                                        aria-current={currentPage === i ? 'page' : undefined}
-                                        aria-label={`Go to page ${i + 1}`}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                );
-                            })}
+                        <div className="flex items-center gap-2">
+                            <span className="text-[10px] md:text-[11px] font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
+                                Page <span className="text-main">{currentPage + 1}</span> / {pageData.totalPages}
+                            </span>
                         </div>
 
                         <button
@@ -254,17 +240,17 @@ export const UserMatchesPage = () => {
                                 window.scrollTo({ top: 300, behavior: 'smooth' });
                             }}
                             disabled={pageData.last}
-                            aria-label="Next page"
-                            className="px-4 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[8px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
+                            className="group flex items-center gap-2 px-6 py-2.5 bg-kickr text-white rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] hover:brightness-110 disabled:opacity-5 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)] active:scale-95"
                         >
-                            Next
+                            NEXT
+                            <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
                         </button>
                     </div>
                 )}
 
                 {!isLoading && filteredReviews.length === 0 && (
-                    <div className="py-20 text-center bg-black/[0.02] border border-white/5 rounded-sm">
-                        <p className="text-muted text-[9px] font-black uppercase tracking-widest italic">No match logs match this signature.</p>
+                    <div className="py-20 text-center bg-black/[0.1] border border-dashed border-white/5 rounded-sm">
+                        <p className="text-muted text-[9px] font-black uppercase tracking-widest italic leading-none">No match logs match this signature.</p>
                     </div>
                 )}
 

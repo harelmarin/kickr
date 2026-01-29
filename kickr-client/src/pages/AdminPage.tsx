@@ -35,9 +35,9 @@ export default function AdminPage() {
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-md text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab
-                                ? 'bg-kickr text-white'
-                                : 'text-secondary hover:text-white'
+                            className={`flex-1 md:flex-none px-4 sm:px-6 py-2 rounded-sm text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap italic active:scale-95 ${activeTab === tab
+                                ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.3)]'
+                                : 'text-secondary hover:text-main'
                                 }`}
                         >
                             {tab}
@@ -102,7 +102,7 @@ const DashboardTab = () => {
             </div>
 
             {/* Existing Data Management */}
-            <section className="bg-kickr-bg-primary border border-white/5 rounded-sm p-8">
+            <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-8 poster-shadow">
                 <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-kickr mb-8">System Sync Utilities</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <DataSyncCard
@@ -167,7 +167,7 @@ const UsersTab = () => {
     );
 
     return (
-        <div className="bg-kickr-bg-primary border border-white/5 rounded-md overflow-hidden shadow-xl">
+        <div className="bg-kickr-bg-secondary border border-white/5 rounded-md overflow-hidden shadow-xl poster-shadow">
             <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <h2 className="text-[11px] font-bold uppercase tracking-widest text-kickr">User Directory</h2>
                 <input
@@ -175,7 +175,7 @@ const UsersTab = () => {
                     placeholder="Search users..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-kickr-bg-primary/20 border border-white/10 rounded-md px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr w-full sm:w-64 uppercase"
+                    className="bg-kickr-bg-primary/40 border border-white/10 rounded-md px-4 py-2 text-xs text-white focus:outline-none focus:border-kickr w-full sm:w-64 uppercase italic tracking-widest"
                 />
             </div>
             <div className="overflow-x-auto">
@@ -234,24 +234,26 @@ const UsersTab = () => {
 
             {/* Pagination */}
             {pageData && pageData.totalPages > 1 && (
-                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-kickr-bg-primary/10">
-                    <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest">
+                <div className="p-6 border-t border-white/5 flex items-center justify-between bg-black/[0.1]">
+                    <div className="text-[10px] text-[#445566] font-black uppercase tracking-widest italic">
                         Page {pageData.number + 1} / {pageData.totalPages}
                     </div>
                     <div className="flex gap-2">
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
                             disabled={pageData.first}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="group flex items-center gap-2 px-6 py-2.5 bg-kickr-bg-secondary border border-white/5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr hover:border-kickr/40 disabled:opacity-5 transition-all italic active:scale-95"
                         >
-                            Previous
+                            <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
+                            PREV
                         </button>
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(pageData.totalPages - 1, prev + 1))}
                             disabled={pageData.last}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="group flex items-center gap-2 px-6 py-2.5 bg-kickr text-white rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] hover:brightness-110 disabled:opacity-5 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)] active:scale-95"
                         >
-                            Next
+                            NEXT
+                            <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
                         </button>
                     </div>
                 </div>
@@ -297,7 +299,7 @@ const ReportsTab = () => {
                     </div>
                 ) : (
                     reports.map(report => (
-                        <div key={report.id} className="bg-kickr-bg-primary border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all">
+                        <div key={report.id} className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-4 md:p-8 hover:border-kickr/20 transition-all poster-shadow">
                             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 md:gap-8">
                                 <div className="space-y-4 md:space-y-6 flex-1">
                                     <div className="flex items-center gap-2 md:gap-3 flex-wrap">
@@ -376,10 +378,10 @@ const ReportsTab = () => {
 // --- UTILS ---
 
 const StatCard = ({ label, value, trend, warning }: any) => (
-    <div className={`bg-kickr-bg-primary border rounded-md p-3 md:p-6 shadow-xl ${warning ? 'border-kickr/40' : 'border-white/5'}`}>
-        <p className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">{label}</p>
+    <div className={`bg-kickr-bg-secondary border rounded-sm p-3 md:p-6 poster-shadow ${warning ? 'border-kickr/40' : 'border-white/5'}`}>
+        <p className="text-[10px] font-black text-secondary uppercase tracking-widest mb-4 italic">// {label}</p>
         <div className="flex items-end justify-between">
-            <h3 className={`text-2xl md:text-4xl font-bold tracking-tight ${warning ? 'text-kickr' : 'text-white'}`}>{value}</h3>
+            <h3 className={`text-2xl md:text-4xl font-black italic tracking-tighter ${warning ? 'text-kickr' : 'text-white'}`}>{value}</h3>
             {trend && <span className="text-emerald-500 text-[10px] font-bold mb-1">{trend}</span>}
         </div>
     </div>
@@ -389,10 +391,10 @@ const ChartSection = ({ title, subtitle, data, color }: any) => {
     const maxVal = Math.max(...data.map((d: any) => d.count), 1);
 
     return (
-        <div className="bg-kickr-bg-primary border border-white/5 rounded-sm p-4 md:p-8 shadow-xl">
+        <div className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-4 md:p-8 poster-shadow">
             <div className="mb-6 md:mb-10">
                 <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter mb-1">{title}</h3>
-                <p className="text-[8px] md:text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black">{subtitle}</p>
+                <p className="text-[8px] md:text-[10px] text-[#445566] uppercase tracking-[0.2em] font-black italic">{subtitle}</p>
             </div>
 
             <div className="h-48 md:h-60 flex items-end gap-1 md:gap-2 px-1 md:px-2">

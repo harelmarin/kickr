@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { NextMatchesHomePage } from '../components/matches/nextMatchesClient';
+import { TodayMatches } from '../components/matches/TodayMatches';
 import { Link } from 'react-router-dom';
 import { useLatestReviews, useUserMatchesByUser, useFollowingReviews, usePopularReviews } from '../hooks/useUserMatch';
 import { useGlobalFeed } from '../hooks/usePreviewFeed';
@@ -13,11 +14,11 @@ import { ReviewPosterCard } from '../components/review/ReviewPosterCard';
 export default function HomePage() {
   const { user } = useAuth();
   const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(5);
-  const { data: popularReviews } = usePopularReviews(5);
+  const { data: popularReviews } = usePopularReviews(50); // Increased to get more diverse competitions
   const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 10);
   const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(5);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
-  const { data: communityScouts } = useUsers();
+  const { data: communityFans } = useUsers();
 
   const trendingSectors = useMemo(() => {
     if (!popularReviews || !Array.isArray(popularReviews)) return [];
@@ -100,17 +101,17 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8">
                 {!user ? (
-                  <Link to="/register" className="h-[44px] md:h-[56px] px-8 md:px-12 flex items-center bg-kickr text-white text-xs md:text-sm font-bold uppercase tracking-widest rounded-md hover:brightness-110 transition-all shadow-[0_0_20px_rgba(93,139,255,0.2)]">
+                  <Link to="/register" className="h-[44px] md:h-[56px] px-8 md:px-12 flex items-center bg-kickr text-white text-xs md:text-sm font-black uppercase tracking-widest rounded-sm hover:brightness-110 transition-all shadow-[0_0_20px_rgba(93,139,255,0.2)] italic">
                     Get Started
                   </Link>
                 ) : (
-                  <Link to={`/user/${user.id}`} className="w-full sm:w-auto h-[48px] md:h-[64px] px-5 md:px-8 flex items-center bg-white/[0.01] border border-white/5 rounded-md gap-3 md:gap-6 transition-all group">
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-md bg-white/[0.04] border border-white/5 flex items-center justify-center text-kickr text-sm md:text-lg font-bold overflow-hidden">
-                      {user.avatarUrl ? <img src={user.avatarUrl} alt={`${user.name}'s avatar`} loading="lazy" decoding="async" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" /> : user.name[0]}
+                  <Link to={`/user/${user.id}`} className="w-full sm:w-auto h-[48px] md:h-[64px] px-5 md:px-8 flex items-center bg-white/[0.01] border border-white/5 rounded-sm gap-3 md:gap-6 transition-all group hover:border-kickr/40 hover:bg-white/[0.02]">
+                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-sm bg-black/20 border border-white/5 flex items-center justify-center text-kickr text-sm md:text-lg font-black overflow-hidden">
+                      {user.avatarUrl ? <img src={user.avatarUrl} alt={`${user.name}'s avatar`} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" /> : user.name[0]}
                     </div>
                     <div className="flex flex-col items-start min-w-0">
-                      <span className="text-xs md:text-sm font-bold text-main uppercase tracking-widest">Dashboard</span>
-                      <span className="text-[10px] md:text-xs font-medium text-muted uppercase tracking-widest truncate w-full max-w-[80px] md:max-w-none">{user.name}</span>
+                      <span className="text-xs md:text-sm font-black text-main uppercase tracking-widest italic tracking-tighter">Dashboard</span>
+                      <span className="text-[10px] md:text-xs font-bold text-muted uppercase tracking-widest truncate w-full max-w-[80px] md:max-w-none italic">{user.name}</span>
                     </div>
                   </Link>
                 )}
@@ -142,17 +143,17 @@ export default function HomePage() {
                   <Link to="/feed" className="text-xs md:text-sm font-bold text-secondary hover:text-kickr transition-colors">View All Feed →</Link>
                 </div>
 
-                <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-md">
+                <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
                   <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-6">
                     {isFollowingLoading ? (
-                      <div className="h-24 bg-black/5 animate-pulse rounded-sm col-span-2"></div>
+                      Array.from({ length: 5 }).map((_, i) => <div key={i} className="aspect-[2/3] bg-black/5 animate-pulse rounded-sm" />)
                     ) : activeFollowing.length > 0 ? (
                       activeFollowing.map((review: any) => (
                         <ReviewPosterCard key={review.id} review={review} />
                       ))
                     ) : (
-                      <div className="py-8 text-center col-span-2 border border-white/5 bg-white/[0.01]">
-                        <p className="text-secondary text-xs font-black uppercase tracking-[0.2em]">Empty Network</p>
+                      <div className="py-12 text-center col-span-full border border-dashed border-white/5 rounded-sm">
+                        <p className="text-muted text-[10px] font-black uppercase tracking-[0.4em] italic">No activity detected</p>
                       </div>
                     )}
                   </div>
@@ -160,15 +161,29 @@ export default function HomePage() {
               </section>
             )}
 
-            {/* FIXTURES */}
+            {/* TODAY'S MATCHES */}
             <section className={`${user ? 'pt-8 border-t border-white/10' : ''}`}>
+              <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                <div className="flex items-center gap-3">
+                  <h2 className="cinematic-header text-sm md:text-base">Today's Matches</h2>
+                  <span className="text-[8px] md:text-[10px] font-black text-kickr uppercase tracking-widest px-2 py-0.5 bg-kickr/10 rounded-sm">LIVE</span>
+                </div>
+                <Link to="/matches" className="text-xs md:text-sm font-bold text-secondary hover:text-kickr transition-colors">See All →</Link>
+              </div>
+              <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+                <TodayMatches />
+              </div>
+            </section>
+
+            {/* FIXTURES */}
+            <section className="pt-8 border-t border-white/10">
               <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
                 <div className="flex items-center gap-3">
                   <h2 className="cinematic-header text-sm md:text-base">Recent Fixtures</h2>
                 </div>
                 <Link to="/matches" className="text-xs md:text-sm font-bold text-secondary hover:text-kickr transition-colors">See Search →</Link>
               </div>
-              <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-md">
+              <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
                 <NextMatchesHomePage />
               </div>
             </section>
@@ -185,17 +200,19 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {isGlobalLoading || isLatestLoading ? (
-                <div className="space-y-1">
-                  {[1, 2, 3, 4].map(i => <div key={i} className="h-8 bg-black/5 animate-pulse rounded-sm"></div>)}
-                </div>
-              ) : (
-                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-4">
-                  {activeGlobal.map((review: UserMatch) => (
-                    <ReviewPosterCard key={review.id} review={review} />
-                  ))}
-                </div>
-              )}
+              <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+                {isGlobalLoading || isLatestLoading ? (
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-4">
+                    {[1, 2, 3, 4, 5].map(i => <div key={i} className="aspect-[2/3] bg-black/5 animate-pulse rounded-sm" />)}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-4">
+                    {activeGlobal.map((review: UserMatch) => (
+                      <ReviewPosterCard key={review.id} review={review} />
+                    ))}
+                  </div>
+                )}
+              </div>
             </section>
           </div>
 
@@ -234,7 +251,7 @@ export default function HomePage() {
             <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-1 lg:col-auto poster-shadow">
               <h3 className="cinematic-header text-[10px] md:text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Top Leagues</h3>
               <div className="space-y-4">
-                {trendingSectors.slice(0, 3).map((sector, i) => (
+                {trendingSectors.slice(0, 5).map((sector, i) => (
                   <Link key={sector.name} to={sector.id ? `/competitions/${sector.id}` : `/matches`} className="group block">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
@@ -248,16 +265,16 @@ export default function HomePage() {
               </div>
             </section>
 
-            {/* COMMUNITY - Hidden on very small mobile if grid is crowded, or just kept small */}
+            {/* COMMUNITY */}
             <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-2 lg:col-auto poster-shadow">
               <h3 className="cinematic-header text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Community</h3>
               <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
-                {communityScouts?.content?.filter((s: any) => s.id !== user?.id).slice(0, 5).map((scout: any) => (
-                  <Link key={scout.id} to={`/user/${scout.id}`} className="flex items-center gap-3 group">
+                {communityFans?.content?.filter((s: any) => s.id !== user?.id).slice(0, 5).map((fan: any) => (
+                  <Link key={fan.id} to={`/user/${fan.id}`} className="flex items-center gap-3 group">
                     <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-[10px] text-kickr font-bold group-hover:border-kickr transition-all overflow-hidden flex-shrink-0">
-                      {scout.avatarUrl ? <img src={scout.avatarUrl} alt={`${scout.name}'s avatar profile`} loading="lazy" decoding="async" className="w-full h-full object-cover" /> : scout.name[0]}
+                      {fan.avatarUrl ? <img src={fan.avatarUrl} alt={`${fan.name}'s avatar profile`} loading="lazy" decoding="async" className="w-full h-full object-cover" /> : fan.name[0]}
                     </div>
-                    <p className="text-xs font-bold text-secondary group-hover:text-white uppercase transition-all truncate">{scout.name}</p>
+                    <p className="text-xs font-bold text-secondary group-hover:text-white uppercase transition-all truncate">{fan.name}</p>
                   </Link>
                 ))}
               </div>

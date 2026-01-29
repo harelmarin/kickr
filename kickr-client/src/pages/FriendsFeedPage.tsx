@@ -42,7 +42,7 @@ export const FriendsFeedPage = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm">
+                        <div className="bg-kickr-bg-secondary border border-white/5 p-2.5 md:p-8 rounded-sm poster-shadow">
 
                             {isLoading ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -78,21 +78,20 @@ export const FriendsFeedPage = () => {
 
                         {/* Pagination */}
                         {!isLoading && pageData && pageData.totalPages > 1 && (
-                            <div className="mt-12 flex items-center justify-center gap-8 border-t border-white/10 pt-8">
+                            <div className="mt-12 flex items-center justify-center gap-4 md:gap-8 border-t border-white/10 pt-8">
                                 <button
                                     onClick={() => {
                                         setCurrentPage(prev => Math.max(0, prev - 1));
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="group flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-main/20 disabled:opacity-5 hover:text-main transition-all italic"
+                                    className="px-6 py-2.5 bg-black/[0.02] border border-white/5 rounded-sm text-[10px] font-black uppercase tracking-widest text-secondary hover:text-kickr hover:border-kickr/40 disabled:opacity-5 transition-all italic flex items-center gap-2"
                                 >
-                                    <span className="text-sm md:text-lg group-hover:-translate-x-1 transition-transform mb-0.5">←</span>
-                                    PREV
+                                    <span className="text-sm">←</span> PREV
                                 </button>
 
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[8px] md:text-[10px] font-black text-main/10 uppercase tracking-widest italic tabular-nums">
+                                    <span className="text-[10px] font-black text-main/10 uppercase tracking-widest italic tabular-nums">
                                         PAGE <span className="text-main/40">{currentPage + 1}</span> / {pageData.totalPages}
                                     </span>
                                 </div>
@@ -103,10 +102,9 @@ export const FriendsFeedPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="group flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-main/20 disabled:opacity-5 hover:text-main transition-all italic"
+                                    className="px-8 py-2.5 bg-kickr text-white rounded-sm text-[10px] font-black uppercase tracking-widest hover:brightness-110 disabled:opacity-5 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)] flex items-center gap-2"
                                 >
-                                    NEXT
-                                    <span className="text-sm md:text-lg group-hover:translate-x-1 transition-transform mb-0.5">→</span>
+                                    NEXT <span className="text-sm">→</span>
                                 </button>
                             </div>
                         )}

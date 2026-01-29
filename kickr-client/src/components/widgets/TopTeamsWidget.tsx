@@ -1,37 +1,67 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { usePopularReviews } from '../../hooks/useUserMatch';
+import { useLatestReviews } from '../../hooks/useUserMatch';
 import type { UserMatch } from '../../types/userMatch';
 
 export const TopTeamsWidget = () => {
-    const { data: popularReviews, isLoading } = usePopularReviews(20);
+    const { data: latestReviews, isLoading } = useLatestReviews(200);
 
     const trendingTeams = useMemo(() => {
-        if (!popularReviews || !Array.isArray(popularReviews)) return [];
+        if (!latestReviews || !Array.isArray(latestReviews)) return [];
 
-        // Aggregate popularity by team (both home and away)
-        const teams: Record<string, { count: number, logo: string, id?: string }> = {};
+        const teams: Record<string, { count: number, totalNote: number, name: string, logo: string, id?: string }> = {};
 
-        popularReviews.forEach((review: UserMatch) => {
-            const home = review.match.homeTeam;
-            const away = review.match.awayTeam;
+        latestReviews.forEach((review: UserMatch) => {
+            const homeName = review.match.homeTeam;
+            const homeId = review.match.homeTeamId || homeName;
+            const awayName = review.match.awayTeam;
+            const awayId = review.match.awayTeamId || awayName;
 
-            if (!teams[home]) teams[home] = { count: 0, logo: review.match.homeLogo, id: review.match.homeTeamId };
-            teams[home].count += 1 + (review.note / 10); // Weight by rating slightly
+            if (!teams[homeId]) {
+                teams[homeId] = {
+                    count: 0,
+                    totalNote: 0,
+                    name: homeName,
+                    logo: review.match.homeLogo,
+                    id: review.match.homeTeamId
+                };
+            }
+            teams[homeId].count += 1;
+            teams[homeId].totalNote += review.note;
 
-            if (!teams[away]) teams[away] = { count: 0, logo: review.match.awayLogo, id: review.match.awayTeamId };
-            teams[away].count += 1 + (review.note / 10);
+            if (!teams[awayId]) {
+                teams[awayId] = {
+                    count: 0,
+                    totalNote: 0,
+                    name: awayName,
+                    logo: review.match.awayLogo,
+                    id: review.match.awayTeamId
+                };
+            }
+            teams[awayId].count += 1;
+            teams[awayId].totalNote += review.note;
         });
 
-        return Object.entries(teams)
-            .map(([name, data]) => ({ name, ...data }))
-            .sort((a, b) => b.count - a.count)
+        return Object.values(teams)
+            .sort((a, b) => {
+                // Combine rating and count into a weighted score
+                // Score = average_rating * log(count + 1)
+                const aAvg = a.totalNote / a.count;
+                const bAvg = b.totalNote / b.count;
+                const aScore = aAvg * Math.log(a.count + 1);
+                const bScore = bAvg * Math.log(b.count + 1);
+
+                if (Math.abs(bScore - aScore) > 0.01) {
+                    return bScore - aScore;
+                }
+                return b.count - a.count;
+            })
             .slice(0, 5);
-    }, [popularReviews]);
+    }, [latestReviews]);
 
     return (
-        <section className="bg-black/[0.02] border border-white/5 p-8 rounded-sm">
-            <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+        <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+            <div className="flex items-center justify-between mb-8 border-b border-white/[0.03] pb-6">
                 <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Trending Clubs</h3>
                 <span className="text-[8px] font-mono text-muted uppercase tracking-widest">Global Hype</span>
             </div>

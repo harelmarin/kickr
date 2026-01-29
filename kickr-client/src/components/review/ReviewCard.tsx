@@ -137,7 +137,7 @@ export const ReviewCard = ({ review, onModerate }: ReviewCardProps) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     if (!user) {
-                                        toast.error('Authentication required for report protocol');
+                                        toast.error('Log in to report reviews');
                                         return;
                                     }
                                     setIsReportModalOpen(true);

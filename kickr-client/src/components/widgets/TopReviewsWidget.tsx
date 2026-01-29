@@ -5,8 +5,8 @@ export const TopReviewsWidget = () => {
     const { data: popularReviews, isLoading } = usePopularReviews(4);
 
     return (
-        <section className="bg-black/[0.02] border border-white/5 p-8 rounded-sm">
-            <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+        <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+            <div className="flex items-center justify-between mb-8 border-b border-white/[0.03] pb-6">
                 <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.5em] italic">Top Reviews</h3>
                 <span className="text-[10px] font-mono text-muted uppercase tracking-widest">Community</span>
             </div>

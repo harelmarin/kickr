@@ -10,8 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const profileSchema = z.object({
-    name: z.string().min(3, "Callsign must be at least 3 characters").max(10, "Callsign must be less than 10 characters"),
-    email: z.string().email("Please enter a valid tactical email").max(100, "Email is too long"),
+    name: z.string().min(3, "Username must be at least 3 characters").max(10, "Username must be less than 10 characters"),
+    email: z.string().email("Please enter a valid email address").max(100, "Email is too long"),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
@@ -51,7 +51,7 @@ export const SettingsPage = () => {
                 <EmptyState
                     icon="🔒"
                     title="Access Restricted"
-                    description="You need to be authenticated to access tactical settings."
+                    description="You need to be logged in to access settings."
                     actionLabel="Login / Register"
                     onAction={() => window.location.href = '/register'}
                 />
@@ -59,7 +59,7 @@ export const SettingsPage = () => {
         );
     }
 
-    const refreshTacticalData = () => {
+    const refreshUserData = () => {
         queryClient.invalidateQueries({ queryKey: ['user', user.id] });
         queryClient.invalidateQueries({ queryKey: ['users'] });
         queryClient.invalidateQueries({ queryKey: ['userMatches'] });
@@ -74,13 +74,13 @@ export const SettingsPage = () => {
         }
 
         setIsSaving(true);
-        const saveToast = toast.loading('Syncing tactical data...');
+        const saveToast = toast.loading('Saving changes...');
 
         try {
             const updatedUser = await userService.updateProfile(data);
             updateUser(updatedUser);
-            refreshTacticalData();
-            toast.success('Profile identification updated', { id: saveToast });
+            refreshUserData();
+            toast.success('Profile updated', { id: saveToast });
         } catch (error: any) {
             const message = error.response?.data?.message || 'Failed to update credentials';
             toast.error(message, { id: saveToast });
@@ -104,16 +104,16 @@ export const SettingsPage = () => {
         }
 
         setIsUploading(true);
-        const uploadToast = toast.loading('Uploading tactical avatar...');
+        const uploadToast = toast.loading('Uploading avatar...');
 
         try {
             const updatedUser = await userService.uploadAvatar(file);
             updateUser(updatedUser);
 
-            // Force refresh of cached tactical data
-            refreshTacticalData();
+            // Force refresh of cached data
+            refreshUserData();
 
-            toast.success('Profile signature updated', { id: uploadToast });
+            toast.success('Avatar updated', { id: uploadToast });
 
             // OPTIONAL: The user asked to force a refresh. 
             // We'll do it after a short delay so the toast stays visible.
@@ -122,7 +122,7 @@ export const SettingsPage = () => {
             }, 800);
 
         } catch (error) {
-            toast.error('Failed to sync avatar', { id: uploadToast });
+            toast.error('Failed to upload avatar', { id: uploadToast });
         } finally {
             setIsUploading(false);
             // RESET FILE INPUT - Critical to allow re-uploading the same file
@@ -131,7 +131,7 @@ export const SettingsPage = () => {
     };
 
     const handleDeleteAvatar = async () => {
-        if (!window.confirm('Remove your profile signature?')) return;
+        if (!window.confirm('Remove your profile picture?')) return;
 
         setIsUploading(true);
         const deleteToast = toast.loading('Deleting avatar...');
@@ -139,15 +139,15 @@ export const SettingsPage = () => {
         try {
             const updatedUser = await userService.deleteAvatar();
             updateUser(updatedUser);
-            refreshTacticalData();
-            toast.success('Signature reverted to default', { id: deleteToast });
+            refreshUserData();
+            toast.success('Avatar removed', { id: deleteToast });
 
             // Force refresh as requested
             setTimeout(() => {
                 window.location.reload();
             }, 800);
         } catch (error) {
-            toast.error('Failed to remove signature', { id: deleteToast });
+            toast.error('Failed to remove avatar', { id: deleteToast });
         } finally {
             setIsUploading(false);
         }
@@ -162,16 +162,16 @@ export const SettingsPage = () => {
             <div className="mb-6 md:mb-12 border-b border-white/5 pb-4 md:pb-8 relative">
                 <div className="absolute top-0 left-0 w-8 h-[1px] bg-kickr"></div>
                 <h1 className="text-2xl md:text-3xl font-black text-main italic tracking-tighter uppercase mb-1 md:mb-2">
-                    Tactical <span className="text-kickr">Parameters</span>
+                    Account <span className="text-kickr">Settings</span>
                 </h1>
                 <p className="text-[#445566] font-black uppercase tracking-[0.4em] text-[7px] md:text-[9px] italic">
-                    Central User Identification Node
+                    Manage your profile and account
                 </p>
             </div>
 
             <div className="space-y-4 md:space-y-8">
                 {/* 1. Identity & Avatar Section */}
-                <section className="bg-black/[0.02] border border-white/5 rounded-sm p-4 md:p-10 relative overflow-hidden group">
+                <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-4 md:p-10 relative overflow-hidden group poster-shadow">
                     <div className="absolute inset-0 bg-kickr/[0.01] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div className="flex flex-row items-center gap-4 md:gap-10 relative z-10">
                         <div className="relative">
@@ -186,7 +186,7 @@ export const SettingsPage = () => {
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-black/5 flex items-center justify-center">
-                                            <span className="text-xl md:text-4xl font-black text-kickr italic italic">{user.name[0].toUpperCase()}</span>
+                                            <span className="text-xl md:text-4xl font-black text-kickr italic">{user.name[0].toUpperCase()}</span>
                                         </div>
                                     )}
                                     {isUploading && (
@@ -199,7 +199,7 @@ export const SettingsPage = () => {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="absolute -bottom-1 -right-1 md:-bottom-3 md:-right-3 bg-kickr text-black w-6 h-6 md:w-10 md:h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[3px] md:border-[6px] border-kickr-bg-primary shadow-xl shadow-kickr/20"
+                                className="absolute -bottom-1 -right-1 md:-bottom-3 md:-right-3 bg-kickr text-white w-6 h-6 md:w-10 md:h-10 rounded-sm flex items-center justify-center hover:scale-105 transition-all disabled:opacity-50 border-[3px] md:border-[6px] border-kickr-bg-primary shadow-xl shadow-kickr/20"
                                 title="Upload Signal"
                             >
                                 <span className="text-xs md:text-sm">⚡</span>
@@ -216,10 +216,10 @@ export const SettingsPage = () => {
                         <div className="flex-1 text-left space-y-2 md:space-y-4">
                             <div>
                                 <h2 className="text-main font-black text-base md:text-xl italic uppercase tracking-tighter leading-none mb-0.5 md:mb-1">
-                                    Visual ID
+                                    Profile Picture
                                 </h2>
                                 <p className="text-main/20 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic">
-                                    Biometric recognition signature
+                                    Update your profile image
                                 </p>
                             </div>
                             <div className="flex flex-wrap justify-start gap-4 md:gap-6 pt-1 md:pt-2">
@@ -227,14 +227,14 @@ export const SettingsPage = () => {
                                     onClick={() => fileInputRef.current?.click()}
                                     className="text-[7px] md:text-[9px] font-black text-main/40 hover:text-kickr uppercase tracking-[0.4em] transition-all italic"
                                 >
-                                    [ UPDATE RECORD ]
+                                    [ CHANGE IMAGE ]
                                 </button>
                                 {user.avatarUrl && (
                                     <button
                                         onClick={handleDeleteAvatar}
                                         className="text-[7px] md:text-[9px] font-black text-red-500/40 hover:text-red-500 uppercase tracking-[0.4em] transition-all italic"
                                     >
-                                        [ PURGE DATA ]
+                                        [ REMOVE IMAGE ]
                                     </button>
                                 )}
                             </div>
@@ -243,7 +243,7 @@ export const SettingsPage = () => {
                 </section>
 
                 {/* 2. Credentials Form */}
-                <section className="bg-black/[0.02] border border-white/5 rounded-sm overflow-hidden">
+                <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden poster-shadow">
                     <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-10 space-y-4 md:space-y-8">
                         <div className="space-y-4 md:space-y-6">
                             <div className="space-y-2 md:space-y-3">
@@ -258,7 +258,7 @@ export const SettingsPage = () => {
                                 )}
                             </div>
                             <div className="space-y-2 md:space-y-3">
-                                <label className="text-[7px] md:text-[9px] font-black text-main/20 uppercase tracking-[0.4em] px-1 italic">Communication Link</label>
+                                <label className="text-[7px] md:text-[9px] font-black text-main/20 uppercase tracking-[0.4em] px-1 italic">Email Address</label>
                                 <input
                                     type="email"
                                     {...register("email")}
@@ -274,15 +274,15 @@ export const SettingsPage = () => {
                             <div className="flex items-center gap-2 md:gap-3">
                                 <div className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full ${isSaving ? 'bg-kickr animate-pulse shadow-[0_0_8px_rgba(var(--kickr-rgb),0.5)]' : (isDirty ? 'bg-kickr/40' : 'bg-black/10')}`}></div>
                                 <span className="text-[6px] md:text-[8px] font-black text-main/10 uppercase tracking-[0.4em] italic">
-                                    {isDirty ? 'Awaiting Commit' : 'System Synced'}
+                                    {isDirty ? 'Changes pending' : 'Saved'}
                                 </span>
                             </div>
                             <button
                                 type="submit"
                                 disabled={isSaving || isUploading || !isDirty}
-                                className="bg-kickr text-black text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] px-6 py-3 md:px-10 md:py-4 rounded-sm hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-20 italic shadow-lg shadow-kickr/5"
+                                className="bg-kickr text-white text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] px-6 py-3 md:px-10 md:py-4 rounded-sm hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-20 italic shadow-lg shadow-kickr/20"
                             >
-                                {isSaving ? 'SYNCING...' : 'SAVE PARAMETERS'}
+                                {isSaving ? 'SAVING...' : 'SAVE SETTINGS'}
                             </button>
                         </div>
                     </form>
@@ -291,11 +291,11 @@ export const SettingsPage = () => {
                 {/* 3. Dangerous Zone */}
                 <section className="p-4 md:p-10 flex items-center justify-between opacity-10 hover:opacity-100 transition-opacity border border-dashed border-red-500/20 rounded-sm bg-red-500/[0.01]">
                     <div className="flex flex-col gap-0.5 md:gap-1">
-                        <h4 className="text-red-500 font-black text-[8px] md:text-[10px] uppercase tracking-[0.4em] italic">System Decommission</h4>
-                        <p className="text-main/20 text-[6px] md:text-[8px] font-black uppercase tracking-widest leading-none italic">Irreversible authentication purge</p>
+                        <h4 className="text-red-500 font-black text-[8px] md:text-[10px] uppercase tracking-[0.4em] italic">Delete Account</h4>
+                        <p className="text-main/20 text-[6px] md:text-[8px] font-black uppercase tracking-widest leading-none italic">This action cannot be undone</p>
                     </div>
                     <button className="text-[7px] md:text-[9px] font-black text-main/40 hover:text-red-500 uppercase tracking-[0.4em] transition-all italic">
-                        [ EXECUTE ]
+                        [ DELETE MY ACCOUNT ]
                     </button>
                 </section>
             </div>

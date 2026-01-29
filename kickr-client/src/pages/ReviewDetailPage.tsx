@@ -42,11 +42,11 @@ export const ReviewDetailPage: FC = () => {
         if (!review || !currentUser) return;
         deleteReviewMutation.mutate(review.id, {
             onSuccess: () => {
-                toast.success('Log entry removed');
+                toast.success('Review deleted');
                 navigate(`/matches/${review.match.id}`);
             },
             onError: () => {
-                toast.error('Failed to remove log entry');
+                toast.error('Failed to delete review');
                 setShowConfirmDelete(false);
             }
         });
@@ -66,7 +66,7 @@ export const ReviewDetailPage: FC = () => {
                     <div className="col-span-1 md:col-span-4 lg:col-span-3 md:row-span-3 space-y-3 md:space-y-6">
                         {/* Match Poster */}
                         <Link to={`/matches/${review.match.id}`} className="block group">
-                            <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden shadow-2xl transition-all duration-300 group-hover:border-kickr/40">
+                            <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden shadow-2xl transition-all duration-300 group-hover:border-kickr/40 poster-shadow">
                                 <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-transparent to-transparent z-10" />
                                 <div className="absolute inset-0 opacity-[0.03] z-0" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
 
@@ -84,7 +84,7 @@ export const ReviewDetailPage: FC = () => {
                         </Link>
 
                         {/* RATING & LIKE (Stacked under poster) */}
-                        <div className="flex flex-col items-center md:items-start gap-3 md:gap-4 md:p-4 md:bg-white/[0.01] md:border md:border-white/5 md:rounded-sm">
+                        <div className="flex flex-col items-center md:items-start gap-3 md:gap-4 md:p-4 md:bg-kickr-bg-secondary md:border md:border-white/5 md:rounded-sm md:poster-shadow">
                             <div className="scale-75 md:scale-125 origin-center md:origin-left">
                                 <StarRating note={review.note} />
                             </div>
@@ -128,7 +128,7 @@ export const ReviewDetailPage: FC = () => {
                     <div className="col-span-2 md:col-span-8 lg:col-span-9 space-y-8 md:space-y-12">
                         {/* REVIEW TEXT */}
                         {review.comment ? (
-                            <div className="bg-white/[0.01] border-l-2 border-kickr/20 pl-4 md:pl-10 py-1 md:py-2">
+                            <div className="bg-kickr-bg-secondary border-l-2 border-kickr/20 pl-4 md:pl-10 py-6 md:py-8 rounded-sm poster-shadow border border-white/5">
                                 <p className="text-xs md:text-base font-medium text-main/80 leading-relaxed italic uppercase tracking-tight">
                                     {review.comment}
                                 </p>
@@ -178,8 +178,8 @@ export const ReviewDetailPage: FC = () => {
                                     <textarea
                                         value={commentText}
                                         onChange={(e) => setCommentText(e.target.value)}
-                                        placeholder="Add your tactical response..."
-                                        className="w-full bg-white/[0.01] border border-white/5 rounded-sm p-3 md:p-4 text-[11px] md:text-sm font-medium text-main placeholder-white/5 focus:border-kickr/40 transition-all outline-none resize-none h-20 md:h-24 uppercase italic tracking-wider"
+                                        placeholder="Add your review..."
+                                        className="w-full bg-kickr-bg-secondary border border-white/10 rounded-sm p-3 md:p-4 text-[11px] md:text-sm font-medium text-main placeholder-white/5 focus:border-kickr/40 transition-all outline-none resize-none h-20 md:h-24 uppercase italic tracking-wider poster-shadow"
                                     />
                                     <div className="flex justify-end">
                                         <button disabled={!commentText.trim() || addCommentMutation.isPending} className="px-6 md:px-10 py-2.5 md:py-3.5 bg-kickr text-white text-[10px] font-bold uppercase tracking-widest rounded-md hover:brightness-110 transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(93,139,255,0.2)]">Post Comment</button>
@@ -204,7 +204,7 @@ export const ReviewDetailPage: FC = () => {
                     <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-kickr-bg-primary/95 backdrop-blur-md">
                         <div className="bg-kickr-bg-secondary border border-white/10 p-8 md:p-12 rounded-md max-w-sm w-full text-center">
                             <h3 className="text-xl font-bold text-main uppercase tracking-tight mb-4">Delete Review?</h3>
-                            <p className="text-secondary text-xs font-medium mb-10">This match log will be permanently removed from your diary.</p>
+                            <p className="text-secondary text-xs font-medium mb-10">This review will be permanently removed from your diary.</p>
                             <div className="flex gap-4">
                                 <button onClick={handleDeleteReview} className="flex-1 py-3 bg-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-widest rounded-md hover:bg-red-500/30 transition-all">Confirm</button>
                                 <button onClick={() => setShowConfirmDelete(false)} className="flex-1 py-3 bg-white/5 text-secondary text-[10px] font-bold uppercase tracking-widest rounded-md hover:text-white transition-all">Cancel</button>

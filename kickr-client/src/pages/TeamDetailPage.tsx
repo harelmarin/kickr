@@ -109,20 +109,20 @@ export const TeamDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-kickr-bg-primary pb-24">
-      <div className="bg-kickr-bg-primary border-b border-white/5 pt-12 pb-4 md:pt-20 md:pb-20 relative overflow-hidden">
+      <div className="bg-kickr-bg-secondary border-b border-white/5 pt-12 pb-4 md:pt-20 md:pb-20 relative overflow-hidden poster-shadow">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] opacity-[0.02] pointer-events-none">
           <img src={team.logoUrl} className="w-full h-full object-contain" alt="" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center md:items-end gap-3 md:gap-12 relative z-10 text-center md:text-left">
-          <div className="w-16 h-16 md:w-32 md:h-32 xl:w-48 xl:h-48 bg-kickr-bg-primary rounded-sm shadow-2xl p-3 md:p-6 border border-white/10 relative group flex-shrink-0">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:row items-center md:items-end gap-3 md:gap-12 relative z-10 text-center md:text-left">
+          <div className="w-16 h-16 md:w-32 md:h-32 xl:w-48 xl:h-48 bg-kickr-bg-secondary rounded-sm shadow-2xl p-3 md:p-6 border border-white/10 relative group flex-shrink-0 poster-shadow">
             <img src={team.logoUrl} alt={team.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 mb-1 md:mb-4">
               <div className="h-[1px] w-4 md:w-6 bg-kickr opacity-50"></div>
-              <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Tactical Deployment</span>
+              <span className="text-[6px] md:text-[9px] font-black text-kickr uppercase tracking-[0.4em] italic">Team Overview</span>
             </div>
             <h1 className="text-xl md:text-6xl xl:text-8xl font-black text-main mb-1 md:mb-4 tracking-tighter leading-none uppercase italic display-font truncate">
               {team.name}
@@ -139,7 +139,7 @@ export const TeamDetailPage = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-12 mb-2">
-            <BigStat label="Logs Recorded" value={totalDiaryEntries >= 1000 ? `${(totalDiaryEntries / 1000).toFixed(1)}k` : totalDiaryEntries.toString()} />
+            <BigStat label="Matches Logged" value={totalDiaryEntries >= 1000 ? `${(totalDiaryEntries / 1000).toFixed(1)}k` : totalDiaryEntries.toString()} />
           </div>
         </div>
       </div>
@@ -147,8 +147,8 @@ export const TeamDetailPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-16">
           <div className="lg:col-span-3 space-y-8 md:space-y-16">
-            <section>
-              <div className="flex flex-col gap-4 mb-6 md:mb-10 border-b border-white/5 pb-4 md:pb-6">
+            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+              <div className="flex flex-col gap-4 mb-6 md:mb-10 border-b border-white/[0.03] pb-4 md:pb-6">
                 <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-kickr italic">Matchography</span>
 
                 <div className="flex items-center justify-between gap-4">
@@ -159,11 +159,11 @@ export const TeamDetailPage = () => {
                       <select
                         value={status}
                         onChange={(e) => setStatus(e.target.value as any)}
-                        className="bg-transparent text-[10px] md:text-[11px] font-bold text-muted focus:text-main outline-none cursor-pointer border-none p-0 m-0"
+                        className="bg-transparent text-[10px] md:text-[11px] font-bold text-muted focus:text-main outline-none cursor-pointer border-none p-0 m-0 uppercase italic"
                       >
-                        <option value="all" className="bg-kickr-bg-primary">All</option>
-                        <option value="finished" className="bg-kickr-bg-primary">Finished</option>
-                        <option value="upcoming" className="bg-kickr-bg-primary">Upcoming</option>
+                        <option value="all" className="bg-kickr-bg-secondary">All</option>
+                        <option value="finished" className="bg-kickr-bg-secondary">Finished</option>
+                        <option value="upcoming" className="bg-kickr-bg-secondary">Upcoming</option>
                       </select>
                     </div>
 
@@ -173,10 +173,10 @@ export const TeamDetailPage = () => {
                       <select
                         value={sort}
                         onChange={(e) => setSort(e.target.value as any)}
-                        className="bg-transparent text-[10px] md:text-[11px] font-bold text-muted focus:text-main outline-none cursor-pointer border-none p-0 m-0"
+                        className="bg-transparent text-[10px] md:text-[11px] font-bold text-muted focus:text-main outline-none cursor-pointer border-none p-0 m-0 uppercase italic"
                       >
-                        <option value="date" className="bg-kickr-bg-primary">Date</option>
-                        <option value="rating" className="bg-kickr-bg-primary">Stars</option>
+                        <option value="date" className="bg-kickr-bg-secondary">Date</option>
+                        <option value="rating" className="bg-kickr-bg-secondary">Stars</option>
                       </select>
                     </div>
                   </div>
@@ -194,7 +194,7 @@ export const TeamDetailPage = () => {
                     <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-black/5 animate-pulse rounded-sm" />
                   ))
                 ) : filteredAndSortedMatches.length === 0 ? (
-                  <div className="col-span-full py-12 text-center border border-white/5 bg-white/[0.01]">
+                  <div className="col-span-full py-12 text-center border border-white/5 bg-black/[0.1] rounded-sm">
                     <p className="text-secondary uppercase tracking-[0.3em] text-[8px] font-black italic">No records in database.</p>
                   </div>
                 ) : (
@@ -207,36 +207,36 @@ export const TeamDetailPage = () => {
           </div>
 
           <div className="space-y-6 md:space-y-8">
-            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-4 md:p-8">
-              <h3 className="text-[9px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Tactical Report</h3>
+            <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-4 md:p-8 poster-shadow">
+              <h3 className="text-[9px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6 italic">Performance Report</h3>
 
               <div className="mb-8">
                 <div className="flex justify-between text-[7px] md:text-[9px] font-black uppercase tracking-widest text-secondary mb-2 md:mb-3 italic">
-                  <span>Battle Records</span>
+                  <span>Match Results</span>
                   <span className="text-muted">{stats.wins}W <span className="text-muted/30 mx-0.5 md:mx-1">/</span> {stats.draws}D <span className="text-muted/30 mx-0.5 md:mx-1">/</span> {stats.losses}L</span>
                 </div>
-                <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-black/5">
+                <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-black/10">
                   <div style={{ width: stats.winRate }} className="bg-kickr h-full shadow-[0_0_10px_rgba(93,139,255,0.3)]" title={`Wins: ${stats.winRate}`}></div>
-                  <div style={{ width: stats.drawRate }} className="bg-black/10 h-full" title={`Draws: ${stats.drawRate}`}></div>
+                  <div style={{ width: stats.drawRate }} className="bg-white/10 h-full" title={`Draws: ${stats.drawRate}`}></div>
                   <div style={{ width: stats.lossRate }} className="bg-[#EF4444]/40 h-full" title={`Losses: ${stats.lossRate}`}></div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 border-y border-white/5 py-6 md:py-8">
+              <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 border-y border-white/[0.03] py-6 md:py-8">
                 <MiniStat label="Attack" value={stats.avgScored} description="Avg" />
-                <MiniStat label="Intel" value={stats.globalAverageRating} description="Avg" isRating />
+                <MiniStat label="Stars" value={stats.globalAverageRating} description="Avg" isRating />
                 <MiniStat label="Defense" value={stats.avgConceded} description="Avg" />
               </div>
 
               <div className="mb-8">
-                <h4 className="text-[7px] md:text-[9px] font-black text-secondary uppercase tracking-widest mb-3 md:mb-4 italic">Operational Form</h4>
+                <h4 className="text-[7px] md:text-[9px] font-black text-secondary uppercase tracking-widest mb-3 md:mb-4 italic">Recent Form</h4>
                 <div className="flex gap-1">
                   {stats.form.map((res, i) => (
                     <div
                       key={i}
                       className={`w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-[9px] font-black ${res === 'W' ? 'bg-kickr text-white shadow-[0_0_8px_rgba(93,139,255,0.2)]' :
-                        res === 'D' ? 'bg-black/10 text-secondary' :
-                          'bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20'
+                        res === 'D' ? 'bg-white/10 text-secondary' :
+                          'bg-[#EF4444]/20 text-[#EF4444] border border-[#EF4444]/20'
                         }`}
                     >
                       {res}
@@ -245,9 +245,9 @@ export const TeamDetailPage = () => {
                 </div>
               </div>
 
-              <div className="pt-4 md:pt-6 border-t border-white/5 space-y-3 md:space-y-4">
+              <div className="pt-4 md:pt-6 border-t border-white/[0.03] space-y-3 md:space-y-4">
                 <div className="flex items-center justify-between uppercase tracking-widest">
-                  <span className="text-[7px] md:text-[8px] font-black text-muted">Clean Sheets</span>
+                  <span className="text-[7px] md:text-[8px] font-black text-muted italic">Clean Sheets</span>
                   <span className="text-lg md:text-xl font-black text-main italic leading-none">{stats.cleanSheets}</span>
                 </div>
                 <p className="text-[7px] md:text-[10px] text-muted italic leading-relaxed uppercase tracking-tighter">

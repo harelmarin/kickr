@@ -94,7 +94,7 @@ export const CompetitionDetailPage = () => {
 
   return (
     <main className="min-h-screen bg-kickr-bg-primary">
-      <div className="bg-black/[0.02] border-b border-white/5 pt-20 pb-6 md:py-24 relative overflow-hidden">
+      <div className="bg-kickr-bg-secondary border-b border-white/5 pt-20 pb-6 md:py-24 relative overflow-hidden poster-shadow">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] opacity-[0.02] pointer-events-none">
           <img src={competition.logoUrl} className="w-full h-full object-contain" alt="" aria-hidden="true" />
         </div>
@@ -136,13 +136,15 @@ export const CompetitionDetailPage = () => {
 
           {!isTournament && (
             <div className="lg:col-span-8 space-y-6 md:space-y-8">
-              <header className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
+              <header className="flex items-center justify-between border-b border-white/[0.03] pb-6">
                 <div>
-                  <h2 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-kickr italic">League Standings</h2>
+                  <h2 className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] text-kickr italic">League Standings</h2>
                   <p className="text-[7px] md:text-[10px] text-main/40 font-bold uppercase tracking-widest mt-0.5 md:mt-1">Live hierarchy</p>
                 </div>
               </header>
-              <LeagueStandings standingsJson={competition.standingsJson} maxEntries={20} />
+              <div className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+                <LeagueStandings standingsJson={competition.standingsJson} maxEntries={20} />
+              </div>
             </div>
           )}
 
@@ -178,16 +180,16 @@ export const CompetitionDetailPage = () => {
               </div>
             </header>
 
-            <div className="flex gap-1 p-1 bg-black/[0.02] border border-white/5 rounded-sm w-fit mb-6 md:mb-8">
+            <div className="flex gap-1 p-1 bg-kickr-bg-secondary border border-white/5 rounded-sm w-fit mb-6 md:mb-8 poster-shadow">
               <button
                 onClick={() => handleFilterChange(false)}
-                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-secondary hover:text-main/40'}`}
+                className={`px-3 md:px-4 py-1.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${!showFinished ? 'bg-kickr text-white shadow-[0_0_10px_rgba(93,139,255,0.2)]' : 'text-secondary/40 hover:text-secondary'}`}
               >
                 Upcoming
               </button>
               <button
                 onClick={() => handleFilterChange(true)}
-                className={`px-3 md:px-4 py-1 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-black shadow-[0_0_10px_rgba(var(--kickr-rgb),0.2)]' : 'text-secondary hover:text-main/40'}`}
+                className={`px-3 md:px-4 py-1.5 rounded-sm text-[8px] md:text-[9px] font-black uppercase tracking-widest transition-all ${showFinished ? 'bg-kickr text-white shadow-[0_0_10px_rgba(93,139,255,0.2)]' : 'text-secondary/40 hover:text-secondary'}`}
               >
                 Finished
               </button>

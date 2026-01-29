@@ -108,7 +108,7 @@ export const MatchDetailPage = () => {
         <div className="flex items-center gap-2 md:gap-6 mb-6 md:mb-12">
           <Link to="/" className="text-xs md:text-sm font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
             <span className="text-base group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
-            <span className="hidden sm:inline">Tactical Feed</span>
+            <span className="hidden sm:inline">Match Feed</span>
             <span className="sm:hidden italic">BACK</span>
           </Link>
           <div className="h-3 w-[1px] bg-black/5"></div>
@@ -119,7 +119,7 @@ export const MatchDetailPage = () => {
 
         <header className="mb-6 md:mb-12">
           {/* Main Poster Card */}
-          <div className="bg-white/[0.01] border border-white/5 rounded-sm relative overflow-hidden flex flex-col items-center justify-center">
+          <div className="bg-kickr-bg-secondary border border-white/5 rounded-sm relative overflow-hidden flex flex-col items-center justify-center poster-shadow">
             {/* Subtle tech background */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/5 md:via-white/10 to-transparent"></div>
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-5 md:opacity-10 pointer-events-none"></div>
@@ -237,9 +237,9 @@ export const MatchDetailPage = () => {
                 <div className="flex flex-col w-full xl:w-auto">
                   {match.averageRating && match.averageRating > 0 ? (
                     <div className="flex flex-col">
-                      <span className="text-[8px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Community Intel</span>
+                      <span className="text-[8px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] mb-4 md:mb-6 italic">Community Reviews</span>
                       <div className="flex flex-col xs:flex-row items-center gap-4 md:gap-8">
-                        <div className="flex flex-col items-center justify-center bg-white/[0.01] border border-white/5 w-20 h-20 md:w-28 md:h-28 rounded-sm relative overflow-hidden group flex-shrink-0">
+                        <div className="flex flex-col items-center justify-center bg-kickr-bg-secondary border border-white/5 w-20 h-20 md:w-28 md:h-28 rounded-sm relative overflow-hidden group flex-shrink-0 poster-shadow">
                           <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                           <span className="text-2xl md:text-4xl font-bold text-main leading-none relative z-10 display-font tabular-nums">{match.averageRating.toFixed(1)}</span>
                           <div className="flex text-rating text-[6px] md:text-[8px] mt-1.5 md:mt-3 relative z-10 tracking-[0.2em]">
@@ -280,13 +280,13 @@ export const MatchDetailPage = () => {
                   )}
                 </div>
 
-                {/* User's Tactical History - if logged */}
+                {/* User's Review History - if logged */}
                 {hasAlreadyLogged && (
                   <div className="flex flex-col w-full xl:w-auto mt-4 xl:mt-0">
                     <span className="text-[8px] md:text-[9px] font-black text-muted uppercase tracking-[0.3em] mb-4 italic leading-none">Your Records</span>
                     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1 gap-2 max-h-[300px] overflow-y-auto pr-2 no-scrollbar">
                       {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
-                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-2 bg-white/[0.01] border border-white/5 rounded-sm group/entry">
+                        <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-2 bg-kickr-bg-secondary border border-white/5 rounded-sm group/entry hover:border-kickr/40 transition-colors">
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex text-rating text-[6px] md:text-[8px]">
                               {'★'.repeat(Math.round(entry.note))}
@@ -350,7 +350,7 @@ export const MatchDetailPage = () => {
                   COMMUNITY REVIEWS ({userMatches?.length || 0})
                 </h2>
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 bg-kickr-bg-secondary border border-white/10 rounded-sm px-3 py-2">
+                  <div className="flex items-center gap-2 bg-kickr-bg-secondary border border-white/5 rounded-sm px-3 py-2">
                     <span className="text-[10px] font-bold text-secondary uppercase tracking-wider">Sort:</span>
                     <select
                       value={sortBy}
@@ -363,7 +363,7 @@ export const MatchDetailPage = () => {
                   </div>
                   <button
                     onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
-                    className="bg-kickr-bg-secondary border border-white/10 text-main text-sm px-3 py-2 rounded-sm hover:border-kickr/50 transition-all"
+                    className="bg-kickr-bg-secondary border border-white/5 text-main text-sm px-3 py-2 rounded-sm hover:border-kickr/50 transition-all"
                     title={sortDirection === 'desc' ? 'Descending' : 'Ascending'}
                   >
                     {sortDirection === 'desc' ? '↓' : '↑'}
@@ -387,12 +387,12 @@ export const MatchDetailPage = () => {
 
           {/* Right: Actions Sidebar */}
           <div className="w-full lg:w-[300px] xl:w-[340px] flex-shrink-0 order-1 lg:order-2">
-            <div className="bg-white/[0.01] border border-white/5 rounded-sm overflow-hidden shadow-2xl sticky top-24">
-              <div className="p-2 md:p-6 bg-white/[0.01] border-b border-white/5 flex items-center justify-between">
+            <div className="bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden shadow-2xl sticky top-24 poster-shadow">
+              <div className="p-2 md:p-6 bg-black/[0.1] border-b border-white/[0.03] flex items-center justify-between">
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="text-[7px] md:text-[10px] font-black text-muted uppercase tracking-[0.2em] leading-none italic">
-                      {hasAlreadyLogged ? 'History Found' : 'Rate Intel'}
+                      {hasAlreadyLogged ? 'History Found' : 'Rate Match'}
                     </span>
                     <div className="w-0.5 h-0.5 rounded-full bg-kickr"></div>
                   </div>
@@ -435,7 +435,7 @@ export const MatchDetailPage = () => {
 
                 {/* Review Text Area */}
                 <div className="space-y-1 md:space-y-3">
-                  <span className="hidden md:block text-[6px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] italic leading-none">Intelligence Notes</span>
+                  <span className="hidden md:block text-[6px] md:text-[9px] font-black text-muted uppercase tracking-[0.4em] italic leading-none">Match Notes</span>
                   <textarea
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
@@ -449,7 +449,7 @@ export const MatchDetailPage = () => {
                   disabled={rating === 0 || createUserMatch.isPending}
                   className="w-full py-2 md:py-4 rounded-sm text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-10 disabled:cursor-not-allowed transition-all bg-kickr text-white shadow-[0_0_20px_rgba(93,139,255,0.2)]"
                 >
-                  {createUserMatch.isPending ? 'TRANSMITTING...' : hasAlreadyLogged ? 'LOG AGAIN' : 'EXECUTE LOG'}
+                  {createUserMatch.isPending ? 'SAVING...' : hasAlreadyLogged ? 'REVIEW AGAIN' : 'SAVE REVIEW'}
                 </button>
 
               </div>
@@ -487,7 +487,7 @@ export const MatchDetailPage = () => {
                 </div>
                 <h3 className="text-3xl font-black text-main uppercase italic tracking-tighter mb-3 leading-none">Match Logged</h3>
                 <p className="text-muted text-[13px] mb-10 leading-relaxed font-medium">
-                  Your tactical report is now part of the Kickr network. Export your Review Poster to share your session on social media!
+                  Your review is now part of the Kickr network. Export your Review Poster to share your session on social media!
                 </p>
 
                 <div className="w-full space-y-4">
@@ -532,7 +532,7 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('Remove this tactical log? This action is permanent.')) return;
+    if (!window.confirm('Remove this review? This action is permanent.')) return;
     try {
       await deleteUserMatch.mutateAsync(review.id);
       toast.success('Log removed');
@@ -621,7 +621,7 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
             onClick={() => onToggleView('visual')}
             className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all italic ${viewMode === 'visual' ? 'bg-kickr text-black' : 'text-muted hover:text-main'}`}
           >
-            Tactical
+            Pitch
           </button>
           <button
             onClick={() => onToggleView('list')}
@@ -656,7 +656,7 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
                   </div>
                 </div>
               </div>
-              <TacticalPitch teamLineup={teamLineup} />
+              <MatchPitch teamLineup={teamLineup} />
 
               {/* Subs below the pitch in visual mode but compact */}
               {teamLineup.substitutes && (
@@ -677,7 +677,7 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {lineups.map((teamLineup: any, idx: number) => (
-            <div key={idx} className="bg-black/[0.02] border border-white/5 rounded-sm p-8">
+            <div key={idx} className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-4 md:p-8 poster-shadow">
               <div className="flex items-center gap-6 mb-8 border-b border-white/5 pb-6">
                 <img src={teamLineup.team.logo} alt={teamLineup.team.name} className="w-10 h-10 object-contain" />
                 <div>
@@ -735,7 +735,7 @@ const LineupsSection = ({ lineups, viewMode, onToggleView }: any) => {
   );
 };
 
-const TacticalPitch = ({ teamLineup }: { teamLineup: any }) => {
+const MatchPitch = ({ teamLineup }: { teamLineup: any }) => {
   return (
     <div className="relative aspect-[4/5] w-full rounded-sm overflow-hidden border border-white/5 shadow-2xl">
       {/* Grass Texture & Lines */}
@@ -754,13 +754,13 @@ const TacticalPitch = ({ teamLineup }: { teamLineup: any }) => {
 
       {/* Players */}
       <div className="absolute inset-2 md:inset-4 py-4 md:py-8 px-2 md:px-4 grid grid-rows-5 h-full">
-        {renderTacticalPlayers(teamLineup.startXI)}
+        {renderPlayers(teamLineup.startXI)}
       </div>
     </div>
   );
 };
 
-const renderTacticalPlayers = (players: any[]) => {
+const renderPlayers = (players: any[]) => {
   // Group players by their grid row (1 to 5)
   // API Football grid is "row:col", e.g. "1:1" for GK
   const groupedPlayers: { [key: number]: any[] } = {};
@@ -830,13 +830,13 @@ const StatsSection = ({ stats, homeTeam, homeLogo, homeTeamId, awayTeam, awayLog
   );
 
   return (
-    <div className="space-y-4 md:space-y-8 bg-white/[0.01] border border-white/5 rounded-sm p-4 md:p-12 relative overflow-hidden">
+    <div className="space-y-4 md:space-y-8 bg-kickr-bg-secondary border border-white/5 rounded-sm p-4 md:p-12 relative overflow-hidden poster-shadow">
       <div className="flex justify-between items-center pb-4 md:pb-10 border-b border-white/5 mb-4 md:mb-6">
         <Link to={`/teams/${homeTeamId}`} className="flex items-center gap-2 md:gap-3 group/team p-1 -m-1 rounded-sm transition-all">
           <img src={homeLogo} alt="" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
           <span className="text-main font-black uppercase italic tracking-tighter text-[10px] md:text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{homeTeam}</span>
         </Link>
-        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-muted italic">Tactical Intel</div>
+        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-muted italic">Match Stats</div>
         <Link to={`/teams/${awayTeamId}`} className="flex items-center gap-2 md:gap-3 group/team p-1 -m-1 rounded-sm transition-all">
           <span className="text-main font-black uppercase italic tracking-tighter text-[10px] md:text-sm hidden sm:block group-hover/team:text-kickr transition-colors">{awayTeam}</span>
           <img src={awayLogo} alt="" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
@@ -958,7 +958,7 @@ const LoadingState = () => (
   <div className="min-h-screen bg-kickr-bg-primary flex items-center justify-center">
     <div className="flex flex-col items-center gap-6">
       <div className="w-12 h-12 border border-kickr/20 border-t-kickr animate-spin"></div>
-      <span className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic animate-pulse">Syncing Tactical Data...</span>
+      <span className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic animate-pulse">Syncing Match Data...</span>
     </div>
   </div>
 );

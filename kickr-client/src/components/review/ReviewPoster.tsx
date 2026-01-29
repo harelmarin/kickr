@@ -1,7 +1,7 @@
 import React from 'react';
 import type { UserMatch } from '../../types/userMatch';
 
-interface TacticalCardProps {
+interface ReviewPosterProps {
     review: UserMatch;
     cardRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -24,7 +24,7 @@ const getProxyUrl = (url: string) => {
     return `${baseUrl}/api/proxy/image?url=${encodeURIComponent(url)}`;
 };
 
-export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
+export const ReviewPoster = ({ review, cardRef }: ReviewPosterProps) => {
     return (
         <div
             ref={cardRef}

@@ -58,7 +58,7 @@ export const UserDiaryPage = () => {
                             Profile
                         </Link>
                         <div className="h-3 md:h-4 w-px bg-black/5"></div>
-                        <span className="text-[11px] md:text-[11px] font-black uppercase tracking-widest text-muted italic">Match Records</span>
+                        <span className="text-[11px] md:text-[11px] font-black uppercase tracking-widest text-muted italic">Review Diary</span>
                     </div>
 
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-8 md:mb-12">
@@ -85,10 +85,8 @@ export const UserDiaryPage = () => {
                                     </Link>
                                 </motion.div>
                             ) : (
-                                <motion.div
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-gradient-to-br from-[#1b2228] to-kickr-bg-primary border border-white/5 flex items-center justify-center text-2xl md:text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
+                                <div
+                                    className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-kickr-bg-secondary border border-white/5 flex items-center justify-center text-2xl md:text-3xl font-black text-kickr shadow-2xl relative overflow-hidden group"
                                 >
                                     {user?.avatarUrl ? (
                                         <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
@@ -96,7 +94,7 @@ export const UserDiaryPage = () => {
                                         user?.name[0].toUpperCase()
                                     )}
                                     <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                </motion.div>
+                                </div>
                             )}
                             <div>
                                 <motion.h1
@@ -104,7 +102,7 @@ export const UserDiaryPage = () => {
                                     animate={{ y: 0, opacity: 1 }}
                                     className="text-2xl md:text-5xl font-black text-main italic tracking-tighter uppercase display-font leading-none mb-1"
                                 >
-                                    {user?.name}<span className="text-kickr/80">'s</span> Match Log
+                                    {user?.name}<span className="text-kickr/80">'s</span> Review Diary
                                 </motion.h1>
                                 <p className="text-muted uppercase tracking-[0.2em] md:tracking-[0.3em] text-[11px] md:text-[11px] font-black italic">
                                     Personal History & Football Analysis
@@ -126,7 +124,7 @@ export const UserDiaryPage = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center bg-white/[0.01] border border-white/5 p-2 md:p-4 rounded-sm gap-2 md:gap-4">
+                    <div className="flex items-center bg-kickr-bg-secondary border border-white/5 p-2 md:p-4 rounded-sm gap-2 md:gap-4 poster-shadow">
                         <span className="text-xs md:text-lg opacity-40">🔍</span>
                         <div className="flex flex-col gap-0 flex-1">
                             <span className="text-[11px] md:text-[10px] uppercase font-black text-muted tracking-[0.2em] italic">FIND TEAMS</span>
@@ -155,8 +153,8 @@ export const UserDiaryPage = () => {
                 ) : Object.keys(groupedReviews).length > 0 ? (
                     <div className="space-y-8 md:space-y-16">
                         {Object.entries(groupedReviews).map(([monthYear, monthReviews]: [string, any]) => (
-                            <section key={monthYear} className="bg-white/[0.01] p-4 md:p-6 rounded-sm border border-white/5 poster-shadow">
-                                <h2 className="cinematic-header text-[11px] md:text-[11px] text-muted mb-4 md:mb-6 border-b border-white/[0.03] pb-1.5 italic">
+                            <section key={monthYear} className="bg-kickr-bg-secondary p-4 md:p-8 rounded-sm border border-white/5 poster-shadow">
+                                <h2 className="cinematic-header text-[11px] md:text-[11px] text-muted mb-6 md:mb-8 border-b border-white/[0.03] pb-4 italic">
                                     {monthYear}
                                 </h2>
 
@@ -170,43 +168,23 @@ export const UserDiaryPage = () => {
 
                         {/* Pagination Controls */}
                         {!isLoading && pageData && pageData.totalPages > 1 && (
-                            <div className="mt-8 md:mt-16 flex items-center justify-center gap-2 md:gap-4 pb-12">
+                            <div className="mt-8 md:mt-16 flex items-center justify-center gap-2 md:gap-8 pb-12 border-t border-white/[0.03] pt-12">
                                 <button
                                     onClick={() => {
                                         setCurrentPage(prev => Math.max(0, prev - 1));
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.first}
-                                    className="px-3 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[11px] md:text-[11px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
+                                    className="group flex items-center gap-2 px-6 py-2.5 bg-kickr-bg-secondary border border-white/5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr hover:border-kickr/40 disabled:opacity-5 transition-all italic active:scale-95"
                                 >
-                                    Prev
+                                    <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
+                                    PREV
                                 </button>
 
-                                <div className="flex items-center gap-1 md:gap-2">
-                                    {[...Array(pageData.totalPages)].map((_, i) => {
-                                        if (pageData.totalPages > 5) {
-                                            if (i < currentPage - 2 && i !== 0) return null;
-                                            if (i > currentPage + 2 && i !== pageData.totalPages - 1) return null;
-                                            if (i === currentPage - 2 && i !== 0) return <span key={i} className="text-main/5 text-[8px]">...</span>;
-                                            if (i === currentPage + 2 && i !== pageData.totalPages - 1) return <span key={i} className="text-main/5 text-[8px]">...</span>;
-                                        }
-
-                                        return (
-                                            <button
-                                                key={i}
-                                                onClick={() => {
-                                                    setCurrentPage(i);
-                                                    window.scrollTo({ top: 300, behavior: 'smooth' });
-                                                }}
-                                                className={`w-7 h-7 md:w-10 md:h-10 rounded-sm text-[11px] md:text-[11px] font-black transition-all cursor-pointer tabular-nums ${currentPage === i
-                                                    ? 'bg-kickr text-white'
-                                                    : 'bg-white/[0.01] border border-white/5 text-muted hover:text-main hover:border-white/10'
-                                                    }`}
-                                            >
-                                                {i + 1}
-                                            </button>
-                                        );
-                                    })}
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[10px] md:text-[11px] font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
+                                        Page <span className="text-main">{currentPage + 1}</span> / {pageData.totalPages}
+                                    </span>
                                 </div>
 
                                 <button
@@ -215,9 +193,10 @@ export const UserDiaryPage = () => {
                                         window.scrollTo({ top: 300, behavior: 'smooth' });
                                     }}
                                     disabled={pageData.last}
-                                    className="px-3 md:px-6 py-2 md:py-3 bg-white/[0.01] border border-white/5 rounded-sm text-[11px] md:text-[11px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-5 transition-all cursor-pointer italic"
+                                    className="group flex items-center gap-2 px-6 py-2.5 bg-kickr text-white rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] hover:brightness-110 disabled:opacity-5 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)] active:scale-95"
                                 >
-                                    Next
+                                    NEXT
+                                    <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>
                                 </button>
                             </div>
                         )}
@@ -225,8 +204,8 @@ export const UserDiaryPage = () => {
                 ) : (
                     <EmptyState
                         icon="📔"
-                        title="Your tactical diary is empty"
-                        description="No matchlogs matches your current search filters. Try clear the identification filter."
+                        title="Your diary is empty"
+                        description="No reviews matches your current search filters. Try clear the identification filter."
                         actionLabel="Clear Search"
                         onAction={() => setSearch('')}
                     />
@@ -239,7 +218,7 @@ export const UserDiaryPage = () => {
 const ErrorState = () => (
     <div className="min-h-screen flex items-center justify-center text-center p-12 bg-kickr-bg-primary">
         <div className="max-w-md">
-            <h2 className="text-2xl font-black text-main mb-4 uppercase tracking-tighter italic">Tactical Log Error</h2>
+            <h2 className="text-2xl font-black text-main mb-4 uppercase tracking-tighter italic">Diary Error</h2>
             <p className="text-secondary text-sm mb-8 leading-relaxed">Failed to load the match diary at this time.</p>
             <button onClick={() => window.location.reload()} className="text-kickr font-black uppercase tracking-widest text-xs border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Try Again</button>
         </div>

@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { EmptyState } from '../components/ui/EmptyState';
 import { TopTeamsWidget } from '../components/widgets/TopTeamsWidget';
 import { TopReviewsWidget } from '../components/widgets/TopReviewsWidget';
+import { TodayMatches } from '../components/matches/TodayMatches';
 
 export const MatchesPage = () => {
   const [page, setPage] = useState(0);
@@ -52,8 +53,8 @@ export const MatchesPage = () => {
             <h1 className="cinematic-header text-sm md:text-base">Browse Matches</h1>
           </div>
 
-          <div className="mt-4 md:mt-12">
-            <div className="flex items-end justify-between border-b border-white/5 pb-2 md:pb-4 gap-4">
+          <div className="mt-4 md:mt-12 bg-kickr-bg-secondary border border-white/5 p-4 md:p-6 rounded-sm poster-shadow">
+            <div className="flex items-end justify-between border-b border-white/[0.03] pb-6 gap-4">
               <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                 {/* Search */}
                 <div className="flex flex-col gap-1 w-full md:w-60">
@@ -66,7 +67,7 @@ export const MatchesPage = () => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       aria-label="Search clubs"
-                      className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[11px] md:text-[12px] font-black text-main placeholder-white/20 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
+                      className="w-full bg-kickr-bg-primary/40 border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[11px] md:text-[12px] font-black text-main placeholder-white/20 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
                     />
                   </div>
                 </div>
@@ -81,23 +82,23 @@ export const MatchesPage = () => {
                         setCompetitionId(e.target.value || undefined);
                         setPage(0);
                       }}
-                      className="w-full bg-white/[0.02] border border-white/10 rounded-sm px-3 py-1.5 text-[11px] md:text-[12px] font-black text-main focus:border-kickr/40 outline-none cursor-pointer appearance-none hover:bg-white/[0.04] transition-all uppercase italic tracking-widest"
+                      className="w-full bg-kickr-bg-primary/40 border border-white/10 rounded-sm px-3 py-1.5 text-[11px] md:text-[12px] font-black text-main focus:border-kickr/40 outline-none cursor-pointer appearance-none hover:bg-white/[0.04] transition-all uppercase italic tracking-widest"
                     >
-                      <option value="" className="bg-kickr-bg-primary">All Leagues</option>
+                      <option value="" className="bg-kickr-bg-secondary">All Leagues</option>
                       {competitions?.map(c => (
-                        <option key={c.id} value={c.id} className="bg-kickr-bg-primary">{c.name}</option>
+                        <option key={c.id} value={c.id} className="bg-kickr-bg-secondary">{c.name}</option>
                       ))}
                     </select>
                   </div>
                 </div>
 
                 {/* Status Filter */}
-                <div className="flex bg-black/[0.05] p-1 rounded-sm border border-white/5 w-full md:w-auto h-[32px] md:h-[34px] items-center self-end">
+                <div className="flex bg-black/[0.1] p-1 rounded-sm border border-white/5 w-full md:w-auto h-[32px] md:h-[34px] items-center self-end">
                   {['all', 'upcoming', 'finished'].map((s) => (
                     <button
                       key={s}
                       onClick={() => { setStatus(s as any); setPage(0); }}
-                      className={`px-4 py-1.5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.2)]' : 'text-muted hover:text-main'}`}
+                      className={`px-4 py-1.5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all ${status === s ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.3)]' : 'text-muted hover:text-main'}`}
                     >
                       {s}
                     </button>
@@ -108,35 +109,49 @@ export const MatchesPage = () => {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 mt-8 md:mt-12">
           {/* Main Content */}
-          <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-              <h2 className="cinematic-header text-[11px] md:text-[11px] text-muted italic">Live Feed</h2>
-              <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
-            </div>
+          <div className="lg:col-span-8 space-y-8 md:space-y-12">
+            {/* TODAY'S MATCHES SECTION */}
+            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+              <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                <div className="flex items-center gap-3">
+                  <h2 className="cinematic-header text-[11px] md:text-[11px] text-kickr italic">Today's Matches</h2>
+                  <span className="text-[8px] md:text-[10px] font-black text-kickr uppercase tracking-widest px-2 py-0.5 bg-kickr/10 rounded-sm">LIVE</span>
+                </div>
+              </div>
+              <TodayMatches />
+            </section>
 
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-              {isLoading ? (
-                Array.from({ length: 9 }).map((_, i) => (
-                  <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-black/5 animate-pulse rounded-sm" />
-                ))
-              ) : (
-                <AnimatePresence mode="popLayout">
-                  {sortMatchesByHierarchy(data?.content || []).map((match) => (
-                    <motion.div
-                      key={match.id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <CompactMatchCard match={match} />
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              )}
-            </div>
+            {/* LIVE FEED SECTION */}
+            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+              <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                <h2 className="cinematic-header text-[11px] md:text-[11px] text-muted italic">Live Feed</h2>
+                <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: LIVE</span>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                {isLoading ? (
+                  Array.from({ length: 9 }).map((_, i) => (
+                    <div key={i} className="aspect-[1.5/1] md:aspect-[2.5/1] bg-black/5 animate-pulse rounded-sm" />
+                  ))
+                ) : (
+                  <AnimatePresence mode="popLayout">
+                    {sortMatchesByHierarchy(data?.content || []).map((match) => (
+                      <motion.div
+                        key={match.id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <CompactMatchCard match={match} />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                )}
+              </div>
+            </section>
 
             {/* Empty State */}
             {!isLoading && data?.content.length === 0 && (
@@ -158,15 +173,15 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={page === 0}
-                  className="group flex items-center gap-2 text-[11px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
+                  className="group flex items-center gap-2 px-6 py-2.5 bg-black/[0.02] border border-white/5 rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr hover:border-kickr/40 disabled:opacity-5 transition-all italic active:scale-95"
                 >
                   <span className="text-sm group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
                   PREV
                 </button>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] md:text-sm font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
-                    PAGE {page + 1} / {data.totalPages}
+                  <span className="text-[10px] md:text-[11px] font-black text-muted uppercase tracking-widest italic tabular-nums font-mono">
+                    Page <span className="text-main">{page + 1}</span> / {data.totalPages}
                   </span>
                 </div>
 
@@ -176,7 +191,7 @@ export const MatchesPage = () => {
                     window.scrollTo({ top: 300, behavior: 'smooth' });
                   }}
                   disabled={data?.last}
-                  className="group flex items-center gap-2 text-[11px] md:text-[11px] font-black uppercase tracking-[0.2em] text-secondary disabled:opacity-5 hover:text-main transition-all italic"
+                  className="group flex items-center gap-2 px-6 py-2.5 bg-kickr text-white rounded-sm text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] hover:brightness-110 disabled:opacity-5 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)] active:scale-95"
                 >
                   NEXT
                   <span className="text-sm group-hover:translate-x-1 transition-transform leading-none mb-0.5">→</span>

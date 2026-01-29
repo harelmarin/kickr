@@ -21,8 +21,8 @@ export const CompetitionsPage = () => {
             <h1 className="cinematic-header text-sm md:text-base">The Competitions</h1>
           </div>
 
-          <div className="mt-4 md:mt-10">
-            <div className="flex items-end justify-between gap-4 border-b border-white/5 pb-4">
+          <div className="mt-4 md:mt-10 bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+            <div className="flex items-end justify-between gap-4 border-b border-white/[0.03] pb-6">
               <div className="flex flex-col gap-1 w-full md:w-60">
                 <span className="text-[10px] md:text-[11px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Leagues</span>
                 <div className="relative">
@@ -39,7 +39,7 @@ export const CompetitionsPage = () => {
               </div>
 
               <div className="flex flex-col items-end">
-                <span className="text-base md:text-xl font-black text-main italic leading-none tracking-tighter">
+                <span className="text-base md:text-xl font-black text-main italic leading-none tracking-tighter tabular-nums">
                   {isLoading ? '...' : filteredCompetitions.length}
                 </span>
                 <span className="text-[10px] md:text-[11px] uppercase tracking-widest text-muted font-bold mt-1">Found</span>
@@ -52,33 +52,35 @@ export const CompetitionsPage = () => {
 
           {/* Left Column: All Competitions Grid */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-              <h2 className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">All Competitions</h2>
-              <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
-            </div>
+            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+              <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                <h2 className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">All Competitions</h2>
+                <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: LIVE</span>
+              </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              {isLoading ? (
-                Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-square bg-black/5 animate-pulse rounded-sm" />)
-              ) : (
-                filteredCompetitions.map((comp) => (
-                  <Link key={comp.id} to={`/competitions/${comp.id}`} className="group relative block bg-black/[0.02] border border-white/5 hover:border-kickr/40 hover:bg-black/[0.04] hover:shadow-[0_0_20px_rgba(93,139,255,0.05)] transition-all rounded-sm p-3 md:p-4 overflow-hidden h-full">
-                    <div className="flex flex-col items-center gap-3 md:gap-4 h-full">
-                      <div className="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center p-1 mt-auto">
-                        <img
-                          src={comp.logoUrl}
-                          alt={comp.name}
-                          className="max-w-full max-h-full object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300"
-                        />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                {isLoading ? (
+                  Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-square bg-black/5 animate-pulse rounded-sm" />)
+                ) : (
+                  filteredCompetitions.map((comp) => (
+                    <Link key={comp.id} to={`/competitions/${comp.id}`} className="group relative block bg-black/[0.02] border border-white/5 hover:border-kickr/40 hover:bg-black/[0.04] hover:shadow-[0_0_20px_rgba(93,139,255,0.05)] transition-all rounded-sm p-3 md:p-4 overflow-hidden h-full">
+                      <div className="flex flex-col items-center gap-3 md:gap-4 h-full">
+                        <div className="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center p-1 mt-auto">
+                          <img
+                            src={comp.logoUrl}
+                            alt={comp.name}
+                            className="max-w-full max-h-full object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </div>
+                        <h3 className="text-center text-[10px] md:text-[11px] font-black text-secondary group-hover:text-main transition-colors tracking-widest uppercase truncate w-full mb-auto">
+                          {comp.name}
+                        </h3>
                       </div>
-                      <h3 className="text-center text-[10px] md:text-[11px] font-black text-secondary group-hover:text-main transition-colors tracking-widest uppercase truncate w-full mb-auto">
-                        {comp.name}
-                      </h3>
-                    </div>
-                  </Link>
-                ))
-              )}
-            </div>
+                    </Link>
+                  ))
+                )}
+              </div>
+            </section>
 
             {!isLoading && filteredCompetitions.length === 0 && (
               <EmptyState

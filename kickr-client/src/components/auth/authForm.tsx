@@ -8,8 +8,8 @@ import axiosInstance from '../../services/axios';
 import toast from 'react-hot-toast';
 
 const loginSchema = z.object({
-    username: z.string().min(1, "Identity is required"),
-    password: z.string().min(1, "Security pass is required"),
+    username: z.string().min(1, "Username is required"),
+    password: z.string().min(1, "Password is required"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -38,6 +38,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
         try {
             await login(data);
             onSuccess?.();
+            toast.success('Signed in successfully!');
         } catch (err) { }
     };
 
@@ -69,8 +70,8 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                         className="p-6 sm:p-8 flex flex-col gap-6"
                     >
                         <div>
-                            <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">Kickr Access</h3>
-                            <p className="text-main text-2xl font-black tracking-tighter italic uppercase leading-none display-font">Authorization</p>
+                            <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">Kickr Sign In</h3>
+                            <p className="text-main text-2xl font-black tracking-tighter italic uppercase leading-none display-font">Welcome Back</p>
                         </div>
 
                         <div className="space-y-4">
@@ -111,7 +112,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                             disabled={isLoading}
                             className="w-full py-4 rounded-sm bg-kickr text-black text-[12px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30 italic shadow-lg shadow-kickr/5"
                         >
-                            {isLoading ? 'VERIFYING...' : 'AUTHENTICATE'}
+                            {isLoading ? 'SIGNING IN...' : 'SIGN IN'}
                         </button>
 
                         <button
@@ -119,7 +120,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                             onClick={() => setIsForgot(true)}
                             className="text-[11px] font-black text-main/40 hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 italic"
                         >
-                            [ FORGOT DETAILS? ]
+                            [ FORGOT PASSWORD? ]
                         </button>
                     </motion.form>
                 ) : (
@@ -132,13 +133,13 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                     >
                         <div>
                             <h3 className="text-[12px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic">Forgot Password</h3>
-                            <p className="text-main text-xl font-black tracking-tighter italic uppercase leading-none">Reset Access</p>
+                            <p className="text-main text-xl font-black tracking-tighter italic uppercase leading-none">Reset Password</p>
                         </div>
 
                         {!isForgotSent ? (
                             <form onSubmit={handleForgotSubmit} className="space-y-6">
                                 <div className="space-y-3">
-                                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.3em] pl-1 block italic">Email Adress</label>
+                                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.3em] pl-1 block italic">Email Address</label>
                                     <input
                                         type="email"
                                         required
@@ -154,7 +155,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                                     disabled={isForgotLoading}
                                     className="w-full py-4 rounded-sm bg-kickr text-black text-[12px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30 italic shadow-lg shadow-kickr/5"
                                 >
-                                    {isForgotLoading ? 'PROCESSING...' : 'SEND RESET LINK'}
+                                    {isForgotLoading ? 'SENDING...' : 'SEND RESET LINK'}
                                 </button>
                             </form>
                         ) : (
@@ -174,7 +175,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
                             }}
                             className="text-[11px] font-black text-secondary hover:text-kickr uppercase tracking-[0.3em] transition-all italic"
                         >
-                            [ BACK TO LOGIN ]
+                            [ BACK TO SIGN IN ]
                         </button>
                     </motion.div>
                 )}
@@ -185,7 +186,7 @@ export const LoginDropdown: FC<LoginDropdownProps> = ({ onSuccess }) => {
 
 const registerSchema = z.object({
     name: z.string().min(3, "Min 3 chars").max(20, "Max 20 chars"),
-    email: z.string().email("Invalid tactical email"),
+    email: z.string().email("Invalid email address"),
     password: z.string()
         .min(8, "Min 8 chars")
         .regex(/[A-Z]/, "One uppercase")
@@ -238,8 +239,8 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-kickr/40 to-transparent"></div>
 
             <div className="mb-4">
-                <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">System Enrollment</h3>
-                <p className="text-main text-3xl font-black tracking-tighter italic uppercase leading-none display-font">New Member</p>
+                <h3 className="text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-2 italic px-0.5">Kickr Sign Up</h3>
+                <p className="text-main text-3xl font-black tracking-tighter italic uppercase leading-none display-font">Join Kickr</p>
             </div>
 
             <div className="flex flex-col gap-6">
@@ -247,7 +248,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                     <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Username</label>
                     <input
                         type="text"
-                        placeholder="CHOOSE_IDENTITY"
+                        placeholder="Username"
                         {...register("name")}
                         className={`bg-[#0F1115] border ${errors.name ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
@@ -255,10 +256,10 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Communication Link</label>
+                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Email Address</label>
                     <input
                         type="email"
-                        placeholder="ENCRYPTED@SIGNAL.MAIL"
+                        placeholder="your@email.com"
                         {...register("email")}
                         className={`bg-[#0F1115] border ${errors.email ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
@@ -266,10 +267,10 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Security Pass</label>
+                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Password</label>
                     <input
                         type="password"
-                        placeholder="CREATE_ENCRYPTION_PASS"
+                        placeholder="Password"
                         {...register("password")}
                         className={`bg-[#0F1115] border ${errors.password ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
@@ -277,10 +278,10 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Confirm Security</label>
+                    <label className="text-[11px] font-black text-secondary uppercase tracking-[0.4em] pl-1 italic">Confirm Password</label>
                     <input
                         type="password"
-                        placeholder="VERIFY_ENCRYPTION_PASS"
+                        placeholder="Confirm Password"
                         {...register("confirmPassword")}
                         className={`bg-[#0F1115] border ${errors.confirmPassword ? 'border-red-500/30' : 'border-white/5'} rounded-sm px-5 py-4 text-xs font-black text-main placeholder-white/30 outline-none focus:border-kickr/20 transition-all italic`}
                     />
@@ -288,7 +289,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
 
                     {password.length > 0 && (
                         <div className="bg-white/[0.01] border border-white/5 rounded-sm p-6 space-y-3 mt-2">
-                            <div className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-2 italic">Security Checklist</div>
+                            <div className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-2 italic">Password Requirements</div>
                             <div className="flex items-center gap-3">
                                 <div className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-kickr' : 'bg-black/10'}`}></div>
                                 <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasMinLength ? 'text-secondary' : 'text-muted'}`}>
@@ -298,19 +299,19 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                             <div className="flex items-center gap-3">
                                 <div className={`w-1.5 h-1.5 rounded-full ${hasUppercase ? 'bg-kickr' : 'bg-black/10'}`}></div>
                                 <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasUppercase ? 'text-secondary' : 'text-muted'}`}>
-                                    Alpha-Upper Requirement
+                                    One uppercase letter
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <div className={`w-1.5 h-1.5 rounded-full ${hasLowercase ? 'bg-kickr' : 'bg-black/10'}`}></div>
                                 <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasLowercase ? 'text-secondary' : 'text-muted'}`}>
-                                    Alpha-Lower Requirement
+                                    One lowercase letter
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <div className={`w-1.5 h-1.5 rounded-full ${hasNumber ? 'bg-kickr' : 'bg-black/10'}`}></div>
                                 <span className={`text-[11px] font-black uppercase tracking-widest italic transition-colors ${hasNumber ? 'text-secondary' : 'text-muted'}`}>
-                                    Numeric Requirement
+                                    One number
                                 </span>
                             </div>
                         </div>
@@ -323,7 +324,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                 disabled={isLoading}
                 className="w-full py-4 rounded-sm bg-kickr text-black text-[12px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all disabled:opacity-30 italic shadow-lg shadow-kickr/5 mt-4"
             >
-                {isLoading ? 'ENROLLING...' : 'INITIALIZE ACCOUNT'}
+                {isLoading ? 'CREATING ACCOUNT...' : 'CREATE ACCOUNT'}
             </button>
 
             {onSwitchToLogin && (
@@ -332,7 +333,7 @@ export const RegisterDropdown: FC<RegisterDropdownProps> = ({ onSuccess, onSwitc
                     onClick={onSwitchToLogin}
                     className="text-[11px] font-black text-secondary hover:text-kickr uppercase tracking-[0.3em] transition-all pt-2 mx-auto italic"
                 >
-                    [ ALREADY AUTHORIZED? LOGIN ]
+                    [ ALREADY HAVE AN ACCOUNT? SIGN IN ]
                 </button>
             )}
         </form>

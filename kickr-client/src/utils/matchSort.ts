@@ -1,29 +1,19 @@
 import type { Match } from '../types/match';
 
-const TIER_1 = [
-    'UEFA Champions League',
-    'Champions League',
-    'Premier League',
-    'La Liga',
-    'Ligue 1',
-    'Serie A',
-    'Bundesliga'
-];
-
-const TIER_2 = [
-    'UEFA Europa League',
-    'Europa League',
-    'UEFA Europa Conference League',
-    'Conference League'
-];
 
 const getMatchWeight = (match: Match): number => {
     const compName = match.competition || '';
 
-    if (TIER_1.some(name => compName.includes(name))) return 100;
-    if (TIER_2.some(name => compName.includes(name))) return 50;
+    if (compName.includes('UEFA Champions League')) return 1000;
+    if (compName.includes('Premier League')) return 900;
+    if (compName.includes('La Liga')) return 800;
+    if (compName.includes('UEFA Europa League')) return 700;
+    if (compName.includes('Bundesliga')) return 600;
+    if (compName.includes('Serie A')) return 500;
+    if (compName.includes('Ligue 1')) return 400;
+    if (compName.includes('UEFA Europa Conference League')) return 300;
 
-    return 10;
+    return 100;
 };
 
 export const sortMatchesByHierarchy = (matches: Match[]): Match[] => {

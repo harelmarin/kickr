@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
-import { TacticalCard } from './TacticalCard';
+import { ReviewPoster } from './ReviewPoster';
 import type { UserMatch } from '../../types/userMatch';
 import toast from 'react-hot-toast';
 
@@ -21,7 +21,7 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
         if (!cardRef.current) return;
 
         setIsGenerating(true);
-        const loadingToast = toast.loading('Generating Tactical Card...');
+        const loadingToast = toast.loading('Generating Review Card...');
 
         try {
             // Wait longer for fonts and images to be ready
@@ -113,7 +113,7 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 }}
             >
                 <div style={{ visibility: isGenerating ? 'visible' : 'hidden' }}>
-                    <TacticalCard review={review} cardRef={cardRef} />
+                    <ReviewPoster review={review} cardRef={cardRef} />
                 </div>
             </div>
 

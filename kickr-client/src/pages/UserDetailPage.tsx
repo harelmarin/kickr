@@ -137,19 +137,19 @@ export const UserDetailPage = () => {
                     </div>
 
                     {/* Stats Bar */}
-                    <div className="flex items-center justify-between md:justify-start gap-2 md:gap-8 px-3 md:px-6 py-3 md:py-4 bg-white/[0.01] border border-white/5 rounded-sm overflow-x-auto no-scrollbar">
+                    <div className="flex items-center justify-between md:justify-start gap-2 md:gap-8 px-3 md:px-6 py-3 md:py-4 bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-x-auto no-scrollbar poster-shadow">
                         <StatHorizontal
                             label="Logs"
                             value={user.matchesCount.toString()}
                             onClick={() => navigate(`/user/${id}/diary`)}
                         />
-                        <div className="w-[1px] h-6 md:h-8 bg-black/5" />
+                        <div className="w-[1px] h-6 md:h-8 bg-white/[0.03]" />
                         <StatHorizontal
                             label="Following"
                             value={user.followingCount.toString()}
                             onClick={() => navigate(`/user/${id}/following`)}
                         />
-                        <div className="w-[1px] h-6 md:h-8 bg-black/5" />
+                        <div className="w-[1px] h-6 md:h-8 bg-white/[0.03]" />
                         <StatHorizontal
                             label="Followers"
                             value={user.followersCount.toString()}
@@ -162,9 +162,9 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-8 md:space-y-12">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm poster-shadow">
-                            <div className="flex items-center justify-between border-b border-white/[0.03] pb-3 md:pb-4">
-                                <Link to={`/user/${id}/diary`} className="cinematic-header text-[11px] md:text-sm text-main/90 hover:text-kickr transition-colors">Tactical Diary</Link>
+                        <section id="diary-entries" className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
+                            <div className="flex items-center justify-between border-b border-white/[0.03] pb-4 mb-8">
+                                <Link to={`/user/${id}/diary`} className="cinematic-header text-[11px] md:text-sm text-main/90 hover:text-kickr transition-colors italic">Match Diary</Link>
                                 <span className="text-[11px] md:text-[10px] font-black text-muted uppercase tracking-widest leading-none italic">DATABASE: {pageData?.totalElements || 0}</span>
                             </div>
 
@@ -182,21 +182,21 @@ export const UserDetailPage = () => {
                                         ))}
                                 </div>
                             ) : (
-                                <div className="py-12 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-sm">
-                                    <p className="text-secondary text-[10px] font-bold uppercase tracking-widest">No match entries detected.</p>
+                                <div className="py-12 text-center bg-black/[0.1] border border-dashed border-white/5 rounded-sm">
+                                    <p className="text-secondary text-[10px] font-bold uppercase tracking-widest italic leading-none">No match entries detected.</p>
                                 </div>
                             )}
                         </section>
 
                         {/* Top Teams & Leagues Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
-                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6">Top Squads</h3>
+                            <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6 italic">Top Squads</h3>
                                 <MostWatchedTeams reviews={pageData?.content || []} />
                             </section>
 
-                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
-                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6">Top Leagues</h3>
+                            <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6 italic">Top Leagues</h3>
                                 <MostWatchedLeagues reviews={pageData?.content || []} />
                             </section>
                         </div>
@@ -205,16 +205,16 @@ export const UserDetailPage = () => {
                     {/* Sidebar: Stats & Favorites */}
                     <div className="space-y-6 md:space-y-8">
                         {/* Network Section (Followers/Following) */}
-                        <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
+                        <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
                             <div className="space-y-6 md:space-y-8 relative z-10">
                                 {/* Following */}
                                 <div className="space-y-3 md:space-y-4">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <h4 className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-widest">Following</h4>
+                                            <h4 className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-widest italic">Following</h4>
                                             <span className="text-[7px] md:text-[8px] font-black px-1.5 py-0.5 bg-kickr/10 rounded-sm text-kickr italic">{following?.totalElements ?? user.followingCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/following`} className="text-[7px] md:text-[8px] font-black text-muted hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
+                                        <Link to={`/user/${id}/following`} className="text-[7px] md:text-[8px] font-black text-muted hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none italic">All</Link>
                                     </div>
                                     {following?.content && following.content.length > 0 ? (
                                         <div className="grid grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
@@ -239,15 +239,14 @@ export const UserDetailPage = () => {
                                         <p className="text-muted italic font-bold uppercase tracking-tighter">Silence.</p>
                                     )}
                                 </div>
-
                                 {/* Followers */}
-                                <div className="space-y-3 md:space-y-4 pt-4 md:pt-6 border-t border-white/5">
+                                <div className="space-y-3 md:space-y-4 pt-4 md:pt-6 border-t border-white/[0.03]">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <h4 className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-widest">Followers</h4>
+                                            <h4 className="text-[8px] md:text-[10px] font-black text-secondary uppercase tracking-widest italic">Followers</h4>
                                             <span className="text-[7px] md:text-[8px] font-black px-1.5 py-0.5 bg-kickr/10 rounded-sm text-kickr italic">{followers?.totalElements ?? user.followersCount}</span>
                                         </div>
-                                        <Link to={`/user/${id}/followers`} className="text-[7px] md:text-[8px] font-black text-muted hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none">All</Link>
+                                        <Link to={`/user/${id}/followers`} className="text-[7px] md:text-[8px] font-black text-muted hover:text-kickr transition-colors uppercase tracking-widest cursor-pointer leading-none italic">All</Link>
                                     </div>
                                     {followers?.content && followers.content.length > 0 ? (
                                         <div className="grid grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
@@ -275,17 +274,17 @@ export const UserDetailPage = () => {
                             </div>
                         </section>
 
-                        <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                            <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Rating Spread</h3>
+                        <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                            <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6 italic">Rating Spread</h3>
                             <RatingsChart reviews={pageData?.content || []} />
 
-                            <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center tabular-nums">
+                            <div className="mt-8 pt-6 border-t border-white/[0.03] flex justify-between items-center tabular-nums">
                                 <div className="flex flex-col">
                                     <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest leading-none mb-1 md:mb-2 italic">DEPLOYMENTS</span>
                                     <span className="text-base md:text-xl font-black text-main/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                    <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest leading-none mb-1 md:mb-2 italic">INTEL AVG</span>
+                                    <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest leading-none mb-1 md:mb-2 italic">RATING AVG</span>
                                     <span className="text-base md:text-xl font-black text-rating italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -295,15 +294,15 @@ export const UserDetailPage = () => {
                             </div>
                         </section>
 
-                        <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                            <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Operational Data</h3>
+                        <section className="bg-kickr-bg-secondary border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                            <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6 italic">Account Activity</h3>
                             <div className="space-y-4 md:space-y-6 tabular-nums">
-                                <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
-                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Total Logs</span>
+                                <div className="flex justify-between items-center border-b border-white/[0.03] pb-2.5 md:pb-3">
+                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">Total Logs</span>
                                     <span className="text-xs md:text-base font-black text-main/90 italic">{pageData?.totalElements || 0}</span>
                                 </div>
-                                <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
-                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Avg Stars</span>
+                                <div className="flex justify-between items-center border-b border-white/[0.03] pb-2.5 md:pb-3">
+                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">Avg Stars</span>
                                     <span className="text-xs md:text-base font-black text-rating italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
@@ -311,7 +310,7 @@ export const UserDetailPage = () => {
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Marked Favorites</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">Marked Favorites</span>
                                     <span className="text-xs md:text-base font-black text-main/90 italic">
                                         {pageData?.content.filter((r: any) => r.isLiked).length || 0}
                                     </span>
@@ -351,7 +350,7 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                         className="flex-1 h-full flex flex-col items-center group cursor-pointer"
                         title={`View ${rating}-star reviews`}
                     >
-                        <div className="w-full flex-1 bg-black/[0.02] rounded-t-md relative flex items-end overflow-hidden border-x border-t border-black/[0.05] hover:border-rating/30 transition-all">
+                        <div className="w-full flex-1 bg-kickr-bg-primary/40 rounded-t-md relative flex items-end overflow-hidden border-x border-t border-white/[0.03] hover:border-rating/30 transition-all">
                             <div
                                 className="w-full bg-gradient-to-t from-rating/40 to-rating group-hover:brightness-125 transition-all duration-300 ease-out relative rounded-t-sm"
                                 style={{ height: `${heightPercentage}%`, minHeight: count > 0 ? '2px' : '0' }}
