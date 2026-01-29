@@ -43,9 +43,9 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
             <Link to={`/reviews/${review.id}`} className="group/log block">
                 <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/10 rounded-sm overflow-hidden transition-all duration-300 group-hover/log:border-white/30 group-hover/log:scale-[1.02]">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-0.5 gap-2 transition-transform duration-500">
-                        <img src={review.match.homeLogo} className="w-6 h-6 md:w-10 md:h-10 object-contain drop-shadow-lg" alt={`${review.match.homeTeam} logo`} loading="lazy" decoding="async" />
-                        <img src={review.match.awayLogo} className="w-6 h-6 md:w-10 md:h-10 object-contain drop-shadow-lg" alt={`${review.match.awayTeam} logo`} loading="lazy" decoding="async" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-1 gap-2 md:gap-3 transition-transform duration-500">
+                        <img src={review.match.homeLogo} className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-lg" alt={`${review.match.homeTeam} logo`} loading="lazy" decoding="async" />
+                        <img src={review.match.awayLogo} className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-lg" alt={`${review.match.awayTeam} logo`} loading="lazy" decoding="async" />
                     </div>
                 </div>
                 <div className="mt-2 flex flex-col items-center">
@@ -60,7 +60,7 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
 
     return (
         <Link to={`/reviews/${review.id}`} className="group block">
-            <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden transition-all duration-500 group-hover:border-kickr/50 group-hover:scale-[1.02] poster-shadow">
+            <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden transition-all duration-500 group-hover:border-kickr/50 group-hover:scale-[1.02] group-active:scale-[0.98] poster-shadow">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 gap-4 md:gap-6 group-hover:scale-[1.03] transition-transform duration-500">
@@ -93,7 +93,7 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
                             <span className="text-[11px] font-bold text-secondary">{review.user?.name[0]}</span>
                         )}
                     </div>
-                    <span className="text-[11px] font-bold text-secondary group-hover:text-main transition-colors uppercase tracking-wide">
+                    <span className="hidden md:block text-[11px] font-bold text-secondary group-hover:text-main transition-colors uppercase tracking-wide">
                         {review.user?.name}
                     </span>
                 </div>

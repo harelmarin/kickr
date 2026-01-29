@@ -1,11 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { type ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { triggerHaptic } from '../../utils/haptic';
 
 export const MobileBottomNav = () => {
     return (
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-kickr-bg-primary/80 backdrop-blur-xl border-t border-white/5 z-50 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
-            <div className="flex items-center justify-around h-14 px-2">
+            <div className="flex items-center justify-around h-16 px-2">
                 <NavItem to="/feed" icon={<FeedIcon />} label="Feed" />
                 <NavItem to="/matches" icon={<MatchesIcon />} label="Fixtures" />
                 <NavItem to="/" icon={<HomeIcon />} label="Hub" />
@@ -22,9 +23,19 @@ const NavItem = ({ to, icon, label }: { to: string; icon: ReactNode; label: stri
         ? location.pathname === '/'
         : location.pathname.startsWith(to);
 
+    const handleClick = () => {
+        if (!isActive) {
+            triggerHaptic('light');
+        }
+    };
+
     return (
-        <Link to={to} className="relative flex flex-col items-center justify-center w-full h-full gap-0.5 transition-all active:scale-90 active:bg-black/5 group rounded-lg">
-            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-secondary group-hover:text-white'}`}>
+        <Link
+            to={to}
+            onClick={handleClick}
+            className="relative flex flex-col items-center justify-center w-full h-full gap-1 transition-all active:scale-90 group rounded-lg min-w-[44px] min-h-[44px]"
+        >
+            <div className={`relative z-10 w-6 h-6 flex items-center justify-center transition-all duration-300 ${isActive ? 'text-kickr scale-110' : 'text-secondary group-active:text-white'}`}>
                 {icon}
             </div>
             <span className={`relative z-10 text-[9px] font-black uppercase tracking-[0.1em] transition-all duration-300 ${isActive ? 'text-kickr' : 'text-muted'}`}>

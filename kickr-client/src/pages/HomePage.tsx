@@ -205,36 +205,43 @@ export default function HomePage() {
             {user && (
               <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-1 lg:col-auto poster-shadow">
                 <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
-                  <h3 className="cinematic-header text-xs text-kickr">Your Diary</h3>
-                  <Link to={`/user/${user.id}/diary`} className="text-[10px] font-bold uppercase text-secondary hover:text-kickr transition-colors tracking-widest">All →</Link>
+                  <h3 className="cinematic-header text-[10px] md:text-xs text-kickr">Your Diary</h3>
+                  <Link to={`/user/${user.id}/diary`} className="text-[8px] md:text-[10px] font-bold uppercase text-secondary hover:text-kickr transition-colors tracking-widest">All →</Link>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
-                  {sortedUserReviews.length > 0 ? (
-                    sortedUserReviews.map((review: any) => (
-                      <ReviewPosterCard key={review.id} review={review} variant="mini" />
-                    ))
-                  ) : (
-                    <div className="col-span-3 py-6 text-center">
-                      <p className="text-[10px] text-muted font-bold uppercase tracking-widest">No entries yet</p>
+                {sortedUserReviews.length > 0 ? (
+                  <>
+                    {/* Mobile: Show only 1 review */}
+                    <div className="md:hidden">
+                      <ReviewPosterCard review={sortedUserReviews[0]} variant="mini" />
                     </div>
-                  )}
-                </div>
+                    {/* Desktop: Show 3 reviews in grid */}
+                    <div className="hidden md:grid grid-cols-3 gap-3">
+                      {sortedUserReviews.map((review: any) => (
+                        <ReviewPosterCard key={review.id} review={review} variant="mini" />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="py-6 text-center">
+                    <p className="text-[10px] text-muted font-bold uppercase tracking-widest">No entries yet</p>
+                  </div>
+                )}
               </section>
             )}
 
             {/* SECTORS */}
             <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-1 lg:col-auto poster-shadow">
-              <h3 className="cinematic-header text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Top Leagues</h3>
+              <h3 className="cinematic-header text-[10px] md:text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Top Leagues</h3>
               <div className="space-y-4">
                 {trendingSectors.slice(0, 3).map((sector, i) => (
                   <Link key={sector.name} to={sector.id ? `/competitions/${sector.id}` : `/matches`} className="group block">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[10px] font-mono text-muted/30">{i + 1}</span>
-                        <span className="text-xs font-bold text-secondary uppercase tracking-wide group-hover:text-white transition-colors truncate max-w-[100px] md:max-w-none">{sector.name}</span>
+                      <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+                        <span className="text-[9px] md:text-[10px] font-mono text-muted/30 flex-shrink-0">{i + 1}</span>
+                        <span className="text-[10px] md:text-xs font-bold text-secondary uppercase tracking-wide group-hover:text-white transition-colors truncate">{sector.name}</span>
                       </div>
-                      <span className="text-xs font-bold text-rating tabular-nums">{sector.rating.toFixed(1)}</span>
+                      <span className="text-[10px] md:text-xs font-bold text-rating tabular-nums flex-shrink-0 ml-2">{sector.rating.toFixed(1)}</span>
                     </div>
                   </Link>
                 ))}

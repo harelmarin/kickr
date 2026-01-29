@@ -12,7 +12,7 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
     return (
         <Link
             to={`/matches/${match.id}`}
-            className="group relative bg-kickr-bg-secondary border border-white/5 hover:border-kickr/50 transition-all rounded-sm overflow-hidden block h-full flex flex-col poster-shadow"
+            className="group relative bg-kickr-bg-secondary border border-white/5 hover:border-kickr/50 transition-all rounded-sm overflow-hidden block h-full flex flex-col poster-shadow active:scale-[0.98]"
         >
             {/* Minimal Header: Competition - Floating or tiny */}
             <div className="flex items-center justify-center px-3 py-2 border-b border-white/5 bg-black/10 flex-shrink-0">
