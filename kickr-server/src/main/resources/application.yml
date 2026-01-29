@@ -49,6 +49,7 @@ spring:
 jwt:
   secret: ${JWT_SECRET:default_jwt_secret_must_be_changed_in_production_1234567890}
   expiration: ${JWT_EXPIRATION:900} # 15 minutes by default
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800} # 7 days (604800 seconds)
 football:
   api:
     key: ${FOOTBALL_API_KEY:none}

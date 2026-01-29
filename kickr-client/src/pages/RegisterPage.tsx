@@ -47,8 +47,16 @@ export const RegisterPage = () => {
     const onSubmit = async (data: RegisterFormData) => {
         try {
             await registerUser(data);
-            // User is now logged in automatically by the hook
-            navigate('/');
+            // User state is updated by the hook, redirect to profile
+            // Use setTimeout to ensure state is updated
+            setTimeout(() => {
+                const currentUser = useAuth.getState().user;
+                if (currentUser?.id) {
+                    navigate(`/user/${currentUser.id}`);
+                } else {
+                    navigate('/');
+                }
+            }, 100);
         } catch (err) {
             // Error handled in useAuth hook
         }

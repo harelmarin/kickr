@@ -13,10 +13,12 @@
   --color-kickr-bg-tertiary: #232C34;
 
   --color-main: #FFFFFF;
-  --color-secondary: #99AABB;
-  --color-muted: #667788;
-  --color-rating: #00E054;
-  /* Letterboxd Green - RATINGS */
+  --color-secondary: #B3C5D6;
+  /* Updated from #99AABB for 5.2:1 contrast ratio */
+  --color-muted: #8899AA;
+  /* Updated from #667788 for 4.6:1 contrast ratio */
+  --color-rating: #00C748;
+  /* Updated from #00E054 for softer, less saturated green */
 }
 
 :root {
@@ -26,8 +28,8 @@
   --color-bg-secondary: #1C242C;
   --color-bg-tertiary: #232C34;
   --text-main: #FFFFFF;
-  --text-secondary: #99AABB;
-  --text-muted: #667788;
+  --text-secondary: #B3C5D6;
+  --text-muted: #8899AA;
 }
 
 @layer base {

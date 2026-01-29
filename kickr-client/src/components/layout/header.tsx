@@ -2,7 +2,7 @@ import { LoginDropdown } from '../auth/authForm.tsx';
 import { UserMenu } from '../auth/UserMenu';
 import { useAuth } from '../../hooks/useAuth';
 import { useUIStore } from '../../hooks/useUIStore';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { SearchBar } from '../search/SearchBar';
 import { NotificationBell } from './notificationBell';
 import { useEffect, useRef } from 'react';
@@ -14,6 +14,18 @@ export const Header = () => {
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const scrollDirection = useScrollDirection();
+  const navigate = useNavigate();
+
+  const handleLoginSuccess = () => {
+    closeAuthModal();
+    // Redirect to user profile after successful login
+    setTimeout(() => {
+      const currentUser = useAuth.getState().user;
+      if (currentUser?.id) {
+        navigate(`/user/${currentUser.id}`);
+      }
+    }, 100);
+  };
 
   // Close modal on route change
   useEffect(() => {
@@ -35,79 +47,89 @@ export const Header = () => {
   }, [authModalMode, closeAuthModal]);
 
   return (
-    <header className={`bg-kickr-bg-primary/90 backdrop-blur-xl border-b border-white/[0.03] sticky top-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] md:h-16 transition-all duration-300 pt-[env(safe-area-inset-top))] ${scrollDirection === 'down' ? 'md:translate-y-0 -translate-y-full' : 'translate-y-0'}`}>
-      <div className="max-w-7xl mx-auto flex items-center h-full px-4 md:px-6 justify-between md:justify-start">
-        <Link to="/" className="flex items-center gap-2 mr-0 md:mr-10 flex-shrink-0">
-          <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center">
-            <img src="/favicon.png" alt="Kickr Platform Logo" className="w-full h-full object-contain" loading="eager" />
-          </div>
-          <span className="text-xs md:text-2xl font-black tracking-tighter uppercase leading-none text-main italic">
-            KICKR
-          </span>
-        </Link>
+    <>
+      {/* Skip link for keyboard navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-kickr focus:text-white focus:rounded-sm focus:font-bold focus:text-sm"
+      >
+        Skip to main content
+      </a>
 
-        <nav className="hidden md:flex flex-1 items-center gap-6">
-          <NavSlot to="/matches" label="Matches" />
-          <NavSlot to="/competitions" label="Leagues" />
-          <NavSlot to="/teams" label="Teams" />
-          <NavSlot to="/community" label="Community" />
-        </nav>
-
-        <div className="flex items-center gap-2 md:gap-5 flex-shrink-0 ml-auto">
-          <SearchBar />
-
-          {isAuthenticated ? (
-            <div className="flex items-center gap-3 md:gap-6 border-l border-white/5 pl-3 md:pl-5">
-              <div className="hidden md:block">
-                <NavSlot to="/feed" label="Feed" />
-              </div>
-              <NotificationBell />
-              <UserMenu />
+      <header className={`bg-kickr-bg-primary/90 backdrop-blur-xl border-b border-white/[0.03] sticky top-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] md:h-16 transition-all duration-300 pt-[env(safe-area-inset-top))] ${scrollDirection === 'down' ? 'md:translate-y-0 -translate-y-full' : 'translate-y-0'}`}>
+        <div className="max-w-7xl mx-auto flex items-center h-full px-4 md:px-6 justify-between md:justify-start">
+          <Link to="/" className="flex items-center gap-2 mr-0 md:mr-10 flex-shrink-0">
+            <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center">
+              <img src="/favicon.png" alt="Kickr Platform Logo" className="w-full h-full object-contain" loading="eager" />
             </div>
-          ) : (
-            <div className="flex items-center gap-1.5 md:gap-4 border-l border-white/5 pl-3 md:pl-5 relative" ref={dropdownRef}>
-              <button
-                className="text-secondary hover:text-white font-bold uppercase tracking-widest text-[11px] transition-colors"
-                onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
-              >
-                Sign In
-              </button>
-              <Link
-                to="/register"
-                className="bg-kickr hover:brightness-110 text-white px-4 py-1.5 md:py-2 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all active:scale-95 whitespace-nowrap"
-              >
-                Sign Up
-              </Link>
+            <span className="text-xs md:text-2xl font-black tracking-tighter uppercase leading-none text-main italic">
+              KICKR
+            </span>
+          </Link>
 
-              {authModalMode === 'login' && (
-                <>
-                  {/* Mobile Mobile Overlay */}
-                  <div
-                    className="fixed inset-x-0 top-[56px] h-[calc(100vh-56px)] bg-black/20 backdrop-blur-sm sm:hidden z-50"
-                    onClick={() => closeAuthModal()}
-                  >
+          <nav className="hidden md:flex flex-1 items-center gap-6">
+            <NavSlot to="/matches" label="Matches" />
+            <NavSlot to="/competitions" label="Leagues" />
+            <NavSlot to="/teams" label="Teams" />
+            <NavSlot to="/community" label="Community" />
+          </nav>
+
+          <div className="flex items-center gap-2 md:gap-5 flex-shrink-0 ml-auto">
+            <SearchBar />
+
+            {isAuthenticated ? (
+              <div className="flex items-center gap-3 md:gap-6 border-l border-white/5 pl-3 md:pl-5">
+                <div className="hidden md:block">
+                  <NavSlot to="/feed" label="Feed" />
+                </div>
+                <NotificationBell />
+                <UserMenu />
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 md:gap-4 border-l border-white/5 pl-3 md:pl-5 relative" ref={dropdownRef}>
+                <button
+                  className="text-secondary hover:text-white font-bold uppercase tracking-widest text-[11px] transition-colors"
+                  onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
+                >
+                  Sign In
+                </button>
+                <Link
+                  to="/register"
+                  className="bg-kickr hover:brightness-110 text-white px-4 py-1.5 md:py-2 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all active:scale-95 whitespace-nowrap"
+                >
+                  Sign Up
+                </Link>
+
+                {authModalMode === 'login' && (
+                  <>
+                    {/* Mobile Mobile Overlay */}
                     <div
-                      className="absolute top-0 right-0 w-full animate-fade-in"
+                      className="fixed inset-x-0 top-[56px] h-[calc(100vh-56px)] bg-black/20 backdrop-blur-sm sm:hidden z-50"
+                      onClick={() => closeAuthModal()}
+                    >
+                      <div
+                        className="absolute top-0 right-0 w-full animate-fade-in"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <LoginDropdown onSuccess={handleLoginSuccess} />
+                      </div>
+                    </div>
+
+                    {/* Desktop Dropdown */}
+                    <div
+                      className="hidden sm:block absolute top-full right-0 mt-4 w-[350px] animate-fade-in z-50"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <LoginDropdown onSuccess={() => closeAuthModal()} />
+                      <LoginDropdown onSuccess={handleLoginSuccess} />
                     </div>
-                  </div>
-
-                  {/* Desktop Dropdown */}
-                  <div
-                    className="hidden sm:block absolute top-full right-0 mt-4 w-[350px] animate-fade-in z-50"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <LoginDropdown onSuccess={() => closeAuthModal()} />
-                  </div>
-                </>
-              )}
-            </div>
-          )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 
