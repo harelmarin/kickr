@@ -93,10 +93,10 @@ export const MatchDetailPage = () => {
       <div className="relative h-[260px] md:h-[650px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex blur-[60px] md:blur-[80px] opacity-15 md:opacity-30">
           <div className="flex-1 relative overflow-hidden">
-            <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" />
+            <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" loading="lazy" decoding="async" />
           </div>
           <div className="flex-1 relative overflow-hidden">
-            <img src={match.awayLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" />
+            <img src={match.awayLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" loading="lazy" decoding="async" />
           </div>
         </div>
 
@@ -106,13 +106,13 @@ export const MatchDetailPage = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-[140px] md:mt-[-550px] relative z-10 pb-16">
         <div className="flex items-center gap-2 md:gap-6 mb-6 md:mb-12">
-          <Link to="/" className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
+          <Link to="/" className="text-xs md:text-sm font-black uppercase tracking-[0.2em] text-secondary hover:text-kickr transition-all flex items-center gap-1.5 md:gap-3 group">
             <span className="text-base group-hover:-translate-x-1 transition-transform leading-none mb-0.5">←</span>
             <span className="hidden sm:inline">Tactical Feed</span>
             <span className="sm:hidden italic">BACK</span>
           </Link>
           <div className="h-3 w-[1px] bg-black/5"></div>
-          <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted italic truncate">
+          <div className="flex items-center gap-2 md:gap-3 text-xs md:text-sm font-black uppercase tracking-[0.2em] text-muted italic truncate">
             <span className="text-main/40 truncate max-w-[150px] xs:max-w-none">{match.homeTeam} / {match.awayTeam}</span>
           </div>
         </div>
@@ -134,11 +134,11 @@ export const MatchDetailPage = () => {
                         {match.homeTeam}
                       </h2>
                     </Link>
-                    <span className="text-kickr/40 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Home</span>
+                    <span className="text-kickr/40 text-xs md:text-sm font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Home</span>
                   </div>
                   <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105 active:scale-95">
                     <div className="p-2 md:p-3 rounded-sm bg-kickr-bg-primary/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
-                      <img src={match.homeLogo} alt={match.homeTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                      <img src={match.homeLogo} alt={`${match.homeTeam} logo`} loading="lazy" decoding="async" className="w-8 h-8 md:w-20 md:h-20 object-contain" />
                     </div>
                   </Link>
                 </div>
@@ -159,7 +159,7 @@ export const MatchDetailPage = () => {
                   </div>
                   <div className="absolute -bottom-5 md:-bottom-8 left-1/2 -translate-x-1/2 w-full flex flex-col items-center gap-1 opacity-40 md:opacity-20 whitespace-nowrap">
                     <div className="w-0.5 h-0.5 rounded-full bg-white/20 hidden md:block"></div>
-                    <span className="text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em] italic text-muted">
+                    <span className="text-xs md:text-sm font-black uppercase tracking-[0.3em] italic text-muted">
                       {isPast ? 'FT' : 'Upcoming'}
                     </span>
                   </div>
@@ -169,7 +169,7 @@ export const MatchDetailPage = () => {
                 <div className="flex items-center justify-start gap-3 md:gap-6 min-w-0 group/away">
                   <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105 active:scale-95">
                     <div className="p-2 md:p-3 rounded-sm bg-kickr-bg-primary/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
-                      <img src={match.awayLogo} alt={match.awayTeam} className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                      <img src={match.awayLogo} alt={`${match.awayTeam} logo`} loading="lazy" decoding="async" className="w-8 h-8 md:w-20 md:h-20 object-contain" />
                     </div>
                   </Link>
                   <div className="min-w-0 flex-1 text-left hidden xs:block">
@@ -178,7 +178,7 @@ export const MatchDetailPage = () => {
                         {match.awayTeam}
                       </h2>
                     </Link>
-                    <span className="text-muted text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Away</span>
+                    <span className="text-muted text-xs md:text-sm font-black uppercase tracking-[0.3em] italic leading-none mt-1 block">Away</span>
                   </div>
                 </div>
               </div>
@@ -188,8 +188,8 @@ export const MatchDetailPage = () => {
                   or just rely on the clean logo view which is common in apps) 
               */}
               <div className="flex xs:hidden items-center justify-between mt-4 px-2">
-                <span className="text-[10px] font-black text-main/90 uppercase italic truncate max-w-[40%]">{match.homeTeam}</span>
-                <span className="text-[10px] font-black text-main/90 uppercase italic truncate max-w-[40%] text-right">{match.awayTeam}</span>
+                <span className="text-xs font-black text-main/90 uppercase italic truncate max-w-[40%]">{match.homeTeam}</span>
+                <span className="text-xs font-black text-main/90 uppercase italic truncate max-w-[40%] text-right">{match.awayTeam}</span>
               </div>
             </div>
 
@@ -199,17 +199,17 @@ export const MatchDetailPage = () => {
                 <Link to={`/competitions/${match.competitionId}`} className="flex flex-col items-center justify-center p-3 md:p-6 text-center group hover:bg-black/[0.02] transition-colors">
                   <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Competitions</span>
                   <div className="flex items-center gap-1.5 md:gap-2 justify-center">
-                    <img src={match.competitionLogo} className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
-                    <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none group-hover:text-kickr transition-colors">{match.competition || 'Competitions'}</span>
+                    <img src={match.competitionLogo} alt="" aria-hidden="true" className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
+                    <span className="text-xs md:text-sm font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none group-hover:text-kickr transition-colors">{match.competition || 'Competitions'}</span>
                   </div>
                 </Link>
                 <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-black/[0.02] transition-colors">
-                  <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Date</span>
-                  <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                  <span className="text-xs md:text-sm font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Date</span>
+                  <span className="text-xs md:text-sm font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
                 </div>
                 <div className="flex flex-col items-center justify-center p-3 md:p-6 text-center hover:bg-black/[0.02] transition-colors">
-                  <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Time</span>
-                  <span className="text-[8px] md:text-[10px] font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
+                  <span className="text-xs md:text-sm font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Time</span>
+                  <span className="text-xs md:text-sm font-bold text-main uppercase italic tabular-nums">{matchDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
                 </div>
               </div>
             </div>

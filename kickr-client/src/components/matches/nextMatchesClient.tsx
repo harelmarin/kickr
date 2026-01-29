@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNextMatches } from '../../hooks/useNextMatches';
+import { sortMatchesByHierarchy } from '../../utils/matchSort';
 
 export function NextMatchesHomePage() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -11,7 +12,8 @@ export function NextMatchesHomePage() {
     matchesPerPage,
   );
 
-  const matches = data?.content || [];
+  const rawMatches = data?.content || [];
+  const matches = sortMatchesByHierarchy(rawMatches).slice(0, 9);
   const isLastPage = data?.last ?? true;
 
   if (isLoading && matches.length === 0) {

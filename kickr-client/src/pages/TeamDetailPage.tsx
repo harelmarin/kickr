@@ -128,8 +128,6 @@ export const TeamDetailPage = () => {
               {team.name}
             </h1>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-6">
-              <span className="text-muted uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic">{team.competition?.country || 'France'}</span>
-              <span className="hidden md:block w-1 h-1 rounded-full bg-black/10 px-0"></span>
               <span className="text-muted uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic">{team.competition?.name || 'Club International'}</span>
             </div>
           </div>

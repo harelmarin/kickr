@@ -106,6 +106,9 @@ export const TeamsPage = () => {
                         <h3 className="text-center text-[7px] md:text-[9px] font-black text-secondary group-hover:text-main transition-colors tracking-widest uppercase truncate px-1">
                           {team.name}
                         </h3>
+                        <p className="text-center text-[6px] md:text-[7px] font-bold text-muted/50 group-hover:text-kickr/40 transition-colors tracking-[0.2em] uppercase truncate mt-1 italic">
+                          {team.competition?.name}
+                        </p>
                       </Link>
                     </motion.div>
                   ))

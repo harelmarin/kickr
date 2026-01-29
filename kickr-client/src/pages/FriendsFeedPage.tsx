@@ -26,7 +26,7 @@ export const FriendsFeedPage = () => {
                     <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
                         Social <span className="text-kickr/80">Feed</span>
                     </h1>
-                    <p className="text-main/10 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
+                    <p className="text-kickr uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
                         Real-time match logs from your social network.
                     </p>
                 </header>
@@ -34,44 +34,47 @@ export const FriendsFeedPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                     {/* Main Content */}
                     <div className="lg:col-span-8">
-                        <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-1.5">
-                            <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/10 italic">Match Logs</h2>
+                        <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-2">
+                            <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Match Logs</h2>
                             <div className="flex items-center gap-1 md:gap-2">
-                                <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-kickr animate-pulse opacity-40"></div>
-                                <span className="text-[6px] md:text-[9px] font-black text-main/5 uppercase tracking-widest italic leading-none">LIVE</span>
+                                <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-kickr animate-pulse opacity-60"></div>
+                                <span className="text-[6px] md:text-[9px] font-black text-secondary uppercase tracking-widest italic leading-none">LIVE FEED</span>
                             </div>
                         </div>
 
-                        {isLoading ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                                {Array.from({ length: 6 }).map((_, i) => (
-                                    <div key={i} className="h-64 bg-black/5 rounded-sm animate-pulse" />
-                                ))}
-                            </div>
-                        ) : isError ? (
-                            <div className="py-20 text-center bg-black/[0.02] border border-white/5 rounded-sm">
-                                <h2 className="text-lg font-black text-main uppercase italic mb-2">Transmission Interrupted</h2>
-                                <p className="text-main/20 text-xs uppercase tracking-widest mb-6">Failed to retrieve intel from your network.</p>
-                                <button onClick={() => window.location.reload()} className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Retry Link</button>
-                            </div>
-                        ) : reviews.length === 0 ? (
-                            <div className="py-24 text-center bg-black/[0.02] border border-white/5 rounded-sm px-6">
-                                <div className="text-4xl mb-6 font-black italic">📡</div>
-                                <h2 className="text-lg font-black text-main italic uppercase mb-2">No Logs Found</h2>
-                                <p className="text-main/20 text-[10px] uppercase tracking-[0.2em] font-bold max-w-xs mx-auto leading-relaxed mb-6">
-                                    Your friends haven't logged any matches yet. Expand your network to see more activity.
-                                </p>
-                                <Link to="/community" className="inline-block bg-kickr text-black text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-sm hover:scale-105 transition-all italic">
-                                    Find Friends →
-                                </Link>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                                {reviews.map((review: any) => (
-                                    <FeedReviewCard key={review.id} review={review} />
-                                ))}
-                            </div>
-                        )}
+                        <div className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm">
+
+                            {isLoading ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                    {Array.from({ length: 6 }).map((_, i) => (
+                                        <div key={i} className="h-64 bg-black/5 rounded-sm animate-pulse" />
+                                    ))}
+                                </div>
+                            ) : isError ? (
+                                <div className="py-20 text-center bg-black/[0.02] border border-white/5 rounded-sm">
+                                    <h2 className="text-lg font-black text-main uppercase italic mb-2">Transmission Interrupted</h2>
+                                    <p className="text-main/20 text-xs uppercase tracking-widest mb-6">Failed to retrieve intel from your network.</p>
+                                    <button onClick={() => window.location.reload()} className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Retry Link</button>
+                                </div>
+                            ) : reviews.length === 0 ? (
+                                <div className="py-24 text-center bg-black/[0.02] border border-white/5 rounded-sm px-6">
+                                    <div className="text-4xl mb-6 font-black italic">📡</div>
+                                    <h2 className="text-lg font-black text-main italic uppercase mb-2">No Logs Found</h2>
+                                    <p className="text-main/20 text-[10px] uppercase tracking-[0.2em] font-bold max-w-xs mx-auto leading-relaxed mb-6">
+                                        Your friends haven't logged any matches yet. Expand your network to see more activity.
+                                    </p>
+                                    <Link to="/community" className="inline-block bg-kickr text-black text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-sm hover:scale-105 transition-all italic">
+                                        Find Friends →
+                                    </Link>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                    {reviews.map((review: any) => (
+                                        <FeedReviewCard key={review.id} review={review} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
 
                         {/* Pagination */}
                         {!isLoading && pageData && pageData.totalPages > 1 && (

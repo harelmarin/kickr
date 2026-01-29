@@ -62,6 +62,8 @@ export default function HomePage() {
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
             alt="Stadium"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover grayscale opacity-[0.1]"
           />
         </div>
@@ -97,17 +99,17 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8">
                 {!user ? (
-                  <Link to="/register" className="h-[44px] md:h-[60px] px-8 md:px-12 flex items-center bg-kickr text-black text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] rounded-sm hover:brightness-110 transition-all border border-white/10 italic">
+                  <Link to="/register" className="h-[44px] md:h-[60px] px-8 md:px-12 flex items-center bg-kickr text-black text-xs md:text-sm font-black uppercase tracking-[0.2em] md:tracking-[0.3em] rounded-sm hover:brightness-110 transition-all border border-white/10 italic">
                     Join the pitch
                   </Link>
                 ) : (
                   <Link to={`/user/${user.id}`} className="w-full sm:w-auto h-[48px] md:h-[64px] px-5 md:px-8 flex items-center bg-white/[0.01] border border-white/5 rounded-sm gap-3 md:gap-6 transition-all group">
                     <div className="w-7 h-7 md:w-10 md:h-10 rounded-sm bg-white/[0.04] border border-white/5 flex items-center justify-center text-kickr text-sm md:text-lg font-black italic overflow-hidden">
-                      {user.avatarUrl ? <img src={user.avatarUrl} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" /> : user.name[0]}
+                      {user.avatarUrl ? <img src={user.avatarUrl} alt={`${user.name}'s avatar`} loading="lazy" decoding="async" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" /> : user.name[0]}
                     </div>
                     <div className="flex flex-col items-start min-w-0">
-                      <span className="text-[10px] md:text-[11px] font-black text-main uppercase italic tracking-[0.1em]">Dashboard</span>
-                      <span className="text-[9px] md:text-[7px] font-mono text-muted uppercase tracking-[0.1em] truncate w-full max-w-[80px] md:max-w-none">{user.name}</span>
+                      <span className="text-xs md:text-sm font-black text-main uppercase italic tracking-[0.1em]">Dashboard</span>
+                      <span className="text-[10px] md:text-xs font-mono text-muted uppercase tracking-[0.1em] truncate w-full max-w-[80px] md:max-w-none">{user.name}</span>
                     </div>
                   </Link>
                 )}
@@ -135,23 +137,25 @@ export default function HomePage() {
                 <div className="flex items-center justify-between mb-3 md:mb-12">
                   <div className="flex items-center gap-2 md:gap-3">
                     <div className="h-3 md:h-5 w-[1.5px] bg-kickr opacity-60"></div>
-                    <h2 className="text-[11px] md:text-[14px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Network activity</h2>
+                    <h2 className="text-[11px] md:text-[14px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Real-time match logs</h2>
                   </div>
-                  <Link to="/feed" className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors">View all →</Link>
+                  <Link to="/feed" className="text-xs md:text-sm font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors">View feed →</Link>
                 </div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-6">
-                  {isFollowingLoading ? (
-                    <div className="h-24 bg-black/5 animate-pulse rounded-sm col-span-2"></div>
-                  ) : activeFollowing.length > 0 ? (
-                    activeFollowing.map((review: any) => (
-                      <ReviewPosterCard key={review.id} review={review} />
-                    ))
-                  ) : (
-                    <div className="py-8 text-center col-span-2 border border-white/5 bg-white/[0.01]">
-                      <p className="text-secondary text-[8px] font-black uppercase tracking-[0.2em]">Empty Network</p>
-                    </div>
-                  )}
+                <div className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm">
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 md:gap-6">
+                    {isFollowingLoading ? (
+                      <div className="h-24 bg-black/5 animate-pulse rounded-sm col-span-2"></div>
+                    ) : activeFollowing.length > 0 ? (
+                      activeFollowing.map((review: any) => (
+                        <ReviewPosterCard key={review.id} review={review} />
+                      ))
+                    ) : (
+                      <div className="py-8 text-center col-span-2 border border-white/5 bg-white/[0.01]">
+                        <p className="text-secondary text-xs font-black uppercase tracking-[0.2em]">Empty Network</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </section>
             )}
@@ -163,7 +167,7 @@ export default function HomePage() {
                   <div className="h-3 md:h-4 w-[1px] bg-kickr opacity-40"></div>
                   <h2 className="text-[11px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Fixtures</h2>
                 </div>
-                <Link to="/matches" className="text-[10px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors">See all →</Link>
+                <Link to="/matches" className="text-xs md:text-sm font-black uppercase tracking-widest text-secondary hover:text-kickr transition-colors">See all →</Link>
               </div>
               <div className="bg-white/[0.01] border border-white/5 p-2 md:p-8 rounded-sm">
                 <NextMatchesHomePage />
@@ -175,11 +179,11 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-3 md:mb-10">
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-[1px] bg-kickr opacity-40"></div>
-                  <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-main/80 italic">Global Live</h2>
+                  <h2 className="text-xs md:text-sm font-black uppercase tracking-[0.4em] text-main/80 italic">Global Live</h2>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-1 h-1 rounded-full bg-kickr animate-pulse opacity-50"></div>
-                  <span className="text-[10px] font-black text-muted uppercase tracking-widest italic">ACTIVE</span>
+                  <span className="text-xs md:text-sm font-black text-muted uppercase tracking-widest italic">ACTIVE</span>
                 </div>
               </div>
 
@@ -203,8 +207,8 @@ export default function HomePage() {
             {user && (
               <section className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm relative overflow-hidden group col-span-1 lg:col-auto">
                 <div className="flex items-center justify-between mb-3 md:mb-10 border-b border-white/5 pb-2 md:pb-6">
-                  <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic">My Log</h3>
-                  <Link to={`/user/${user.id}/diary`} className="text-[9px] font-black uppercase text-secondary hover:text-kickr transition-colors">Files →</Link>
+                  <h3 className="text-xs md:text-sm font-black text-kickr uppercase tracking-[0.3em] italic">My Log</h3>
+                  <Link to={`/user/${user.id}/diary`} className="text-xs md:text-sm font-black uppercase text-secondary hover:text-kickr transition-colors">Files →</Link>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2.5">
@@ -214,7 +218,7 @@ export default function HomePage() {
                     ))
                   ) : (
                     <div className="col-span-3 py-4 text-center">
-                      <p className="text-[11px] text-muted italic font-black uppercase tracking-widest">Empty log</p>
+                      <p className="text-xs text-muted italic font-black uppercase tracking-widest">Empty log</p>
                     </div>
                   )}
                 </div>
@@ -223,16 +227,16 @@ export default function HomePage() {
 
             {/* SECTORS */}
             <section className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm col-span-1 lg:col-auto">
-              <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic mb-3 md:mb-8 border-b border-white/5 pb-2 md:pb-6">Leagues</h3>
+              <h3 className="text-xs md:text-sm font-black text-kickr uppercase tracking-[0.3em] italic mb-3 md:mb-8 border-b border-white/5 pb-2 md:pb-6">Leagues</h3>
               <div className="space-y-2 md:space-y-8">
                 {trendingSectors.slice(0, 3).map((sector, i) => (
                   <Link key={sector.name} to={sector.id ? `/competitions/${sector.id}` : `/matches`} className="group block">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono text-muted/30">0{i + 1}</span>
-                        <span className="text-[10px] md:text-[10px] font-black text-secondary uppercase italic tracking-widest group-hover:text-kickr transition-colors truncate max-w-[50px] md:max-w-none">{sector.name}</span>
+                        <span className="text-xs font-mono text-muted/30">0{i + 1}</span>
+                        <span className="text-xs md:text-sm font-black text-secondary uppercase italic tracking-widest group-hover:text-kickr transition-colors truncate max-w-[50px] md:max-w-none">{sector.name}</span>
                       </div>
-                      <span className="text-[11px] font-mono text-kickr italic tabular-nums">{sector.rating.toFixed(1)}</span>
+                      <span className="text-xs md:text-sm font-mono text-kickr italic tabular-nums">{sector.rating.toFixed(1)}</span>
                     </div>
                   </Link>
                 ))}
@@ -241,14 +245,14 @@ export default function HomePage() {
 
             {/* COMMUNITY - Hidden on very small mobile if grid is crowded, or just kept small */}
             <section className="bg-white/[0.01] border border-white/5 p-2.5 md:p-8 rounded-sm col-span-2 lg:col-auto">
-              <h3 className="text-[11px] md:text-[10px] font-black text-kickr uppercase tracking-[0.3em] italic mb-3 md:mb-8 border-b border-white/5 pb-2 md:pb-6">Community</h3>
+              <h3 className="text-xs md:text-sm font-black text-kickr uppercase tracking-[0.3em] italic mb-3 md:mb-8 border-b border-white/5 pb-2 md:pb-6">Community</h3>
               <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 md:gap-6">
                 {communityScouts?.content?.filter((s: any) => s.id !== user?.id).slice(0, 6).map((scout: any) => (
                   <Link key={scout.id} to={`/user/${scout.id}`} className="flex items-center gap-1.5 md:gap-4 group">
-                    <div className="w-4 h-4 md:w-8 md:h-8 rounded-sm bg-white/[0.01] border border-white/5 flex items-center justify-center text-[10px] text-kickr/40 font-black italic group-hover:border-kickr group-hover:text-kickr transition-all overflow-hidden">
-                      {scout.avatarUrl ? <img src={scout.avatarUrl} className="w-full h-full object-cover" /> : scout.name[0]}
+                    <div className="w-4 h-4 md:w-8 md:h-8 rounded-sm bg-white/[0.01] border border-white/5 flex items-center justify-center text-xs text-kickr/40 font-black italic group-hover:border-kickr group-hover:text-kickr transition-all overflow-hidden">
+                      {scout.avatarUrl ? <img src={scout.avatarUrl} alt={`${scout.name}'s avatar`} loading="lazy" decoding="async" className="w-full h-full object-cover" /> : scout.name[0]}
                     </div>
-                    <p className="text-[10px] md:text-[10px] font-black text-muted group-hover:text-kickr uppercase italic transition-all truncate leading-none">{scout.name}</p>
+                    <p className="text-xs md:text-sm font-black text-muted group-hover:text-kickr uppercase italic transition-all truncate leading-none">{scout.name}</p>
                   </Link>
                 ))}
               </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+/* Fonts loaded in index.html for performance */
 
 @import "tailwindcss";
 
@@ -6,29 +6,29 @@
    KICKR GLOBAL THEME - CHANGE THE RAW HEX BELOW TO CHANGE THE ENTIRE SITE
    ========================================================================== */
 @theme {
-  --color-kickr: #4B7BEC;
-  /* Sapphire Blue */
+  --color-kickr: #5D8BFF;
+  /* Brighter Sapphire Blue (Accessible 6.2:1) */
   --color-kickr-bg-primary: #0F1115;
   --color-kickr-bg-secondary: #16191F;
   --color-kickr-bg-tertiary: #1C2129;
 
-  --color-main: #E2E8F0;
-  --color-secondary: #94A3B8;
-  --color-muted: #8292A8;
+  --color-main: #FFFFFF;
+  --color-secondary: #CBD5E1;
+  --color-muted: #94A3B8;
 }
 
 :root {
-  --kickr-primary: #4B7BEC;
-  --kickr-primary-rgb: 75, 123, 236;
+  --kickr-primary: #5D8BFF;
+  --kickr-primary-rgb: 93, 139, 255;
   --color-bg-primary: #0F1115;
   --color-bg-secondary: #16191F;
   --color-bg-tertiary: #1C2129;
-  --text-main: #E2E8F0;
-  /* Softer Off-White */
-  --text-secondary: #94A3B8;
-  /* Slate-400 */
-  --text-muted: #8292A8;
-  /* Slate-450 (Accessible) */
+  --text-main: #FFFFFF;
+  /* Pure White */
+  --text-secondary: #CBD5E1;
+  /* Slate-300 */
+  --text-muted: #94A3B8;
+  /* Slated-400 (Accessible on dark) */
   --pitch-green: #0D1410;
   --pitch-light: #16241C;
 }
