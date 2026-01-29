@@ -52,23 +52,16 @@ export const CommunityPage = () => {
         <main className="min-h-screen bg-kickr-bg-primary pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-6 md:mb-16">
-                    <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
-                        <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
-                        <span className="text-[7px] md:text-[10px] font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Global Network</span>
+                    <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                        <h1 className="cinematic-header text-sm md:text-base">Intelligence Network</h1>
                     </div>
-                    <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
-                        The <span className="text-kickr/80">Community</span>
-                    </h1>
-                    <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
-                        Analyze. Track. Connect. Global Football Network.
-                    </p>
 
                     <div className="mt-4 md:mt-12">
                         <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">
                             <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-x-8 flex-1">
                                 {/* Search */}
                                 <div className="flex flex-col gap-1 w-full md:w-60">
-                                    <span className="text-[7px] md:text-[8px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Users</span>
+                                    <span className="text-[10px] md:text-[11px] uppercase font-black text-muted tracking-[0.2em] pl-0.5 italic">Find Members</span>
                                     <div className="relative">
                                         <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] text-muted">🔍</span>
                                         <input
@@ -77,17 +70,17 @@ export const CommunityPage = () => {
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             aria-label="Search members"
-                                            className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[8px] md:text-[11px] font-black text-main placeholder-white/20 focus:border-kickr/20 transition-all outline-none italic uppercase tracking-widest"
+                                            className="w-full bg-white/[0.02] border border-white/10 rounded-sm pl-8 pr-3 py-1.5 text-[11px] md:text-[12px] font-black text-main placeholder-white/20 focus:border-kickr/40 transition-all outline-none italic uppercase tracking-widest"
                                         />
                                     </div>
                                 </div>
                             </div>
 
                             <div className="hidden lg:flex flex-col items-end">
-                                <span className="text-base md:text-xl font-black text-main italic leading-none tracking-tighter">
+                                <span className="text-base md:text-xl font-black text-main italic leading-none tracking-tighter tabular-nums">
                                     {isLoading ? '...' : (statsTotalLogs >= 1000 ? `${(statsTotalLogs / 1000).toFixed(1)}k` : statsTotalLogs)}
                                 </span>
-                                <span className="text-[7px] md:text-[8px] uppercase tracking-widest text-muted font-bold mt-1">Global Logs</span>
+                                <span className="text-[10px] md:text-[11px] uppercase tracking-widest text-muted font-bold mt-1">Total Logs</span>
                             </div>
                         </div>
                     </div>
@@ -97,8 +90,8 @@ export const CommunityPage = () => {
                     {/* Main Content */}
                     <div className="lg:col-span-8">
                         <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-2 md:pb-4">
-                            <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">All Members</h2>
-                            <span className="text-[6px] md:text-[8px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
+                            <h2 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted italic">All Members</h2>
+                            <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic font-mono">STATUS: OPERATIONAL</span>
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
@@ -120,9 +113,9 @@ export const CommunityPage = () => {
                                     }}
                                     disabled={pageData.first}
                                     aria-label="Previous page"
-                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[11px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-10 transition-all cursor-pointer italic"
                                 >
-                                    [ Prev ]
+                                    Prev
                                 </button>
 
                                 <div className="flex items-center gap-1">
@@ -141,8 +134,8 @@ export const CommunityPage = () => {
                                                     setCurrentPage(i);
                                                     window.scrollTo({ top: 300, behavior: 'smooth' });
                                                 }}
-                                                className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[11px] md:text-[9px] font-black transition-all cursor-pointer ${currentPage === i
-                                                    ? 'bg-kickr text-black'
+                                                className={`w-6 h-6 md:w-8 md:h-8 rounded-sm text-[11px] md:text-[11px] font-black transition-all cursor-pointer ${currentPage === i
+                                                    ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.3)]'
                                                     : 'bg-white/[0.01] border border-white/5 text-muted hover:text-secondary'
                                                     }`}
                                             >
@@ -159,9 +152,9 @@ export const CommunityPage = () => {
                                     }}
                                     disabled={pageData.last}
                                     aria-label="Next page"
-                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[10px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-white/10 disabled:opacity-10 transition-all cursor-pointer"
+                                    className="px-3 py-2 bg-black/[0.02] border border-white/5 rounded-sm text-[11px] md:text-[11px] font-black uppercase tracking-widest text-secondary hover:text-main hover:border-kickr/40 disabled:opacity-10 transition-all cursor-pointer italic"
                                 >
-                                    [ Next ]
+                                    Next
                                 </button>
                             </div>
                         )}
@@ -197,7 +190,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
             <div className="p-2 md:p-4 flex flex-col items-center md:items-start text-center md:text-left h-full">
                 {isMe && (
                     <div className="absolute top-1 right-1">
-                        <span className="bg-kickr text-black text-[9px] md:text-[7px] font-black uppercase tracking-tight px-1 py-0.5 rounded-sm">
+                        <span className="bg-kickr text-white text-[10px] md:text-[9px] font-black uppercase tracking-tight px-1 py-0.5 rounded-sm shadow-sm">
                             YOU
                         </span>
                     </div>
@@ -213,7 +206,7 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
                     </div>
 
                     <div className="flex-1 min-w-0 w-full">
-                        <h3 className="text-[11px] md:text-sm font-black text-main uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
+                        <h3 className="text-[12px] md:text-sm font-black text-main uppercase italic tracking-tighter group-hover:text-kickr transition-colors truncate">
                             {user.name}
                         </h3>
                         <p className="hidden md:block text-[11px] text-muted font-bold uppercase tracking-wide mt-0.5">
@@ -224,16 +217,16 @@ const UserCard = ({ user, isMe }: { user: any; isMe: boolean }) => {
 
                 <div className="flex items-center justify-center md:justify-around w-full mt-auto pt-1 border-t border-white/5 gap-3 md:gap-4">
                     <div className="flex flex-col items-center">
-                        <span className="text-[10px] md:text-base font-black text-main italic tracking-tighter leading-none tabular-nums">
+                        <span className="text-[11px] md:text-base font-black text-main italic tracking-tighter leading-none tabular-nums">
                             {user.matchesCount || 0}
                         </span>
-                        <span className="text-[10px] md:text-[7px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">LOGS</span>
+                        <span className="text-[11px] md:text-[10px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">LOGS</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="text-[10px] md:text-base font-black text-main italic tracking-tighter leading-none tabular-nums">
+                        <span className="text-[11px] md:text-base font-black text-main italic tracking-tighter leading-none tabular-nums">
                             {user.followersCount || 0}
                         </span>
-                        <span className="text-[10px] md:text-[7px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">NET</span>
+                        <span className="text-[11px] md:text-[10px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">NET</span>
                     </div>
                 </div>
             </div>

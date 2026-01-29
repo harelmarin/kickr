@@ -118,7 +118,7 @@ const NotificationItem = ({ notification, onRead, onClose }: { notification: any
 
     const getTypeColor = () => {
         if (isFollow) return 'text-blue-400 bg-blue-400/5 border-blue-400/20';
-        if (isComment) return 'text-orange-400 bg-orange-400/5 border-orange-400/20';
+        if (isComment) return 'text-kickr bg-kickr/5 border-kickr/20';
         return 'text-kickr bg-kickr/5 border-kickr/20';
     };
 
@@ -156,7 +156,7 @@ const NotificationItem = ({ notification, onRead, onClose }: { notification: any
             </div>
 
             {!notification.isRead && (
-                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-kickr shadow-[0_0_10px_rgba(255,128,0,0.5)]"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-kickr shadow-[0_0_10px_rgba(93,139,255,0.5)]"></div>
             )}
         </Link>
     );

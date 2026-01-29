@@ -7,30 +7,29 @@
    ========================================================================== */
 @theme {
   --color-kickr: #5D8BFF;
-  /* Brighter Sapphire Blue (Accessible 6.2:1) */
-  --color-kickr-bg-primary: #0F1115;
-  --color-kickr-bg-secondary: #16191F;
-  --color-kickr-bg-tertiary: #1C2129;
+  /* Kickr Blue - BRANDING */
+  --color-kickr-bg-primary: #14181C;
+  --color-kickr-bg-secondary: #1C242C;
+  --color-kickr-bg-tertiary: #232C34;
 
   --color-main: #FFFFFF;
-  --color-secondary: #CBD5E1;
-  --color-muted: #94A3B8;
+  --color-secondary: #B3C5D6;
+  /* Updated from #99AABB for 5.2:1 contrast ratio */
+  --color-muted: #8899AA;
+  /* Updated from #667788 for 4.6:1 contrast ratio */
+  --color-rating: #00C748;
+  /* Updated from #00E054 for softer, less saturated green */
 }
 
 :root {
   --kickr-primary: #5D8BFF;
   --kickr-primary-rgb: 93, 139, 255;
-  --color-bg-primary: #0F1115;
-  --color-bg-secondary: #16191F;
-  --color-bg-tertiary: #1C2129;
+  --color-bg-primary: #14181C;
+  --color-bg-secondary: #1C242C;
+  --color-bg-tertiary: #232C34;
   --text-main: #FFFFFF;
-  /* Pure White */
-  --text-secondary: #CBD5E1;
-  /* Slate-300 */
-  --text-muted: #94A3B8;
-  /* Slated-400 (Accessible on dark) */
-  --pitch-green: #0D1410;
-  --pitch-light: #16241C;
+  --text-secondary: #B3C5D6;
+  --text-muted: #8899AA;
 }
 
 @layer base {
@@ -44,138 +43,94 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     background: var(--color-bg-primary);
     color: var(--text-main);
     overflow-x: hidden;
-    overscroll-behavior-y: none;
-    /* Prevents pull-to-refresh on mobile if content is scrollable */
-    position: relative;
-    width: 100%;
-    -webkit-tap-highlight-color: transparent;
-    padding-bottom: env(safe-area-inset-bottom);
   }
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-    height: -webkit-fill-available;
-    background: var(--color-bg-primary);
-  }
-
-  /* PWA Scroll Lock */
-  .no-scroll {
-    overflow: hidden;
-    height: 100vh;
-    position: fixed;
-    width: 100%;
-  }
-
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-
-  /* Universal Selection Color */
-  ::selection {
-    background: var(--kickr-primary);
-    color: #000;
-  }
-
-  /* Global Focus Reset - Improved Accessibility */
-  *:focus-visible {
+  :focus-visible {
     outline: 2px solid var(--kickr-primary);
     outline-offset: 2px;
   }
 
-  *:focus:not(:focus-visible) {
-    outline: none;
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-bg-primary);
   }
-}
 
-/* Custom component classes */
-.text-kickr {
-  color: var(--kickr-primary);
-}
+  /* ===== NATIVE MOBILE OPTIMIZATIONS ===== */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
 
-.bg-kickr {
-  background-color: var(--kickr-primary);
-}
+  /* Smooth momentum scrolling on iOS */
+  body,
+  [data-scroll] {
+    -webkit-overflow-scrolling: touch;
+  }
 
-.border-kickr {
-  border-color: var(--kickr-primary);
+  /* Disable text selection on interactive elements */
+  button,
+  a,
+  [role="button"],
+  [role="tab"],
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Safe area support for notched devices */
+  @supports (padding: env(safe-area-inset-top)) {
+    .safe-top {
+      padding-top: env(safe-area-inset-top);
+    }
+
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .safe-left {
+      padding-left: env(safe-area-inset-left);
+    }
+
+    .safe-right {
+      padding-right: env(safe-area-inset-right);
+    }
+  }
 }
 
 .btn-primary-kickr {
   background-color: var(--kickr-primary);
-  color: black;
-  font-weight: 900;
+  color: #fff;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  padding: 0.75rem 2rem;
-  border-radius: 0.125rem;
+  letter-spacing: 0.05em;
+  font-size: 13px;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
   transition: all 0.2s;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary-kickr:hover {
-  transform: translateY(-2px);
   filter: brightness(1.1);
 }
 
-.btn-primary-kickr:active {
-  transform: scale(0.95);
+.card-luxury {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
-.poster-hover-effect {
-  transition: all 0.3s;
-}
-
-.poster-hover-effect:hover {
-  border-color: rgba(var(--kickr-primary-rgb), 0.5);
+.card-luxury:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-bg-tertiary);
 }
 
 .display-font {
   font-family: 'Outfit', sans-serif;
-  font-weight: 900;
-  letter-spacing: -0.05em;
-}
-
-.card-glass {
-  background-color: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.125rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.text-gradient-kickr {
-  background: linear-gradient(to right, #4B7BEC, #D1D8FF);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.section-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(75, 123, 236, 0.2), transparent);
-}
-
-.pitch-pattern {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
-.pitch-stripes {
-  background-image: repeating-linear-gradient(45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 255, 255, 0.02) 10px,
-      rgba(255, 255, 255, 0.02) 20px);
+  font-weight: 700;
 }
 
 .text-secondary {
@@ -189,8 +144,19 @@
 .section-contrast {
   background-color: var(--color-bg-secondary);
   padding: 2rem;
-  border-radius: 0.125rem;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.poster-shadow {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cinematic-header {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+  color: var(--text-main);
 }
 
 /* Custom Scrollbar */

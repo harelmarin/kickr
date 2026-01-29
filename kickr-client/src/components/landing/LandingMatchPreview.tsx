@@ -11,11 +11,10 @@ export const LandingMatchPreview = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-kickr/20 via-transparent to-kickr/20 blur opacity-30"></div>
 
             <div className="relative bg-kickr-bg-secondary border border-white/10 rounded-sm overflow-hidden shadow-2xl">
-                {/* Tactical Header */}
                 <div className="bg-kickr-bg-primary/40 border-b border-white/5 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3 md:gap-4">
-                        <div className="h-1.5 w-1.5 bg-kickr animate-pulse rounded-full"></div>
-                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-main/40 italic">Live Analysis Hub</span>
+                    <div className="flex items-center gap-3">
+                        <div className="h-1.5 w-1.5 bg-rating animate-pulse rounded-full"></div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-secondary opacity-60">Featured Match Review</span>
                     </div>
                 </div>
 
@@ -38,7 +37,7 @@ export const LandingMatchPreview = () => {
                         </div>
                         <div className="flex gap-0.5 mt-1 md:mt-4">
                             {[1, 2, 3, 4, 5].map(i => (
-                                <span key={i} className="text-kickr text-xs md:text-2xl">★</span>
+                                <span key={i} className="text-rating text-xs md:text-2xl">★</span>
                             ))}
                         </div>
                     </div>
@@ -52,31 +51,29 @@ export const LandingMatchPreview = () => {
                     </div>
                 </div>
 
-                {/* Tactical Review Extract */}
                 <div className="px-4 md:px-12 pb-6 md:pb-12">
-                    <div className="bg-black/[0.02] border-l-2 border-kickr p-4 md:p-8 relative">
-                        <p className="text-main/80 text-[10px] md:text-lg font-medium leading-relaxed italic pr-0 md:pr-12">
+                    <div className="bg-white/[0.02] border-l-2 border-kickr/40 p-4 md:p-8 rounded-r-md">
+                        <p className="text-main/80 text-sm md:text-lg font-medium leading-relaxed italic pr-0 md:pr-12">
                             "Massive performance from Odegaard in the half-spaces. Arteta's press completely neutralized Rodri."
                         </p>
-                        <div className="mt-4 flex items-center gap-3">
-                            <div className="w-6 h-6 rounded-sm bg-kickr/20 border border-kickr/40 flex items-center justify-center text-kickr font-black italic text-[8px] overflow-hidden">
+                        <div className="mt-6 flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-kickr/10 border border-kickr/20 flex items-center justify-center text-kickr font-bold text-xs uppercase">
                                 KA
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-[9px] font-black text-main uppercase tracking-widest truncate">Kickr Admin</span>
+                                <span className="text-[10px] font-bold text-main uppercase tracking-widest">Kickr Staff</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* Footer Labels - Hidden on Mobile */}
                 <div className="hidden md:flex bg-white/[0.01] border-t border-white/5 p-4 justify-between items-center px-8">
-                    <div className="flex gap-4">
-                        <span className="text-[8px] font-black text-main/10 uppercase tracking-widest">Comp: Premier League</span>
-                        <span className="text-[8px] font-black text-main/10 uppercase tracking-widest">Date: 15 JAN 2026</span>
+                    <div className="flex gap-6">
+                        <span className="text-[9px] font-bold text-secondary uppercase tracking-widest opacity-30">Premier League</span>
+                        <span className="text-[9px] font-bold text-secondary uppercase tracking-widest opacity-30">15 JAN 2026</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full bg-kickr"></div>
-                        <span className="text-[8px] font-black text-kickr/60 uppercase tracking-widest italic">Authenticity Verified</span>
+                        <div className="w-1 h-1 rounded-full bg-rating"></div>
+                        <span className="text-[9px] font-bold text-rating uppercase tracking-widest">Verified Review</span>
                     </div>
                 </div>
             </div>

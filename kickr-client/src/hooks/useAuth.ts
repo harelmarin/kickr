@@ -30,15 +30,15 @@ export const useAuth = create<AuthState>((set) => ({
         const toastId = toast.loading('Logging in...');
 
         try {
-            const response = await authService.login(credentials);
+            const user = await authService.login(credentials);
             set({
-                user: response.user,
+                user: user,
                 isAuthenticated: true,
                 isLoading: false,
                 error: null
             });
 
-            toast.success(`Welcome back, ${response.user.name}!`, {
+            toast.success(`Welcome back, ${user.name}!`, {
                 id: toastId,
             });
         } catch (error: any) {
@@ -66,19 +66,19 @@ export const useAuth = create<AuthState>((set) => ({
             await authService.register(data);
 
             // Automatic login after registration
-            const response = await authService.login({
+            const user = await authService.login({
                 username: data.name,
                 password: data.password
             });
 
             set({
-                user: response.user,
+                user: user,
                 isAuthenticated: true,
                 isLoading: false,
                 error: null
             });
 
-            toast.success(`Welcome to the field, ${response.user.name}!`, {
+            toast.success(`Welcome to the field, ${user.name}!`, {
                 id: toastId,
                 duration: 4000,
             });

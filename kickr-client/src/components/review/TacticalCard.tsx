@@ -39,7 +39,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
 
             {/* Header: Competition & Date */}
             <div className="flex justify-between items-center mb-16 z-10">
-                <span className="text-[#4B7BEC] text-2xl font-black uppercase tracking-[0.2em]">
+                <span className="text-[#5D8BFF] text-2xl font-bold uppercase tracking-widest">
                     {review.match.competition}
                 </span>
                 <span className="text-main/40 text-2xl font-bold uppercase tracking-widest">
@@ -51,7 +51,7 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
             <div className="flex flex-col items-center justify-center flex-1 z-10">
                 <div className="flex items-center justify-center gap-20 mb-12">
                     <div className="flex flex-col items-center gap-6 w-[280px]">
-                        <img src={getProxyUrl(review.match.homeLogo)} crossOrigin="anonymous" className="w-48 h-48 object-contain" alt="" />
+                        <img src={getProxyUrl(review.match.homeLogo)} crossOrigin="anonymous" className="w-48 h-48 object-contain" alt={`${review.match.homeTeam} crest`} />
                         <span className="text-main text-3xl font-black uppercase text-center tracking-tight leading-tight">
                             {review.match.homeTeam}
                         </span>
@@ -60,13 +60,13 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                     <div className="flex flex-col items-center gap-6">
                         <div className="flex items-center gap-10 bg-white/[0.03] border border-white/10 px-12 py-8 rounded-sm">
                             <span className="text-[120px] font-black text-main leading-none tabular-nums">{review.match.homeScore}</span>
-                            <div className="w-[2px] h-24 bg-[#4B7BEC]/30"></div>
+                            <div className="w-[2px] h-24 bg-[#5D8BFF]/30"></div>
                             <span className="text-[120px] font-black text-main leading-none tabular-nums">{review.match.awayScore}</span>
                         </div>
                     </div>
 
                     <div className="flex flex-col items-center gap-6 w-[280px]">
-                        <img src={getProxyUrl(review.match.awayLogo)} crossOrigin="anonymous" className="w-48 h-48 object-contain" alt="" />
+                        <img src={getProxyUrl(review.match.awayLogo)} crossOrigin="anonymous" className="w-48 h-48 object-contain" alt={`${review.match.awayTeam} crest`} />
                         <span className="text-main text-3xl font-black uppercase text-center tracking-tight leading-tight">
                             {review.match.awayTeam}
                         </span>
@@ -74,27 +74,27 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
                 </div>
 
                 {/* Stars/Rating */}
-                <div className="flex items-center gap-4 mb-20 bg-[#4B7BEC]/5 px-8 py-4 rounded-full border border-[#4B7BEC]/20">
-                    <div className="flex text-[#4B7BEC] text-5xl">
+                <div className="flex items-center gap-4 mb-20 bg-[#5D8BFF]/5 px-8 py-4 rounded-full border border-[#5D8BFF]/20">
+                    <div className="flex text-[#00E054] text-5xl">
                         {'★'.repeat(Math.round(review.note))}
                         <span className="text-main/20">{'★'.repeat(5 - Math.round(review.note))}</span>
                     </div>
                     {review.isLiked && (
-                        <span className="text-[#ff8000] text-4xl ml-2">❤</span>
+                        <span className="text-[#5D8BFF] text-4xl ml-2">❤</span>
                     )}
                 </div>
 
                 {/* Commentary - adaptive height with safety limit */}
                 {review.comment && (
                     <div className="w-full max-w-[800px] text-center px-10">
-                        <p className="text-[#99aabb] text-[32px] leading-[1.5] font-medium">
+                        <p className="text-[#99AABB] text-[32px] font-medium leading-[1.5]">
                             {review.comment.length > 1000
                                 ? `${review.comment.substring(0, 1000)}...`
                                 : review.comment
                             }
                         </p>
                         {review.comment.length > 1000 && (
-                            <p className="text-[#4B7BEC] text-[24px] font-bold uppercase tracking-wider mt-8">
+                            <p className="text-[#5D8BFF] text-[24px] font-bold uppercase tracking-widest mt-8">
                                 Read full review on kickrhq.com
                             </p>
                         )}
@@ -105,12 +105,12 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
             {/* Footer: User & Branding */}
             <div className="flex justify-between items-end mt-16 z-10">
                 <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 rounded-full border-2 border-[#4B7BEC]/30 p-1">
+                    <div className="w-20 h-20 rounded-full border-2 border-[#5D8BFF]/30 p-1">
                         <div className="w-full h-full rounded-full overflow-hidden bg-white/10 flex items-center justify-center">
                             {review.user?.avatarUrl ? (
-                                <img src={getProxyUrl(review.user.avatarUrl)} crossOrigin="anonymous" alt="" className="w-full h-full object-cover" />
+                                <img src={getProxyUrl(review.user.avatarUrl)} crossOrigin="anonymous" alt={`${review.user.name}'s avatar profile`} className="w-full h-full object-cover" />
                             ) : (
-                                <span className="text-2xl font-black text-main">{review.user?.name[0]}</span>
+                                <span className="text-2xl font-black text-main">{review.user ? review.user.name[0] : '?'}</span>
                             )}
                         </div>
                     </div>
@@ -122,12 +122,12 @@ export const TacticalCard = ({ review, cardRef }: TacticalCardProps) => {
 
                 <div className="flex flex-col items-end">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 bg-[#4B7BEC] flex items-center justify-center rounded-sm">
+                        <div className="w-10 h-10 bg-[#5D8BFF] flex items-center justify-center rounded-md">
                             <span className="font-black text-main text-2xl uppercase">K</span>
                         </div>
                         <span className="text-main text-4xl font-black tracking-tighter uppercase">Kickr</span>
                     </div>
-                    <span className="text-main/50 text-lg font-bold tracking-[0.3em] uppercase">kickrhq.com</span>
+                    <span className="text-main/50 text-lg font-bold tracking-widest uppercase">kickrhq.com</span>
                 </div>
             </div>
         </div>

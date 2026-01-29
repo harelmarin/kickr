@@ -29,6 +29,14 @@ public class JwtService {
         if (secret == null || secret.isEmpty()) {
             throw new IllegalStateException("La variable d'environnement JWT_SECRET n'est pas définie !");
         }
+
+        // HS512 requires at least 512 bits (64 bytes) for security
+        if (secret.getBytes().length < 64) {
+            throw new IllegalStateException(
+                    "JWT_SECRET must be at least 64 characters for HS512 algorithm. Current length: "
+                            + secret.getBytes().length);
+        }
+
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         this.expirationTime = expiration * 1000; // convert to milliseconds
     }

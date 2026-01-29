@@ -26,19 +26,19 @@ export const FriendsFeedPage = () => {
                     <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
                         Social <span className="text-kickr/80">Feed</span>
                     </h1>
-                    <p className="text-kickr uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic">
-                        Real-time match logs from your social network.
+                    <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-[8px] md:text-[11px] font-black italic">
+                        The latest match logs from your network.
                     </p>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                     {/* Main Content */}
                     <div className="lg:col-span-8">
-                        <div className="flex items-center justify-between mb-3 md:mb-8 border-b border-white/5 pb-2">
-                            <h2 className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-main/80 italic">Match Logs</h2>
-                            <div className="flex items-center gap-1 md:gap-2">
-                                <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-kickr animate-pulse opacity-60"></div>
-                                <span className="text-[6px] md:text-[9px] font-black text-secondary uppercase tracking-widest italic leading-none">LIVE FEED</span>
+                        <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-4">
+                            <h2 className="text-sm md:text-lg font-bold uppercase tracking-wider text-secondary">Match Logs</h2>
+                            <div className="flex items-center gap-2 bg-kickr/10 px-3 py-1 rounded-full">
+                                <div className="w-1.5 h-1.5 rounded-full bg-rating animate-pulse"></div>
+                                <span className="text-[10px] md:text-xs font-bold text-rating uppercase tracking-wider">LIVE</span>
                             </div>
                         </div>
 
@@ -51,10 +51,10 @@ export const FriendsFeedPage = () => {
                                     ))}
                                 </div>
                             ) : isError ? (
-                                <div className="py-20 text-center bg-black/[0.02] border border-white/5 rounded-sm">
-                                    <h2 className="text-lg font-black text-main uppercase italic mb-2">Transmission Interrupted</h2>
-                                    <p className="text-main/20 text-xs uppercase tracking-widest mb-6">Failed to retrieve intel from your network.</p>
-                                    <button onClick={() => window.location.reload()} className="text-kickr text-[10px] font-black uppercase tracking-[0.3em] border border-kickr/20 px-8 py-3 rounded-sm hover:bg-kickr/5 transition-all">Retry Link</button>
+                                <div className="py-20 text-center">
+                                    <h2 className="text-lg font-bold text-main uppercase mb-2">Connection Error</h2>
+                                    <p className="text-secondary text-xs uppercase tracking-widest mb-6">Failed to retrieve logs from your network.</p>
+                                    <button onClick={() => window.location.reload()} className="btn-primary-kickr">Retry</button>
                                 </div>
                             ) : reviews.length === 0 ? (
                                 <div className="py-24 text-center bg-black/[0.02] border border-white/5 rounded-sm px-6">
@@ -63,7 +63,7 @@ export const FriendsFeedPage = () => {
                                     <p className="text-main/20 text-[10px] uppercase tracking-[0.2em] font-bold max-w-xs mx-auto leading-relaxed mb-6">
                                         Your friends haven't logged any matches yet. Expand your network to see more activity.
                                     </p>
-                                    <Link to="/community" className="inline-block bg-kickr text-black text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-sm hover:scale-105 transition-all italic">
+                                    <Link to="/community" className="inline-block bg-kickr text-white text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-sm hover:brightness-110 transition-all italic shadow-[0_0_20px_rgba(93,139,255,0.2)]">
                                         Find Friends →
                                     </Link>
                                 </div>
@@ -78,7 +78,7 @@ export const FriendsFeedPage = () => {
 
                         {/* Pagination */}
                         {!isLoading && pageData && pageData.totalPages > 1 && (
-                            <div className="mt-8 flex items-center justify-center gap-4 md:gap-8 border-t border-white/5 pt-6">
+                            <div className="mt-12 flex items-center justify-center gap-8 border-t border-white/10 pt-8">
                                 <button
                                     onClick={() => {
                                         setCurrentPage(prev => Math.max(0, prev - 1));

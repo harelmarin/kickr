@@ -123,9 +123,10 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                     disabled={isGenerating}
                     className={`flex items-center justify-center rounded-sm transition-all duration-300 group overflow-hidden cursor-pointer ${variant === 'full'
                         ? 'w-10 h-10 bg-white/[0.03] border border-white/5 text-main/40 hover:text-kickr hover:border-kickr/40 active:scale-95'
-                        : 'p-1 text-[#445566] hover:text-kickr active:scale-90'
+                        : 'p-1 text-muted hover:text-kickr active:scale-90'
                         }`}
                     title="Download PNG Card"
+                    aria-label="Download review as PNG image"
                 >
                     {isGenerating ? (
                         <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
@@ -141,9 +142,10 @@ export const ShareReviewButton = ({ review, variant = 'icon', showXShare = false
                 {showXShare && (
                     <button
                         onClick={handleShareTwitter}
-                        className={`flex items-center justify-center transition-all duration-300 cursor-pointer ${variant === 'full' ? 'w-10 h-10 bg-white/5 border border-white/5 rounded-sm' : 'p-1 hover:text-[#1DA1F2] active:scale-90 text-[#445566]'
+                        className={`flex items-center justify-center transition-all duration-300 cursor-pointer ${variant === 'full' ? 'w-10 h-10 bg-white/5 border border-white/5 rounded-sm' : 'p-1 hover:text-[#1DA1F2] active:scale-90 text-muted'
                             }`}
                         title="Share to X (Twitter)"
+                        aria-label="Share review to X (previously Twitter)"
                     >
                         <svg viewBox="0 0 24 24" fill="currentColor" className={variant === 'full' ? 'w-4 h-4' : 'w-3 h-3'}>
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />

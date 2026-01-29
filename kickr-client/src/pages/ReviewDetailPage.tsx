@@ -52,8 +52,8 @@ export const ReviewDetailPage: FC = () => {
         });
     };
 
-    if (isReviewLoading) return <div className="min-h-screen bg-kickr-bg-primary pt-32 flex justify-center"><div className="animate-pulse text-kickr text-[10px] font-black uppercase tracking-[0.4em] italic">Loading Tactical Report...</div></div>;
-    if (!review) return <div className="min-h-screen bg-kickr-bg-primary pt-32 flex justify-center"><div className="text-red-500 text-[10px] font-black uppercase tracking-[0.4em] italic">Report not found</div></div>;
+    if (isReviewLoading) return <div className="min-h-screen bg-kickr-bg-primary pt-32 flex justify-center"><div className="animate-pulse text-kickr text-[10px] font-bold uppercase tracking-widest">Loading Review...</div></div>;
+    if (!review) return <div className="min-h-screen bg-kickr-bg-primary pt-32 flex justify-center"><div className="text-red-500 text-[10px] font-bold uppercase tracking-widest">Review not found</div></div>;
 
     return (
         <main className="min-h-screen bg-kickr-bg-primary pt-[calc(3rem+env(safe-area-inset-top))] md:pt-24 pb-12 md:pb-20">
@@ -108,8 +108,7 @@ export const ReviewDetailPage: FC = () => {
                                 )}
                             </Link>
                             <div className="flex flex-col">
-                                <span className="text-[7px] md:text-[10px] font-black text-kickr uppercase tracking-widest italic leading-none mb-0.5 md:mb-1 hidden md:block">Review by</span>
-                                <Link to={`/user/${review.user.id}`} className="text-xs md:text-xl font-black text-main uppercase hover:text-kickr transition-colors tracking-tighter italic leading-none">{review.user.name}</Link>
+                                <Link to={`/user/${review.user.id}`} className="text-sm md:text-xl font-bold text-main uppercase hover:text-kickr transition-colors tracking-tight leading-none">{review.user.name}</Link>
                             </div>
                         </div>
 
@@ -143,16 +142,16 @@ export const ReviewDetailPage: FC = () => {
                             <ShareReviewButton review={review} variant="full" />
                             <div className="h-4 w-px bg-white/5" />
                             {currentUser?.id === review.user.id ? (
-                                <button onClick={() => setShowConfirmDelete(true)} className="text-[8px] md:text-[9px] font-black text-red-500/40 hover:text-red-500 uppercase tracking-widest transition-colors italic">Delete Report</button>
+                                <button onClick={() => setShowConfirmDelete(true)} className="text-[10px] font-bold text-red-500/40 hover:text-red-500 uppercase tracking-widest transition-colors">Delete Review</button>
                             ) : (
-                                <button onClick={() => setReportConfig({ id: review.id, type: 'MATCH_REVIEW' })} className="text-[8px] md:text-[9px] font-black text-main/10 hover:text-red-500 uppercase tracking-widest transition-colors italic">Report Analysis</button>
+                                <button onClick={() => setReportConfig({ id: review.id, type: 'MATCH_REVIEW' })} className="text-[10px] font-bold text-main/10 hover:text-red-500 uppercase tracking-widest transition-colors">Report Review</button>
                             )}
                         </div>
 
                         {/* COMMENTS SECTION */}
                         <section className="pt-6 md:pt-12">
                             <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-10">
-                                <h3 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-main/20 italic">Responses</h3>
+                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-secondary">Comments</h3>
                                 <div className="h-px flex-1 bg-white/5" />
                                 <span className="text-[9px] md:text-[10px] font-mono text-kickr">{comments?.length || 0}</span>
                             </div>
@@ -183,7 +182,7 @@ export const ReviewDetailPage: FC = () => {
                                         className="w-full bg-white/[0.01] border border-white/5 rounded-sm p-3 md:p-4 text-[11px] md:text-sm font-medium text-main placeholder-white/5 focus:border-kickr/40 transition-all outline-none resize-none h-20 md:h-24 uppercase italic tracking-wider"
                                     />
                                     <div className="flex justify-end">
-                                        <button disabled={!commentText.trim() || addCommentMutation.isPending} className="px-5 md:px-8 py-2 md:py-3 bg-kickr text-black text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] rounded-sm hover:brightness-110 transition-all disabled:opacity-50 italic">Transmit</button>
+                                        <button disabled={!commentText.trim() || addCommentMutation.isPending} className="px-6 md:px-10 py-2.5 md:py-3.5 bg-kickr text-white text-[10px] font-bold uppercase tracking-widest rounded-md hover:brightness-110 transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(93,139,255,0.2)]">Post Comment</button>
                                     </div>
                                 </form>
                             )}
@@ -202,13 +201,13 @@ export const ReviewDetailPage: FC = () => {
             {/* Confirm Delete Popup */}
             <AnimatePresence>
                 {showConfirmDelete && (
-                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-kickr-bg-primary/90 backdrop-blur-sm">
-                        <div className="bg-kickr-bg-secondary border border-white/10 p-12 rounded-sm max-w-sm w-full text-center">
-                            <h3 className="text-xl font-black text-main uppercase italic tracking-tighter mb-4">Terminate Record?</h3>
-                            <p className="text-main/40 text-[10px] font-black uppercase tracking-widest mb-10">This tactical data will be permanently erased from the network.</p>
+                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-kickr-bg-primary/95 backdrop-blur-md">
+                        <div className="bg-kickr-bg-secondary border border-white/10 p-8 md:p-12 rounded-md max-w-sm w-full text-center">
+                            <h3 className="text-xl font-bold text-main uppercase tracking-tight mb-4">Delete Review?</h3>
+                            <p className="text-secondary text-xs font-medium mb-10">This match log will be permanently removed from your diary.</p>
                             <div className="flex gap-4">
-                                <button onClick={handleDeleteReview} className="flex-1 py-4 bg-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-[0.2em] rounded-sm hover:bg-red-500/30 transition-all">Confirm Erase</button>
-                                <button onClick={() => setShowConfirmDelete(false)} className="flex-1 py-4 bg-black/5 text-main/40 text-[10px] font-black uppercase tracking-[0.2em] rounded-sm hover:text-main transition-all">Abort</button>
+                                <button onClick={handleDeleteReview} className="flex-1 py-3 bg-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-widest rounded-md hover:bg-red-500/30 transition-all">Confirm</button>
+                                <button onClick={() => setShowConfirmDelete(false)} className="flex-1 py-3 bg-white/5 text-secondary text-[10px] font-bold uppercase tracking-widest rounded-md hover:text-white transition-all">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -234,12 +233,12 @@ const LikeButton: FC<{ reviewId: string; likesCount: number; simplified?: boolea
     return (
         <button
             onClick={handleLike}
-            className={`flex items-center gap-1.5 md:gap-3 transition-all ${isLikedByMe ? 'text-kickr' : 'text-main/10 hover:text-main'}`}
+            className={`flex items-center gap-2 md:gap-4 transition-all ${isLikedByMe ? 'text-kickr' : 'text-secondary/40 hover:text-white'}`}
         >
             <span className="text-base md:text-xl">{isLikedByMe ? '❤' : '❤'}</span>
             <div className="flex flex-col items-start leading-none">
-                <span className={`text-[10px] md:text-[11px] font-black italic tabular-nums leading-none ${isLikedByMe ? 'text-kickr' : 'text-main/40'}`}>{likesCount || 0}</span>
-                {!simplified && <span className="text-[6px] md:text-[7px] font-black uppercase tracking-widest mt-0.5 hidden md:block">Supports</span>}
+                <span className={`text-[10px] md:text-[11px] font-bold tabular-nums leading-none ${isLikedByMe ? 'text-kickr' : 'text-secondary/40'}`}>{likesCount || 0}</span>
+                {!simplified && <span className="text-[10px] font-bold uppercase tracking-widest mt-1 hidden md:block">Likes</span>}
             </div>
         </button>
     );

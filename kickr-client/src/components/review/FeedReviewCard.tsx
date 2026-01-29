@@ -7,62 +7,62 @@ interface FeedReviewCardProps {
 
 export const FeedReviewCard = ({ review }: FeedReviewCardProps) => {
     return (
-        <div className="group/card bg-black/[0.02] border border-white/5 rounded-sm overflow-hidden hover:border-kickr/20 transition-all duration-300 flex flex-col h-full">
+        <div className="group/card bg-kickr-bg-secondary border border-white/5 rounded-md overflow-hidden hover:border-white/20 transition-all duration-300 flex flex-col h-full">
             {/* Match Header (Compact) */}
             <Link
                 to={review.comment && review.comment.trim() !== "" ? `/reviews/${review.id}` : `/matches/${review.match.id}`}
-                className="relative h-14 md:h-20 overflow-hidden block bg-kickr-bg-primary/20 border-b border-white/5"
+                className="relative h-14 md:h-20 overflow-hidden block bg-black/20 border-b border-white/5"
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary to-transparent opacity-40 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-kickr-bg-primary via-transparent to-transparent opacity-80 z-10" />
 
                 {/* Team Logos & Score */}
                 <div className="absolute inset-0 flex items-center justify-center gap-3 md:gap-6 px-4 z-20">
-                    <img src={review.match.homeLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain drop-shadow-lg group-hover/card:scale-105 transition-transform" alt="" />
+                    <img src={review.match.homeLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain drop-shadow-xl group-hover/card:scale-[1.05] transition-transform" alt="" />
                     <div className="flex flex-col items-center">
-                        <span className="text-[11px] md:text-sm font-black text-main italic tracking-tighter tabular-nums">
+                        <span className="text-xs md:text-sm font-bold text-main tabular-nums">
                             {review.match.homeScore} - {review.match.awayScore}
                         </span>
                     </div>
-                    <img src={review.match.awayLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain drop-shadow-lg group-hover/card:scale-105 transition-transform" alt="" />
+                    <img src={review.match.awayLogo} className="w-5 h-5 md:w-8 md:h-8 object-contain drop-shadow-xl group-hover/card:scale-[1.05] transition-transform" alt="" />
                 </div>
             </Link>
 
             {/* Content Body */}
-            <div className="p-1.5 md:p-4 flex flex-col flex-1">
-                <div className="flex items-center justify-between mb-1 md:mb-3 pb-1 md:pb-3 border-b border-white/5">
-                    <Link to={`/user/${review.user?.id}`} className="flex items-center gap-1 md:gap-2 group/user min-w-0">
-                        <div className="w-3 h-3 md:w-5 md:h-5 rounded-sm bg-kickr/10 border border-white/5 flex items-center justify-center text-[5px] md:text-[8px] font-black text-kickr overflow-hidden flex-shrink-0">
+            <div className="p-3 md:p-5 flex flex-col flex-1">
+                <div className="flex items-center justify-between mb-3 border-b border-white/5 pb-3">
+                    <Link to={`/user/${review.user?.id}`} className="flex items-center gap-2 group/user min-w-0">
+                        <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-[10px] font-bold text-secondary overflow-hidden flex-shrink-0">
                             {review.user?.avatarUrl ? (
                                 <img src={review.user.avatarUrl} alt="" className="w-full h-full object-cover" />
                             ) : (
                                 review.user?.name[0]
                             )}
                         </div>
-                        <span className="text-[6px] md:text-[9px] font-black text-main/90 group-hover/user:text-kickr transition-colors uppercase italic truncate">
+                        <span className="text-[11px] font-bold text-secondary group-hover:text-white transition-colors uppercase tracking-wide truncate">
                             {review.user?.name}
                         </span>
                     </Link>
 
-                    <div className="flex items-center gap-1 bg-kickr/5 px-1 md:px-2 py-0.5 border border-kickr/10">
-                        <span className="text-kickr text-[7px] md:text-[10px] font-black italic tabular-nums">{review.note.toFixed(1)}</span>
+                    <div className="flex items-center gap-1 bg-rating/10 px-2 py-0.5 rounded-sm border border-rating/20">
+                        <span className="text-rating text-xs font-bold tabular-nums">{review.note.toFixed(1)}</span>
                     </div>
                 </div>
 
                 {review.comment && (
-                    <p className="text-main/70 text-[7px] md:text-[10px] leading-relaxed italic line-clamp-2 mb-1.5 md:mb-4 uppercase font-medium">
-                        {review.comment}
+                    <p className="text-secondary text-xs leading-relaxed line-clamp-2 mb-4 font-medium italic">
+                        "{review.comment}"
                     </p>
                 )}
 
                 <div className="mt-auto flex items-center justify-between">
-                    <span className="text-[6px] md:text-[9px] font-black text-main/40 uppercase tracking-widest italic leading-none">
+                    <span className="text-[10px] font-bold text-muted/60 uppercase tracking-widest leading-none">
                         {new Date(review.watchedAt).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}
                     </span>
                     <Link
                         to={`/reviews/${review.id}`}
-                        className="text-[5px] md:text-[8px] font-black text-main/40 hover:text-kickr uppercase tracking-widest transition-all flex items-center gap-0.5 md:gap-1 italic"
+                        className="text-[10px] font-bold text-secondary hover:text-kickr uppercase tracking-widest transition-all flex items-center gap-1"
                     >
-                        DETAILS <span className="text-[8px] md:text-xs">→</span>
+                        DETAILS <span>→</span>
                     </Link>
                 </div>
             </div>

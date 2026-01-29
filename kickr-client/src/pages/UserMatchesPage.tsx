@@ -103,11 +103,11 @@ export const UserMatchesPage = () => {
                             </Link>
                         )}
                         <div className="min-w-0">
-                            <h1 className="text-2xl md:text-6xl font-black text-main italic tracking-tighter uppercase leading-none mb-1">
-                                Match <span className="text-kickr/80">Logs</span>
+                            <h1 className="text-2xl md:text-6xl font-bold text-main tracking-tight uppercase leading-none mb-1">
+                                Match <span className="text-kickr">Diary</span>
                             </h1>
-                            <p className="text-main/40 uppercase tracking-[0.15em] md:tracking-[0.25em] text-[7px] md:text-[11px] font-black italic truncate">
-                                {pageData?.totalElements || 0} Entries // {user?.name}
+                            <p className="text-secondary uppercase tracking-widest text-[9px] md:text-sm font-bold opacity-60">
+                                {pageData?.totalElements || 0} Entries · {user?.name}
                             </p>
                         </div>
                     </div>
@@ -131,11 +131,11 @@ export const UserMatchesPage = () => {
                                     value={status}
                                     aria-label="Filter by match status"
                                     onChange={(e) => setStatus(e.target.value as any)}
-                                    className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-3 pr-8 py-1.5 text-[9px] font-black text-secondary focus:text-main focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-black/[0.03] transition-all italic"
+                                    className="w-full bg-white/[0.03] border border-white/10 rounded-md px-3 py-2.5 text-xs font-medium text-main focus:border-kickr transition-all outline-none cursor-pointer appearance-none uppercase"
                                 >
-                                    <option value="all" className="bg-kickr-bg-primary">ALL STATUS</option>
-                                    <option value="finished" className="bg-kickr-bg-primary">COMPLETED</option>
-                                    <option value="upcoming" className="bg-kickr-bg-primary">PROJECTED</option>
+                                    <option value="all" className="bg-kickr-bg-primary">All Status</option>
+                                    <option value="finished" className="bg-kickr-bg-primary">Completed</option>
+                                    <option value="upcoming" className="bg-kickr-bg-primary">Upcoming</option>
                                 </select>
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-main/40 italic">▼</div>
                             </div>
@@ -145,14 +145,14 @@ export const UserMatchesPage = () => {
                                     value={minRating}
                                     aria-label="Filter by minimum rating"
                                     onChange={(e) => setMinRating(Number(e.target.value))}
-                                    className="w-full bg-white/[0.01] border border-white/5 rounded-sm pl-3 pr-8 py-1.5 text-[9px] font-black text-secondary focus:text-main focus:border-kickr/20 outline-none cursor-pointer appearance-none uppercase tracking-widest hover:bg-black/[0.03] transition-all italic"
+                                    className="w-full bg-white/[0.03] border border-white/10 rounded-md px-3 py-2.5 text-xs font-medium text-main focus:border-kickr transition-all outline-none cursor-pointer appearance-none uppercase"
                                 >
-                                    <option value="0" className="bg-kickr-bg-primary">UNFILTERED</option>
-                                    <option value="1" className="bg-kickr-bg-primary">1+ STAR</option>
-                                    <option value="2" className="bg-kickr-bg-primary">2+ STARS</option>
-                                    <option value="3" className="bg-kickr-bg-primary">3+ STARS</option>
-                                    <option value="4" className="bg-kickr-bg-primary">4+ STARS</option>
-                                    <option value="5" className="bg-kickr-bg-primary">ELITE CLASS</option>
+                                    <option value="0" className="bg-kickr-bg-primary">No Rating Filter</option>
+                                    <option value="5" className="bg-kickr-bg-primary">5 Stars Only</option>
+                                    <option value="4" className="bg-kickr-bg-primary">4+ Stars</option>
+                                    <option value="3" className="bg-kickr-bg-primary">3+ Stars</option>
+                                    <option value="2" className="bg-kickr-bg-primary">2+ Stars</option>
+                                    <option value="1" className="bg-kickr-bg-primary">1+ Star</option>
                                 </select>
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[7px] text-main/40 italic">▼</div>
                             </div>
@@ -180,12 +180,12 @@ export const UserMatchesPage = () => {
 
                                     <div className="px-1 flex flex-col gap-2">
                                         <div className="flex items-center justify-between">
-                                            <div className="flex text-kickr text-[8px] md:text-[10px] tabular-nums" aria-label={`${review.note} stars out of 5`}>
+                                            <div className="flex text-rating text-[10px] tabular-nums" aria-label={`${review.note} stars out of 5`}>
                                                 {'★'.repeat(Math.round(review.note))}
                                                 <span className="text-main/10">{'★'.repeat(5 - Math.round(review.note))}</span>
                                             </div>
                                             {review.isLiked && (
-                                                <span className="text-[#ff8000] text-[10px] md:text-xs italic">PRIME</span>
+                                                <span className="text-kickr text-[10px] font-bold uppercase tracking-widest">Favorite</span>
                                             )}
                                         </div>
 
@@ -236,7 +236,7 @@ export const UserMatchesPage = () => {
                                             window.scrollTo({ top: 300, behavior: 'smooth' });
                                         }}
                                         className={`w-8 h-8 md:w-10 md:h-10 rounded-sm text-[8px] md:text-[10px] font-black transition-all cursor-pointer tabular-nums ${currentPage === i
-                                            ? 'bg-kickr text-black'
+                                            ? 'bg-kickr text-white shadow-[0_0_15px_rgba(93,139,255,0.3)]'
                                             : 'bg-white/[0.01] border border-white/5 text-muted hover:text-main hover:border-white/10'
                                             }`}
                                         aria-current={currentPage === i ? 'page' : undefined}

@@ -69,7 +69,7 @@ export const UserDetailPage = () => {
                                         )}
                                     </div>
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-kickr-bg-primary/40">
-                                        <span className="text-[8px] font-black text-main uppercase tracking-widest">Edit</span>
+                                        <span className="text-[11px] font-black text-main uppercase tracking-widest">Edit</span>
                                     </div>
                                 </Link>
                             ) : (
@@ -91,12 +91,12 @@ export const UserDetailPage = () => {
                                 <div className="flex items-center gap-2 mb-1 justify-center md:justify-start">
                                     <h1 className="text-xl md:text-4xl font-black text-main tracking-tight italic uppercase">{user.name}</h1>
                                     {isOwnProfile && (
-                                        <span className="bg-kickr/10 text-kickr text-[7px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-sm border border-kickr/20">
+                                        <span className="bg-kickr/10 text-kickr text-[11px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-sm border border-kickr/20">
                                             SELF
                                         </span>
                                     )}
                                 </div>
-                                <p className="text-muted text-[8px] md:text-xs uppercase tracking-widest italic font-bold">
+                                <p className="text-muted text-[11px] md:text-xs uppercase tracking-widest italic font-bold">
                                     DEPLOYED {new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
@@ -105,14 +105,14 @@ export const UserDetailPage = () => {
                         <div className="w-full md:w-auto flex justify-center gap-2 md:gap-3">
                             <Link
                                 to={`/user/${id}/diary`}
-                                className="bg-black/[0.03] border border-white/5 hover:border-kickr/40 text-secondary hover:text-main text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 justify-center italic"
+                                className="bg-black/[0.03] border border-white/5 hover:border-kickr/40 text-secondary hover:text-main text-[11px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 justify-center italic"
                             >
                                 DIARY
                             </Link>
                             {isOwnProfile ? (
                                 <Link
                                     to="/settings"
-                                    className="bg-kickr hover:brightness-110 text-black text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 w-full md:w-auto justify-center italic"
+                                    className="bg-kickr hover:brightness-110 text-white text-[11px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-sm transition-all flex items-center gap-2 w-full md:w-auto justify-center italic shadow-[0_0_20px_rgba(93,139,255,0.2)]"
                                 >
                                     CONFIG
                                 </Link>
@@ -122,12 +122,12 @@ export const UserDetailPage = () => {
                                     disabled={followAction.isPending}
                                     className={`group flex items-center justify-center gap-3 px-6 py-2 rounded-sm transition-all w-full md:w-auto italic ${isFollowing
                                         ? 'bg-black/5 border border-white/10 hover:border-red-500/50'
-                                        : 'bg-kickr hover:brightness-110 text-black'
+                                        : 'bg-kickr hover:brightness-110 text-white shadow-[0_0_20px_rgba(93,139,255,0.2)]'
                                         } disabled:opacity-50`}
                                 >
-                                    <span className={`text-[9px] font-black uppercase tracking-[0.2em] transition-colors ${isFollowing
+                                    <span className={`text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${isFollowing
                                         ? 'text-secondary group-hover:text-red-500'
-                                        : 'text-black'
+                                        : 'text-white'
                                         }`}>
                                         {followAction.isPending ? '...' : isFollowing ? 'Unfollow' : 'Follow'}
                                     </span>
@@ -162,10 +162,10 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-8 md:space-y-12">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm">
-                            <div className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
-                                <Link to={`/user/${id}/diary`} className="text-[10px] md:text-sm font-black text-main/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Diary</Link>
-                                <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest leading-none">DATABASE: {pageData?.totalElements || 0}</span>
+                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm poster-shadow">
+                            <div className="flex items-center justify-between border-b border-white/[0.03] pb-3 md:pb-4">
+                                <Link to={`/user/${id}/diary`} className="cinematic-header text-[11px] md:text-sm text-main/90 hover:text-kickr transition-colors">Tactical Diary</Link>
+                                <span className="text-[11px] md:text-[10px] font-black text-muted uppercase tracking-widest leading-none italic">DATABASE: {pageData?.totalElements || 0}</span>
                             </div>
 
                             {isReviewsLoading ? (
@@ -183,20 +183,20 @@ export const UserDetailPage = () => {
                                 </div>
                             ) : (
                                 <div className="py-12 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-sm">
-                                    <p className="text-secondary text-[8px] font-bold uppercase tracking-widest">No match entries detected.</p>
+                                    <p className="text-secondary text-[10px] font-bold uppercase tracking-widest">No match entries detected.</p>
                                 </div>
                             )}
                         </section>
 
                         {/* Top Teams & Leagues Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                                <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Squads</h3>
+                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6">Top Squads</h3>
                                 <MostWatchedTeams reviews={pageData?.content || []} />
                             </section>
 
-                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                                <h3 className="text-[9px] md:text-[10px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Leagues</h3>
+                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6">Top Leagues</h3>
                                 <MostWatchedLeagues reviews={pageData?.content || []} />
                             </section>
                         </div>
@@ -286,7 +286,7 @@ export const UserDetailPage = () => {
                                 </div>
                                 <div className="flex flex-col items-end">
                                     <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest leading-none mb-1 md:mb-2 italic">INTEL AVG</span>
-                                    <span className="text-base md:text-xl font-black text-kickr italic">
+                                    <span className="text-base md:text-xl font-black text-rating italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
                                             : '0.0'}
@@ -304,7 +304,7 @@ export const UserDetailPage = () => {
                                 </div>
                                 <div className="flex justify-between items-center border-b border-white/5 pb-2.5 md:pb-3">
                                     <span className="text-[8px] md:text-[10px] font-black text-muted uppercase tracking-widest">Avg Stars</span>
-                                    <span className="text-xs md:text-base font-black text-kickr italic">
+                                    <span className="text-xs md:text-base font-black text-rating italic">
                                         {pageData && pageData.content.length > 0
                                             ? (pageData.content.reduce((acc: number, r: any) => acc + r.note, 0) / pageData.content.length).toFixed(1)
                                             : '0.0'}
@@ -351,9 +351,9 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                         className="flex-1 h-full flex flex-col items-center group cursor-pointer"
                         title={`View ${rating}-star reviews`}
                     >
-                        <div className="w-full flex-1 bg-black/[0.02] rounded-t-md relative flex items-end overflow-hidden border-x border-t border-black/[0.05] hover:border-kickr/30 transition-all">
+                        <div className="w-full flex-1 bg-black/[0.02] rounded-t-md relative flex items-end overflow-hidden border-x border-t border-black/[0.05] hover:border-rating/30 transition-all">
                             <div
-                                className="w-full bg-gradient-to-t from-kickr/40 to-kickr group-hover:brightness-125 transition-all duration-300 ease-out relative rounded-t-sm"
+                                className="w-full bg-gradient-to-t from-rating/40 to-rating group-hover:brightness-125 transition-all duration-300 ease-out relative rounded-t-sm"
                                 style={{ height: `${heightPercentage}%`, minHeight: count > 0 ? '2px' : '0' }}
                             >
                                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/20"></div>
@@ -366,8 +366,8 @@ const RatingsChart = ({ reviews }: { reviews: any[] }) => {
                         </div>
 
                         <div className="mt-3 flex flex-col items-center">
-                            <span className="text-[10px] font-black text-secondary group-hover:text-kickr transition-colors">{rating}★</span>
-                            <div className="w-1 h-1 rounded-full bg-black/5 mt-1 group-hover:bg-kickr transition-colors"></div>
+                            <span className="text-[10px] font-black text-secondary group-hover:text-rating transition-colors">{rating}★</span>
+                            <div className="w-1 h-1 rounded-full bg-black/5 mt-1 group-hover:bg-rating transition-colors"></div>
                         </div>
                     </Link>
                 );
@@ -416,17 +416,17 @@ const MostWatchedTeams = ({ reviews }: { reviews: UserMatch[] }) => {
                 >
                     <div className="flex items-center justify-between mb-1.5 md:mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
-                            <span className="text-[7px] md:text-[9px] font-mono text-main/10 uppercase leading-none">{index + 1}</span>
+                            <span className="text-[10px] md:text-[11px] font-mono text-main/10 uppercase leading-none">{index + 1}</span>
                             {team.logo && (
                                 <img src={team.logo} alt="" className="w-3.5 h-3.5 md:w-4 md:h-4 object-contain" />
                             )}
-                            <span className="text-[9px] md:text-[10px] font-black text-main uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{team.name}</span>
+                            <span className="text-[11px] md:text-[11px] font-black text-main uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{team.name}</span>
                         </div>
-                        <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{team.count}</span>
+                        <span className="text-[11px] md:text-[11px] font-mono text-kickr italic tabular-nums">{team.count}</span>
                     </div>
                     <div className="flex justify-between pt-1 border-t border-black/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">DEPLOYED</span>
-                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">{team.count} MATCHES</span>
+                        <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">DEPLOYED</span>
+                        <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">{team.count} MATCHES</span>
                     </div>
                 </Link>
             ))}
@@ -480,17 +480,17 @@ const MostWatchedLeagues = ({ reviews }: { reviews: UserMatch[] }) => {
                 >
                     <div className="flex items-center justify-between mb-1.5 md:mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
-                            <span className="text-[7px] md:text-[9px] font-mono text-main/10 uppercase leading-none">{index + 1}</span>
+                            <span className="text-[10px] md:text-[11px] font-mono text-main/10 uppercase leading-none">{index + 1}</span>
                             {league.logo && (
                                 <img src={league.logo} alt="" className="w-3.5 h-3.5 md:w-4 md:h-4 object-contain" />
                             )}
-                            <span className="text-[9px] md:text-[10px] font-black text-main uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{league.name}</span>
+                            <span className="text-[11px] md:text-[11px] font-black text-main uppercase italic tracking-widest truncate max-w-[120px] md:max-w-none">{league.name}</span>
                         </div>
-                        <span className="text-[9px] md:text-[10px] font-mono text-kickr italic tabular-nums">{league.rating.toFixed(1)}</span>
+                        <span className="text-[11px] md:text-[11px] font-mono text-rating italic tabular-nums">{league.rating.toFixed(1)}</span>
                     </div>
                     <div className="flex justify-between pt-1 border-t border-black/[0.02]">
-                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">LEAGUE</span>
-                        <span className="text-[6px] md:text-[7px] font-black text-muted uppercase tracking-widest italic">{league.count} RECS</span>
+                        <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">LEAGUE</span>
+                        <span className="text-[10px] md:text-[10px] font-black text-muted uppercase tracking-widest italic">{league.count} RECS</span>
                     </div>
                 </Link>
             ))}
@@ -504,7 +504,7 @@ const StatHorizontal = ({ label, value, onClick }: { label: string; value: strin
         className="flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer group"
     >
         <span className="text-xl md:text-2xl font-black text-main/90 group-hover:text-kickr transition-colors italic tabular-nums leading-none">{value}</span>
-        <span className="text-[7px] md:text-[10px] font-bold text-muted uppercase tracking-[0.2em] italic">{label}</span>
+        <span className="text-[10px] md:text-[11px] font-bold text-muted uppercase tracking-[0.2em] italic">{label}</span>
     </button>
 );
 

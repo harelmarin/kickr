@@ -93,10 +93,10 @@ export const MatchDetailPage = () => {
       <div className="relative h-[260px] md:h-[650px] w-full overflow-hidden">
         <div className="absolute inset-0 z-0 flex blur-[60px] md:blur-[80px] opacity-15 md:opacity-30">
           <div className="flex-1 relative overflow-hidden">
-            <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" loading="lazy" decoding="async" />
+            <img src={match.homeLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt={`${match.homeTeam} background motif`} loading="eager" decoding="async" />
           </div>
           <div className="flex-1 relative overflow-hidden">
-            <img src={match.awayLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt="" loading="lazy" decoding="async" />
+            <img src={match.awayLogo} className="absolute inset-0 w-full h-full object-cover scale-150 grayscale" alt={`${match.awayTeam} background motif`} loading="eager" decoding="async" />
           </div>
         </div>
 
@@ -138,7 +138,14 @@ export const MatchDetailPage = () => {
                   </div>
                   <Link to={`/teams/${match.homeTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/home:scale-105 active:scale-95">
                     <div className="p-2 md:p-3 rounded-sm bg-kickr-bg-primary/40 border border-white/5 group-hover/home:border-kickr/40 transition-all">
-                      <img src={match.homeLogo} alt={`${match.homeTeam} logo`} loading="lazy" decoding="async" className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                      <img
+                        src={match.homeLogo}
+                        alt={`${match.homeTeam} official crest`}
+                        loading="eager"
+                        fetchPriority="high"
+                        decoding="async"
+                        className="w-8 h-8 md:w-20 md:h-20 object-contain"
+                      />
                     </div>
                   </Link>
                 </div>
@@ -169,7 +176,14 @@ export const MatchDetailPage = () => {
                 <div className="flex items-center justify-start gap-3 md:gap-6 min-w-0 group/away">
                   <Link to={`/teams/${match.awayTeamId}`} className="flex-shrink-0 transition-transform duration-500 group-hover/away:scale-105 active:scale-95">
                     <div className="p-2 md:p-3 rounded-sm bg-kickr-bg-primary/40 border border-white/5 group-hover/away:border-kickr/40 transition-all">
-                      <img src={match.awayLogo} alt={`${match.awayTeam} logo`} loading="lazy" decoding="async" className="w-8 h-8 md:w-20 md:h-20 object-contain" />
+                      <img
+                        src={match.awayLogo}
+                        alt={`${match.awayTeam} official crest`}
+                        loading="eager"
+                        fetchPriority="high"
+                        decoding="async"
+                        className="w-8 h-8 md:w-20 md:h-20 object-contain"
+                      />
                     </div>
                   </Link>
                   <div className="min-w-0 flex-1 text-left hidden xs:block">
@@ -199,7 +213,7 @@ export const MatchDetailPage = () => {
                 <Link to={`/competitions/${match.competitionId}`} className="flex flex-col items-center justify-center p-3 md:p-6 text-center group hover:bg-black/[0.02] transition-colors">
                   <span className="text-[6px] md:text-[9px] font-black text-secondary/40 md:text-muted/40 uppercase tracking-[0.2em] mb-1 italic">Competitions</span>
                   <div className="flex items-center gap-1.5 md:gap-2 justify-center">
-                    <img src={match.competitionLogo} alt="" aria-hidden="true" className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" />
+                    <img src={match.competitionLogo} alt={`${match.competition} crest`} className="w-3 h-3 md:w-4 md:h-4 object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all" loading="lazy" decoding="async" />
                     <span className="text-xs md:text-sm font-bold text-main uppercase italic truncate max-w-[60px] md:max-w-none group-hover:text-kickr transition-colors">{match.competition || 'Competitions'}</span>
                   </div>
                 </Link>
@@ -227,8 +241,8 @@ export const MatchDetailPage = () => {
                       <div className="flex flex-col xs:flex-row items-center gap-4 md:gap-8">
                         <div className="flex flex-col items-center justify-center bg-white/[0.01] border border-white/5 w-20 h-20 md:w-28 md:h-28 rounded-sm relative overflow-hidden group flex-shrink-0">
                           <div className="absolute inset-0 bg-kickr/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                          <span className="text-2xl md:text-4xl font-black text-main italic leading-none relative z-10 display-font tabular-nums">{match.averageRating.toFixed(1)}</span>
-                          <div className="flex text-kickr text-[6px] md:text-[8px] mt-1.5 md:mt-3 relative z-10 tracking-[0.2em]">
+                          <span className="text-2xl md:text-4xl font-bold text-main leading-none relative z-10 display-font tabular-nums">{match.averageRating.toFixed(1)}</span>
+                          <div className="flex text-rating text-[6px] md:text-[8px] mt-1.5 md:mt-3 relative z-10 tracking-[0.2em]">
                             {'★'.repeat(Math.round(match.averageRating))}
                           </div>
                         </div>
@@ -242,14 +256,14 @@ export const MatchDetailPage = () => {
                             return (
                               <div key={star} className="flex items-center gap-2 md:gap-4">
                                 <span className="text-[6px] md:text-[8px] font-black text-main/10 w-3 md:w-4 italic">{star}s</span>
-                                <div className="flex-1 h-0.5 md:h-1 bg-black/5 rounded-full overflow-hidden">
+                                <div className="flex-1 h-0.5 md:h-1 bg-white/5 rounded-full overflow-hidden">
                                   <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: `${percentage}%` }}
-                                    className="h-full bg-kickr/20"
+                                    className="h-full bg-rating/30"
                                   />
                                 </div>
-                                <span className="text-[6px] md:text-[8px] font-black text-secondary w-4 md:w-8 text-right tabular-nums italic font-mono">{count}</span>
+                                <span className="text-[6px] md:text-[8px] font-bold text-secondary w-4 md:w-8 text-right tabular-nums italic font-mono">{count}</span>
                               </div>
                             );
                           })}
@@ -274,9 +288,9 @@ export const MatchDetailPage = () => {
                       {myMatchEntries.sort((a, b) => new Date(b.watchedAt).getTime() - new Date(a.watchedAt).getTime()).map((entry) => (
                         <Link key={entry.id} to={`/reviews/${entry.id}`} className="block p-2 bg-white/[0.01] border border-white/5 rounded-sm group/entry">
                           <div className="flex items-center justify-between mb-1">
-                            <div className="flex text-kickr text-[6px] md:text-[8px]">
+                            <div className="flex text-rating text-[6px] md:text-[8px]">
                               {'★'.repeat(Math.round(entry.note))}
-                              <span className="text-main/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
+                              <span className="text-white/5">{'★'.repeat(5 - Math.round(entry.note))}</span>
                             </div>
                             <span className="text-[6px] md:text-[8px] font-black text-muted uppercase tabular-nums">
                               {new Date(entry.watchedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
@@ -404,7 +418,7 @@ export const MatchDetailPage = () => {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-base md:text-3xl transition-all duration-300 relative group/star ${star <= (hoveredRating || rating) ? 'text-kickr scale-110' : 'text-main/5'
+                        className={`text-base md:text-3xl transition-all duration-300 relative group/star ${star <= (hoveredRating || rating) ? 'text-rating scale-110' : 'text-white/5'
                           }`}
                         onMouseEnter={() => setHoveredRating(star)}
                         onMouseLeave={() => setHoveredRating(0)}
@@ -412,7 +426,7 @@ export const MatchDetailPage = () => {
                       >
                         <span className="relative z-10">★</span>
                         {star <= (hoveredRating || rating) && (
-                          <div className="absolute inset-0 bg-kickr/10 blur-md rounded-full -z-0"></div>
+                          <div className="absolute inset-0 bg-rating/10 blur-md rounded-full -z-0"></div>
                         )}
                       </button>
                     ))}
@@ -433,7 +447,7 @@ export const MatchDetailPage = () => {
                 <button
                   onClick={handleSaveRating}
                   disabled={rating === 0 || createUserMatch.isPending}
-                  className="w-full py-2 md:py-4 rounded-sm text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-10 disabled:cursor-not-allowed transition-all bg-kickr text-black"
+                  className="w-full py-2 md:py-4 rounded-sm text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] italic hover:brightness-110 active:scale-[0.98] disabled:opacity-10 disabled:cursor-not-allowed transition-all bg-kickr text-white shadow-[0_0_20px_rgba(93,139,255,0.2)]"
                 >
                   {createUserMatch.isPending ? 'TRANSMITTING...' : hasAlreadyLogged ? 'LOG AGAIN' : 'EXECUTE LOG'}
                 </button>
@@ -459,17 +473,17 @@ export const MatchDetailPage = () => {
               exit={{ scale: 0.9, y: 20 }}
               className="bg-kickr-bg-secondary border border-white/10 rounded-sm p-10 max-w-md w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-kickr"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-rating"></div>
               <button
                 onClick={() => setJustLoggedReview(null)}
-                className="absolute top-6 right-6 text-muted hover:text-main transition-colors text-xl font-bold"
+                className="absolute top-6 right-6 text-[#99aabb] hover:text-main transition-colors text-xl font-bold"
               >
                 ✕
               </button>
 
               <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 bg-kickr/10 rounded-full flex items-center justify-center mb-8 border border-kickr/30">
-                  <span className="text-4xl">⚽</span>
+                <div className="w-20 h-20 bg-rating/10 rounded-full flex items-center justify-center mb-8 border border-rating/30">
+                  <span className="text-4xl text-rating">✓</span>
                 </div>
                 <h3 className="text-3xl font-black text-main uppercase italic tracking-tighter mb-3 leading-none">Match Logged</h3>
                 <p className="text-muted text-[13px] mb-10 leading-relaxed font-medium">
@@ -539,12 +553,12 @@ const ReviewItem = ({ review }: { review: UserMatch }) => {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1 md:mb-2">
           <Link to={`/user/${review.user.id}`} className="text-secondary text-[11px] md:text-sm font-black hover:text-kickr transition-colors truncate uppercase italic">{review.user.name}</Link>
-          <span className="text-kickr/60 font-black text-[9px] md:text-xs pl-2 border-l border-white/5 ml-1 flex-shrink-0 tabular-nums">
+          <span className="text-rating font-bold text-[9px] md:text-xs pl-2 border-l border-white/5 ml-1 flex-shrink-0 tabular-nums">
             {'★'.repeat(Math.round(review.note))}
-            <span className="text-main/5">{'★'.repeat(5 - Math.round(review.note))}</span>
+            <span className="text-white/5">{'★'.repeat(5 - Math.round(review.note))}</span>
           </span>
           {review.isLiked === true && (
-            <span className="text-kickr text-[9px] md:text-sm ml-1 flex-shrink-0" title="Liked">❤</span>
+            <span className="text-kickr text-[9px] md:text-sm ml-1 flex-shrink-0" title="Favorite">❤</span>
           )}
           {review.watchedAt && (
             <Link to={`/reviews/${review.id}`} className="text-muted text-[7px] md:text-[9px] font-black uppercase tracking-widest ml-auto hover:text-main transition-colors flex-shrink-0 italic">
