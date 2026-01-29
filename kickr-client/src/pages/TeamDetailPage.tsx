@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { useTeam } from '../hooks/useTeams';
 import { useMatchesByTeam } from '../hooks/useNextMatches';
@@ -128,7 +128,13 @@ export const TeamDetailPage = () => {
               {team.name}
             </h1>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-6">
-              <span className="text-muted uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic">{team.competition?.name || 'Club International'}</span>
+              {team.competition ? (
+                <Link to={`/competitions/${team.competition.id}`} className="text-muted uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic hover:text-kickr transition-colors">
+                  {team.competition.name}
+                </Link>
+              ) : (
+                <span className="text-muted uppercase tracking-[0.2em] font-black text-[6px] md:text-xs italic">Club International</span>
+              )}
             </div>
           </div>
 
@@ -210,7 +216,7 @@ export const TeamDetailPage = () => {
                   <span className="text-muted">{stats.wins}W <span className="text-muted/30 mx-0.5 md:mx-1">/</span> {stats.draws}D <span className="text-muted/30 mx-0.5 md:mx-1">/</span> {stats.losses}L</span>
                 </div>
                 <div className="h-1 md:h-1.5 w-full flex rounded-full overflow-hidden bg-black/5">
-                  <div style={{ width: stats.winRate }} className="bg-rating h-full shadow-[0_0_10px_rgba(0,224,84,0.3)]" title={`Wins: ${stats.winRate}`}></div>
+                  <div style={{ width: stats.winRate }} className="bg-kickr h-full shadow-[0_0_10px_rgba(93,139,255,0.3)]" title={`Wins: ${stats.winRate}`}></div>
                   <div style={{ width: stats.drawRate }} className="bg-black/10 h-full" title={`Draws: ${stats.drawRate}`}></div>
                   <div style={{ width: stats.lossRate }} className="bg-[#EF4444]/40 h-full" title={`Losses: ${stats.lossRate}`}></div>
                 </div>
@@ -228,7 +234,7 @@ export const TeamDetailPage = () => {
                   {stats.form.map((res, i) => (
                     <div
                       key={i}
-                      className={`w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-[9px] font-black ${res === 'W' ? 'bg-rating text-black shadow-[0_0_8px_rgba(0,224,84,0.2)]' :
+                      className={`w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-[9px] font-black ${res === 'W' ? 'bg-kickr text-white shadow-[0_0_8px_rgba(93,139,255,0.2)]' :
                         res === 'D' ? 'bg-black/10 text-secondary' :
                           'bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20'
                         }`}

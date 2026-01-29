@@ -12,7 +12,7 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
     return (
         <Link
             to={`/matches/${match.id}`}
-            className="group relative bg-kickr-bg-secondary border border-white/5 hover:border-white/20 transition-all rounded-md overflow-hidden block h-full flex flex-col"
+            className="group relative bg-kickr-bg-secondary border border-white/5 hover:border-kickr/50 transition-all rounded-sm overflow-hidden block h-full flex flex-col poster-shadow"
         >
             {/* Minimal Header: Competition - Floating or tiny */}
             <div className="flex items-center justify-center px-3 py-2 border-b border-white/5 bg-black/10 flex-shrink-0">
@@ -37,9 +37,9 @@ export const CompactMatchCard = ({ match }: CompactMatchCardProps) => {
                     {isFinished ? (
                         <div className="flex flex-col items-center">
                             <div className="flex items-center gap-1 md:gap-2">
-                                <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.homeScore}</span>
+                                <span className="text-[10px] md:text-2xl font-black text-main italic tabular-nums leading-none tracking-tighter">{match.homeScore}</span>
                                 <span className="text-[11px] md:text-[10px] text-main/40 font-black" aria-hidden="true">-</span>
-                                <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums leading-none tracking-tighter">{match.awayScore}</span>
+                                <span className="text-[10px] md:text-2xl font-black text-main italic tabular-nums leading-none tracking-tighter">{match.awayScore}</span>
                             </div>
                             <span className="text-[11px] md:text-[10px] font-mono text-main/60 uppercase tracking-widest font-bold mt-0.5">FT</span>
                         </div>

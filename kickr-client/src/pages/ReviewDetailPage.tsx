@@ -76,7 +76,7 @@ export const ReviewDetailPage: FC = () => {
                                 </div>
 
                                 <div className="absolute bottom-1 md:bottom-3 inset-x-0 z-20 flex flex-col items-center hidden md:flex">
-                                    <span className="text-[10px] md:text-2xl font-black text-kickr italic tabular-nums tracking-tighter leading-none">
+                                    <span className="text-[10px] md:text-2xl font-black text-main italic tabular-nums tracking-tighter leading-none">
                                         {review.match.homeScore}-{review.match.awayScore}
                                     </span>
                                 </div>

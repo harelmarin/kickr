@@ -52,16 +52,9 @@ export const CommunityPage = () => {
         <main className="min-h-screen bg-kickr-bg-primary pt-16 md:pt-32 pb-12 md:pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-6 md:mb-16">
-                    <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-6">
-                        <div className="h-[1px] md:h-[2px] w-3 md:w-6 bg-kickr/40" />
-                        <span className="text-[10px] md:text-xs font-black text-kickr/80 uppercase tracking-[0.3em] md:tracking-[0.4em] italic leading-none">Intelligence Network</span>
+                    <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                        <h1 className="cinematic-header text-sm md:text-base">Intelligence Network</h1>
                     </div>
-                    <h1 className="text-2xl md:text-6xl font-black text-main mb-1 md:mb-4 italic tracking-tighter uppercase leading-none">
-                        The Global <span className="text-kickr/80">Community</span>
-                    </h1>
-                    <p className="text-muted uppercase tracking-[0.15em] md:tracking-[0.25em] text-[10px] md:text-[12px] font-black italic">
-                        Browse, track, and connect with football fans worldwide.
-                    </p>
 
                     <div className="mt-4 md:mt-12">
                         <div className="flex items-end justify-between border-b border-white/5 pb-3 md:pb-4 gap-4">

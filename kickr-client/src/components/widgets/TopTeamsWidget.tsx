@@ -10,16 +10,16 @@ export const TopTeamsWidget = () => {
         if (!popularReviews || !Array.isArray(popularReviews)) return [];
 
         // Aggregate popularity by team (both home and away)
-        const teams: Record<string, { count: number, logo: string }> = {};
+        const teams: Record<string, { count: number, logo: string, id?: string }> = {};
 
         popularReviews.forEach((review: UserMatch) => {
             const home = review.match.homeTeam;
             const away = review.match.awayTeam;
 
-            if (!teams[home]) teams[home] = { count: 0, logo: review.match.homeLogo };
+            if (!teams[home]) teams[home] = { count: 0, logo: review.match.homeLogo, id: review.match.homeTeamId };
             teams[home].count += 1 + (review.note / 10); // Weight by rating slightly
 
-            if (!teams[away]) teams[away] = { count: 0, logo: review.match.awayLogo };
+            if (!teams[away]) teams[away] = { count: 0, logo: review.match.awayLogo, id: review.match.awayTeamId };
             teams[away].count += 1 + (review.note / 10);
         });
 
@@ -45,7 +45,7 @@ export const TopTeamsWidget = () => {
                     ))
                 ) : trendingTeams.length > 0 ? (
                     trendingTeams.map((team, i) => (
-                        <Link key={team.name} to={`/matches?search=${encodeURIComponent(team.name)}`} className="flex items-center justify-between group">
+                        <Link key={team.name} to={team.id ? `/teams/${team.id}` : `/matches?search=${encodeURIComponent(team.name)}`} className="flex items-center justify-between group">
                             <div className="flex items-center gap-4">
                                 <span className="text-[9px] font-mono text-muted w-3">0{i + 1}</span>
                                 <div className="w-8 h-8 flex items-center justify-center bg-black/[0.02] rounded-full border border-white/5 p-1.5 group-hover:border-kickr/50 transition-colors">

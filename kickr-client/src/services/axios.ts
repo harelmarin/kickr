@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:8080/api'),
   timeout: 10000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,15 +30,9 @@ const processQueue = (error: Error | null = null) => {
   failedQueue = [];
 };
 
-// Request interceptor - Automatically adds JWT token
+// Request interceptor - Automatically adds JWT token (Not needed for cookies, but good for custom headers if any)
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('accessToken');
-
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
     return config;
   },
   (error) => {
@@ -60,6 +55,7 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
       }
 
+
       if (isRefreshing) {
         // If a refresh is already in progress, queue the request
         return new Promise((resolve, reject) => {
@@ -76,33 +72,14 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = localStorage.getItem('refreshToken');
-
-      if (!refreshToken) {
-        // No refresh token: session is invalid. Clear storage to sync UI state
-        // but don't redirect to avoid interrupting public page browsing.
-        localStorage.clear();
-        return Promise.reject(error);
-      }
-
       try {
-        // Attempt to refresh the token
+        // Attempt to refresh the token via cookie
         const refreshUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:8080/api');
-        const response = await axios.post(`${refreshUrl}/auth/refresh`, {
-          refreshToken
-        });
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data;
+        // Ensure withCredentials is true for the refresh request too
+        await axios.post(`${refreshUrl}/auth/refresh`, {}, { withCredentials: true });
 
-        // Update tokens
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', newRefreshToken);
-
-        // Update the original request header
-        if (originalRequest.headers) {
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        }
-
+        // Queue processing
         processQueue(null);
 
         return axiosInstance(originalRequest);
@@ -110,7 +87,7 @@ axiosInstance.interceptors.response.use(
         processQueue(refreshError as Error);
 
         // Refresh failed: session definitively expired.
-        localStorage.clear();
+        // localStorage.clear(); // Only clear user data if needed, but not tokens since they are cookies
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

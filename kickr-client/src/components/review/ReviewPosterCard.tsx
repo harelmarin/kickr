@@ -60,7 +60,7 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
 
     return (
         <Link to={`/reviews/${review.id}`} className="group block">
-            <div className="relative aspect-[3/4] bg-kickr-bg-secondary border border-white/10 rounded-md overflow-hidden transition-all duration-300 group-hover:border-white/30 group-hover:bg-kickr-bg-tertiary">
+            <div className="relative aspect-[2/3] bg-kickr-bg-secondary border border-white/5 rounded-sm overflow-hidden transition-all duration-500 group-hover:border-kickr/50 group-hover:scale-[1.02] poster-shadow">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 gap-4 md:gap-6 group-hover:scale-[1.03] transition-transform duration-500">
@@ -69,7 +69,7 @@ export const ReviewPosterCard = ({ review, variant = 'default' }: ReviewPosterCa
                 </div>
 
                 <div className="absolute bottom-3 inset-x-0 z-20 flex flex-col items-center">
-                    <span className="text-base md:text-xl font-bold text-kickr tabular-nums mb-1">
+                    <span className="text-[11px] md:text-sm font-black text-main italic tabular-nums tracking-tighter leading-none mb-1">
                         {review.match.homeScore}-{review.match.awayScore}
                     </span>
                     <StarRating note={review.note} />

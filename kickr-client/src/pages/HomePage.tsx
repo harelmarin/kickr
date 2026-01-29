@@ -54,11 +54,11 @@ export default function HomePage() {
       className="bg-kickr-bg-primary min-h-screen text-main/90 selection:bg-kickr/30"
     >
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[70vh] md:min-h-[90vh] flex flex-col items-center justify-center border-b border-white/5 overflow-hidden pt-12 pb-6 md:py-24">
+      <section className="relative min-h-[70vh] md:min-h-[90vh] flex flex-col items-center justify-center border-b border-white/[0.03] overflow-hidden pt-12 pb-6 md:py-24">
         {/* Background Atmosphere */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-kickr/5 via-transparent to-kickr-bg-primary"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#14181c_100%)] opacity-90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-kickr/10 via-kickr-bg-primary/50 to-kickr-bg-primary"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#14181c_100%)] opacity-80"></div>
           <img
             src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000"
             alt="Cinematic background of a football stadium"
@@ -77,12 +77,12 @@ export default function HomePage() {
               transition={{ delay: 0.3 }}
               className="font-bold tracking-tight uppercase display-font mb-4 md:mb-12"
             >
-              <span className="text-5xl md:text-8xl text-main block leading-tight md:leading-none">
+              <span className="text-5xl md:text-9xl text-main block font-black tracking-tighter italic">
                 Track every <br /> football match.
               </span>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-y-1 mt-6 md:mt-12 md:gap-x-10">
-                <span className="text-base md:text-3xl text-secondary">Logged by fans.</span>
-                <span className="text-base md:text-3xl text-rating">Reviewed by you.</span>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-y-1 mt-6 md:mt-12 md:gap-x-12">
+                <span className="text-base md:text-2xl font-black uppercase tracking-[0.2em] text-secondary">Logged by fans.</span>
+                <span className="text-base md:text-2xl font-black uppercase tracking-[0.2em] text-rating">Reviewed by you.</span>
               </div>
             </motion.h1>
 
@@ -135,9 +135,9 @@ export default function HomePage() {
             {/* NETWORK */}
             {user && (
               <section>
-                <div className="flex items-center justify-between mb-4 md:mb-8">
+                <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
                   <div className="flex items-center gap-3">
-                    <h2 className="text-sm md:text-xl font-bold uppercase tracking-wider text-main/90">Friends Activity</h2>
+                    <h2 className="cinematic-header text-sm md:text-base">Friends Activity</h2>
                   </div>
                   <Link to="/feed" className="text-xs md:text-sm font-bold text-secondary hover:text-kickr transition-colors">View All Feed →</Link>
                 </div>
@@ -162,9 +162,9 @@ export default function HomePage() {
 
             {/* FIXTURES */}
             <section className={`${user ? 'pt-8 border-t border-white/10' : ''}`}>
-              <div className="flex items-center justify-between mb-4 md:mb-8">
+              <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-sm md:text-xl font-bold uppercase tracking-wider text-main/90">Recent Fixtures</h2>
+                  <h2 className="cinematic-header text-sm md:text-base">Recent Fixtures</h2>
                 </div>
                 <Link to="/matches" className="text-xs md:text-sm font-bold text-secondary hover:text-kickr transition-colors">See Search →</Link>
               </div>
@@ -175,9 +175,9 @@ export default function HomePage() {
 
             {/* GLOBAL LIVE */}
             <section className="pt-8 border-t border-white/10">
-              <div className="flex items-center justify-between mb-4 md:mb-8">
+              <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-sm md:text-xl font-bold uppercase tracking-wider text-main/90">Global Feed</h2>
+                  <h2 className="cinematic-header text-sm md:text-base">Global Feed</h2>
                 </div>
                 <div className="flex items-center gap-2 bg-kickr/10 px-3 py-1 rounded-full">
                   <div className="w-1.5 h-1.5 rounded-full bg-rating animate-pulse"></div>
@@ -203,10 +203,10 @@ export default function HomePage() {
           <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-4 md:gap-16 mt-8 md:mt-16 lg:mt-0">
             {/* DIARY */}
             {user && (
-              <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-md col-span-1 lg:col-auto">
-                <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/5 pb-4">
-                  <h3 className="text-xs font-bold text-kickr uppercase tracking-widest">Your Diary</h3>
-                  <Link to={`/user/${user.id}/diary`} className="text-[10px] font-bold uppercase text-secondary hover:text-kickr transition-colors">View All →</Link>
+              <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-1 lg:col-auto poster-shadow">
+                <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-white/[0.03] pb-4">
+                  <h3 className="cinematic-header text-xs text-kickr">Your Diary</h3>
+                  <Link to={`/user/${user.id}/diary`} className="text-[10px] font-bold uppercase text-secondary hover:text-kickr transition-colors tracking-widest">All →</Link>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
@@ -224,8 +224,8 @@ export default function HomePage() {
             )}
 
             {/* SECTORS */}
-            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-md col-span-1 lg:col-auto">
-              <h3 className="text-xs font-bold text-kickr uppercase tracking-widest mb-4 md:mb-8 border-b border-white/5 pb-4">Top Leagues</h3>
+            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-1 lg:col-auto poster-shadow">
+              <h3 className="cinematic-header text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Top Leagues</h3>
               <div className="space-y-4">
                 {trendingSectors.slice(0, 3).map((sector, i) => (
                   <Link key={sector.name} to={sector.id ? `/competitions/${sector.id}` : `/matches`} className="group block">
@@ -242,8 +242,8 @@ export default function HomePage() {
             </section>
 
             {/* COMMUNITY - Hidden on very small mobile if grid is crowded, or just kept small */}
-            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-md col-span-2 lg:col-auto">
-              <h3 className="text-xs font-bold text-kickr uppercase tracking-widest mb-4 md:mb-8 border-b border-white/5 pb-4">Community</h3>
+            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-2 lg:col-auto poster-shadow">
+              <h3 className="cinematic-header text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Community</h3>
               <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
                 {communityScouts?.content?.filter((s: any) => s.id !== user?.id).slice(0, 5).map((scout: any) => (
                   <Link key={scout.id} to={`/user/${scout.id}`} className="flex items-center gap-3 group">

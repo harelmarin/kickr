@@ -155,8 +155,8 @@ export const UserDiaryPage = () => {
                 ) : Object.keys(groupedReviews).length > 0 ? (
                     <div className="space-y-8 md:space-y-16">
                         {Object.entries(groupedReviews).map(([monthYear, monthReviews]: [string, any]) => (
-                            <section key={monthYear} className="bg-white/[0.01] p-4 md:p-6 rounded-sm border border-white/5">
-                                <h2 className="text-[11px] md:text-[11px] font-black text-muted uppercase tracking-[0.3em] mb-4 md:mb-6 border-b border-white/5 pb-1.5 italic">
+                            <section key={monthYear} className="bg-white/[0.01] p-4 md:p-6 rounded-sm border border-white/5 poster-shadow">
+                                <h2 className="cinematic-header text-[11px] md:text-[11px] text-muted mb-4 md:mb-6 border-b border-white/[0.03] pb-1.5 italic">
                                     {monthYear}
                                 </h2>
 

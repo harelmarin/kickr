@@ -162,10 +162,10 @@ export const UserDetailPage = () => {
                     {/* Main Content: Activity */}
                     <div className="lg:col-span-2 space-y-8 md:space-y-12">
                         {/* Diary Section */}
-                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm">
-                            <div className="flex items-center justify-between border-b border-white/5 pb-3 md:pb-4">
-                                <Link to={`/user/${id}/diary`} className="text-[11px] md:text-sm font-black text-main/90 hover:text-kickr transition-colors uppercase tracking-[0.2em] italic">Tactical Diary</Link>
-                                <span className="text-[11px] md:text-[10px] font-black text-muted uppercase tracking-widest leading-none">DATABASE: {pageData?.totalElements || 0}</span>
+                        <section id="diary-entries" className="space-y-6 md:space-y-8 bg-black/[0.02] border border-white/5 p-4 md:p-6 rounded-sm poster-shadow">
+                            <div className="flex items-center justify-between border-b border-white/[0.03] pb-3 md:pb-4">
+                                <Link to={`/user/${id}/diary`} className="cinematic-header text-[11px] md:text-sm text-main/90 hover:text-kickr transition-colors">Tactical Diary</Link>
+                                <span className="text-[11px] md:text-[10px] font-black text-muted uppercase tracking-widest leading-none italic">DATABASE: {pageData?.totalElements || 0}</span>
                             </div>
 
                             {isReviewsLoading ? (
@@ -190,13 +190,13 @@ export const UserDetailPage = () => {
 
                         {/* Top Teams & Leagues Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                                <h3 className="text-[11px] md:text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Squads</h3>
+                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6">Top Squads</h3>
                                 <MostWatchedTeams reviews={pageData?.content || []} />
                             </section>
 
-                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8">
-                                <h3 className="text-[11px] md:text-[11px] font-black text-kickr uppercase tracking-[0.4em] mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6 italic">Top Leagues</h3>
+                            <section className="bg-black/[0.02] border border-white/5 rounded-sm p-5 md:p-8 poster-shadow">
+                                <h3 className="cinematic-header text-[11px] md:text-[11px] text-kickr mb-6 md:mb-8 border-b border-white/[0.03] pb-4 md:pb-6">Top Leagues</h3>
                                 <MostWatchedLeagues reviews={pageData?.content || []} />
                             </section>
                         </div>
