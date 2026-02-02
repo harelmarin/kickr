@@ -62,7 +62,7 @@ export const TopTeamsWidget = () => {
     return (
         <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm poster-shadow">
             <div className="flex items-center justify-between mb-8 border-b border-white/[0.03] pb-6">
-                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Trending Clubs</h3>
+                <h3 className="text-[10px] font-black text-kickr uppercase tracking-[0.5em] italic">Trending Club</h3>
                 <span className="text-[8px] font-mono text-muted uppercase tracking-widest">Global Hype</span>
             </div>
             <div className="space-y-6">

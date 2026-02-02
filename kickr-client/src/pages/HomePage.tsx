@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
 import { NextMatchesHomePage } from '../components/matches/nextMatchesClient';
 import { TodayMatches } from '../components/matches/TodayMatches';
 import { Link } from 'react-router-dom';
-import { useLatestReviews, useUserMatchesByUser, useFollowingReviews, usePopularReviews } from '../hooks/useUserMatch';
+import { useLatestReviews, useUserMatchesByUser, useFollowingReviews } from '../hooks/useUserMatch';
 import { useGlobalFeed } from '../hooks/usePreviewFeed';
 import { useAuth } from '../hooks/useAuth';
 import { useUsers } from '../hooks/useUser';
@@ -10,36 +9,15 @@ import { motion } from 'framer-motion';
 import type { UserMatch } from '../types/userMatch';
 import { LandingMatchPreview } from '../components/landing/LandingMatchPreview';
 import { ReviewPosterCard } from '../components/review/ReviewPosterCard';
+import { TopTeamsWidget } from '../components/widgets/TopTeamsWidget';
 
 export default function HomePage() {
   const { user } = useAuth();
   const { data: latestReviews, isLoading: isLatestLoading } = useLatestReviews(5);
-  const { data: popularReviews } = usePopularReviews(50); // Increased to get more diverse competitions
   const { data: followingReviews, isLoading: isFollowingLoading } = useFollowingReviews(user?.id, 0, 10);
   const { data: globalFeed, isLoading: isGlobalLoading } = useGlobalFeed(5);
   const { data: userReviews } = useUserMatchesByUser(user?.id || '');
   const { data: communityFans } = useUsers();
-
-  const trendingSectors = useMemo(() => {
-    if (!popularReviews || !Array.isArray(popularReviews)) return [];
-    const sectors: Record<string, { count: number, totalNote: number, logo?: string, id?: string }> = {};
-    popularReviews.forEach((review: UserMatch) => {
-      const name = review.match.competition;
-      if (!sectors[name]) sectors[name] = { count: 0, totalNote: 0, logo: review.match.competitionLogo, id: review.match.competitionId };
-      sectors[name].count++;
-      sectors[name].totalNote += review.note;
-    });
-    return Object.entries(sectors)
-      .map(([name, data]) => ({
-        name,
-        activity: data.count,
-        rating: data.totalNote / data.count,
-        logo: data.logo,
-        id: data.id
-      }))
-      .sort((a, b) => b.activity - a.activity)
-      .slice(0, 5);
-  }, [popularReviews]);
 
   const activeFollowing = (followingReviews?.content || []).slice(0, 10);
   const activeGlobal = (globalFeed || latestReviews || []).slice(0, 5);
@@ -247,23 +225,8 @@ export default function HomePage() {
               </section>
             )}
 
-            {/* SECTORS */}
-            <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-1 lg:col-auto poster-shadow">
-              <h3 className="cinematic-header text-[10px] md:text-xs text-kickr mb-4 md:mb-8 border-b border-white/[0.03] pb-4">Top Leagues</h3>
-              <div className="space-y-4">
-                {trendingSectors.slice(0, 5).map((sector, i) => (
-                  <Link key={sector.name} to={sector.id ? `/competitions/${sector.id}` : `/matches`} className="group block">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
-                        <span className="text-[9px] md:text-[10px] font-mono text-muted/30 flex-shrink-0">{i + 1}</span>
-                        <span className="text-[10px] md:text-xs font-bold text-secondary uppercase tracking-wide group-hover:text-white transition-colors truncate">{sector.name}</span>
-                      </div>
-                      <span className="text-[10px] md:text-xs font-bold text-rating tabular-nums flex-shrink-0 ml-2">{sector.rating.toFixed(1)}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
+            {/* TRENDING CLUBS */}
+            <TopTeamsWidget />
 
             {/* COMMUNITY */}
             <section className="bg-kickr-bg-secondary border border-white/5 p-4 md:p-8 rounded-sm col-span-2 lg:col-auto poster-shadow">
