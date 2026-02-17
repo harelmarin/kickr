@@ -9,9 +9,10 @@ import com.kickr_server.match.Match;
 import com.kickr_server.match.MatchRepository;
 import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
-import com.kickr_server.notification.NotificationService;
 import com.kickr_server.notification.NotificationType;
+import com.kickr_server.event.NotificationEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -44,7 +45,7 @@ public class UserMatchService {
     private final MatchRepository matchRepository;
     private final UserRepository userRepository;
     private final FollowService followService;
-    private final NotificationService notificationService;
+    private final ApplicationEventPublisher eventPublisher;
 
     public User getUserEntityByEmail(String email) {
         return userRepository.findByEmail(email)
@@ -177,13 +178,14 @@ public class UserMatchService {
 
         List<User> followers = followService.getFollowers(user.getId());
         for (User follower : followers) {
-            notificationService.createNotification(
+            eventPublisher.publishEvent(new NotificationEvent(
+                    this,
                     follower,
                     user,
                     NotificationType.NEW_REVIEW,
                     user.getName() + " logged a match: " + match.getHomeTeam().getName() + " vs "
                             + match.getAwayTeam().getName(),
-                    savedMatch.getId().toString());
+                    savedMatch.getId().toString()));
         }
 
         return savedMatch;

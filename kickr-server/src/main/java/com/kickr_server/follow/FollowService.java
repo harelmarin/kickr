@@ -6,10 +6,11 @@ import com.kickr_server.exception.follow.FollowerNotFoundException;
 import com.kickr_server.exception.user.UserNotFoundException;
 import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
-import com.kickr_server.notification.NotificationService;
 import com.kickr_server.notification.NotificationType;
+import com.kickr_server.event.NotificationEvent;
 import com.kickr_server.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class FollowService {
         private final FollowRepository followRepository;
         private final UserRepository userRepository;
         private final UserService userService;
-        private final NotificationService notificationService;
+        private final ApplicationEventPublisher eventPublisher;
 
         /**
          * Permet à un utilisateur de suivre un autre utilisateur.
@@ -63,12 +64,13 @@ public class FollowService {
                                 .followed(followed)
                                 .build());
 
-                notificationService.createNotification(
+                eventPublisher.publishEvent(new NotificationEvent(
+                                this,
                                 followed,
                                 follower,
                                 NotificationType.FOLLOW,
                                 follower.getName() + " started following you",
-                                follower.getId().toString());
+                                follower.getId().toString()));
         }
 
         /**

@@ -56,7 +56,7 @@ export const Header = () => {
 
       <header className="bg-kickr-bg-primary/90 backdrop-blur-xl border-b border-white/[0.03] sticky top-0 z-50 h-[calc(3.5rem+env(safe-area-inset-top))] md:h-16 transition-all duration-300 pt-[env(safe-area-inset-top))]">
         <div className="max-w-7xl mx-auto flex items-center h-full px-4 md:px-6 justify-between md:justify-start">
-          <Link to="/" className="flex items-center gap-2 mr-0 md:mr-10 flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2 mr-0 md:mr-10 flex-shrink-0" aria-label="Kickr Home">
             <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center">
               <img src="/favicon.png" alt="Kickr Platform Logo" className="w-full h-full object-contain" loading="eager" />
             </div>
@@ -88,12 +88,14 @@ export const Header = () => {
                 <button
                   className="text-secondary hover:text-white font-bold uppercase tracking-widest text-[11px] transition-colors"
                   onClick={() => openAuthModal(authModalMode === 'login' ? undefined : 'login')}
+                  aria-label="Sign in"
                 >
                   Sign In
                 </button>
                 <Link
                   to="/register"
                   className="bg-kickr hover:brightness-110 text-white px-4 py-1.5 md:py-2 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all active:scale-95 whitespace-nowrap"
+                  aria-label="Sign up"
                 >
                   Sign Up
                 </Link>

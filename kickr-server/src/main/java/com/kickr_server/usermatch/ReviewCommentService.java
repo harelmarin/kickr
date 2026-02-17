@@ -4,9 +4,10 @@ import com.kickr_server.exception.user.UserNotFoundException;
 import com.kickr_server.exception.userMatch.UserMatchNotFoundException;
 import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
-import com.kickr_server.notification.NotificationService;
 import com.kickr_server.notification.NotificationType;
+import com.kickr_server.event.NotificationEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class ReviewCommentService {
     private final ReviewCommentRepository reviewCommentRepository;
     private final UserMatchRepository userMatchRepository;
     private final UserRepository userRepository;
-    private final NotificationService notificationService;
+    private final ApplicationEventPublisher eventPublisher;
 
     public List<ReviewComment> getCommentsByReviewId(UUID reviewId) {
         return reviewCommentRepository.findByUserMatchIdOrderByCreatedAtAsc(reviewId);
@@ -43,12 +44,13 @@ public class ReviewCommentService {
 
         // Notify the review author
         if (!userMatch.getUser().getId().equals(userId)) {
-            notificationService.createNotification(
+            eventPublisher.publishEvent(new NotificationEvent(
+                    this,
                     userMatch.getUser(),
                     user,
                     NotificationType.COMMENT,
                     user.getName() + " commented on your review",
-                    reviewId.toString());
+                    reviewId.toString()));
         }
 
         return saved;

@@ -4,9 +4,10 @@ import com.kickr_server.user.User;
 import com.kickr_server.user.UserRepository;
 import com.kickr_server.exception.user.UserNotFoundException;
 import com.kickr_server.exception.userMatch.UserMatchNotFoundException;
-import com.kickr_server.notification.NotificationService;
 import com.kickr_server.notification.NotificationType;
+import com.kickr_server.event.NotificationEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public class ReviewLikeService {
     private final ReviewLikeRepository reviewLikeRepository;
     private final UserMatchRepository userMatchRepository;
     private final UserRepository userRepository;
-    private final NotificationService notificationService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public void toggleLike(UUID reviewId, UUID userId) {
@@ -42,12 +43,13 @@ public class ReviewLikeService {
                     review.setLikesCount(review.getLikesCount() + 1);
 
                     // Notify review owner
-                    notificationService.createNotification(
+                    eventPublisher.publishEvent(new NotificationEvent(
+                            this,
                             review.getUser(),
                             user,
                             NotificationType.LIKE,
                             user.getName() + " liked your review",
-                            reviewId.toString());
+                            reviewId.toString()));
                 });
         userMatchRepository.save(review);
     }
