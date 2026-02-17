@@ -1,4 +1,4 @@
-name: Build and Deploy Kickr
+name: CIFlow: Build and Push Images
 
 on:
   push:
