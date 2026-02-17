@@ -60,8 +60,8 @@ export const Header = () => {
             <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center">
               <img src="/favicon.png" alt="Kickr Platform Logo" className="w-full h-full object-contain" loading="eager" />
             </div>
-            <span className="text-xs md:text-2xl font-black tracking-tighter uppercase leading-none text-main italic">
-              KICKR
+            <span className="text-xs md:text-2xl font-black tracking-tighter leading-none text-main italic">
+              Kickr
             </span>
           </Link>
 
