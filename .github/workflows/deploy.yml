@@ -66,6 +66,3 @@ jobs:
           labels: ${{ steps.meta-client.outputs.labels }}
           build-args: |
             VITE_API_URL=https://api.kickrhq.com/api
-
-# Le job 'deploy' est supprimé car Portainer (en mode GitOps) 
-# surveille maintenant le dépôt et se met à jour tout seul.
