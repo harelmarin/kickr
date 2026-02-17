@@ -67,10 +67,5 @@ jobs:
           build-args: |
             VITE_API_URL=https://api.kickrhq.com/api
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Portainer via Webhook
-        run: |
-          curl -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"
+# Le job 'deploy' est supprimé car Portainer (en mode GitOps) 
+# surveille maintenant le dépôt et se met à jour tout seul.

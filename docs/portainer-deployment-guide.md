@@ -4,6 +4,13 @@ Ce guide explique comment déployer un projet Docker sur ton VPS via Portainer a
 
 ## 1. Configuration initiale (Une seule fois par VPS)
 
+### Créer le réseau partagé (Network)
+Certains projets (comme Kickr) utilisent un réseau externe pour communiquer avec un reverse-proxy.
+Dans Portainer : **Networks > Add network**.
+*   **Name** : `proxy-network`
+*   **Driver** : `bridge`
+*   Clique sur **Create the network**.
+
 ### Ajouter le Registry GitHub
 Dans Portainer : **Settings > Registries > Add Registry > Custom Registry**.
 *   **Name** : `GitHub Registry`
@@ -14,40 +21,21 @@ Dans Portainer : **Settings > Registries > Add Registry > Custom Registry**.
 
 ## 2. Déploiement du Projet (Par projet)
 
-### Créer la Stack
+### Créer la Stack (Mode GitOps / Polling)
 Dans Portainer : **Stacks > Add stack**.
 1.  **Nom** : `kickr`.
-2.  **YAML** : Colle le contenu du fichier `docker-compose.prod.yml`.
-3.  **Variables d'environnement** : 
-    *   Sous l'éditeur, clique sur **Advanced mode**.
-    *   Copie-colle le contenu de ton fichier `.env` racine.
-4.  **Déployer** : Clique sur **Deploy the stack**.
+2.  **Build method** : Choisir **Repository**.
+3.  **Repository URL** : `https://github.com/harelmarin/kickr`.
+4.  **Repository reference** : `refs/heads/main`.
+5.  **Compose path** : `docker-compose.prod.yml` (Attention : bien mettre le nom exact du fichier).
+6.  **GitOps updates** : Activer l'option.
+    *   **Mechanism** : Polling.
+    *   **Interval** : `5m`.
+7.  **Variables d'environnement** : Copie-colle ton `.env` racine en mode Advanced.
+8.  **Authentication** (si repo privé) : On + ton PAT GitHub.
+9.  **Déployer** : Clique sur **Deploy the stack**.
 
-### Activer l'automatisation (Webhook)
-1.  Une fois la stack créée, retourne dans ses paramètres (**Editor**).
-2.  Active l'option **Deployment webhook**.
-3.  Copie l'URL générée.
-
-## 3. Configuration GitHub (Par projet)
-
-### Ajouter le secret
-Dans ton repo GitHub : **Settings > Secrets and variables > Actions**.
-*   Ajoute un nouveau secret : `PORTAINER_WEBHOOK_URL`.
-*   Colle l'URL du Webhook Portainer.
-
-### Mettre à jour le Workflow
-Dans `.github/workflows/deploy.yml`, remplace l'étape SSH par :
-```yaml
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy via Portainer Webhook
-        run: |
-          curl -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"
-```
-
-## Pourquoi c'est mieux ?
-- **Sécurité** : GitHub n'a plus besoin d'accès SSH à ton serveur.
-- **Simplicité** : Tu gères tes variables et tes logs directement dans l'interface Portainer.
-- **Vitesse** : Le déploiement est déclenché instantanément après le build des images.
+## Pourquoi cette méthode ?
+- **Version Gratuite** : Entièrement compatible avec Portainer Community Edition.
+- **Sécurité** : Pas d'accès SSH requis pour GitHub Actions.
+- **Zéro maintenance** : Portainer surveille ton repo et met à jour les images automatiquement.
